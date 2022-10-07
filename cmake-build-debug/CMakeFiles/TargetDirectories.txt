@@ -1,0 +1,3 @@
+/Volumes/cdev/victoriam/cmake-build-debug/CMakeFiles/victoriam.dir
+/Volumes/cdev/victoriam/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Volumes/cdev/victoriam/cmake-build-debug/CMakeFiles/rebuild_cache.dir
