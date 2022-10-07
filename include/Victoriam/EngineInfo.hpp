@@ -2,10 +2,10 @@
 // Created by Вячеслав Кривенко on 07.10.2022.
 //
 
-#ifndef VICTORIAM_ENGINEINFO_H
-#define VICTORIAM_ENGINEINFO_H
+#ifndef VICTORIAM_ENGINEINFO_HPP
+#define VICTORIAM_ENGINEINFO_HPP
 
-#include <Victoriam/Core/Base.h>
+#include <Victoriam/Core/Base.hpp>
 
 VISRCBEG
 
@@ -18,4 +18,4 @@ void fGetEngineInfo(sEngineInfo& info);
 
 VISRCEND
 
-#endif //VICTORIAM_ENGINEINFO_H
+#endif //VICTORIAM_ENGINEINFO_HPP

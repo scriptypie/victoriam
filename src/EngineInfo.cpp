@@ -1,7 +1,7 @@
 //
 // Created by Вячеслав Кривенко on 07.10.2022.
 //
-#include <Victoriam/EngineInfo.h>
+#include <Victoriam/EngineInfo.hpp>
 
 VISRCBEG
 

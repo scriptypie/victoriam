@@ -46,15 +46,22 @@ cmake_ninja_workdir = /Volumes/cdev/victoriam/cmake-build-debug/
 
 build cmake_object_order_depends_target_victoriam: phony || CMakeFiles/victoriam.dir
 
-build CMakeFiles/victoriam.dir/library.cpp.o: CXX_COMPILER__victoriam_Debug /Volumes/cdev/victoriam/library.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/library.cpp.o.d
+build CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o: CXX_COMPILER__victoriam_Debug /Volumes/cdev/victoriam/src/EngineInfo.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
   INCLUDES = -I/Volumes/cdev/victoriam/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
 
-build CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o: CXX_COMPILER__victoriam_Debug /Volumes/cdev/victoriam/src/EngineInfo.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o.d
+build CMakeFiles/victoriam.dir/src/AppStateController.cpp.o: CXX_COMPILER__victoriam_Debug /Volumes/cdev/victoriam/src/AppStateController.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/src/AppStateController.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I/Volumes/cdev/victoriam/include
+  OBJECT_DIR = CMakeFiles/victoriam.dir
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+
+build CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o: CXX_COMPILER__victoriam_Debug /Volumes/cdev/victoriam/src/RuntimeApp.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
   INCLUDES = -I/Volumes/cdev/victoriam/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
@@ -68,7 +75,7 @@ build CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o: CXX_COMPILER__victoriam_Deb
 #############################################
 # Link the static library libvictoriam.a
 
-build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Debug CMakeFiles/victoriam.dir/library.cpp.o CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o
+build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Debug CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o CMakeFiles/victoriam.dir/src/AppStateController.cpp.o CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o
   ARCH_FLAGS = -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles/victoriam.dir
