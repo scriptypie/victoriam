@@ -6,9 +6,12 @@
 #define VICTORIAM_BASE_HPP
 
 #include <string>
+#include <sstream>
 #include <vector>
 #include <cstdint>
+#include <functional>
 
+#include <Victoriam/Core/Flags.hpp>
 #include <Victoriam/Core/MacroDefinitions.hpp>
 #include <Victoriam/Core/Memory/SmartPointers.hpp>
 #include <Victoriam/Core/Memory/StandardAllocator.hpp>
@@ -30,10 +33,15 @@ VIDECL typedef double_t Float64;
 
 VIDECL typedef bool     Bool;
 
-VIDECL typedef std::basic_string<char, std::char_traits<char>, StdAllocator<char> > String;
+	VIDECL typedef std::basic_string<char, std::char_traits<char>, StdAllocator<char> > String;
+	VIDECL typedef std::basic_stringstream<char, std::char_traits<char>, StdAllocator<char> > StringStream;
+
 
 template<class T>
 using List = std::vector<T, StdAllocator<T>>;
+
+template<class T>
+using Function = std::function<T>;
 
 VISRCEND
 
