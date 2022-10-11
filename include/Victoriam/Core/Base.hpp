@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <functional>
 
+#include <Victoriam/Core/Cast.hpp>
 #include <Victoriam/Core/Flags.hpp>
 #include <Victoriam/Core/MacroDefinitions.hpp>
 #include <Victoriam/Core/Memory/SmartPointers.hpp>

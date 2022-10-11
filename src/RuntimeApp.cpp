@@ -3,42 +3,90 @@
 //
 
 #include <filesystem>
-
-#include <Victoriam/Application/RuntimeApp.hpp>
 #include <utility>
 
-Vi::cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
+#include <Victoriam/Application/RuntimeApp.hpp>
+#include <Victoriam/EventSystem/EventDispatcher.hpp>
+#include <Victoriam/Input/Input.hpp>
+
+VISRCBEG
+
+extern Bool g_Reload;
+
+cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 	: m_info(std::move(createInfo))
 {
 	s_instance = this;
 	if (m_info.CWD.empty())
 		m_info.CWD = std::filesystem::current_path().string();
 
-	//m_running = true;
+	{
+		sWindowCreateInfo info;
+		info.Name = m_info.AppName + " - NewWindow";
+		info.Offset = {100, 100};
+		info.Resolution = {1280, 800};
+		info.Flags += WindowCreateWindowFlag_DefaultWindow;
+		m_Window = cWindow::Create(info);
+	}
+	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(cRuntimeApp::OnEvent));
+	cInput::Init(m_Window);
+
+	m_running = true;
 }
 
-Vi::cRuntimeApp::~cRuntimeApp() {
+cRuntimeApp::~cRuntimeApp() {
 	if (m_running)
-		Close();
+		Reload();
 }
 
-void Vi::cRuntimeApp::AddState(cAppState* state) {
+void cRuntimeApp::AddState(cAppState* state) {
 	m_stateController.AddState(state);
 	state->OnCreate();
 }
 
-void Vi::cRuntimeApp::AddOverlayState(cAppState* overlay) {
+void cRuntimeApp::AddOverlayState(cAppState* overlay) {
 	m_stateController.AddOverlayState(overlay);
 	overlay->OnCreate();
 }
 
-void Vi::cRuntimeApp::Close() {
+void cRuntimeApp::Reload() {
+	m_running = false;
+}
+
+void cRuntimeApp::Close()
+{
+	g_Reload = false;
 	m_running = false;
 }
 
 void Vi::cRuntimeApp::Startup() {
-	while (m_running)
-	{
+	while (m_running) {
+		m_Window->Update();
 
+		// begin gui update
+		for (auto & state : m_stateController)
+		{
+			state->OnUpdate();
+			state->OnUpdateGUI();
+		}
+		// end gui update
 	}
 }
+
+void cRuntimeApp::OnEvent(cEvent &e) {
+	cEventDispatcher dispatcher(e);
+	dispatcher.Dispatch<cWindowResizeEvent>(BIND_EVENT_FN(cRuntimeApp::OnWindowResize));
+	dispatcher.Dispatch<cWindowCloseEvent>(BIND_EVENT_FN(cRuntimeApp::OnWindowClose));
+}
+
+bool cRuntimeApp::OnWindowResize(const cWindowResizeEvent &e) {
+	printf("%s\n", e.ToString().c_str());
+	return true;
+}
+
+bool cRuntimeApp::OnWindowClose(const cWindowCloseEvent &e) {
+	Close();
+	return true;
+}
+
+VISRCEND

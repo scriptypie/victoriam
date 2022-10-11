@@ -102,6 +102,13 @@ build CMakeFiles/victoriam.dir/src/WindowGlfwImpl.cpp.o: CXX_COMPILER__victoriam
   OBJECT_DIR = CMakeFiles/victoriam.dir
   OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
 
+build CMakeFiles/victoriam.dir/src/Input.cpp.o: CXX_COMPILER__victoriam_Debug /Volumes/cdev/victoriam/src/Input.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/src/Input.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks
+  OBJECT_DIR = CMakeFiles/victoriam.dir
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target victoriam
@@ -110,7 +117,7 @@ build CMakeFiles/victoriam.dir/src/WindowGlfwImpl.cpp.o: CXX_COMPILER__victoriam
 #############################################
 # Link the static library libvictoriam.a
 
-build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Debug CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o CMakeFiles/victoriam.dir/src/AppStateController.cpp.o CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o CMakeFiles/victoriam.dir/src/Comparator.cpp.o CMakeFiles/victoriam.dir/src/FuncVector2.cpp.o CMakeFiles/victoriam.dir/src/ScalarRsqrt.cpp.o CMakeFiles/victoriam.dir/src/Window.cpp.o CMakeFiles/victoriam.dir/src/WindowGlfwImpl.cpp.o || /opt/homebrew/lib/libglfw.3.3.dylib
+build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Debug CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o CMakeFiles/victoriam.dir/src/AppStateController.cpp.o CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o CMakeFiles/victoriam.dir/src/Comparator.cpp.o CMakeFiles/victoriam.dir/src/FuncVector2.cpp.o CMakeFiles/victoriam.dir/src/ScalarRsqrt.cpp.o CMakeFiles/victoriam.dir/src/Window.cpp.o CMakeFiles/victoriam.dir/src/WindowGlfwImpl.cpp.o CMakeFiles/victoriam.dir/src/Input.cpp.o || /opt/homebrew/lib/libglfw.3.3.dylib
   ARCH_FLAGS = -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles/victoriam.dir
@@ -119,13 +126,54 @@ build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Debug CMakeFiles/vict
   TARGET_FILE = libvictoriam.a
   TARGET_PDB = victoriam.a.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target VIsual
+
+
+#############################################
+# Order-only phony target for VIsual
+
+build cmake_object_order_depends_target_VIsual: phony || cmake_object_order_depends_target_victoriam
+
+build CMakeFiles/VIsual.dir/src/VIsual/EditorState.cpp.o: CXX_COMPILER__VIsual_Debug /Volumes/cdev/victoriam/src/VIsual/EditorState.cpp || cmake_object_order_depends_target_VIsual
+  DEP_FILE = CMakeFiles/VIsual.dir/src/VIsual/EditorState.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks
+  OBJECT_DIR = CMakeFiles/VIsual.dir
+  OBJECT_FILE_DIR = CMakeFiles/VIsual.dir/src/VIsual
+
+build CMakeFiles/VIsual.dir/src/VIsual/VIsualApp.cpp.o: CXX_COMPILER__VIsual_Debug /Volumes/cdev/victoriam/src/VIsual/VIsualApp.cpp || cmake_object_order_depends_target_VIsual
+  DEP_FILE = CMakeFiles/VIsual.dir/src/VIsual/VIsualApp.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks
+  OBJECT_DIR = CMakeFiles/VIsual.dir
+  OBJECT_FILE_DIR = CMakeFiles/VIsual.dir/src/VIsual
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target VIsual
+
+
+#############################################
+# Link the executable VIsual
+
+build VIsual: CXX_EXECUTABLE_LINKER__VIsual_Debug CMakeFiles/VIsual.dir/src/VIsual/EditorState.cpp.o CMakeFiles/VIsual.dir/src/VIsual/VIsualApp.cpp.o | libvictoriam.a /opt/homebrew/lib/libglfw.3.3.dylib /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd || libvictoriam.a
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
+  LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib  libvictoriam.a  /opt/homebrew/lib/libglfw.3.3.dylib  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd
+  OBJECT_DIR = CMakeFiles/VIsual.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = VIsual
+  TARGET_PDB = VIsual.dbg
+
 
 #############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /Volumes/cdev/victoriam/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-  DESC = No interactive CMake dialog available...
+  COMMAND = cd /Volumes/cdev/victoriam/cmake-build-debug && /opt/homebrew/Cellar/cmake/3.24.2/bin/ccmake -S/Volumes/cdev/victoriam -B/Volumes/cdev/victoriam/cmake-build-debug
+  DESC = Running CMake cache editor...
+  pool = console
   restat = 1
 
 build edit_cache: phony CMakeFiles/edit_cache.util
@@ -155,7 +203,7 @@ build victoriam: phony libvictoriam.a
 #############################################
 # Folder: /Volumes/cdev/victoriam/cmake-build-debug
 
-build all: phony libvictoriam.a
+build all: phony libvictoriam.a VIsual
 
 # =============================================================================
 # Built-in targets

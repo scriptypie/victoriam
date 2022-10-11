@@ -7,6 +7,7 @@
 
 #include <Victoriam/Application/AppStateController.hpp>
 #include <Victoriam/Application/RuntimeAppCreateInfo.hpp>
+#include <Victoriam/Graphics/Window.hpp>
 
 VISRCBEG
 
@@ -17,6 +18,7 @@ class cRuntimeApp
 	sRuntimeAppCreateInfo m_info = {};
 	Bool m_running = {};
 	cAppStateController m_stateController = {};
+	SPtr<cWindow> m_Window = nullptr;
 public:
 	VIDECL explicit cRuntimeApp(sRuntimeAppCreateInfo  createInfo);
 	virtual ~cRuntimeApp();
@@ -25,11 +27,16 @@ public:
 	VIDECL void AddOverlayState(cAppState* overlay);
 
 	VIDECL void Close();
+	VIDECL void Reload();
 
 	VIDECL inline static cRuntimeApp& Get() { return *s_instance; }
 	VIDECL inline const sRuntimeAppCreateInfo& GetInfo() const { return m_info; }
 private:
 	void Startup();
+	void OnEvent(cEvent& e);
+
+	bool OnWindowResize(const cWindowResizeEvent& e);
+	bool OnWindowClose(const cWindowCloseEvent& e);
 };
 
 // Needs to be defined on the client side

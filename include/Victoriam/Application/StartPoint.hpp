@@ -6,18 +6,18 @@
 #define VICTORIAM_STARTPOINT_HPP
 
 #include <Victoriam/Core/Base.hpp>
-#include "RuntimeApp.hpp"
+#include <Victoriam/Application/RuntimeApp.hpp>
 
 
 VISRCBEG
 
 extern cRuntimeApp* CreateRuntimeApp(const cArgumentLineTool& args);
 
-Bool g_StillRunning = true;
+Bool g_Reload = true;
 
 Int32 Main(Int32 Argc, Int8** Args)
 {
-	while (g_StillRunning)
+	while (g_Reload)
 	{
 		auto application = CreateRuntimeApp({Argc, Args});
 		application->Startup();
