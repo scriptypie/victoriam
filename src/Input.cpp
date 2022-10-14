@@ -2,14 +2,14 @@
 // Created by Вячеслав Кривенко on 11.10.2022.
 //
 
-#include "WindowGlfwImpl.hpp"
+#include "GLFWWindow.hpp"
 
 #include <Victoriam/Input/Input.hpp>
 
 VISRCBEG
 
 void cInput::Init(const SPtr<cWindow> &window) {
-	m_InputStatePtr = &((cWindowGLFWImpl*)window.get())->m_Data.InputState;
+	m_InputStatePtr = &((cGLFWWindow*)window.get())->m_Data.InputState;
 }
 
 Bool cInput::IsKeyDown(const eKeyCode &code) {

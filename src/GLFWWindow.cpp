@@ -2,7 +2,7 @@
 // Created by Вячеслав Кривенко on 09.10.2022.
 //
 
-#include "WindowGlfwImpl.hpp"
+#include "GLFWWindow.hpp"
 
 VISRCBEG
 
@@ -16,20 +16,20 @@ namespace
 	}
 }
 
-cWindowGLFWImpl::cWindowGLFWImpl(const sWindowCreateInfo &info) {
+cGLFWWindow::cGLFWWindow(const sWindowCreateInfo &info) {
 	CreateWindow(info);
 }
 
-cWindowGLFWImpl::~cWindowGLFWImpl() {
+cGLFWWindow::~cGLFWWindow() {
 	DestroyWindow();
 }
 
-void cWindowGLFWImpl::Update() {
+void cGLFWWindow::Update() {
 	glfwPollEvents();
 	// swap context buffers
 }
 
-void cWindowGLFWImpl::CreateWindow(const sWindowCreateInfo &info) {
+void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 	m_Data.Offset = info.Offset;
 	m_Data.Resolution = info.Resolution;
 	m_Data.Flags = info.Flags;
@@ -59,7 +59,7 @@ void cWindowGLFWImpl::CreateWindow(const sWindowCreateInfo &info) {
 
 	glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 	{
-		auto& data = Cast<sWindowGLFWImplData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
 		cWindowCloseEvent close_event;
 		if (data.Callback)
 			data.Callback(close_event);
@@ -67,7 +67,7 @@ void cWindowGLFWImpl::CreateWindow(const sWindowCreateInfo &info) {
 
 	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, Int32 width, Int32 height)
 	{
-		auto& data = Cast<sWindowGLFWImplData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
 		data.Resolution = { CCast<Float32>(width), CCast<Float32>(height) };
 		cWindowResizeEvent resize_event(CCast<UInt32>(width), CCast<UInt32>(height));
 		if (data.Callback)
@@ -76,7 +76,7 @@ void cWindowGLFWImpl::CreateWindow(const sWindowCreateInfo &info) {
 
 	glfwSetKeyCallback(m_Window, [](GLFWwindow* window, Int32 key, Int32 scancode, Int32 action, Int32 mode)
 	{
-		auto& data = Cast<sWindowGLFWImplData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
 
 		if (data.Callback)
 			switch (action)
@@ -98,13 +98,13 @@ void cWindowGLFWImpl::CreateWindow(const sWindowCreateInfo &info) {
 
 	glfwSetCharCallback(m_Window, [](GLFWwindow* window, UInt32 keycode)
 	{
-		auto& data = Cast<sWindowGLFWImplData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
 		data.InputState.keyboard.input = { CCast<char>(keycode) };
 	});
 
 	glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, Int32 button, Int32 action, Int32 mods)
 	{
-		auto& data = Cast<sWindowGLFWImplData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
 
 		switch (action)
 		{
@@ -125,25 +125,25 @@ void cWindowGLFWImpl::CreateWindow(const sWindowCreateInfo &info) {
 
 	glfwSetScrollCallback(m_Window, [](GLFWwindow* window, Float64 x, Float64 y)
 	{
-		auto& data = Cast<sWindowGLFWImplData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
 		data.InputState.mouse.scroll = { CCast<Float32>(x), CCast<Float32>(y) };
 	});
 
 	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, Float64 x, Float64 y)
 	{
-		auto& data = Cast<sWindowGLFWImplData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
 		data.InputState.mouse.position = { CCast<Float32>(x), CCast<Float32>(y) };
 	});
 
 }
 
-void cWindowGLFWImpl::DestroyWindow() {
+void cGLFWWindow::DestroyWindow() {
 	if (m_Window)
 		glfwDestroyWindow(m_Window);
 	glfwTerminate();
 }
 
-void cWindowGLFWImpl::CreateWindowSurface() {
+void cGLFWWindow::CreateWindowSurface() {
 	if (glfwCreateWindowSurface(m_Instance, m_Window, nullptr, m_Surface) != VK_SUCCESS)
 	{
 		throw std::runtime_error("Failed to create window surface!");

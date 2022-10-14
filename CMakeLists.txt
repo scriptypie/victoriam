@@ -22,9 +22,15 @@ set(SOURCE_FILES
         src/EngineInfo.cpp
         src/AppStateController.cpp
         src/RuntimeApp.cpp
-        include/Victoriam/Graphics/Window.hpp include/Victoriam/Graphics/WindowCreateInfo.hpp include/Victoriam/Math/Common/Scalar.hpp include/Victoriam/Math/Common/MinMax.hpp include/Victoriam/Math/Common/ScalarArray.hpp include/Victoriam/Math/Common/Comparator.hpp src/Comparator.cpp include/Victoriam/Math/Vector/VectorBase.hpp include/Victoriam/Math/Vector/TypeVector2.hpp include/Victoriam/Math/Vector/TypeVector3.hpp include/Victoriam/Math/Vector/TypeVector4.hpp include/Victoriam/Math/Vector/FuncVector2.hpp src/FuncVector2.cpp src/ScalarRsqrt.cpp include/Victoriam/Math/Vector2.hpp include/Victoriam/Core/Flags.hpp src/Window.cpp src/WindowGlfwImpl.cpp src/WindowGlfwImpl.hpp include/Victoriam/EventSystem/Event.hpp include/Victoriam/EventSystem/EventDispatcher.hpp include/Victoriam/EventSystem/WindowEvents.hpp include/Victoriam/Input/Keycode.hpp include/Victoriam/Input/Mousecode.hpp include/Victoriam/Input/Padcode.hpp include/Victoriam/Input/Padaxis.hpp include/Victoriam/Core/Cast.hpp include/Victoriam/Input/Input.hpp src/Input.cpp include/Victoriam/Utils/ShaderCooker.hpp src/ShaderCooker.cpp include/Victoriam/Graphics/Basics.hpp include/Victoriam/Graphics/Device.hpp src/Device.cpp src/VulkanDevice.cpp src/VulkanDevice.hpp)
+        include/Victoriam/Graphics/Window.hpp include/Victoriam/Graphics/WindowCreateInfo.hpp include/Victoriam/Math/Common/Scalar.hpp include/Victoriam/Math/Common/MinMax.hpp include/Victoriam/Math/Common/ScalarArray.hpp include/Victoriam/Math/Common/Comparator.hpp src/Comparator.cpp include/Victoriam/Math/Vector/VectorBase.hpp include/Victoriam/Math/Vector/TypeVector2.hpp include/Victoriam/Math/Vector/TypeVector3.hpp include/Victoriam/Math/Vector/TypeVector4.hpp include/Victoriam/Math/Vector/FuncVector2.hpp src/FuncVector2.cpp src/ScalarRsqrt.cpp include/Victoriam/Math/Vector2.hpp include/Victoriam/Core/Flags.hpp src/Window.cpp src/GLFWWindow.cpp src/GLFWWindow.hpp include/Victoriam/EventSystem/Event.hpp include/Victoriam/EventSystem/EventDispatcher.hpp include/Victoriam/EventSystem/WindowEvents.hpp include/Victoriam/Input/Keycode.hpp include/Victoriam/Input/Mousecode.hpp include/Victoriam/Input/Padcode.hpp include/Victoriam/Input/Padaxis.hpp include/Victoriam/Core/Cast.hpp include/Victoriam/Input/Input.hpp src/Input.cpp include/Victoriam/Utils/ShaderCooker.hpp src/ShaderCooker.cpp include/Victoriam/Graphics/Basics.hpp include/Victoriam/Graphics/Device.hpp src/Device.cpp src/VulkanDevice.cpp src/VulkanDevice.hpp src/WindowAccessor.hpp include/Victoriam/Graphics/Pipeline.hpp include/Victoriam/Graphics/PipelineCreateInfo.hpp src/Pipeline.cpp src/VulkanPipeline.cpp src/VulkanPipeline.hpp src/DeviceAccessor.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
+
+if (CMAKE_BUILD_TYPE==Debug)
+    target_compile_definitions(victoriam PUBLIC -D_DEBUG=1)
+elseif(CMAKE_BUILD_TYPE==Release)
+    target_compile_definitions(victoriam PUBLIC -DNDEBUG=1)
+endif ()
 
 find_package(glfw3 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)

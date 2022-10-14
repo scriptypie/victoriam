@@ -31,6 +31,11 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(cRuntimeApp::OnEvent));
 	cInput::Init(m_Window);
 
+	m_Device = cDevice::Create(m_Window);
+
+	m_Pipeline = cPipeline::Create(m_Device, sPipelineCreateInfo(m_Window->GetWidth(), m_Window->GetHeight()));
+	m_Pipeline->SetShader("Default");
+
 	m_running = true;
 }
 

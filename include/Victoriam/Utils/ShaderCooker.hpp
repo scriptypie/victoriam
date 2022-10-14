@@ -27,14 +27,14 @@ struct SPIRVShader
 
 	static String toString(const ShaderType& type) ;
 
-	SPIRVShader(const ShaderType& type, String  src, String  name)
+	SPIRVShader(const ShaderType& type, String src, String name)
 			: Type(type), Source(std::move(src)), Name(std::move(name))
 	{}
 };
 
 class VIDECL cShaderCooker
 {
-	const List<const char*> EXT = { ".vert.spv", ".frag.spv" };
+	const List<CString> EXT = { ".vert.spv", ".frag.spv" };
 	String INFO;
 	const String COMPILER = "glslc ";
 	const String SHADERDIR = "./../Resources/Shaders/";
@@ -43,10 +43,10 @@ class VIDECL cShaderCooker
 	bool IsCookedExists(const String& name);
 	EngineShader ReadShader(const String& name);
 	String CookShader(const List<SPIRVShader>& sshader);
-	String LoadCookedShaderFromName(const String& name, const SPIRVShader::ShaderType& type);
+	BinaryData LoadCookedShaderFromName(const String& name, const SPIRVShader::ShaderType& type);
 public:
-	VIDECL String LoadVertexShader(const String& name);
-	VIDECL String LoadFragmentShader(const String& name);
+	VIDECL BinaryData LoadVertexShader(const String& name);
+	VIDECL BinaryData LoadFragmentShader(const String& name);
 	VIDECL [[nodiscard]] inline String GetCookedInfo() const { return INFO; }
 
 };

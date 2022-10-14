@@ -4,9 +4,9 @@
 
 #include <Victoriam/Graphics/Window.hpp>
 
-#include "WindowGlfwImpl.hpp"
+#include "GLFWWindow.hpp"
 
-Vi::SPtr<Vi::cWindow> Vi::cWindow::Create(const Vi::sWindowCreateInfo &info)
+Vi::pWindow Vi::cWindow::Create(const Vi::sWindowCreateInfo &info)
 {
-	return Vi::CreateSPtr<Vi::cWindowGLFWImpl>(info);
+	return Vi::CreateSPtr<Vi::cGLFWWindow>(info);
 }

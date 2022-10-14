@@ -30,7 +30,7 @@ constexpr       EventCategory EventCategoryMouseButton    = 0x00010000;
 #define EVENT_CLASS_TYPE(type) \
 	inline static ecEventType GetStaticType() { return ecEventType::type; } \
 	inline ecEventType GetEventType() const override { return GetStaticType(); } \
-	inline const char* GetName() const override { return #type; }
+	inline CString GetName() const override { return #type; }
 #define EVENT_CLASS_CATEGORY(cat) \
 	inline EventCategory GetCategoryFlags() const override { return cat; }
 
@@ -44,7 +44,7 @@ public:
 	Bool m_Handled = false;
 
 	virtual ecEventType GetEventType() const = 0;
-	virtual const char* GetName() const = 0;
+	virtual CString GetName() const = 0;
 	virtual EventCategory GetCategoryFlags() const = 0;
 	virtual String ToString() const { return GetName(); }
 	Bool IsInCategory(EventCategory category)

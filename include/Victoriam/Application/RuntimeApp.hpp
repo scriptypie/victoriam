@@ -8,6 +8,7 @@
 #include <Victoriam/Application/AppStateController.hpp>
 #include <Victoriam/Application/RuntimeAppCreateInfo.hpp>
 #include <Victoriam/Graphics/Window.hpp>
+#include <Victoriam/Graphics/Pipeline.hpp>
 
 VISRCBEG
 
@@ -18,7 +19,9 @@ class cRuntimeApp
 	sRuntimeAppCreateInfo m_info = {};
 	Bool m_running = {};
 	cAppStateController m_stateController = {};
-	SPtr<cWindow> m_Window = nullptr;
+	pWindow m_Window = nullptr;
+	pDevice m_Device = nullptr;
+	pPipeline m_Pipeline = nullptr;
 public:
 	VIDECL explicit cRuntimeApp(sRuntimeAppCreateInfo  createInfo);
 	virtual ~cRuntimeApp();

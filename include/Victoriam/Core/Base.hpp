@@ -34,8 +34,9 @@ VIDECL typedef double_t Float64;
 
 VIDECL typedef bool     Bool;
 
-	VIDECL typedef std::basic_string<char, std::char_traits<char>, StdAllocator<char> > String;
-	VIDECL typedef std::basic_stringstream<char, std::char_traits<char>, StdAllocator<char> > StringStream;
+VIDECL typedef const char* CString;
+VIDECL typedef std::basic_string<char, std::char_traits<char>, StdAllocator<char> > String;
+VIDECL typedef std::basic_stringstream<char, std::char_traits<char>, StdAllocator<char> > StringStream;
 
 
 template<class T>
@@ -43,6 +44,8 @@ using List = std::vector<T, StdAllocator<T>>;
 
 template<class T>
 using Function = std::function<T>;
+
+VIDECL typedef List<UInt32> BinaryData;
 
 VISRCEND
 

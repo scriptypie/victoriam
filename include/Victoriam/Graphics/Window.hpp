@@ -41,6 +41,8 @@ public:
 	static SPtr<cWindow> Create(const sWindowCreateInfo& info);
 };
 
+VIDECL typedef SPtr<cWindow> pWindow;
+
 VISRCEND
 
 #endif //VICTORIAM_WINDOW_HPP

@@ -153,10 +153,10 @@ String cShaderCooker::CookShader(const List<SPIRVShader> &sshader)
 	return info;
 }
 
-String cShaderCooker::LoadCookedShaderFromName(const String &name,
+BinaryData cShaderCooker::LoadCookedShaderFromName(const String &name,
                                                        const SPIRVShader::ShaderType &type)
 {
-	String data = {};
+	BinaryData data = {};
 	std::ifstream f(COOKEDDIR + name + EXT[(uint32_t)(type)]);
 	if (f.is_open())
 	{
@@ -169,7 +169,7 @@ String cShaderCooker::LoadCookedShaderFromName(const String &name,
 	return data;
 }
 
-String cShaderCooker::LoadVertexShader(const String &name)
+BinaryData cShaderCooker::LoadVertexShader(const String &name)
 {
 	if (!IsCookedExists(name))
 	{
@@ -180,7 +180,7 @@ String cShaderCooker::LoadVertexShader(const String &name)
 	return LoadCookedShaderFromName(name, SPIRVShader::Vertex);
 }
 
-String cShaderCooker::LoadFragmentShader(const String &name)
+BinaryData cShaderCooker::LoadFragmentShader(const String &name)
 {
 	if (!IsCookedExists(name))
 	{

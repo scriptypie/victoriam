@@ -2,8 +2,8 @@
 // Created by Вячеслав Кривенко on 09.10.2022.
 //
 
-#ifndef VICTORIAM_WINDOWGLFWIMPL_HPP
-#define VICTORIAM_WINDOWGLFWIMPL_HPP
+#ifndef VICTORIAM_GLFWWINDOW_HPP
+#define VICTORIAM_GLFWWINDOW_HPP
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
@@ -33,7 +33,7 @@ struct VIDECL sInputState
 	} mouse;
 };
 
-struct sWindowGLFWImplData
+struct sGLFWWindowData
 {
 	String Name;
 	Vector2 Offset;
@@ -44,16 +44,18 @@ struct sWindowGLFWImplData
 	cWindow::EventCallbackFn Callback;
 };
 
-class cWindowGLFWImpl : public cWindow {
+class cGLFWWindow : public cWindow {
 	friend class cInput;
-	sWindowGLFWImplData m_Data;
+	friend class cWindowAccessor;
+
+	sGLFWWindowData m_Data;
 	GLFWwindow* m_Window;
 
 	VkInstance m_Instance;
 	VkSurfaceKHR* m_Surface;
 public:
-	~cWindowGLFWImpl() override;
-	explicit cWindowGLFWImpl(const sWindowCreateInfo& info);
+	~cGLFWWindow() override;
+	explicit cGLFWWindow(const sWindowCreateInfo& info);
 
 	void Update() override;
 	[[nodiscard]] inline UInt32 GetWidth() const override { return CCast<UInt32>(m_Data.Resolution.x); }
@@ -72,4 +74,4 @@ private:
 
 VISRCEND
 
-#endif //VICTORIAM_WINDOWGLFWIMPL_HPP
+#endif //VICTORIAM_GLFWWINDOW_HPP
