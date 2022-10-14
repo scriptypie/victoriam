@@ -1,0 +1,14 @@
+# ninja log v5
+1	971	1665490518910001854	CMakeFiles/victoriam.dir/src/FuncVector2.cpp.o	e77e65fb0cf69f68
+1	1011	1665490518951544529	CMakeFiles/victoriam.dir/src/ScalarRsqrt.cpp.o	8c368d3f61939dc1
+1	1013	1665490518952303084	CMakeFiles/victoriam.dir/src/Comparator.cpp.o	5a84221272ea389e
+0	1113	1665490519055275931	CMakeFiles/victoriam.dir/src/AppStateController.cpp.o	b7f824a9264779d8
+5	1272	1665490927752624576	CMakeFiles/victoriam.dir/src/Input.cpp.o	eaea70ec2e9815f
+4	1272	1665490927752597827	CMakeFiles/victoriam.dir/src/Window.cpp.o	c25f41d1601df82
+5	1412	1665490927896681203	CMakeFiles/victoriam.dir/src/WindowGlfwImpl.cpp.o	ecd7a010c4889732
+5	1277	1665490927760624641	CMakeFiles/VIsual.dir/src/VIsual/VIsualApp.cpp.o	f52903ff5e818fa8
+0	1015	1665490518955558627	CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o	8ef8df7c9c43092c
+3	1442	1665490927926965030	CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o	2e0991a6b6304303
+1484	1570	1665490928057714422	VIsual	83daa2f0b59f82a0
+1442	1484	1665490927973284000	libvictoriam.a	d72cebc8e80ddd35
+5	1278	1665490927762404697	CMakeFiles/VIsual.dir/src/VIsual/EditorState.cpp.o	7a2df808c5561c06

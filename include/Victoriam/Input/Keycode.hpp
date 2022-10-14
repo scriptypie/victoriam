@@ -137,6 +137,7 @@ enum VIDECL eKeyboardCode : UInt32
 	LeftControl         = 341,
 	LeftAlt             = 342,
 	LeftSuper           = 343,
+	LeftCommand         = LeftSuper,
 	RightShift          = 344,
 	RightControl        = 345,
 	RightAlt            = 346,

@@ -42,11 +42,14 @@ void cWindowGLFWImpl::CreateWindow(const sWindowCreateInfo &info) {
 		glfwSetErrorCallback(glfwErrorCallback);
 	}
 
+	auto fullscreen = (m_Data.Flags.Contains(WindowCreateWindowFlags_Fullscreen)) ? glfwGetPrimaryMonitor() : nullptr;
+
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	m_Window = glfwCreateWindow(
 	CCast<Int32>(m_Data.Resolution.x),
 	CCast<Int32>(m_Data.Resolution.y),
 	m_Data.Name.c_str(),
-	nullptr, nullptr
+	fullscreen, nullptr
 	);
 	g_FirstWindow = false;
 
@@ -140,5 +143,11 @@ void cWindowGLFWImpl::DestroyWindow() {
 	glfwTerminate();
 }
 
+void cWindowGLFWImpl::CreateWindowSurface() {
+	if (glfwCreateWindowSurface(m_Instance, m_Window, nullptr, m_Surface) != VK_SUCCESS)
+	{
+		throw std::runtime_error("Failed to create window surface!");
+	}
+}
 
 VISRCEND

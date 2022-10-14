@@ -9,12 +9,18 @@
 
 VISRCBEG
 
+/**
+ * Evil-hack style cast
+ */
 template<class To, class From>
 VIDECL inline constexpr To& Cast(const From& from)
 {
 	return *(To*)from;
 }
 
+/**
+ * C-Style cast
+ */
 template<class To, class From>
 VIDECL inline constexpr To CCast(const From& from)
 {

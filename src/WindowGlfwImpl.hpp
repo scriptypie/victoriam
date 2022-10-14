@@ -5,6 +5,7 @@
 #ifndef VICTORIAM_WINDOWGLFWIMPL_HPP
 #define VICTORIAM_WINDOWGLFWIMPL_HPP
 
+#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 #include <Victoriam/Graphics/Window.hpp>
@@ -47,19 +48,24 @@ class cWindowGLFWImpl : public cWindow {
 	friend class cInput;
 	sWindowGLFWImplData m_Data;
 	GLFWwindow* m_Window;
+
+	VkInstance m_Instance;
+	VkSurfaceKHR* m_Surface;
 public:
 	~cWindowGLFWImpl() override;
-	cWindowGLFWImpl(const sWindowCreateInfo& info);
+	explicit cWindowGLFWImpl(const sWindowCreateInfo& info);
 
 	void Update() override;
-	inline UInt32 GetWidth() const override { return CCast<UInt32>(m_Data.Resolution.x); }
-	inline UInt32 GetHeight() const override { return CCast<UInt32>(m_Data.Resolution.y); }
-	inline UInt32 GetOffsetX() const override { return CCast<UInt32>(m_Data.Offset.x); }
-	inline UInt32 GetOffsetY() const override { return CCast<UInt32>(m_Data.Offset.y); }
+	[[nodiscard]] inline UInt32 GetWidth() const override { return CCast<UInt32>(m_Data.Resolution.x); }
+	[[nodiscard]] inline UInt32 GetHeight() const override { return CCast<UInt32>(m_Data.Resolution.y); }
+	[[nodiscard]] inline UInt32 GetOffsetX() const override { return CCast<UInt32>(m_Data.Offset.x); }
+	[[nodiscard]] inline UInt32 GetOffsetY() const override { return CCast<UInt32>(m_Data.Offset.y); }
 	inline void SetEventCallbackFunction(const EventCallbackFn& fn) override { m_Data.Callback = fn; }
 	inline void* GetNativeWindowVPtr() override { return CCast<void*>(m_Window); }
+
 private:
 	void CreateWindow(const sWindowCreateInfo& info);
+	void CreateWindowSurface();
 	void DestroyWindow();
 };
 
