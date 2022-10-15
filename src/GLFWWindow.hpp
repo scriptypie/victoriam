@@ -51,8 +51,6 @@ class cGLFWWindow : public cWindow {
 	sGLFWWindowData m_Data;
 	GLFWwindow* m_Window;
 
-	VkInstance m_Instance;
-	VkSurfaceKHR* m_Surface;
 public:
 	~cGLFWWindow() override;
 	explicit cGLFWWindow(const sWindowCreateInfo& info);
@@ -67,7 +65,7 @@ public:
 
 private:
 	void CreateWindow(const sWindowCreateInfo& info);
-	void CreateWindowSurface();
+	void CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface);
 	void DestroyWindow();
 };
 

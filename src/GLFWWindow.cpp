@@ -143,11 +143,9 @@ void cGLFWWindow::DestroyWindow() {
 	glfwTerminate();
 }
 
-void cGLFWWindow::CreateWindowSurface() {
-	if (glfwCreateWindowSurface(m_Instance, m_Window, nullptr, m_Surface) != VK_SUCCESS)
-	{
+void cGLFWWindow::CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface) {
+	if (glfwCreateWindowSurface(instance, m_Window, nullptr, surface) != VK_SUCCESS)
 		throw std::runtime_error("Failed to create window surface!");
-	}
 }
 
 VISRCEND

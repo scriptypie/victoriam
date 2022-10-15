@@ -16,17 +16,13 @@ VISRCBEG
 class cWindowAccessor
 {
 public:
-	static GLFWwindow* GetWindow(const SPtr<cWindow>& window)
+	static GLFWwindow* GetWindow(const pWindow& window)
 	{
 		return ((cGLFWWindow*)window.get())->m_Window;
 	}
-	static VkSurfaceKHR* GetWindowSurface(const SPtr<cWindow>& window)
+	static void CreateWindowSurface(const pWindow& window, VkInstance instance, VkSurfaceKHR* surface)
 	{
-		return ((cGLFWWindow*)window.get())->m_Surface;
-	}
-	static VkInstance GetVkInstance(const SPtr<cWindow>& window)
-	{
-		return ((cGLFWWindow*)window.get())->m_Instance;
+		return ((cGLFWWindow*)window.get())->CreateWindowSurface(instance, surface);
 	}
 };
 

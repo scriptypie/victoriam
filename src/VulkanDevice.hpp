@@ -40,6 +40,7 @@ class cVulkanDevice : public cDevice, public cWindowAccessor
 	VkInstance m_Instance{};
 	VkDebugUtilsMessengerEXT m_DebugMessenger{};
 	VkPhysicalDevice m_PhysicalDevice{};
+	VkPhysicalDeviceProperties m_Properties{};
 	VkCommandPool m_CmdPool{};
 	VkDevice m_Device{};
 	VkSurfaceKHR m_Surface{};
@@ -75,10 +76,10 @@ private:
 	void CreateCommandPool();
 
 	VIDECL Bool IsPhysicalDeviceSuitable(VkPhysicalDevice device);
-	VIDECL List<CString> GetRequiredExtensions();
+	VIDECL List<CString> GetRequiredExtensions() const;
 	VIDECL Bool CheckValidationLayerSupport();
 	VIDECL sQueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
-	VIDECL void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& info);
+	VIDECL static void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& info);
 	VIDECL void HasGLFWRequiredInstanceExtensions();
 	VIDECL Bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
 	VIDECL sSwapchainSupportDetails* QuerySwapchainSupport(VkPhysicalDevice device);
