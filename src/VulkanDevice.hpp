@@ -7,7 +7,7 @@
 
 #include <Victoriam/Graphics/Device.hpp>
 
-#include "WindowAccessor.hpp"
+#include "Accessors/AWindow.hpp"
 #include "GLFWWindow.hpp"
 
 VISRCBEG
@@ -28,9 +28,11 @@ struct VIDECL sQueueFamilyIndices
 	VIDECL [[nodiscard]] inline Bool IsCompleted() const { return GraphicsFamilyHasValue && PresentFamilyHasValue; }
 };
 
-class cVulkanDevice : public cDevice, public cWindowAccessor
+namespace Accessors { class Device; }
+
+class cVulkanDevice : public cDevice
 {
-	friend class cDeviceAccessor;
+	friend class Accessors::Device;
 #ifdef NDEBUG
 		const Bool m_EnableValidation = false;
 #else
@@ -52,20 +54,7 @@ class cVulkanDevice : public cDevice, public cWindowAccessor
 	{ VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 public:
 	explicit cVulkanDevice(const SPtr<cWindow> &window);
-	virtual ~cVulkanDevice();
-
-	inline void* GetProperty(const ecDeviceProperty& property) override
-	{
-		switch (property)
-		{
-			case ecDeviceProperty::CommandPool: return GetCommandPool();
-			case ecDeviceProperty::Device: return GetDevice();
-			case ecDeviceProperty::Surface: return GetSurface();
-			case ecDeviceProperty::GraphicsQueue: return GetGraphicsQueue();
-			case ecDeviceProperty::PresentQueue: return GetPresentQueue();
-			case ecDeviceProperty::SwapchainSupportDetails: return GetSwapchainSupport();
-		}
-	}
+	~cVulkanDevice() override;
 
 private:
 	void CreateGraphicsInstance();
@@ -76,18 +65,18 @@ private:
 	void CreateCommandPool();
 
 	VIDECL Bool IsPhysicalDeviceSuitable(VkPhysicalDevice device);
-	VIDECL List<CString> GetRequiredExtensions() const;
+	VIDECL [[nodiscard]] List<CString> GetRequiredExtensions() const;
 	VIDECL Bool CheckValidationLayerSupport();
 	VIDECL sQueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
 	VIDECL static void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& info);
 	VIDECL void HasGLFWRequiredInstanceExtensions();
 	VIDECL Bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
-	VIDECL sSwapchainSupportDetails* QuerySwapchainSupport(VkPhysicalDevice device);
+	VIDECL sSwapchainSupportDetails QuerySwapchainSupport(VkPhysicalDevice device);
 private:
 	inline VkCommandPool GetCommandPool() { return m_CmdPool; }
 	inline VkDevice GetDevice() { return m_Device; }
 	inline VkSurfaceKHR GetSurface() { return m_Surface; }
-	inline sSwapchainSupportDetails* GetSwapchainSupport() { return QuerySwapchainSupport(m_PhysicalDevice); }
+	inline sSwapchainSupportDetails GetSwapchainSupport() { return QuerySwapchainSupport(m_PhysicalDevice); }
 	inline VkQueue GetGraphicsQueue() { return m_GraphicsQueue; }
 	inline VkQueue GetPresentQueue() { return m_PresentQueue; }
 };

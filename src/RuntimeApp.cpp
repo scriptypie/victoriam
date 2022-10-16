@@ -24,7 +24,7 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 		sWindowCreateInfo info;
 		info.Name = m_info.AppName + " - NewWindow";
 		info.Offset = {100, 100};
-		info.Resolution = {1280, 800};
+		info.Resolution = {1152, 720};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = cWindow::Create(info);
 	}

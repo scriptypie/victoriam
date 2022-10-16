@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Release-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.23"
@@ -20,7 +20,7 @@
 					]
 				}
 			],
-			"name" : "Release",
+			"name" : "Debug",
 			"projects" : 
 			[
 				{
@@ -41,14 +41,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "VIsual::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-VIsual-Release-7bedc5993b3f7f33e2aa.json",
+					"jsonFile" : "target-VIsual-Debug-4256fe682e4f3a909c52.json",
 					"name" : "VIsual",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "victoriam::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-victoriam-Release-2270af261683112148f0.json",
+					"jsonFile" : "target-victoriam-Debug-f6ee53d3073da76a35cf.json",
 					"name" : "victoriam",
 					"projectIndex" : 0
 				}
@@ -58,7 +58,7 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Volumes/cdev/victoriam/cmake-build-release",
+		"build" : "/Volumes/cdev/victoriam/cmake-build-debug-coverage",
 		"source" : "/Volumes/cdev/victoriam"
 	},
 	"version" : 

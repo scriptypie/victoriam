@@ -10,22 +10,11 @@
 
 VISRCBEG
 
-enum class ecDeviceProperty : UInt32
-{
-	CommandPool,
-	Device,
-	Surface,
-	GraphicsQueue,
-	PresentQueue,
-	SwapchainSupportDetails,
-};
-
 class cDevice
 {
 public:
 	virtual ~cDevice() = default;
 
-	VIDECL virtual void* GetProperty(const ecDeviceProperty& property) = 0;
 	VIDECL static SPtr<cDevice> Create(const SPtr<cWindow>& window);
 };
 

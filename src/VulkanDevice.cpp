@@ -70,10 +70,8 @@ void cVulkanDevice::CreateGraphicsInstance()
 	if (m_EnableValidation && !CheckValidationLayerSupport())
 		throw std::runtime_error("Validation layers requested, but not available!");
 
-	VkInstanceCreateInfo instanceCreateInfo = {};
-	instanceCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-	VkApplicationInfo info = {};
-	info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+	VkInstanceCreateInfo instanceCreateInfo = { VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO };
+	VkApplicationInfo info = { VK_STRUCTURE_TYPE_APPLICATION_INFO };
 	info.pApplicationName = "VIsualEditor";
 	info.pEngineName = "Victoriam Engine";
 	info.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
@@ -82,7 +80,7 @@ void cVulkanDevice::CreateGraphicsInstance()
 	instanceCreateInfo.pApplicationInfo = &info;
 	auto extensions = GetRequiredExtensions();
 #ifdef __APPLE__
-	instanceCreateInfo.flags = VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+	instanceCreateInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 	extensions.emplace_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
 #endif
 	instanceCreateInfo.enabledExtensionCount = CCast<UInt32>(extensions.size());
@@ -116,7 +114,7 @@ void cVulkanDevice::SetupDebugMessenger()
 
 void cVulkanDevice::CreateSurface()
 {
-	CreateWindowSurface(m_Window, m_Instance, &m_Surface);
+	Accessors::Window::CreateWindowSurface(m_Window, m_Instance, &m_Surface);
 }
 
 void cVulkanDevice::ChoosePhysicalDevice()
@@ -148,8 +146,7 @@ void cVulkanDevice::CreateLogicalDevice()
 	Float32 queuePriority = 1.0F;
 	for (UInt32 queueFamily : uniqueQueueFamilies)
 	{
-		VkDeviceQueueCreateInfo queueCreateInfo = {};
-		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		VkDeviceQueueCreateInfo queueCreateInfo = { VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO };
 		queueCreateInfo.queueFamilyIndex = queueFamily;
 		queueCreateInfo.queueCount = 1;
 		queueCreateInfo.pQueuePriorities = &queuePriority;
@@ -158,8 +155,7 @@ void cVulkanDevice::CreateLogicalDevice()
 	VkPhysicalDeviceFeatures features = {};
 	features.samplerAnisotropy = VK_TRUE;
 
-	VkDeviceCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+	VkDeviceCreateInfo createInfo = { VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO };
 	createInfo.queueCreateInfoCount = CCast<UInt32>(queueCreateInfos.size());
 	createInfo.pQueueCreateInfos = queueCreateInfos.data();
 	createInfo.pEnabledFeatures = &features;
@@ -185,8 +181,7 @@ void cVulkanDevice::CreateCommandPool()
 {
 	sQueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice);
 
-	VkCommandPoolCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+	VkCommandPoolCreateInfo createInfo = { VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO };
 	createInfo.queueFamilyIndex = indices.GraphicsFamily;
 	createInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
@@ -198,15 +193,14 @@ Bool cVulkanDevice::IsPhysicalDeviceSuitable(VkPhysicalDevice device)
 {
 	sQueueFamilyIndices indices = FindQueueFamilies(device);
 	Bool extensionsSupported = CheckDeviceExtensionSupport(device);
-	Bool swapchainIsOkay = false;
+	Bool swapchainIsOkay;
 	if (extensionsSupported)
 	{
-		sSwapchainSupportDetails* swapchainSupportDetails = QuerySwapchainSupport(device);
-		swapchainIsOkay = !swapchainSupportDetails->formats.empty() && !swapchainSupportDetails->presentModes.empty();
-		delete swapchainSupportDetails; // for memory safety
+		sSwapchainSupportDetails swapchainSupportDetails = QuerySwapchainSupport(device);
+		swapchainIsOkay = !swapchainSupportDetails.formats.empty() && !swapchainSupportDetails.presentModes.empty();
 	}
 	VkPhysicalDeviceFeatures supportedFeatures;
-	vkGetPhysicalDeviceFeatures(m_PhysicalDevice, &supportedFeatures);
+	vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
 
 	return indices.IsCompleted() && extensionsSupported && swapchainIsOkay && supportedFeatures.samplerAnisotropy;
 }
@@ -234,13 +228,11 @@ Bool cVulkanDevice::CheckValidationLayerSupport()
 		Bool layerFound = false;
 
 		for (const auto& layerProperties : availableLayers)
-		{
 			if (!strcmp(layerName, layerProperties.layerName))
 			{
 				layerFound = true;
 				break;
 			}
-		}
 
 		if (!layerFound) return false;
 	}
@@ -259,7 +251,7 @@ sQueueFamilyIndices cVulkanDevice::FindQueueFamilies(VkPhysicalDevice device)
 
 	UInt32 i = {};
 	for (const auto &queueFamily : queueFamilies) {
-		if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+		if (queueFamily.queueCount > 0 && (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) ) {
 			indices.GraphicsFamily = i;
 			indices.GraphicsFamilyHasValue = true;
 		}
@@ -281,13 +273,12 @@ sQueueFamilyIndices cVulkanDevice::FindQueueFamilies(VkPhysicalDevice device)
 
 void cVulkanDevice::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &info)
 {
-	info = {};
-	info.sType              = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-	info.messageSeverity    = VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
-	                             VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-	info.messageType        = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
-	                         VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
-	                         VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+	info                    = { VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT };
+	info.messageSeverity    =   VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+			                    VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+	info.messageType        =   VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+			                    VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+							    VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
 	info.pfnUserCallback = DebugCallback;
 	info.pUserData = nullptr;  // Optional
 }
@@ -325,25 +316,25 @@ Bool cVulkanDevice::CheckDeviceExtensionSupport(VkPhysicalDevice device)
 	return requiredExtensions.empty();
 }
 
-sSwapchainSupportDetails* cVulkanDevice::QuerySwapchainSupport(VkPhysicalDevice device)
+sSwapchainSupportDetails cVulkanDevice::QuerySwapchainSupport(VkPhysicalDevice device)
 {
-	auto* details = new sSwapchainSupportDetails;
+	auto details = sSwapchainSupportDetails();
 
-	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, m_Surface, &details->capabilities);
+	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, m_Surface, &details.capabilities);
 	UInt32 formatCount;
 	vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_Surface, &formatCount, nullptr);
 
 	if (formatCount) {
-		details->formats.resize(formatCount);
-		vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_Surface, &formatCount, details->formats.data());
+		details.formats.resize(formatCount);
+		vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_Surface, &formatCount, details.formats.data());
 	}
 
 	UInt32 presentModeCount;
 	vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_Surface, &presentModeCount, nullptr);
 
 	if (presentModeCount != 0) {
-		details->presentModes.resize(presentModeCount);
-		vkGetPhysicalDeviceSurfacePresentModesKHR( device, m_Surface, &presentModeCount, details->presentModes.data());
+		details.presentModes.resize(presentModeCount);
+		vkGetPhysicalDeviceSurfacePresentModesKHR( device, m_Surface, &presentModeCount, details.presentModes.data());
 	}
 
 	return details;

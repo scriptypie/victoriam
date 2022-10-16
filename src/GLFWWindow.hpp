@@ -44,9 +44,11 @@ struct sGLFWWindowData
 	cWindow::EventCallbackFn Callback;
 };
 
+namespace Accessors { class Window; }
+
 class cGLFWWindow : public cWindow {
 	friend class cInput;
-	friend class cWindowAccessor;
+	friend class Accessors::Window;
 
 	sGLFWWindowData m_Data;
 	GLFWwindow* m_Window;

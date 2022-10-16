@@ -50,7 +50,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk"
+					"fragment" : "-fprofile-instr-generate -fcoverage-mapping -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk"
 				},
 				{
 					"fragment" : "-std=gnu++17"
@@ -460,7 +460,7 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/WindowAccessor.hpp",
+			"path" : "src/Accessors/AWindow.hpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -492,7 +492,7 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/DeviceAccessor.hpp",
+			"path" : "src/Accessors/ADevice.hpp",
 			"sourceGroupIndex" : 0
 		}
 	],
