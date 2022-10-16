@@ -6,6 +6,7 @@
 #define VICTORIAM_MACRODEFINITIONS_HPP
 
 #define VIDECL [[maybe_unused]]
+#define VIREQOUT [[nodiscard]]
 
 #define VISRCBEG namespace Vi {
 #define VISRCEND }

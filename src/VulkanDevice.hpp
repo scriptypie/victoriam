@@ -65,7 +65,7 @@ private:
 	void CreateCommandPool();
 
 	VIDECL Bool IsPhysicalDeviceSuitable(VkPhysicalDevice device);
-	VIDECL [[nodiscard]] List<CString> GetRequiredExtensions() const;
+	VIDECL VIREQOUT List<CString> GetRequiredExtensions() const;
 	VIDECL Bool CheckValidationLayerSupport();
 	VIDECL sQueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
 	VIDECL static void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& info);
@@ -73,12 +73,12 @@ private:
 	VIDECL Bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
 	VIDECL sSwapchainSupportDetails QuerySwapchainSupport(VkPhysicalDevice device);
 private:
-	inline VkCommandPool GetCommandPool() { return m_CmdPool; }
-	inline VkDevice GetDevice() { return m_Device; }
-	inline VkSurfaceKHR GetSurface() { return m_Surface; }
-	inline sSwapchainSupportDetails GetSwapchainSupport() { return QuerySwapchainSupport(m_PhysicalDevice); }
-	inline VkQueue GetGraphicsQueue() { return m_GraphicsQueue; }
-	inline VkQueue GetPresentQueue() { return m_PresentQueue; }
+	VIDECL VIREQOUT inline VkCommandPool GetCommandPool() { return m_CmdPool; }
+	VIDECL VIREQOUT inline VkDevice GetDevice() { return m_Device; }
+	VIDECL VIREQOUT inline VkSurfaceKHR GetSurface() { return m_Surface; }
+	VIDECL VIREQOUT inline sSwapchainSupportDetails GetSwapchainSupport() { return QuerySwapchainSupport(m_PhysicalDevice); }
+	VIDECL VIREQOUT inline VkQueue GetGraphicsQueue() { return m_GraphicsQueue; }
+	VIDECL VIREQOUT inline VkQueue GetPresentQueue() { return m_PresentQueue; }
 };
 
 VISRCEND
