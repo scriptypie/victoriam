@@ -47,7 +47,7 @@ class VIDECL cShaderCooker
 public:
 	VIDECL BinaryData LoadVertexShader(const String& name);
 	VIDECL BinaryData LoadFragmentShader(const String& name);
-	VIDECL [[nodiscard]] inline String GetCookedInfo() const { return INFO; }
+	VIDECL VIREQOUT inline String GetCookedInfo() const { return INFO; }
 
 };
 

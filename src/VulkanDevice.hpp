@@ -68,11 +68,22 @@ private:
 	VIDECL VIREQOUT List<CString> GetRequiredExtensions() const;
 	VIDECL Bool CheckValidationLayerSupport();
 	VIDECL sQueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
+	VIDECL VkFormat FindSupportedFormat(const List<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 	VIDECL static void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& info);
 	VIDECL void HasGLFWRequiredInstanceExtensions();
 	VIDECL Bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
 	VIDECL sSwapchainSupportDetails QuerySwapchainSupport(VkPhysicalDevice device);
+
 private:
+	// API defined
+	VIDECL void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer &buffer, VkDeviceMemory &bufferMemory);
+	VIDECL VkCommandBuffer BeginSingleTimeCommands();
+	VIDECL void EndSingleTimeCommands(VkCommandBuffer commandBuffer);
+	VIDECL void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
+	VIDECL void CopyBufferToImage(VkBuffer buffer, VkImage image, UInt32 width, UInt32 height, UInt32 layerCount);
+	VIDECL void CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory);
+	VIDECL UInt32 FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags properties);
+	private:
 	VIDECL VIREQOUT inline VkCommandPool GetCommandPool() { return m_CmdPool; }
 	VIDECL VIREQOUT inline VkDevice GetDevice() { return m_Device; }
 	VIDECL VIREQOUT inline VkSurfaceKHR GetSurface() { return m_Surface; }

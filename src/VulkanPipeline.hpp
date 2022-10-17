@@ -7,6 +7,7 @@
 
 #include "Accessors/AWindow.hpp"
 #include "Accessors/ADevice.hpp"
+#include "Accessors/ASwapchain.hpp"
 #include <Victoriam/Utils/ShaderCooker.hpp>
 #include <Victoriam/Graphics/Pipeline.hpp>
 
@@ -16,7 +17,6 @@ struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 {
 	VIDECL VkViewport Viewport = {};
 	VIDECL VkRect2D Scissor = {};
-	VIDECL VkPipelineViewportStateCreateInfo ViewportStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO };
 	VIDECL VkPipelineInputAssemblyStateCreateInfo InputAssemblyStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO };
 	VIDECL VkPipelineRasterizationStateCreateInfo RasterizationStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO };
 	VIDECL VkPipelineMultisampleStateCreateInfo MultisampleStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO };
@@ -38,11 +38,6 @@ struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 		Viewport.maxDepth = 1.0f;
 		// Scissor
 		Scissor.extent = { Width, Height };
-		// ViewportState
-		ViewportStateCreateInfo.viewportCount = 1; // Only one viewport will be used
-		ViewportStateCreateInfo.pViewports = &Viewport;
-		ViewportStateCreateInfo.scissorCount = 1; // ...as well as scissor
-		ViewportStateCreateInfo.pScissors = &Scissor;
 		// RasterizationState
 		RasterizationStateCreateInfo.polygonMode = VK_POLYGON_MODE_FILL; // TODO: Maybe add a wireframe mode?
 		RasterizationStateCreateInfo.lineWidth = 1.0f;                   // LINE_WIDTH FOR WIREFRAME MODE
@@ -80,12 +75,12 @@ class cVulkanPipeline : public cPipeline
 	VIDECL VkShaderModule m_FragmentShaderModule = {};
 	VIDECL sVulkanPipelineCreateInfo m_Info = {256, 256};
 public:
-	cVulkanPipeline(const String& name, pDevice& device, const sPipelineCreateInfo& info);
+	cVulkanPipeline(const String& name, pDevice& device, pSwapchain& swapchain, const sPipelineCreateInfo& info);
 	~cVulkanPipeline() override;
-
 private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();
+	VIDECL void CreatePipelineLayout();
 };
 
 VISRCEND

@@ -50,21 +50,20 @@ class cGLFWWindow : public cWindow {
 	friend class cInput;
 	friend class Accessors::Window;
 
-	sGLFWWindowData m_Data;
-	GLFWwindow* m_Window;
+	sGLFWWindowData m_Data = {};
+	GLFWwindow* m_Window = nullptr;
 
 public:
 	~cGLFWWindow() override;
 	explicit cGLFWWindow(const sWindowCreateInfo& info);
 
 	void Update() override;
-	[[nodiscard]] inline UInt32 GetWidth() const override { return CCast<UInt32>(m_Data.Resolution.x); }
-	[[nodiscard]] inline UInt32 GetHeight() const override { return CCast<UInt32>(m_Data.Resolution.y); }
-	[[nodiscard]] inline UInt32 GetOffsetX() const override { return CCast<UInt32>(m_Data.Offset.x); }
-	[[nodiscard]] inline UInt32 GetOffsetY() const override { return CCast<UInt32>(m_Data.Offset.y); }
+	VIREQOUT inline UInt32 GetWidth() const override { return CCast<UInt32>(m_Data.Resolution.x); }
+	VIREQOUT inline UInt32 GetHeight() const override { return CCast<UInt32>(m_Data.Resolution.y); }
+	VIREQOUT inline UInt32 GetOffsetX() const override { return CCast<UInt32>(m_Data.Offset.x); }
+	VIREQOUT inline UInt32 GetOffsetY() const override { return CCast<UInt32>(m_Data.Offset.y); }
+	VIREQOUT inline sWindowExtent GetExtent() const override { return { GetWidth(), GetHeight() }; }
 	inline void SetEventCallbackFunction(const EventCallbackFn& fn) override { m_Data.Callback = fn; }
-	inline void* GetNativeWindowVPtr() override { return CCast<void*>(m_Window); }
-
 private:
 	void CreateWindow(const sWindowCreateInfo& info);
 	void CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface);

@@ -100,7 +100,7 @@ Scalar fDistance(const sVector2 &from, const sVector2 &to) {
 
 sVector2 fNormalize(const sVector2 &a) {
 	Scalar len = fLength(a);
-	if (!len) return a;
+	if (len == 0.0f) return a;
 	sVector2 b(a);
 	b *= (static_cast<Scalar>(1) / len);
 	return b;

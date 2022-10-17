@@ -12,9 +12,9 @@ VISRCBEG
 class cWindowCloseEvent : public cEvent
 {
 public:
-	cWindowCloseEvent() {}
+	inline cWindowCloseEvent() = default;
 
-	String ToString() const override
+	VIREQOUT String ToString() const override
 	{
 		StringStream ss;
 		ss << "cWindowCloseEvent()";
@@ -31,10 +31,10 @@ class cWindowResizeEvent : public cEvent
 public:
 	cWindowResizeEvent(UInt32 width, UInt32 height) : m_Width(width), m_Height(height) {}
 
-	inline UInt32 GetWidth() const { return m_Width; }
-	inline UInt32 GetHeight() const { return m_Height; }
+	VIREQOUT inline UInt32 GetWidth() const { return m_Width; }
+	VIREQOUT inline UInt32 GetHeight() const { return m_Height; }
 
-	String ToString() const override
+	VIREQOUT String ToString() const override
 	{
 		StringStream ss;
 		ss << "cWindowResizeEvent(" << m_Width << ", " << m_Height << ")";
@@ -48,9 +48,9 @@ public:
 class cWindowLostFocusEvent : public cEvent
 {
 public:
-	cWindowLostFocusEvent() {}
+	inline cWindowLostFocusEvent() = default;
 
-	String ToString() const override
+	VIREQOUT String ToString() const override
 	{
 		StringStream ss;
 		ss << "cWindowLostFocusEvent()";
@@ -64,9 +64,9 @@ public:
 class cWindowGetFocusEvent : public cEvent
 {
 public:
-	cWindowGetFocusEvent() {}
+	inline cWindowGetFocusEvent() = default;
 
-	String ToString() const override
+	VIREQOUT String ToString() const override
 	{
 		StringStream ss;
 		ss << "cWindowGetFocusEvent()";

@@ -7,21 +7,20 @@
 
 #include <Victoriam/Application/AppStateController.hpp>
 #include <Victoriam/Application/RuntimeAppCreateInfo.hpp>
-#include <Victoriam/Graphics/Window.hpp>
-#include <Victoriam/Graphics/Pipeline.hpp>
+#include <Victoriam/Graphics/Renderer.hpp>
 
 VISRCBEG
 
 class cRuntimeApp
 {
-	inline static cRuntimeApp* s_instance = nullptr;
 	friend Int32 Main(Int32, Int8**);
+	friend class cRenderer;
+	inline static cRuntimeApp* s_instance = nullptr;
 	sRuntimeAppCreateInfo m_info = {};
 	Bool m_running = {};
 	cAppStateController m_stateController = {};
+	cRenderer m_Renderer = {};
 	pWindow m_Window = nullptr;
-	pDevice m_Device = nullptr;
-	pPipeline m_Pipeline = nullptr;
 public:
 	VIDECL explicit cRuntimeApp(sRuntimeAppCreateInfo  createInfo);
 	virtual ~cRuntimeApp();
@@ -33,12 +32,14 @@ public:
 	VIDECL void Reload();
 
 	VIDECL inline static cRuntimeApp& Get() { return *s_instance; }
-	VIDECL inline const sRuntimeAppCreateInfo& GetInfo() const { return m_info; }
+	VIDECL inline cRenderer& Renderer() { return m_Renderer; }
+	VIDECL VIREQOUT inline String CWD() const { return m_info.CWD; }
+	VIDECL VIREQOUT inline const sRuntimeAppCreateInfo& GetInfo() const { return m_info; }
 private:
 	void Startup();
 	void OnEvent(cEvent& e);
 
-	bool OnWindowResize(const cWindowResizeEvent& e);
+	static bool OnWindowResize(const cWindowResizeEvent& e);
 	bool OnWindowClose(const cWindowCloseEvent& e);
 };
 

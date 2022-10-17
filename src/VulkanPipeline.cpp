@@ -6,18 +6,21 @@
 
 VISRCBEG
 
-cVulkanPipeline::cVulkanPipeline(const String& name, pDevice &device, const sPipelineCreateInfo &info)
+cVulkanPipeline::cVulkanPipeline(const String& name, pDevice &device, pSwapchain& swapchain, const sPipelineCreateInfo &info)
 		: m_Device(device), m_Info(info.Width, info.Height)
 {
+	m_Info.RenderPass = Accessors::Swapchain::GetRenderPass(swapchain);
 	// I know, it's wrong, but in this case it's okay 'cause our virtual function will be existed
 	CreateShaderModule(m_ShaderCooker.LoadVertexShader(name), &m_VertexShaderModule);
 	CreateShaderModule(m_ShaderCooker.LoadFragmentShader(name), &m_FragmentShaderModule);
+	CreatePipelineLayout();
 	CreateGraphicsPipeline();
 }
 
 cVulkanPipeline::~cVulkanPipeline() {
 	vkDestroyShaderModule(Accessors::Device::GetDevice(m_Device), m_VertexShaderModule, nullptr);
 	vkDestroyShaderModule(Accessors::Device::GetDevice(m_Device), m_FragmentShaderModule, nullptr);
+	vkDestroyPipelineLayout(Accessors::Device::GetDevice(m_Device), m_Info.PipelineLayout, nullptr);
 	vkDestroyPipeline(Accessors::Device::GetDevice(m_Device), m_GraphicsPipeline, nullptr);
 }
 
@@ -31,8 +34,8 @@ void cVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderM
 }
 
 void cVulkanPipeline::CreateGraphicsPipeline() {
-	assert(m_Info.RenderPass != nullptr && "Cannot create graphics pipeline, cause RenderPass object is nullptr!");
-	assert(m_Info.PipelineLayout != nullptr && "Cannot create graphics pipeline, cause PipelineLayout object is nullptr!");
+	assert(m_Info.RenderPass && "Cannot create graphics pipeline, cause RenderPass object is nullptr!");
+	assert(m_Info.PipelineLayout && "Cannot create graphics pipeline, cause PipelineLayout object is nullptr!");
 
 	VkPipelineShaderStageCreateInfo shaderStagesCreateInfo[2] = {{VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO }, {VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO } };
 	shaderStagesCreateInfo[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
@@ -44,6 +47,12 @@ void cVulkanPipeline::CreateGraphicsPipeline() {
 
 	VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO };
 
+	VkPipelineViewportStateCreateInfo ViewportStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO };
+	ViewportStateCreateInfo.viewportCount = 1; // Only one viewport will be used
+	ViewportStateCreateInfo.pViewports = &m_Info.Viewport;
+	ViewportStateCreateInfo.scissorCount = 1; // ...as well as scissor
+	ViewportStateCreateInfo.pScissors = &m_Info.Scissor;
+
 	VkGraphicsPipelineCreateInfo pipelineCreateInfo = { VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO };
 	pipelineCreateInfo.pColorBlendState = &m_Info.ColorBlendStateCreateInfo;
 	pipelineCreateInfo.pDepthStencilState = &m_Info.DepthStencilStateCreateInfo;
@@ -53,7 +62,7 @@ void cVulkanPipeline::CreateGraphicsPipeline() {
 	pipelineCreateInfo.pStages = shaderStagesCreateInfo;
 	pipelineCreateInfo.stageCount = StaticSize(shaderStagesCreateInfo);
 	pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-	pipelineCreateInfo.pViewportState = &m_Info.ViewportStateCreateInfo;
+	pipelineCreateInfo.pViewportState = &ViewportStateCreateInfo;
 	pipelineCreateInfo.layout = m_Info.PipelineLayout;
 	pipelineCreateInfo.renderPass = m_Info.RenderPass;
 	pipelineCreateInfo.subpass = m_Info.Subpass;
@@ -63,5 +72,10 @@ void cVulkanPipeline::CreateGraphicsPipeline() {
 		throw std::runtime_error("Failed to create graphics pipeline!");
 }
 
+void cVulkanPipeline::CreatePipelineLayout() {
+	VkPipelineLayoutCreateInfo createInfo = { VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO };
+	if (vkCreatePipelineLayout(Accessors::Device::GetDevice(m_Device), &createInfo, nullptr, &m_Info.PipelineLayout) != VK_SUCCESS)
+		throw std::runtime_error("Failed to create pipeline layout!");
+}
 
 VISRCEND

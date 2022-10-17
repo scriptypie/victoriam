@@ -109,7 +109,7 @@ EngineShader cShaderCooker::ReadShader(const String &name)
 			String exerror = "Cant open shader '" + name + "'! Maybe it's doesn't exists!";
 			String addictionalinfo = "\nINFO:\n\t";
 			addictionalinfo += "CWD - ";
-			addictionalinfo += std::filesystem::__current_path().string();
+			addictionalinfo += std::filesystem::current_path().string();
 
 			exerror += addictionalinfo;
 			throw std::runtime_error(exerror.c_str());

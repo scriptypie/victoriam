@@ -19,7 +19,10 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 	s_instance = this;
 	if (m_info.CWD.empty())
 		m_info.CWD = std::filesystem::current_path().string();
+	else
+		std::filesystem::current_path(m_info.CWD);
 
+	sRendererCreateInfo rendererCreateInfo = {};
 	{
 		sWindowCreateInfo info;
 		info.Name = m_info.AppName + " - NewWindow";
@@ -31,9 +34,8 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(cRuntimeApp::OnEvent));
 	cInput::Init(m_Window);
 
-	m_Device = cDevice::Create(m_Window);
-
-	m_Pipeline = cPipeline::Create("Default", m_Device, sPipelineCreateInfo(m_Window->GetWidth(), m_Window->GetHeight()));
+	rendererCreateInfo.WindowPtr = m_Window;
+	m_Renderer.Setup(rendererCreateInfo);
 
 	m_running = true;
 }
@@ -74,6 +76,8 @@ void Vi::cRuntimeApp::Startup() {
 			state->OnUpdateGUI();
 		}
 		// end gui update
+
+		m_Renderer.DrawFrame();
 	}
 }
 

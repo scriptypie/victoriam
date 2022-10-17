@@ -17,6 +17,7 @@ cRuntimeApp* CreateRuntimeApp(const cArgumentLineTool& args)
 {
 	sRuntimeAppCreateInfo createInfo = {};
 	createInfo.Arguments = args;
+	createInfo.CWD = args[0].substr(0, args[0].size() - 6); // current path
 	createInfo.AppName = "VIsual";
 	return new VIsualApp(createInfo);
 }

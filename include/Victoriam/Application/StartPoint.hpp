@@ -11,8 +11,6 @@
 
 VISRCBEG
 
-extern cRuntimeApp* CreateRuntimeApp(const cArgumentLineTool& args);
-
 Bool g_Reload = true;
 
 Int32 Main(Int32 Argc, Int8** Args)

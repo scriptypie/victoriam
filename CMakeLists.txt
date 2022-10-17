@@ -65,7 +65,7 @@ set(SOURCE_FILES
         src/VulkanDevice.cpp
         src/Pipeline.cpp
         src/VulkanPipeline.cpp
-)
+        include/Victoriam/Graphics/Swapchain.hpp src/Swapchain.cpp src/VulkanSwapchain.cpp src/VulkanSwapchain.hpp src/Accessors/ASwapchain.hpp include/Victoriam/Graphics/Renderer.hpp include/Victoriam/Graphics/RendererCreateInfo.hpp src/Renderer.cpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

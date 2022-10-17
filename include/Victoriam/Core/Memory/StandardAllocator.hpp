@@ -44,7 +44,7 @@ public:
     {
         return &r;
     }
-    VIDECL inline pointer allocate(size_type cnt, const void* block = 0)
+    VIDECL inline pointer allocate(size_type cnt, const void* block = nullptr)
     {
         auto ptr = (pointer)malloc(cnt * sizeof(value_type));
         assert(ptr && "StdAllocator error! Can't allocate memory!");
@@ -54,7 +54,7 @@ public:
     {
         free(p);
     }
-    VIDECL inline size_type max_size() const
+    VIDECL VIREQOUT inline size_type max_size() const
     {
         return std::numeric_limits<size_type>::max() / sizeof(value_type);
     }

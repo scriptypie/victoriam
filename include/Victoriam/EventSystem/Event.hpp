@@ -43,11 +43,11 @@ public:
 
 	Bool m_Handled = false;
 
-	virtual ecEventType GetEventType() const = 0;
-	virtual CString GetName() const = 0;
-	virtual EventCategory GetCategoryFlags() const = 0;
-	virtual String ToString() const { return GetName(); }
-	Bool IsInCategory(EventCategory category)
+	VIREQOUT virtual ecEventType GetEventType() const = 0;
+	VIREQOUT virtual CString GetName() const = 0;
+	VIREQOUT virtual EventCategory GetCategoryFlags() const = 0;
+	VIREQOUT virtual String ToString() const { return GetName(); }
+	VIDECL VIREQOUT Bool IsInCategory(EventCategory category) const
 	{
 		return GetCategoryFlags() & category;
 	}

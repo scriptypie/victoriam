@@ -8,6 +8,7 @@
 #include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/Graphics/PipelineCreateInfo.hpp>
 #include <Victoriam/Graphics/Device.hpp>
+#include <Victoriam/Graphics/Swapchain.hpp>
 
 VISRCBEG
 
@@ -16,11 +17,10 @@ class cPipeline
 public:
 	virtual ~cPipeline() = default;
 
-
-	static SPtr<cPipeline> Create(const String& name, pDevice& device, const sPipelineCreateInfo& info);
+	static UPtr<cPipeline> Create(const String& name, pDevice& device, pSwapchain& swapchain, const sPipelineCreateInfo& info);
 };
 
-VIDECL typedef SPtr<cPipeline> pPipeline;
+VIDECL typedef UPtr<cPipeline> pPipeline;
 
 VISRCEND
 

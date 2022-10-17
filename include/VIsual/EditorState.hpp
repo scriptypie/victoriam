@@ -11,7 +11,7 @@ VISRCBEG
 
 class EditorState : public cAppState {
 public:
-	virtual ~EditorState() override;
+	~EditorState() override;
 
 	void OnCreate() override;
 

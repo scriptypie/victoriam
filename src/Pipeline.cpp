@@ -8,8 +8,8 @@
 
 VISRCBEG
 
-pPipeline cPipeline::Create(const String& name, pDevice& device, const sPipelineCreateInfo& info) {
-	return CreateSPtr<cVulkanPipeline>(name, device, info);
+pPipeline cPipeline::Create(const String& name, pDevice& device, pSwapchain& swapchain, const sPipelineCreateInfo& info) {
+	return CreateUPtr<cVulkanPipeline>(name, device, swapchain, info);
 }
 
 VISRCEND

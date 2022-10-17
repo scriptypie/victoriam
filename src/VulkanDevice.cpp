@@ -276,8 +276,7 @@ void cVulkanDevice::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreate
 {
 	info                    = { VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT };
 	info.messageSeverity    =   VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
-			                    VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT |
-								VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT;
+			                    VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
 	info.messageType        =   VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
 			                    VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
 							    VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
@@ -310,16 +309,6 @@ Bool cVulkanDevice::CheckDeviceExtensionSupport(VkPhysicalDevice device)
 	List<VkExtensionProperties> availableExtensions(extensionCount);
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
 
-#ifdef __APPLE__
-	for (auto ext : availableExtensions)
-	{
-		if (!strcmp(ext.extensionName, VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME))
-			DEVICE_EXTENSIONS.push_back(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
-		if (!strcmp(ext.extensionName, VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME))
-			DEVICE_EXTENSIONS.push_back(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
-	}
-#endif
-
 	std::set<String> requiredExtensions(DEVICE_EXTENSIONS.begin(), DEVICE_EXTENSIONS.end());
 
 	for (const auto &extension : availableExtensions)
@@ -350,6 +339,125 @@ sSwapchainSupportDetails cVulkanDevice::QuerySwapchainSupport(VkPhysicalDevice d
 	}
 
 	return details;
+}
+
+void cVulkanDevice::CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties,
+                                 VkBuffer &buffer, VkDeviceMemory &bufferMemory)
+ {
+	 VkBufferCreateInfo bufferInfo = { VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO };
+	 bufferInfo.size = size;
+	 bufferInfo.usage = usage;
+
+	 if (vkCreateBuffer(m_Device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
+		 throw std::runtime_error("Failed to create buffer!");
+
+	 VkMemoryRequirements memRequirements;
+	 vkGetBufferMemoryRequirements(m_Device, buffer, &memRequirements);
+
+	 VkMemoryAllocateInfo allocInfo = { VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO };
+	 allocInfo.allocationSize = memRequirements.size;
+	 allocInfo.memoryTypeIndex = FindMemoryType(memRequirements.memoryTypeBits, properties);
+
+	 if (vkAllocateMemory(m_Device, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
+		 throw std::runtime_error("Failed to allocate buffer memory!");
+
+	 vkBindBufferMemory(m_Device, buffer, bufferMemory, 0);
+}
+
+VkCommandBuffer cVulkanDevice::BeginSingleTimeCommands()
+{
+	VkCommandBufferAllocateInfo allocInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO };
+	allocInfo.commandPool = m_CmdPool;
+	allocInfo.commandBufferCount = 1;
+
+	VkCommandBuffer commandBuffer;
+	vkAllocateCommandBuffers(m_Device, &allocInfo, &commandBuffer);
+
+	VkCommandBufferBeginInfo beginInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO };
+	beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+	vkBeginCommandBuffer(commandBuffer, &beginInfo);
+	return commandBuffer;
+}
+
+void cVulkanDevice::EndSingleTimeCommands(VkCommandBuffer commandBuffer) {
+	vkEndCommandBuffer(commandBuffer);
+
+	VkSubmitInfo submitInfo = { VK_STRUCTURE_TYPE_SUBMIT_INFO };
+	submitInfo.commandBufferCount = 1;
+	submitInfo.pCommandBuffers = &commandBuffer;
+
+	vkQueueSubmit(m_GraphicsQueue, 1, &submitInfo, nullptr);
+	vkQueueWaitIdle(m_GraphicsQueue);
+
+	vkFreeCommandBuffers(m_Device, m_CmdPool, 1, &commandBuffer);
+}
+
+void cVulkanDevice::CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
+	VkCommandBuffer commandBuffer = BeginSingleTimeCommands();
+
+	VkBufferCopy copyRegion = {};
+	copyRegion.size = size;
+	vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
+
+	EndSingleTimeCommands(commandBuffer);
+}
+
+void cVulkanDevice::CopyBufferToImage(VkBuffer buffer, VkImage image, UInt32 width, UInt32 height, UInt32 layerCount)
+{
+	VkCommandBuffer commandBuffer = BeginSingleTimeCommands();
+
+	VkBufferImageCopy region = {};
+	region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	region.imageSubresource.layerCount = layerCount;
+	region.imageExtent = {width, height, 1};
+
+	vkCmdCopyBufferToImage(commandBuffer, buffer, image, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
+	EndSingleTimeCommands(commandBuffer);
+}
+
+void cVulkanDevice::CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory)
+{
+	if (vkCreateImage(m_Device, &imageInfo, nullptr, &image) != VK_SUCCESS)
+		throw std::runtime_error("Failed to create image!");
+
+	VkMemoryRequirements memRequirements;
+	vkGetImageMemoryRequirements(m_Device, image, &memRequirements);
+
+	VkMemoryAllocateInfo allocInfo = { VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO };
+	allocInfo.allocationSize = memRequirements.size;
+	allocInfo.memoryTypeIndex = FindMemoryType(memRequirements.memoryTypeBits, properties);
+
+	if (vkAllocateMemory(m_Device, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS)
+		throw std::runtime_error("Failed to allocate image memory!");
+
+	if (vkBindImageMemory(m_Device, image, imageMemory, 0) != VK_SUCCESS)
+		throw std::runtime_error("Failed to bind image memory!");
+}
+
+UInt32 cVulkanDevice::FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags properties)
+{
+	VkPhysicalDeviceMemoryProperties memProperties = {};
+	vkGetPhysicalDeviceMemoryProperties(m_PhysicalDevice, &memProperties);
+	for (UInt32 i = 0; i < memProperties.memoryTypeCount; i++) {
+		if ((typeFilter & (1 << i)) &&
+		    (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
+			return i;
+		}
+	}
+
+	throw std::runtime_error("Failed to find suitable memory type!");
+}
+
+VkFormat cVulkanDevice::FindSupportedFormat(const List<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
+{
+	for (VkFormat format : candidates) {
+		VkFormatProperties props = {};
+		vkGetPhysicalDeviceFormatProperties(m_PhysicalDevice, format, &props);
+		if ((tiling == VK_IMAGE_TILING_LINEAR) && ((props.linearTilingFeatures & features) == features)) return format;
+		else if ((tiling == VK_IMAGE_TILING_OPTIMAL) && ((props.optimalTilingFeatures & features) == features)) return format;
+	}
+	throw std::runtime_error("Failed to find supported format!");
 }
 
 VISRCEND

@@ -93,6 +93,7 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 					data.InputState.keyboard.released[key] = true;
 					break;
 				}
+				default: break;
 			}
 	});
 
@@ -120,6 +121,7 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 				data.InputState.mouse.released[button] = true;
 				break;
 			}
+			default: break;
 		}
 	});
 

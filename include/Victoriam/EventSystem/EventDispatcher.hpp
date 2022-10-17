@@ -13,7 +13,7 @@ class cEventDispatcher
 {
 	cEvent& m_Event;
 public:
-	inline cEventDispatcher(cEvent& event) : m_Event(event) {}
+	inline explicit cEventDispatcher(cEvent& event) : m_Event(event) {}
 
 	template<class T, class FN>
 	inline Bool Dispatch(const FN& func)

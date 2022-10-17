@@ -28,7 +28,7 @@ struct VIDECL sVectorBase<2>
 
 	sVectorBase() = default;
 	~sVectorBase() = default;
-	VIDECL sVectorBase(const Scalar _data[DIM])
+	VIDECL explicit sVectorBase(const Scalar _data[DIM])
 	{
 		for (Int16 i = 0; i < DIM; i++) data[i] = _data[i];
 	}
