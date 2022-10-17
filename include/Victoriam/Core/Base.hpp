@@ -45,7 +45,10 @@ using List = std::vector<T, StdAllocator<T>>;
 template<class T>
 using Function = std::function<T>;
 
-VIDECL typedef List<UInt32> BinaryData;
+VIDECL typedef List<char> BinaryData;
+
+template<class T, auto N>
+VIDECL constexpr auto StaticSize(T(&)[N]) { return N; }
 
 VISRCEND
 

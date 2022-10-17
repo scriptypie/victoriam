@@ -27,7 +27,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 27,
+				"line" : 70,
 				"parent" : 0
 			},
 			{
@@ -39,7 +39,7 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 39,
+				"line" : 82,
 				"parent" : 0
 			}
 		]
@@ -97,20 +97,20 @@
 			},
 			"sourceIndexes" : 
 			[
-				11,
-				12,
-				13,
-				20,
-				26,
-				27,
-				30,
-				31,
-				42,
+				43,
 				44,
+				45,
+				46,
 				47,
 				48,
+				49,
+				50,
+				51,
+				52,
 				53,
-				54
+				54,
+				55,
+				56
 			]
 		}
 	],
@@ -139,19 +139,27 @@
 				8,
 				9,
 				10,
+				11,
+				12,
+				13,
 				14,
 				15,
 				16,
 				17,
 				18,
 				19,
+				20,
 				21,
 				22,
 				23,
 				24,
 				25,
+				26,
+				27,
 				28,
 				29,
+				30,
+				31,
 				32,
 				33,
 				34,
@@ -162,35 +170,27 @@
 				39,
 				40,
 				41,
-				43,
-				45,
-				46,
-				49,
-				50,
-				51,
-				52,
-				55,
-				56
+				42
 			]
 		},
 		{
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				11,
-				12,
-				13,
-				20,
-				26,
-				27,
-				30,
-				31,
-				42,
+				43,
 				44,
+				45,
+				46,
 				47,
 				48,
+				49,
+				50,
+				51,
+				52,
 				53,
-				54
+				54,
+				55,
+				56
 			]
 		}
 	],
@@ -253,24 +253,6 @@
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/EngineInfo.cpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/AppStateController.cpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/RuntimeApp.cpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"path" : "include/Victoriam/Graphics/Window.hpp",
 			"sourceGroupIndex" : 0
 		},
@@ -301,12 +283,6 @@
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/Comparator.cpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"path" : "include/Victoriam/Math/Vector/VectorBase.hpp",
 			"sourceGroupIndex" : 0
 		},
@@ -332,41 +308,12 @@
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/FuncVector2.cpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/ScalarRsqrt.cpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"path" : "include/Victoriam/Math/Vector2.hpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"path" : "include/Victoriam/Core/Flags.hpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/Window.cpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/GLFWWindow.cpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/GLFWWindow.hpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -416,20 +363,8 @@
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/Input.cpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"path" : "include/Victoriam/Utils/ShaderCooker.hpp",
 			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/ShaderCooker.cpp",
-			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
@@ -440,6 +375,101 @@
 			"backtrace" : 1,
 			"path" : "include/Victoriam/Graphics/Device.hpp",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Victoriam/Graphics/Pipeline.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Victoriam/Graphics/PipelineCreateInfo.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/VulkanDevice.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/Accessors/AWindow.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/VulkanPipeline.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/Accessors/ADevice.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/GLFWWindow.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/EngineInfo.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/AppStateController.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/RuntimeApp.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/Comparator.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/FuncVector2.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/ScalarRsqrt.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/Window.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/GLFWWindow.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/Input.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/ShaderCooker.cpp",
+			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
@@ -455,26 +485,6 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/VulkanDevice.hpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/Accessors/AWindow.hpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "include/Victoriam/Graphics/Pipeline.hpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "include/Victoriam/Graphics/PipelineCreateInfo.hpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/Pipeline.cpp",
 			"sourceGroupIndex" : 1
@@ -484,16 +494,6 @@
 			"compileGroupIndex" : 0,
 			"path" : "src/VulkanPipeline.cpp",
 			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/VulkanPipeline.hpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "src/Accessors/ADevice.hpp",
-			"sourceGroupIndex" : 0
 		}
 	],
 	"type" : "STATIC_LIBRARY"

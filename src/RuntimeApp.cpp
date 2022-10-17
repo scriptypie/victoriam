@@ -33,8 +33,7 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 
 	m_Device = cDevice::Create(m_Window);
 
-	m_Pipeline = cPipeline::Create(m_Device, sPipelineCreateInfo(m_Window->GetWidth(), m_Window->GetHeight()));
-	m_Pipeline->SetShader("Default");
+	m_Pipeline = cPipeline::Create("Default", m_Device, sPipelineCreateInfo(m_Window->GetWidth(), m_Window->GetHeight()));
 
 	m_running = true;
 }

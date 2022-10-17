@@ -101,12 +101,18 @@ EngineShader cShaderCooker::ReadShader(const String &name)
 			size_t size = file.tellg();
 			file.seekg(0, std::ios::beg);
 			source.resize(size);
-			file.read((char*)source.data(), CCast<UInt32>(source.size()));
+			file.read(CCast<char*>(source.data()), CCast<UInt32>(source.size()));
 			file.close();
 		}
 		else
 		{
-			throw std::runtime_error("cant open shader! probably doesnt exists!");
+			String exerror = "Cant open shader '" + name + "'! Maybe it's doesn't exists!";
+			String addictionalinfo = "\nINFO:\n\t";
+			addictionalinfo += "CWD - ";
+			addictionalinfo += std::filesystem::__current_path().string();
+
+			exerror += addictionalinfo;
+			throw std::runtime_error(exerror.c_str());
 		}
 	}
 	return { name, source };
@@ -163,7 +169,7 @@ BinaryData cShaderCooker::LoadCookedShaderFromName(const String &name,
 		f.seekg(0, std::ios::end);
 		data.resize(f.tellg());
 		f.seekg(0, std::ios::beg);
-		f.read((char*)data.data(), CCast<UInt32>(data.size()));
+		f.read(CCast<char*>(data.data()), CCast<UInt32>(data.size()));
 		f.close();
 	}
 	return data;
@@ -176,6 +182,7 @@ BinaryData cShaderCooker::LoadVertexShader(const String &name)
 		EngineShader es = ReadShader(name);
 		List<SPIRVShader> shaders = SplitShader(es);
 		INFO = CookShader(shaders);
+        printf("%s\n", INFO.c_str());
 	}
 	return LoadCookedShaderFromName(name, SPIRVShader::Vertex);
 }
@@ -187,7 +194,8 @@ BinaryData cShaderCooker::LoadFragmentShader(const String &name)
 		EngineShader es = ReadShader(name);
 		List<SPIRVShader> shaders = SplitShader(es);
 		INFO = CookShader(shaders);
-	}
+        printf("%s\n", INFO.c_str());
+}
 	return LoadCookedShaderFromName(name, SPIRVShader::Fragment);
 }
 

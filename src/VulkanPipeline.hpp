@@ -23,14 +23,51 @@ struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 	VIDECL VkPipelineColorBlendAttachmentState ColorBlendAttachmentState = {};
 	VIDECL VkPipelineColorBlendStateCreateInfo ColorBlendStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO };
 	VIDECL VkPipelineDepthStencilStateCreateInfo DepthStencilStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO };
-	VIDECL VkPipelineLayout PipelineLayout = nullptr;
-	VIDECL VkRenderPass RenderPass = nullptr;
+	VIDECL VkPipelineLayout PipelineLayout = VK_NULL_HANDLE;
+	VIDECL VkRenderPass RenderPass = VK_NULL_HANDLE;
 	VIDECL UInt32 Subpass = {};
 
 	VIDECL inline sVulkanPipelineCreateInfo(const UInt32& width, const UInt32& height)
 		: sPipelineCreateInfo(width, height)
 	{
-		
+		// InputAssembly
+		InputAssemblyStateCreateInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+		// Viewport
+		Viewport.width    = CCast<Float32>(Width);
+		Viewport.height   = CCast<Float32>(Height);
+		Viewport.maxDepth = 1.0f;
+		// Scissor
+		Scissor.extent = { Width, Height };
+		// ViewportState
+		ViewportStateCreateInfo.viewportCount = 1; // Only one viewport will be used
+		ViewportStateCreateInfo.pViewports = &Viewport;
+		ViewportStateCreateInfo.scissorCount = 1; // ...as well as scissor
+		ViewportStateCreateInfo.pScissors = &Scissor;
+		// RasterizationState
+		RasterizationStateCreateInfo.polygonMode = VK_POLYGON_MODE_FILL; // TODO: Maybe add a wireframe mode?
+		RasterizationStateCreateInfo.lineWidth = 1.0f;                   // LINE_WIDTH FOR WIREFRAME MODE
+		RasterizationStateCreateInfo.cullMode = VK_CULL_MODE_BACK_BIT;   // VK_CULL_MODE_NONE
+		RasterizationStateCreateInfo.frontFace = VK_FRONT_FACE_CLOCKWISE;
+		// MultisampleStateCreateInfo
+		MultisampleStateCreateInfo.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+		MultisampleStateCreateInfo.minSampleShading = 1.0f;
+		// ColorBlendAttachmentState
+		ColorBlendAttachmentState.colorWriteMask = 0x0000000F; /* RGBA */
+		ColorBlendAttachmentState.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;  // Optional
+		ColorBlendAttachmentState.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO; // Optional
+		ColorBlendAttachmentState.colorBlendOp = VK_BLEND_OP_ADD;             // Optional
+		ColorBlendAttachmentState.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;  // Optional
+		ColorBlendAttachmentState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO; // Optional
+		ColorBlendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;             // Optional
+		// ColorBlendStateCreateInfo
+		ColorBlendStateCreateInfo.logicOp = VK_LOGIC_OP_COPY;
+		ColorBlendStateCreateInfo.attachmentCount = 1;
+		ColorBlendStateCreateInfo.pAttachments = &ColorBlendAttachmentState;
+		// DepthStencilStateCreateInfo
+		DepthStencilStateCreateInfo.depthTestEnable = true;
+		DepthStencilStateCreateInfo.depthWriteEnable = true;
+		DepthStencilStateCreateInfo.depthCompareOp = VK_COMPARE_OP_LESS;
+		DepthStencilStateCreateInfo.maxDepthBounds = 1.0f;
 	}
 };
 
@@ -41,15 +78,14 @@ class cVulkanPipeline : public cPipeline
 	VIDECL VkPipeline m_GraphicsPipeline = {};
 	VIDECL VkShaderModule m_VertexShaderModule = {};
 	VIDECL VkShaderModule m_FragmentShaderModule = {};
-	VIDECL sVulkanPipelineCreateInfo m_Info = {0, 0};
+	VIDECL sVulkanPipelineCreateInfo m_Info = {256, 256};
 public:
-	cVulkanPipeline(pDevice& device, const sPipelineCreateInfo& info);
 	cVulkanPipeline(const String& name, pDevice& device, const sPipelineCreateInfo& info);
-
-	void SetShader(const String& name) override;
+	~cVulkanPipeline() override;
 
 private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
+	VIDECL void CreateGraphicsPipeline();
 };
 
 VISRCEND

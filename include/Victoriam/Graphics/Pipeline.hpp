@@ -16,9 +16,7 @@ class cPipeline
 public:
 	virtual ~cPipeline() = default;
 
-	virtual void SetShader(const String& name) = 0;
 
-	static SPtr<cPipeline> Create(pDevice& device, const sPipelineCreateInfo& info);
 	static SPtr<cPipeline> Create(const String& name, pDevice& device, const sPipelineCreateInfo& info);
 };
 

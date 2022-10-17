@@ -36,7 +36,7 @@ class VIDECL cShaderCooker
 {
 	const List<CString> EXT = { ".vert.spv", ".frag.spv" };
 	String INFO;
-	const String COMPILER = "glslc ";
+	const String COMPILER = "/usr/local/bin/glslc ";
 	const String SHADERDIR = "./../Resources/Shaders/";
 	const String COOKEDDIR = SHADERDIR + "Cooked/";
 	const String TEMPDIR = SHADERDIR + ".TMP/";
