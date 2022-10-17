@@ -50,7 +50,7 @@ class cVulkanDevice : public cDevice
 	VkQueue m_PresentQueue{};
 	const List<CString> VALIDATION_LAYERS =
 	{ "VK_LAYER_KHRONOS_validation" };
-	const List<CString> DEVICE_EXTENSIONS =
+	List<CString> DEVICE_EXTENSIONS =
 	{ VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 public:
 	explicit cVulkanDevice(const SPtr<cWindow> &window);

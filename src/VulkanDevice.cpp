@@ -7,6 +7,7 @@
 #include <unordered_set>
 
 #include "VulkanDevice.hpp"
+#include <vulkan/vulkan_beta.h>
 
 VISRCBEG
 
@@ -308,6 +309,16 @@ Bool cVulkanDevice::CheckDeviceExtensionSupport(VkPhysicalDevice device)
 
 	List<VkExtensionProperties> availableExtensions(extensionCount);
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+
+#ifdef __APPLE__
+	for (auto ext : availableExtensions)
+	{
+		if (!strcmp(ext.extensionName, VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME))
+			DEVICE_EXTENSIONS.push_back(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
+		if (!strcmp(ext.extensionName, VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME))
+			DEVICE_EXTENSIONS.push_back(VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME);
+	}
+#endif
 
 	std::set<String> requiredExtensions(DEVICE_EXTENSIONS.begin(), DEVICE_EXTENSIONS.end());
 

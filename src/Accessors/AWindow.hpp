@@ -18,10 +18,10 @@ namespace Accessors {
 	class Window {
 	public:
 		VIDECL static GLFWwindow *GetGLFWWindow(const pWindow &window) {
-			return ((cGLFWWindow *) window.get())->m_Window;
+			return CCast<cGLFWWindow*>(window.get())->m_Window;
 		}
 		VIDECL static void CreateWindowSurface(const pWindow &window, VkInstance instance, VkSurfaceKHR *surface) {
-			return ((cGLFWWindow *) window.get())->CreateWindowSurface(instance, surface);
+			return CCast<cGLFWWindow*>(window.get())->CreateWindowSurface(instance, surface);
 		}
 	};
 

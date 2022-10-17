@@ -31,6 +31,9 @@ void cVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderM
 }
 
 void cVulkanPipeline::CreateGraphicsPipeline() {
+	assert(m_Info.RenderPass != nullptr && "Cannot create graphics pipeline, cause RenderPass object is nullptr!");
+	assert(m_Info.PipelineLayout != nullptr && "Cannot create graphics pipeline, cause PipelineLayout object is nullptr!");
+
 	VkPipelineShaderStageCreateInfo shaderStagesCreateInfo[2] = {{VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO }, {VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO } };
 	shaderStagesCreateInfo[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
 	shaderStagesCreateInfo[0].module = m_VertexShaderModule;
