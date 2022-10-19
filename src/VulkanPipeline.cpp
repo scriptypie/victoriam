@@ -7,9 +7,8 @@
 VISRCBEG
 
 cVulkanPipeline::cVulkanPipeline(const String& name, pDevice &device, pSwapchain& swapchain, const sPipelineCreateInfo &info)
-		: m_Device(device), m_Info(info.Width, info.Height)
+		: m_Device(device), m_Info(info.Width, info.Height, Accessors::Swapchain::GetRenderPass(swapchain))
 {
-	m_Info.RenderPass = Accessors::Swapchain::GetRenderPass(swapchain);
 	// I know, it's wrong, but in this case it's okay 'cause our virtual function will be existed
 	CreateShaderModule(m_ShaderCooker.LoadVertexShader(name), &m_VertexShaderModule);
 	CreateShaderModule(m_ShaderCooker.LoadFragmentShader(name), &m_FragmentShaderModule);
@@ -17,14 +16,16 @@ cVulkanPipeline::cVulkanPipeline(const String& name, pDevice &device, pSwapchain
 	CreateGraphicsPipeline();
 }
 
-cVulkanPipeline::~cVulkanPipeline() {
+cVulkanPipeline::~cVulkanPipeline()
+{
 	vkDestroyShaderModule(Accessors::Device::GetDevice(m_Device), m_VertexShaderModule, nullptr);
 	vkDestroyShaderModule(Accessors::Device::GetDevice(m_Device), m_FragmentShaderModule, nullptr);
 	vkDestroyPipelineLayout(Accessors::Device::GetDevice(m_Device), m_Info.PipelineLayout, nullptr);
 	vkDestroyPipeline(Accessors::Device::GetDevice(m_Device), m_GraphicsPipeline, nullptr);
 }
 
-void cVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderModule *shaderModule) {
+void cVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderModule *shaderModule)
+{
 	VkShaderModuleCreateInfo createInfo = { VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO };
 	createInfo.codeSize = sourceData.size();
 	createInfo.pCode = CCast<const UInt32*>(sourceData.data());
@@ -33,7 +34,8 @@ void cVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderM
 		 throw std::runtime_error("Failed to create shader module!");
 }
 
-void cVulkanPipeline::CreateGraphicsPipeline() {
+void cVulkanPipeline::CreateGraphicsPipeline()
+{
 	assert(m_Info.RenderPass && "Cannot create graphics pipeline, cause RenderPass object is nullptr!");
 	assert(m_Info.PipelineLayout && "Cannot create graphics pipeline, cause PipelineLayout object is nullptr!");
 
@@ -47,12 +49,6 @@ void cVulkanPipeline::CreateGraphicsPipeline() {
 
 	VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO };
 
-	VkPipelineViewportStateCreateInfo ViewportStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO };
-	ViewportStateCreateInfo.viewportCount = 1; // Only one viewport will be used
-	ViewportStateCreateInfo.pViewports = &m_Info.Viewport;
-	ViewportStateCreateInfo.scissorCount = 1; // ...as well as scissor
-	ViewportStateCreateInfo.pScissors = &m_Info.Scissor;
-
 	VkGraphicsPipelineCreateInfo pipelineCreateInfo = { VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO };
 	pipelineCreateInfo.pColorBlendState = &m_Info.ColorBlendStateCreateInfo;
 	pipelineCreateInfo.pDepthStencilState = &m_Info.DepthStencilStateCreateInfo;
@@ -62,7 +58,7 @@ void cVulkanPipeline::CreateGraphicsPipeline() {
 	pipelineCreateInfo.pStages = shaderStagesCreateInfo;
 	pipelineCreateInfo.stageCount = StaticSize(shaderStagesCreateInfo);
 	pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
-	pipelineCreateInfo.pViewportState = &ViewportStateCreateInfo;
+	pipelineCreateInfo.pViewportState = &m_Info.ViewportStateCreateInfo;
 	pipelineCreateInfo.layout = m_Info.PipelineLayout;
 	pipelineCreateInfo.renderPass = m_Info.RenderPass;
 	pipelineCreateInfo.subpass = m_Info.Subpass;
@@ -72,10 +68,18 @@ void cVulkanPipeline::CreateGraphicsPipeline() {
 		throw std::runtime_error("Failed to create graphics pipeline!");
 }
 
-void cVulkanPipeline::CreatePipelineLayout() {
+void cVulkanPipeline::CreatePipelineLayout()
+{
 	VkPipelineLayoutCreateInfo createInfo = { VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO };
 	if (vkCreatePipelineLayout(Accessors::Device::GetDevice(m_Device), &createInfo, nullptr, &m_Info.PipelineLayout) != VK_SUCCESS)
 		throw std::runtime_error("Failed to create pipeline layout!");
+}
+
+void cVulkanPipeline::BindDrawCommandBuffer(VkCommandBuffer const &commandBuffer) {
+	if (m_GraphicsPipeline != VK_NULL_HANDLE)
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
+	else
+		throw std::runtime_error("Failed to bind command buffer because graphics pipeline is null!");
 }
 
 VISRCEND

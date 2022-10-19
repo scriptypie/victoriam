@@ -13,6 +13,7 @@
 #include <Victoriam/Input/Mousecode.hpp>
 #include <Victoriam/Input/Padcode.hpp>
 #include <Victoriam/Input/Padaxis.hpp>
+#include <Victoriam/Math/Vector2.hpp>
 
 VISRCBEG
 
@@ -36,8 +37,8 @@ struct VIDECL sInputState
 struct sGLFWWindowData
 {
 	String Name;
-	Vector2 Offset;
-	Vector2 Resolution;
+	sWindowExtent Offset;
+	sWindowExtent Resolution;
 	sFlags Flags;
 
 	sInputState InputState;
@@ -58,10 +59,10 @@ public:
 	explicit cGLFWWindow(const sWindowCreateInfo& info);
 
 	void Update() override;
-	VIREQOUT inline UInt32 GetWidth() const override { return CCast<UInt32>(m_Data.Resolution.x); }
-	VIREQOUT inline UInt32 GetHeight() const override { return CCast<UInt32>(m_Data.Resolution.y); }
-	VIREQOUT inline UInt32 GetOffsetX() const override { return CCast<UInt32>(m_Data.Offset.x); }
-	VIREQOUT inline UInt32 GetOffsetY() const override { return CCast<UInt32>(m_Data.Offset.y); }
+	VIREQOUT inline UInt32 GetWidth() const override { return m_Data.Resolution.Width; }
+	VIREQOUT inline UInt32 GetHeight() const override { return m_Data.Resolution.Height; }
+	VIREQOUT inline UInt32 GetOffsetX() const override { return m_Data.Offset.Width; }
+	VIREQOUT inline UInt32 GetOffsetY() const override { return m_Data.Offset.Height; }
 	VIREQOUT inline sWindowExtent GetExtent() const override { return { GetWidth(), GetHeight() }; }
 	inline void SetEventCallbackFunction(const EventCallbackFn& fn) override { m_Data.Callback = fn; }
 private:

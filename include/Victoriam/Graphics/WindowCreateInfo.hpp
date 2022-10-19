@@ -6,7 +6,7 @@
 #define VICTORIAM_WINDOWCREATEINFO_HPP
 
 #include <Victoriam/Graphics/Basics.hpp>
-#include <Victoriam/Math/Vector2.hpp>
+#include <Victoriam/Graphics/WindowExtent.hpp>
 
 VISRCBEG
 
@@ -20,8 +20,8 @@ enum eWindowCreateWindowFlags : FlagDef
 struct sWindowCreateInfo
 {
 	String Name;
-	Vector2 Offset;
-	Vector2 Resolution;
+	sWindowExtent Offset;
+	sWindowExtent Resolution;
 	sFlags Flags;
 };
 

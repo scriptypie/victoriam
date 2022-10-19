@@ -6,25 +6,22 @@
 #define VICTORIAM_RENDERER_HPP
 
 #include <Victoriam/Graphics/RendererCreateInfo.hpp>
+#include <Victoriam/Graphics/DrawCommandBuffer.hpp>
 
 VISRCBEG
 
 class cRenderer
 {
-	pDevice m_Device = nullptr;
-	pPipeline m_Pipeline = nullptr;
-	pSwapchain m_Swapchain = nullptr;
 public:
-	inline cRenderer() = default;
-	inline ~cRenderer() = default;
+	virtual ~cRenderer() = default;
 
-	bool Setup(const sRendererCreateInfo& createInfo);
+	VIDECL VIREQOUT static UPtr<cRenderer> Create(const sRendererCreateInfo& createInfo);
 
-	void DrawFrame();
-private:
-	void BeginFrame();
-	void EndFrame();
+	virtual void DrawFrame() = 0;
+	virtual void Shutdown() = 0;
 };
+
+VIDECL typedef UPtr<cRenderer> pRenderer;
 
 VISRCEND
 

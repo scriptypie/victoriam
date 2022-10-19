@@ -33,6 +33,7 @@ namespace Accessors { class Device; }
 class cVulkanDevice : public cDevice
 {
 	friend class Accessors::Device;
+	friend class cVulkanRenderer;
 #ifdef NDEBUG
 		const Bool m_EnableValidation = false;
 #else

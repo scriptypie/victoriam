@@ -11,12 +11,6 @@
 
 VISRCBEG
 
-struct VIDECL sWindowExtent
-{
-	VIDECL UInt32 Width;
-	VIDECL UInt32 Height;
-};
-
 class cWindow
 {
 public:

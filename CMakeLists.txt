@@ -65,15 +65,15 @@ set(SOURCE_FILES
         src/VulkanDevice.cpp
         src/Pipeline.cpp
         src/VulkanPipeline.cpp
-        include/Victoriam/Graphics/Swapchain.hpp src/Swapchain.cpp src/VulkanSwapchain.cpp src/VulkanSwapchain.hpp src/Accessors/ASwapchain.hpp include/Victoriam/Graphics/Renderer.hpp include/Victoriam/Graphics/RendererCreateInfo.hpp src/Renderer.cpp)
+        include/Victoriam/Graphics/Swapchain.hpp src/Swapchain.cpp src/VulkanSwapchain.cpp src/VulkanSwapchain.hpp src/Accessors/ASwapchain.hpp include/Victoriam/Graphics/Renderer.hpp include/Victoriam/Graphics/RendererCreateInfo.hpp src/Renderer.cpp include/Victoriam/Graphics/DrawCommandBuffer.hpp src/DrawCommandBuffer.cpp src/VulkanDrawCommandBuffer.cpp src/VulkanDrawCommandBuffer.hpp src/Accessors/APipeline.hpp src/VulkanRenderer.cpp src/VulkanRenderer.hpp src/Accessors/ADrawCommandBuffer.hpp include/Victoriam/Graphics/WindowExtent.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 
-if (CMAKE_BUILD_TYPE==Debug)
+if(CMAKE_BUILD_TYPE==Debug)
     target_compile_definitions(victoriam PUBLIC -D_DEBUG=1)
 elseif(CMAKE_BUILD_TYPE==Release)
     target_compile_definitions(victoriam PUBLIC -DNDEBUG=1)
-endif ()
+endif()
 
 find_package(glfw3 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)

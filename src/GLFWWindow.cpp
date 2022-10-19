@@ -46,8 +46,8 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	m_Window = glfwCreateWindow(
-	CCast<Int32>(m_Data.Resolution.x),
-	CCast<Int32>(m_Data.Resolution.y),
+	CCast<Int32>(m_Data.Resolution.Width),
+	CCast<Int32>(m_Data.Resolution.Height),
 	m_Data.Name.c_str(),
 	fullscreen, nullptr
 	);
@@ -68,7 +68,7 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, Int32 width, Int32 height)
 	{
 		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
-		data.Resolution = { CCast<Float32>(width), CCast<Float32>(height) };
+		data.Resolution = { CCast<UInt32>(width), CCast<UInt32>(height) };
 		cWindowResizeEvent resize_event(CCast<UInt32>(width), CCast<UInt32>(height));
 		if (data.Callback)
 			data.Callback(resize_event);

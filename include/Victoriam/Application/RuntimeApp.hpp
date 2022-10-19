@@ -19,7 +19,7 @@ class cRuntimeApp
 	sRuntimeAppCreateInfo m_info = {};
 	Bool m_running = {};
 	cAppStateController m_stateController = {};
-	cRenderer m_Renderer = {};
+	pRenderer m_Renderer = {};
 	pWindow m_Window = nullptr;
 public:
 	VIDECL explicit cRuntimeApp(sRuntimeAppCreateInfo  createInfo);
@@ -32,7 +32,7 @@ public:
 	VIDECL void Reload();
 
 	VIDECL inline static cRuntimeApp& Get() { return *s_instance; }
-	VIDECL inline cRenderer& Renderer() { return m_Renderer; }
+	VIDECL inline pRenderer& Renderer() { return m_Renderer; }
 	VIDECL VIREQOUT inline String CWD() const { return m_info.CWD; }
 	VIDECL VIREQOUT inline const sRuntimeAppCreateInfo& GetInfo() const { return m_info; }
 private:

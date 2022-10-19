@@ -15,6 +15,7 @@ namespace Accessors { class VIDECL Swapchain; }
 class VIDECL cVulkanSwapchain : public cSwapchain
 {
 	friend class Accessors::Swapchain;
+	friend class cVulkanRenderer;
 
 	VIDECL inline static constexpr UInt32 MAX_FRAMES_PER_STEP = 2; // TODO: configurable MAX_FRAMES_PER_STEP
 	VIDECL VkFormat m_SwapchainImageFormat = {};

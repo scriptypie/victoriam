@@ -19,7 +19,7 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 	s_instance = this;
 	if (m_info.CWD.empty())
 		m_info.CWD = std::filesystem::current_path().string();
-	else
+	else if (m_info.CWD != "/Volumes/cdev/victoriam/cmake-build-debug/")
 		std::filesystem::current_path(m_info.CWD);
 
 	sRendererCreateInfo rendererCreateInfo = {};
@@ -35,7 +35,7 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 	cInput::Init(m_Window);
 
 	rendererCreateInfo.WindowPtr = m_Window;
-	m_Renderer.Setup(rendererCreateInfo);
+	m_Renderer = cRenderer::Create(rendererCreateInfo);
 
 	m_running = true;
 }
@@ -77,8 +77,9 @@ void Vi::cRuntimeApp::Startup() {
 		}
 		// end gui update
 
-		m_Renderer.DrawFrame();
+		m_Renderer->DrawFrame();
 	}
+	m_Renderer->Shutdown();
 }
 
 void cRuntimeApp::OnEvent(cEvent &e) {

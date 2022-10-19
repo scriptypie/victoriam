@@ -8,6 +8,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <array>
 #include <cstdint>
 #include <functional>
 
@@ -41,6 +42,9 @@ VIDECL typedef std::basic_stringstream<char, std::char_traits<char>, StdAllocato
 
 template<class T>
 using List = std::vector<T, StdAllocator<T>>;
+
+template<class T, UInt32 N>
+using Array = std::array<T, N>;
 
 template<class T>
 using Function = std::function<T>;

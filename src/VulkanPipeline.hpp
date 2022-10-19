@@ -13,6 +13,8 @@
 
 VISRCBEG
 
+namespace Accessors { class Pipeline; }
+
 struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 {
 	VIDECL VkViewport Viewport = {};
@@ -23,9 +25,17 @@ struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 	VIDECL VkPipelineColorBlendAttachmentState ColorBlendAttachmentState = {};
 	VIDECL VkPipelineColorBlendStateCreateInfo ColorBlendStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO };
 	VIDECL VkPipelineDepthStencilStateCreateInfo DepthStencilStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO };
+	VIDECL 	VkPipelineViewportStateCreateInfo ViewportStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO };
 	VIDECL VkPipelineLayout PipelineLayout = VK_NULL_HANDLE;
 	VIDECL VkRenderPass RenderPass = VK_NULL_HANDLE;
 	VIDECL UInt32 Subpass = {};
+
+	VIDECL inline sVulkanPipelineCreateInfo(const UInt32& width, const UInt32& height, const VkRenderPass& renderPass)
+		: sVulkanPipelineCreateInfo(width, height)
+	{
+		// RenderPass
+		RenderPass = renderPass;
+	}
 
 	VIDECL inline sVulkanPipelineCreateInfo(const UInt32& width, const UInt32& height)
 		: sPipelineCreateInfo(width, height)
@@ -36,6 +46,11 @@ struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 		Viewport.width    = CCast<Float32>(Width);
 		Viewport.height   = CCast<Float32>(Height);
 		Viewport.maxDepth = 1.0f;
+		// ViewportStateCreateInfo
+		ViewportStateCreateInfo.viewportCount = 1; // Only one viewport will be used
+		ViewportStateCreateInfo.pViewports = &Viewport;
+		ViewportStateCreateInfo.scissorCount = 1; // ...as well as scissor
+		ViewportStateCreateInfo.pScissors = &Scissor;
 		// Scissor
 		Scissor.extent = { Width, Height };
 		// RasterizationState
@@ -68,6 +83,9 @@ struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 
 class cVulkanPipeline : public cPipeline
 {
+	friend class Accessors::Pipeline;
+	friend class cVulkanRenderer;
+
 	VIDECL cShaderCooker m_ShaderCooker = {};
 	VIDECL pDevice& m_Device;
 	VIDECL VkPipeline m_GraphicsPipeline = {};
@@ -81,6 +99,9 @@ private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();
 	VIDECL void CreatePipelineLayout();
+
+private:
+	VIDECL void BindDrawCommandBuffer(const VkCommandBuffer& commandBuffer);
 };
 
 VISRCEND

@@ -281,13 +281,18 @@ VkPresentModeKHR cVulkanSwapchain::ChooseSwapchainPresentMode(const List<VkPrese
 
 VkExtent2D cVulkanSwapchain::ChooseSwapchainExtent(const VkSurfaceCapabilitiesKHR &capabilities)
 {
-	if (capabilities.currentExtent.width != std::numeric_limits<UInt32>::max())
+	if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
+	{
 		return capabilities.currentExtent;
-
-	VkExtent2D actualExtent = Cast<VkExtent2D>(&m_WindowExtent);
-	actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
-	actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));
-	return actualExtent;
+	}
+	else {
+		VkExtent2D actualExtent = Cast<VkExtent2D>(&m_WindowExtent);
+		actualExtent.width = std::max(capabilities.minImageExtent.width,
+		                              std::min(capabilities.maxImageExtent.width, actualExtent.width));
+		actualExtent.height = std::max(capabilities.minImageExtent.height,
+		                               std::min(capabilities.maxImageExtent.height, actualExtent.height));
+		return actualExtent;
+	}
 }
 
 VkFormat cVulkanSwapchain::FindDepthFormat()
