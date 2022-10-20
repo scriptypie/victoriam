@@ -25,6 +25,7 @@ public:
 	cVulkanRenderer(const sRendererCreateInfo& createInfo);
 	~cVulkanRenderer() override;
 
+	void OnWindowResize(const sWindowExtent& extent) override;
 	void DrawFrame() override;
 	void Shutdown() override;
 private:

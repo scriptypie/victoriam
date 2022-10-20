@@ -41,6 +41,7 @@ public:
 	~cVulkanSwapchain() override;
 
 
+	VIDECL void RecreateSwapchain(const sWindowExtent& newExtent) override;
 private:
 	VIDECL void CreateSwapchain();
 	VIDECL void CreateImageViews();

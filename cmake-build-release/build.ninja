@@ -186,6 +186,20 @@ build CMakeFiles/victoriam.dir/src/VulkanRenderer.cpp.o: CXX_COMPILER__victoriam
   OBJECT_DIR = CMakeFiles/victoriam.dir
   OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
 
+build CMakeFiles/victoriam.dir/src/Cryptogen.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/Cryptogen.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/src/Cryptogen.cpp.o.d
+  FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/victoriam.dir
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+
+build CMakeFiles/victoriam.dir/src/File.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/File.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/src/File.cpp.o.d
+  FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/victoriam.dir
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target victoriam
@@ -194,7 +208,7 @@ build CMakeFiles/victoriam.dir/src/VulkanRenderer.cpp.o: CXX_COMPILER__victoriam
 #############################################
 # Link the static library libvictoriam.a
 
-build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Release CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o CMakeFiles/victoriam.dir/src/AppStateController.cpp.o CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o CMakeFiles/victoriam.dir/src/Comparator.cpp.o CMakeFiles/victoriam.dir/src/FuncVector2.cpp.o CMakeFiles/victoriam.dir/src/ScalarRsqrt.cpp.o CMakeFiles/victoriam.dir/src/Window.cpp.o CMakeFiles/victoriam.dir/src/GLFWWindow.cpp.o CMakeFiles/victoriam.dir/src/Input.cpp.o CMakeFiles/victoriam.dir/src/ShaderCooker.cpp.o CMakeFiles/victoriam.dir/src/Device.cpp.o CMakeFiles/victoriam.dir/src/VulkanDevice.cpp.o CMakeFiles/victoriam.dir/src/Pipeline.cpp.o CMakeFiles/victoriam.dir/src/VulkanPipeline.cpp.o CMakeFiles/victoriam.dir/src/Swapchain.cpp.o CMakeFiles/victoriam.dir/src/VulkanSwapchain.cpp.o CMakeFiles/victoriam.dir/src/Renderer.cpp.o CMakeFiles/victoriam.dir/src/DrawCommandBuffer.cpp.o CMakeFiles/victoriam.dir/src/VulkanDrawCommandBuffer.cpp.o CMakeFiles/victoriam.dir/src/VulkanRenderer.cpp.o || /opt/homebrew/lib/libglfw.3.3.dylib
+build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Release CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o CMakeFiles/victoriam.dir/src/AppStateController.cpp.o CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o CMakeFiles/victoriam.dir/src/Comparator.cpp.o CMakeFiles/victoriam.dir/src/FuncVector2.cpp.o CMakeFiles/victoriam.dir/src/ScalarRsqrt.cpp.o CMakeFiles/victoriam.dir/src/Window.cpp.o CMakeFiles/victoriam.dir/src/GLFWWindow.cpp.o CMakeFiles/victoriam.dir/src/Input.cpp.o CMakeFiles/victoriam.dir/src/ShaderCooker.cpp.o CMakeFiles/victoriam.dir/src/Device.cpp.o CMakeFiles/victoriam.dir/src/VulkanDevice.cpp.o CMakeFiles/victoriam.dir/src/Pipeline.cpp.o CMakeFiles/victoriam.dir/src/VulkanPipeline.cpp.o CMakeFiles/victoriam.dir/src/Swapchain.cpp.o CMakeFiles/victoriam.dir/src/VulkanSwapchain.cpp.o CMakeFiles/victoriam.dir/src/Renderer.cpp.o CMakeFiles/victoriam.dir/src/DrawCommandBuffer.cpp.o CMakeFiles/victoriam.dir/src/VulkanDrawCommandBuffer.cpp.o CMakeFiles/victoriam.dir/src/VulkanRenderer.cpp.o CMakeFiles/victoriam.dir/src/Cryptogen.cpp.o CMakeFiles/victoriam.dir/src/File.cpp.o || /opt/homebrew/lib/libglfw.3.3.dylib
   ARCH_FLAGS = -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
   OBJECT_DIR = CMakeFiles/victoriam.dir

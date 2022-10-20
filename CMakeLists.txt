@@ -65,7 +65,7 @@ set(SOURCE_FILES
         src/VulkanDevice.cpp
         src/Pipeline.cpp
         src/VulkanPipeline.cpp
-        include/Victoriam/Graphics/Swapchain.hpp src/Swapchain.cpp src/VulkanSwapchain.cpp src/VulkanSwapchain.hpp src/Accessors/ASwapchain.hpp include/Victoriam/Graphics/Renderer.hpp include/Victoriam/Graphics/RendererCreateInfo.hpp src/Renderer.cpp include/Victoriam/Graphics/DrawCommandBuffer.hpp src/DrawCommandBuffer.cpp src/VulkanDrawCommandBuffer.cpp src/VulkanDrawCommandBuffer.hpp src/Accessors/APipeline.hpp src/VulkanRenderer.cpp src/VulkanRenderer.hpp src/Accessors/ADrawCommandBuffer.hpp include/Victoriam/Graphics/WindowExtent.hpp)
+        include/Victoriam/Graphics/Swapchain.hpp src/Swapchain.cpp src/VulkanSwapchain.cpp src/VulkanSwapchain.hpp src/Accessors/ASwapchain.hpp include/Victoriam/Graphics/Renderer.hpp include/Victoriam/Graphics/RendererCreateInfo.hpp src/Renderer.cpp include/Victoriam/Graphics/DrawCommandBuffer.hpp src/DrawCommandBuffer.cpp src/VulkanDrawCommandBuffer.cpp src/VulkanDrawCommandBuffer.hpp src/Accessors/APipeline.hpp src/VulkanRenderer.cpp src/VulkanRenderer.hpp src/Accessors/ADrawCommandBuffer.hpp include/Victoriam/Graphics/WindowExtent.hpp include/Victoriam/Utils/Cryptogen.hpp src/Cryptogen.cpp include/Victoriam/Utils/File.hpp src/File.cpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

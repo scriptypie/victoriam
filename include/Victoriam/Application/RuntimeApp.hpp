@@ -39,7 +39,7 @@ private:
 	void Startup();
 	void OnEvent(cEvent& e);
 
-	static bool OnWindowResize(const cWindowResizeEvent& e);
+	bool OnWindowResize(const cWindowResizeEvent& e);
 	bool OnWindowClose(const cWindowCloseEvent& e);
 };
 

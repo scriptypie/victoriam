@@ -15,6 +15,8 @@ class cSwapchain
 public:
 	virtual ~cSwapchain() = default;
 
+	virtual void RecreateSwapchain(const sWindowExtent& newExtent) = 0;
+
 	VIDECL static UPtr<cSwapchain> Create(pDevice& device, const sWindowExtent& extent);
 };
 

@@ -14,6 +14,7 @@ struct EngineShader
 {
 	String Name;
 	String Source;
+	String Checksum;
 };
 struct SPIRVShader
 {
@@ -41,6 +42,7 @@ class VIDECL cShaderCooker
 	const String COOKEDDIR = SHADERDIR + "Cooked/";
 	const String TEMPDIR = SHADERDIR + ".TMP/";
 	bool IsCookedExists(const String& name);
+	bool IsShaderChanged(const EngineShader& shader, const String& name);
 	EngineShader ReadShader(const String& name);
 	String CookShader(const List<SPIRVShader>& sshader);
 	BinaryData LoadCookedShaderFromName(const String& name, const SPIRVShader::ShaderType& type);

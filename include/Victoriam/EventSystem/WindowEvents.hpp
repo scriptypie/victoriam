@@ -33,6 +33,7 @@ public:
 
 	VIREQOUT inline UInt32 GetWidth() const { return m_Width; }
 	VIREQOUT inline UInt32 GetHeight() const { return m_Height; }
+	VIREQOUT inline sWindowExtent GetExtent() const { return { m_Width, m_Height }; }
 
 	VIREQOUT String ToString() const override
 	{

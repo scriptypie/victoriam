@@ -25,9 +25,8 @@ void Vi::cVulkanRenderer::DrawFrame()
 	if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 		throw std::runtime_error("Failed to acquire next image!");
 
-	result = Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, &Accessors::DrawCommandBuffer::GetCommandBufferList(m_DrawCommandBuffer).at(imageIndex), &imageIndex);
-	if (result != VK_SUCCESS)
-		throw std::runtime_error("Failed to present swapchain image!");
+	Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, &Accessors::DrawCommandBuffer::GetCommandBufferList(m_DrawCommandBuffer).at(imageIndex), &imageIndex);
+
 
 }
 
@@ -43,6 +42,10 @@ void Vi::cVulkanRenderer::EndFrame()
 
 void cVulkanRenderer::Shutdown() {
 	vkDeviceWaitIdle(Accessors::Device::GetDevice(m_Device));
+}
+
+void cVulkanRenderer::OnWindowResize(const sWindowExtent &extent) {
+	m_Swapchain->RecreateSwapchain(extent);
 }
 
 VISRCEND

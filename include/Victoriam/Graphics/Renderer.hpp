@@ -17,6 +17,7 @@ public:
 
 	VIDECL VIREQOUT static UPtr<cRenderer> Create(const sRendererCreateInfo& createInfo);
 
+	virtual void OnWindowResize(const sWindowExtent& extent) = 0;
 	virtual void DrawFrame() = 0;
 	virtual void Shutdown() = 0;
 };

@@ -281,18 +281,7 @@ VkPresentModeKHR cVulkanSwapchain::ChooseSwapchainPresentMode(const List<VkPrese
 
 VkExtent2D cVulkanSwapchain::ChooseSwapchainExtent(const VkSurfaceCapabilitiesKHR &capabilities)
 {
-	if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
-	{
-		return capabilities.currentExtent;
-	}
-	else {
-		VkExtent2D actualExtent = Cast<VkExtent2D>(&m_WindowExtent);
-		actualExtent.width = std::max(capabilities.minImageExtent.width,
-		                              std::min(capabilities.maxImageExtent.width, actualExtent.width));
-		actualExtent.height = std::max(capabilities.minImageExtent.height,
-		                               std::min(capabilities.maxImageExtent.height, actualExtent.height));
-		return actualExtent;
-	}
+	return Cast<VkExtent2D>(&m_WindowExtent);
 }
 
 VkFormat cVulkanSwapchain::FindDepthFormat()
@@ -347,6 +336,10 @@ VkResult cVulkanSwapchain::SubmitCommandBuffers(const VkCommandBuffer *buffers, 
 	m_CurrentFrame = (m_CurrentFrame + 1) % MAX_FRAMES_PER_STEP;
 
 	return result;
+}
+
+void cVulkanSwapchain::RecreateSwapchain(const sWindowExtent &newExtent) {
+
 }
 
 VISRCEND

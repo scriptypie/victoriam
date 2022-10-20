@@ -27,7 +27,7 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 		sWindowCreateInfo info;
 		info.Name = m_info.AppName + " - NewWindow";
 		info.Offset = {100, 100};
-		info.Resolution = {1152, 720};
+		info.Resolution = {1280, 720};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = cWindow::Create(info);
 	}
@@ -90,6 +90,7 @@ void cRuntimeApp::OnEvent(cEvent &e) {
 
 bool cRuntimeApp::OnWindowResize(const cWindowResizeEvent &e) {
 	printf("%s\n", e.ToString().c_str());
+	m_Renderer->OnWindowResize(e.GetExtent());
 	return true;
 }
 
