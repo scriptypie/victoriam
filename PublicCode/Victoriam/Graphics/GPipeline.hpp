@@ -19,7 +19,7 @@ public:
 
 	virtual void BindDrawCommandBuffer(const sCommandBuffer& buffer) = 0;
 
-	static UPtr<cPipeline> Create(const String& name, pDevice& device, pSwapchain& swapchain, const sPipelineCreateInfo& info);
+	static UPtr<cPipeline> Create(const String& name, pDevice& device, pSwapchain& swapchain);
 };
 
 VIDECL typedef UPtr<cPipeline> pPipeline;

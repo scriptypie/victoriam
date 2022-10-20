@@ -27,10 +27,6 @@ namespace Accessors
 		{
 			return CCast<cVulkanSwapchain*>(swapchain.get())->GetImageView(index);
 		}
-		VIDECL VIREQOUT static UInt32 GetImageCount(const pSwapchain& swapchain)
-		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->GetImageCount();
-		}
 		VIDECL VIREQOUT static VkFormat GetSwapchainImageFormat(const pSwapchain& swapchain)
 		{
 			return CCast<cVulkanSwapchain*>(swapchain.get())->GetSwapchainImageFormat();
@@ -39,25 +35,9 @@ namespace Accessors
 		{
 			return CCast<cVulkanSwapchain*>(swapchain.get())->GetSwapchainExtent();
 		}
-		VIDECL VIREQOUT static UInt32 GetWidth(const pSwapchain& swapchain)
-		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->GetWidth();
-		}
-		VIDECL VIREQOUT static UInt32 GetHeight(const pSwapchain& swapchain)
-		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->GetHeight();
-		}
-		VIDECL VIREQOUT static Float32 GetExtentAspectRatio(const pSwapchain& swapchain)
-		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->GetExtentAspectRatio();
-		}
 		VIDECL VIREQOUT static VkFormat FindDepthFormat(const pSwapchain& swapchain)
 		{
 			return CCast<cVulkanSwapchain*>(swapchain.get())->FindDepthFormat();
-		}
-		VIDECL VIREQOUT static VkResult AcquiredNextImage(const pSwapchain& swapchain, UInt32* imageIndex)
-		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->AcquireNextImage(imageIndex);
 		}
 		VIDECL static VkResult SubmitCommandBuffers(const pSwapchain& swapchain, const VkCommandBuffer* buffers, UInt32* imageIndex)
 		{

@@ -35,14 +35,21 @@ class VIDECL cVulkanSwapchain : public cSwapchain
 	VIDECL List<VkFence> m_InFlightFences = {};
 	VIDECL List<VkFence> m_ImagesInFlight = {};
 	VIDECL UInt32 m_CurrentFrame = {};
+	VIDECL cSwapchain* m_OldSwapchain = {};
 
 public:
 	explicit cVulkanSwapchain(pDevice& device, const sWindowExtent& extent);
+	explicit cVulkanSwapchain(pDevice& device, const sWindowExtent& extent, cSwapchain* prev);
 	~cVulkanSwapchain() override;
 
-
-	VIDECL void RecreateSwapchain(const sWindowExtent& newExtent) override;
+	VIDECL UInt32 AcquireNextImage(UInt32* imageIndex) override;
+	VIDECL VIREQOUT inline UInt32 GetImageCount() const override { return m_SwapchainImages.size(); }
+	VIDECL VIREQOUT inline UInt32 GetWidth() const override { return m_SwapchainExtent.width; }
+	VIDECL VIREQOUT inline UInt32 GetHeight() const override { return m_SwapchainExtent.height; }
+	VIDECL VIREQOUT inline Float32 GetExtentAspectRatio() const override { return CCast<Float32>(m_SwapchainExtent.width) / CCast<Float32>(m_SwapchainExtent.height); }
 private:
+	VIDECL void Init();
+
 	VIDECL void CreateSwapchain();
 	VIDECL void CreateImageViews();
 	VIDECL void CreateDepthResources();
@@ -55,18 +62,13 @@ private:
 	VIDECL VkExtent2D ChooseSwapchainExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 
 	VIDECL VkFormat FindDepthFormat();
-	VIDECL VkResult AcquireNextImage(UInt32* imageIndex);
 	VIDECL VkResult SubmitCommandBuffers(const VkCommandBuffer* buffers, const UInt32* imageIndex);
 private:
 	VIDECL VIREQOUT inline VkFramebuffer GetFramebuffer(const UInt32& index) const { return m_SwapchainFramebuffers[index]; }
 	VIDECL VIREQOUT inline VkRenderPass GetRenderPass() const { return m_RenderPass; }
 	VIDECL VIREQOUT inline VkImageView GetImageView(const UInt32& index) const { return m_SwapchainImageViews[index]; }
-	VIDECL VIREQOUT inline UInt32 GetImageCount() const { return m_SwapchainImages.size(); }
 	VIDECL VIREQOUT inline VkFormat GetSwapchainImageFormat() const { return m_SwapchainImageFormat; }
 	VIDECL VIREQOUT inline VkExtent2D GetSwapchainExtent() const { return m_SwapchainExtent; }
-	VIDECL VIREQOUT inline UInt32 GetWidth() const { return m_SwapchainExtent.width; }
-	VIDECL VIREQOUT inline UInt32 GetHeight() const { return m_SwapchainExtent.height; }
-	VIDECL VIREQOUT inline Float32 GetExtentAspectRatio() const { return CCast<Float32>(m_SwapchainExtent.width) / CCast<Float32>(m_SwapchainExtent.height); }
 };
 
 VISRCEND

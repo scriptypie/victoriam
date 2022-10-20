@@ -64,7 +64,9 @@ public:
 	VIREQOUT inline UInt32 GetOffsetX() const override { return m_Data.Offset.Width; }
 	VIREQOUT inline UInt32 GetOffsetY() const override { return m_Data.Offset.Height; }
 	VIREQOUT inline sWindowExtent GetExtent() const override { return { GetWidth(), GetHeight() }; }
+	inline void SetExtent(const sWindowExtent& extent) override { m_Data.Resolution = extent; }
 	inline void SetEventCallbackFunction(const EventCallbackFn& fn) override { m_Data.Callback = fn; }
+	void WaitForEvents() override;
 private:
 	void CreateWindow(const sWindowCreateInfo& info);
 	void CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface);

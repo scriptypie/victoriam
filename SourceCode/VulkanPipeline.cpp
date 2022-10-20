@@ -8,8 +8,8 @@
 
 VISRCBEG
 
-cVulkanPipeline::cVulkanPipeline(const String& name, pDevice &device, pSwapchain& swapchain, const sPipelineCreateInfo &info)
-		: m_Device(device), m_Info(info.Width, info.Height, Accessors::Swapchain::GetRenderPass(swapchain))
+cVulkanPipeline::cVulkanPipeline(const String& name, pDevice &device, pSwapchain& swapchain)
+		: m_Device(device), m_Info(Accessors::Swapchain::GetRenderPass(swapchain))
 {
 	// I know, it's wrong, but in this case it's okay 'cause our virtual function will be existed
 	CreateShaderModule(m_ShaderCooker.LoadVertexShader(name), &m_VertexShaderModule);
@@ -68,6 +68,7 @@ void cVulkanPipeline::CreateGraphicsPipeline()
 	pipelineCreateInfo.stageCount = StaticSize(shaderStagesCreateInfo);
 	pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
 	pipelineCreateInfo.pViewportState = &m_Info.ViewportStateCreateInfo;
+	pipelineCreateInfo.pDynamicState = &m_Info.DynamicStateCreateInfo;
 	pipelineCreateInfo.layout = m_Info.PipelineLayout;
 	pipelineCreateInfo.renderPass = m_Info.RenderPass;
 	pipelineCreateInfo.subpass = m_Info.Subpass;

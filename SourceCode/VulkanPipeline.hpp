@@ -17,42 +17,35 @@ namespace Accessors { class Pipeline; }
 
 struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 {
-	VIDECL VkViewport Viewport = {};
-	VIDECL VkRect2D Scissor = {};
 	VIDECL VkPipelineInputAssemblyStateCreateInfo InputAssemblyStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO };
 	VIDECL VkPipelineRasterizationStateCreateInfo RasterizationStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO };
 	VIDECL VkPipelineMultisampleStateCreateInfo MultisampleStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO };
 	VIDECL VkPipelineColorBlendAttachmentState ColorBlendAttachmentState = {};
 	VIDECL VkPipelineColorBlendStateCreateInfo ColorBlendStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO };
 	VIDECL VkPipelineDepthStencilStateCreateInfo DepthStencilStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO };
-	VIDECL 	VkPipelineViewportStateCreateInfo ViewportStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO };
+	VIDECL VkPipelineViewportStateCreateInfo ViewportStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO };
+	VIDECL VkPipelineDynamicStateCreateInfo DynamicStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO };
+	VIDECL List<VkDynamicState> DynamicStateEnables = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 	VIDECL VkPipelineLayout PipelineLayout = VK_NULL_HANDLE;
 	VIDECL VkRenderPass RenderPass = VK_NULL_HANDLE;
 	VIDECL UInt32 Subpass = {};
 
-	VIDECL inline sVulkanPipelineCreateInfo(const UInt32& width, const UInt32& height, const VkRenderPass& renderPass)
-		: sVulkanPipelineCreateInfo(width, height)
+	VIDECL inline explicit sVulkanPipelineCreateInfo(const VkRenderPass& renderPass)
+		: sVulkanPipelineCreateInfo()
 	{
 		// RenderPass
 		RenderPass = renderPass;
 	}
 
-	VIDECL inline sVulkanPipelineCreateInfo(const UInt32& width, const UInt32& height)
-		: sPipelineCreateInfo(width, height)
+	VIDECL inline sVulkanPipelineCreateInfo()
 	{
 		// InputAssembly
 		InputAssemblyStateCreateInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
-		// Viewport
-		Viewport.width    = CCast<Float32>(Width);
-		Viewport.height   = CCast<Float32>(Height);
-		Viewport.maxDepth = 1.0f;
 		// ViewportStateCreateInfo
 		ViewportStateCreateInfo.viewportCount = 1; // Only one viewport will be used
-		ViewportStateCreateInfo.pViewports = &Viewport;
+		ViewportStateCreateInfo.pViewports = nullptr;
 		ViewportStateCreateInfo.scissorCount = 1; // ...as well as scissor
-		ViewportStateCreateInfo.pScissors = &Scissor;
-		// Scissor
-		Scissor.extent = { Width, Height };
+		ViewportStateCreateInfo.pScissors = nullptr;
 		// RasterizationState
 		RasterizationStateCreateInfo.polygonMode = VK_POLYGON_MODE_FILL; // TODO: Maybe add a wireframe mode?
 		RasterizationStateCreateInfo.lineWidth = 1.0f;                   // LINE_WIDTH FOR WIREFRAME MODE
@@ -78,6 +71,9 @@ struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 		DepthStencilStateCreateInfo.depthWriteEnable = true;
 		DepthStencilStateCreateInfo.depthCompareOp = VK_COMPARE_OP_LESS;
 		DepthStencilStateCreateInfo.maxDepthBounds = 1.0f;
+		// DynamicStateCreateInfo
+		DynamicStateCreateInfo.dynamicStateCount = CCast<UInt32>(DynamicStateEnables.size());
+		DynamicStateCreateInfo.pDynamicStates = DynamicStateEnables.data();
 	}
 };
 
@@ -91,9 +87,9 @@ class cVulkanPipeline : public cPipeline
 	VIDECL VkPipeline m_GraphicsPipeline = {};
 	VIDECL VkShaderModule m_VertexShaderModule = {};
 	VIDECL VkShaderModule m_FragmentShaderModule = {};
-	VIDECL sVulkanPipelineCreateInfo m_Info = {256, 256};
+	VIDECL sVulkanPipelineCreateInfo m_Info = {};
 public:
-	cVulkanPipeline(const String& name, pDevice& device, pSwapchain& swapchain, const sPipelineCreateInfo& info);
+	cVulkanPipeline(const String& name, pDevice& device, pSwapchain& swapchain);
 	~cVulkanPipeline() override;
 
 	void BindDrawCommandBuffer(const sCommandBuffer& buffer) override;

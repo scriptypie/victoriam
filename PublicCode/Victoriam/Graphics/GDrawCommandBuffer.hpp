@@ -18,6 +18,8 @@ class cDrawCommandBuffer
 public:
 	virtual ~cDrawCommandBuffer() = default;
 
+	virtual void RecordCommandBuffer(UInt32 imageIndex) = 0;
+
 	VIDECL VIREQOUT static SPtr<cDrawCommandBuffer> Create(pSwapchain& swapchain, pDevice& device, pPipeline& pipeline, const List<pVertexBuffer>& vertexBuffers);
 };
 

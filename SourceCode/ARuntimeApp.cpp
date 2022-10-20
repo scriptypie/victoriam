@@ -34,7 +34,7 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 		info.Name = m_info.AppName + " - NewWindow";
 		info.Offset = {100, 100};
 		info.Resolution = {1280, 720};
-		info.Flags += WindowCreateWindowFlag_DefaultWindow | WindowCreateWindowFlags_NoResize; // TODO: remove WindowCreateWindowFlags_NoResize
+		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = cWindow::Create(info);
 	}
 	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(cRuntimeApp::OnEvent));

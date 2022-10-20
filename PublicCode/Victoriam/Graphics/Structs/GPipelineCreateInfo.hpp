@@ -15,12 +15,8 @@ struct sPipelineCreateInfo
 	VIDECL UInt32 Width;
 	VIDECL UInt32 Height;
 
-	VIDECL inline explicit sPipelineCreateInfo(const Vector2& resolution) : sPipelineCreateInfo(CCast<UInt32>(resolution.x), CCast<UInt32>(resolution.y))
-	{}
-	inline sPipelineCreateInfo(const UInt32& width, const UInt32& height)
+	inline sPipelineCreateInfo()
 	{
-		Width = width;
-		Height = height;
 	}
 };
 

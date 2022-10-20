@@ -24,7 +24,9 @@ public:
 	VIDECL VIREQOUT virtual UInt32 GetOffsetX() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetOffsetY() const = 0;
 	VIDECL VIREQOUT virtual sWindowExtent GetExtent() const = 0;
+	VIDECL virtual void SetExtent(const sWindowExtent& extent) = 0;
 	virtual void SetEventCallbackFunction(const EventCallbackFn& fn) = 0;
+	virtual void WaitForEvents() = 0;
 
 	static SPtr<cWindow> Create(const sWindowCreateInfo& info);
 };

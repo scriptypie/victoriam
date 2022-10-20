@@ -13,4 +13,9 @@ pSwapchain cSwapchain::Create(pDevice &device, const sWindowExtent &extent) {
 	return CreateUPtr<cVulkanSwapchain>(device, extent);
 }
 
+pSwapchain cSwapchain::Create(pDevice &device, const sWindowExtent &extent, cSwapchain* prev)
+{
+	return CreateUPtr<cVulkanSwapchain>(device, extent, prev);
+}
+
 VISRCEND

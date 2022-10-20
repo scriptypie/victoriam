@@ -13,7 +13,7 @@ VISRCBEG
 enum eWindowCreateWindowFlags : FlagDef
 {
 	WindowCreateWindowFlag_DefaultWindow = 0x0000000000000000,
-	WindowCreateWindowFlags_Fullscreen = 0x0000000000000001,
+	WindowCreateWindowFlag_Fullscreen = 0x0000000000000001,
 	WindowCreateWindowFlags_NoResize = 0x0000000000000010,
 };
 

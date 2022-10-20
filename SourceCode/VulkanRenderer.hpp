@@ -17,12 +17,12 @@
 VISRCBEG
 
 class cVulkanRenderer : public cRenderer {
-	VIDECL pDevice m_Device;
-	VIDECL pSwapchain m_Swapchain;
-	VIDECL pPipeline m_Pipeline;
-	VIDECL pDrawCommandBuffer m_DrawCommandBuffer;
-	VIDECL List<pVertexBuffer> m_VertexBuffers;
-	VIDECL pWindow m_Window;
+	VIDECL pDevice m_Device = {};
+	VIDECL pSwapchain m_Swapchain = {};
+	VIDECL pPipeline m_Pipeline = {};
+	VIDECL pDrawCommandBuffer m_DrawCommandBuffer = {};
+	VIDECL List<pVertexBuffer> m_VertexBuffers = {};
+	VIDECL pWindow m_Window = {};
 public:
 	explicit cVulkanRenderer(const sRendererCreateInfo& createInfo);
 	~cVulkanRenderer() override;
@@ -36,6 +36,9 @@ public:
 private:
 	void BeginFrame();
 	void EndFrame();
+
+	void CreatePipeline();
+	void RecreateSwapchain(const sWindowExtent& newExtent);
 };
 
 VISRCEND

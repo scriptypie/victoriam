@@ -15,7 +15,7 @@ namespace Accessors
 	class VIDECL Pipeline
 	{
 	public:
-
+		// TODO: remove if no longer needed!
 	};
 
 }

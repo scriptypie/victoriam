@@ -28,9 +28,10 @@ public:
 	cVulkanDrawCommandBuffer(pSwapchain& swapchain, pDevice& device, pPipeline& pipeline, const List<pVertexBuffer>& vertexBuffers);
 	~cVulkanDrawCommandBuffer() override;
 
+	void RecordCommandBuffer(UInt32 imageIndex) override;
+
 private:
 	void CreateCommandBuffers();
-
 private:
 	VIDECL VIREQOUT inline List<VkCommandBuffer> GetCommandBufferList() const { return m_CommandBuffers; }
 };

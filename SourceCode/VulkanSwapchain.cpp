@@ -15,6 +15,19 @@ VISRCBEG
 cVulkanSwapchain::cVulkanSwapchain(pDevice &device, const sWindowExtent &extent)
 	: m_Device(device), m_WindowExtent(extent)
 {
+	Init();
+}
+
+cVulkanSwapchain::cVulkanSwapchain(pDevice &device, const sWindowExtent &extent, cSwapchain* prev)
+	: m_Device(device), m_WindowExtent(extent)
+{
+	m_OldSwapchain = prev;
+	Init();
+	m_OldSwapchain = nullptr;
+}
+
+void cVulkanSwapchain::Init()
+{
 	CreateSwapchain();
 	CreateImageViews();
 	CreateDepthResources();
@@ -90,6 +103,8 @@ void cVulkanSwapchain::CreateSwapchain()
 	createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 	createInfo.presentMode = presentMode;
 	createInfo.clipped = true;
+	if (m_OldSwapchain)
+		createInfo.oldSwapchain = CCast<cVulkanSwapchain*>(m_OldSwapchain)->m_Swapchain;
 
 	if (vkCreateSwapchainKHR(Accessors::Device::GetDevice(m_Device), &createInfo, nullptr, &m_Swapchain) != VK_SUCCESS)
 		throw std::runtime_error("failed to create swap chain!");
@@ -256,7 +271,7 @@ void cVulkanSwapchain::SetupSynchronization()
 VkSurfaceFormatKHR cVulkanSwapchain::ChooseSwapchainSurfaceFormat(const List<VkSurfaceFormatKHR> &available)
 {
 	for (const auto &availableFormat : available)
-		if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM &&
+		if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB &&
 		    availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 			return availableFormat;
 
@@ -290,7 +305,7 @@ VkFormat cVulkanSwapchain::FindDepthFormat()
 			{VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT}, VK_IMAGE_TILING_OPTIMAL, VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
 }
 
-VkResult cVulkanSwapchain::AcquireNextImage(UInt32 *imageIndex)
+UInt32 cVulkanSwapchain::AcquireNextImage(UInt32 *imageIndex)
 {
 	vkWaitForFences(Accessors::Device::GetDevice(m_Device), 1, &m_InFlightFences[m_CurrentFrame], true, std::numeric_limits<uint64_t>::max());
 	return vkAcquireNextImageKHR(Accessors::Device::GetDevice(m_Device), m_Swapchain, std::numeric_limits<uint64_t>::max(), m_ImageAvailableSemaphores[m_CurrentFrame],  /* must be a not signaled semaphore */ nullptr, imageIndex);
@@ -336,10 +351,6 @@ VkResult cVulkanSwapchain::SubmitCommandBuffers(const VkCommandBuffer *buffers, 
 	m_CurrentFrame = (m_CurrentFrame + 1) % MAX_FRAMES_PER_STEP;
 
 	return result;
-}
-
-void cVulkanSwapchain::RecreateSwapchain(const sWindowExtent &newExtent) {
-
 }
 
 VISRCEND

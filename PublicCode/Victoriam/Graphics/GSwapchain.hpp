@@ -15,9 +15,14 @@ class cSwapchain
 public:
 	virtual ~cSwapchain() = default;
 
-	virtual void RecreateSwapchain(const sWindowExtent& newExtent) = 0;
+	VIDECL VIREQOUT virtual UInt32 AcquireNextImage(UInt32* imageIndex) = 0;
+	VIDECL VIREQOUT virtual UInt32 GetImageCount() const = 0;
+	VIDECL VIREQOUT virtual UInt32 GetWidth() const = 0;
+	VIDECL VIREQOUT virtual UInt32 GetHeight() const = 0;
+	VIDECL VIREQOUT virtual Float32 GetExtentAspectRatio() const = 0;
 
 	VIDECL static UPtr<cSwapchain> Create(pDevice& device, const sWindowExtent& extent);
+	VIDECL static UPtr<cSwapchain> Create(pDevice& device, const sWindowExtent& extent, cSwapchain* prev);
 };
 
 VIDECL typedef UPtr<cSwapchain> pSwapchain;

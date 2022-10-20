@@ -15,7 +15,7 @@ namespace Accessors
 	class VIDECL VertexBuffer
 	{
 	public:
-
+		// TODO: remove if no longer needed!
 	};
 
 }

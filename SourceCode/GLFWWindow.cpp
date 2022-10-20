@@ -26,7 +26,6 @@ cGLFWWindow::~cGLFWWindow() {
 
 void cGLFWWindow::Update() {
 	glfwPollEvents();
-	// swap context buffers
 }
 
 void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
@@ -42,7 +41,7 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 		glfwSetErrorCallback(glfwErrorCallback);
 	}
 
-	auto fullscreen = (m_Data.Flags.Contains(WindowCreateWindowFlags_Fullscreen)) ? glfwGetPrimaryMonitor() : nullptr;
+	auto fullscreen = (m_Data.Flags.Contains(WindowCreateWindowFlag_Fullscreen)) ? glfwGetPrimaryMonitor() : nullptr;
 
 	if (m_Data.Flags.Contains(WindowCreateWindowFlags_NoResize))
 	{
@@ -68,6 +67,14 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 		cWindowCloseEvent close_event;
 		if (data.Callback)
 			data.Callback(close_event);
+	});
+
+	glfwSetWindowRefreshCallback(m_Window, [](GLFWwindow* window)
+	{
+		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
+		cWindowResizeEvent resize_event(CCast<UInt32>(data.Resolution.Width), CCast<UInt32>(data.Resolution.Height));
+		if (data.Callback)
+			data.Callback(resize_event);
 	});
 
 	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, Int32 width, Int32 height)
@@ -153,6 +160,11 @@ void cGLFWWindow::DestroyWindow() {
 void cGLFWWindow::CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface) {
 	if (glfwCreateWindowSurface(instance, m_Window, nullptr, surface) != VK_SUCCESS)
 		throw std::runtime_error("Failed to create window surface!");
+}
+
+void cGLFWWindow::WaitForEvents()
+{
+	glfwWaitEvents();
 }
 
 VISRCEND
