@@ -7,12 +7,14 @@
 
 #include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/Math/MVector2.hpp>
+#include <Victoriam/Math/MVector4.hpp>
 
 VISRCBEG
 
 struct VIDECL sVertex
 {
 	Vector2 Position;
+	Vector4 Color;
 };
 
 VISRCEND

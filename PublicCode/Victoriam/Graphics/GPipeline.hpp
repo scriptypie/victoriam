@@ -17,6 +17,8 @@ class cPipeline
 public:
 	virtual ~cPipeline() = default;
 
+	virtual void BindDrawCommandBuffer(const sCommandBuffer& buffer) = 0;
+
 	static UPtr<cPipeline> Create(const String& name, pDevice& device, pSwapchain& swapchain, const sPipelineCreateInfo& info);
 };
 

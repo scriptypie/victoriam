@@ -19,14 +19,14 @@ cVulkanVertexBuffer::~cVulkanVertexBuffer()
 	vkFreeMemory(Accessors::Device::GetDevice(m_Device), m_VertexBufferMemory, nullptr);
 }
 
-void cVulkanVertexBuffer::Bind(const VkCommandBuffer& buffer) {
+void cVulkanVertexBuffer::Bind(const sCommandBuffer& buffer) {
 	VkBuffer buffers[] = { m_VertexBuffer };
 	VkDeviceSize offsets[] = { 0 };
-	vkCmdBindVertexBuffers(buffer, 0, 1, buffers, offsets);
+	vkCmdBindVertexBuffers(CCast<VkCommandBuffer>(buffer), 0, 1, buffers, offsets);
 }
 
-void cVulkanVertexBuffer::Draw(const VkCommandBuffer& buffer) {
-	vkCmdDraw(buffer, m_VertexCount, 1, 0, 0);
+void cVulkanVertexBuffer::Draw(const sCommandBuffer& buffer) const {
+	vkCmdDraw(CCast<VkCommandBuffer>(buffer), m_VertexCount, 1, 0, 0);
 }
 
 void cVulkanVertexBuffer::CreateVertexBuffer(const List<sVertex> &vertices) {

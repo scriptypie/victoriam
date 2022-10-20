@@ -34,7 +34,7 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 		info.Name = m_info.AppName + " - NewWindow";
 		info.Offset = {100, 100};
 		info.Resolution = {1280, 720};
-		info.Flags += WindowCreateWindowFlag_DefaultWindow;
+		info.Flags += WindowCreateWindowFlag_DefaultWindow | WindowCreateWindowFlags_NoResize; // TODO: remove WindowCreateWindowFlags_NoResize
 		m_Window = cWindow::Create(info);
 	}
 	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(cRuntimeApp::OnEvent));
@@ -45,9 +45,9 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 	m_Renderer = cRenderer::Create(rendererCreateInfo);
 
 	const List<sVertex> vertices = {
-			{ { 0.0F, -0.5F } },
-			{ { 0.5F,  0.5F } },
-			{ {-0.5F,  0.5F } },
+			{ { 0.0F, -0.5F }, { 1.0F, 0.0F, 0.0F, 1.0F } },
+			{ { 0.5F,  0.5F }, { 0.0F, 1.0F, 0.0F, 1.0F } },
+			{ {-0.5F,  0.5F }, { 0.0F, 0.0F, 1.0F, 1.0F } },
 	};
 	m_Renderer->PushVertexBuffer(vertices);
 

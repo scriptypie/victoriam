@@ -15,14 +15,7 @@ namespace Accessors
 	class VIDECL VertexBuffer
 	{
 	public:
-		VIDECL inline static void Bind(const pVertexBuffer& vertexBuffer, const VkCommandBuffer& buffer)
-		{
-			CCast<cVulkanVertexBuffer*>(vertexBuffer.get())->Bind(buffer);
-		}
-		VIDECL inline static void Draw(const pVertexBuffer& vertexBuffer, const VkCommandBuffer& buffer)
-		{
-			CCast<cVulkanVertexBuffer*>(vertexBuffer.get())->Draw(buffer);
-		}
+
 	};
 
 }

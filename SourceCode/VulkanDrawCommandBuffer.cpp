@@ -15,7 +15,7 @@ cVulkanDrawCommandBuffer::cVulkanDrawCommandBuffer(pSwapchain &swapchain, pDevic
 
 cVulkanDrawCommandBuffer::~cVulkanDrawCommandBuffer()
 {
-
+	
 }
 
 void cVulkanDrawCommandBuffer::CreateCommandBuffers()
@@ -52,12 +52,11 @@ void cVulkanDrawCommandBuffer::CreateCommandBuffers()
 
 		vkCmdBeginRenderPass(m_CommandBuffers.at(i), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-
-		Accessors::Pipeline::BindDrawCommandBuffer(m_Pipeline, m_CommandBuffers.at(i));
-		for (UInt32 j = 0; j < m_VertexBuffers.size(); j++)
+		m_Pipeline->BindDrawCommandBuffer(CCast<sCommandBuffer>(m_CommandBuffers.at(i)));
+		for (const auto& m_VertexBuffer : m_VertexBuffers)
 		{
-			Accessors::VertexBuffer::Bind(m_VertexBuffers.at(j), m_CommandBuffers.at(i));
-			Accessors::VertexBuffer::Draw(m_VertexBuffers.at(j), m_CommandBuffers.at(i));
+			m_VertexBuffer->Bind(CCast<sCommandBuffer>(m_CommandBuffers.at(i)));
+			m_VertexBuffer->Draw(CCast<sCommandBuffer>(m_CommandBuffers.at(i)));
 		}
 
 		vkCmdEndRenderPass(m_CommandBuffers.at(i));

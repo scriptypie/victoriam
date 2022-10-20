@@ -16,6 +16,9 @@ class VIDECL cVertexBuffer
 public:
 	virtual ~cVertexBuffer() = default;
 
+	virtual void Bind(const sCommandBuffer& buffer) = 0;
+	virtual void Draw(const sCommandBuffer& buffer) const = 0;
+
 	VIDECL VIREQOUT static SPtr<cVertexBuffer> Create(pDevice& device, const List<sVertex>& vertices);
 };
 

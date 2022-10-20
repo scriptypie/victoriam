@@ -34,8 +34,6 @@ void cVulkanRenderer::DrawFrame()
 		throw std::runtime_error("Failed to acquire next image!");
 
 	Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, &Accessors::DrawCommandBuffer::GetCommandBufferList(m_DrawCommandBuffer).at(imageIndex), &imageIndex);
-
-
 }
 
 void cVulkanRenderer::BeginFrame()

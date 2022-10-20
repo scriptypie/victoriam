@@ -18,12 +18,11 @@ VIDECL VIREQOUT inline static List<VkVertexInputBindingDescription> GetVertexBin
 
 VIDECL VIREQOUT inline static List<VkVertexInputAttributeDescription> GetVertexAttributeDescriptions()
 {
-	List<VkVertexInputAttributeDescription> result(1);
-	result[0].binding = 0;
-	result[0].location = 0;
-	result[0].format = VK_FORMAT_R32G32_SFLOAT;
-	result[0].offset = 0;
-	return result;
+	return
+	{
+		{ 0, 0, VK_FORMAT_R32G32_SFLOAT,       offsetof(sVertex, Position) },
+		{ 1, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(sVertex, Color)    },
+	};
 }
 
 

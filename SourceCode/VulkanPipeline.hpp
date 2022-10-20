@@ -95,13 +95,12 @@ class cVulkanPipeline : public cPipeline
 public:
 	cVulkanPipeline(const String& name, pDevice& device, pSwapchain& swapchain, const sPipelineCreateInfo& info);
 	~cVulkanPipeline() override;
+
+	void BindDrawCommandBuffer(const sCommandBuffer& buffer) override;
 private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();
 	VIDECL void CreatePipelineLayout();
-
-private:
-	VIDECL void BindDrawCommandBuffer(const VkCommandBuffer& commandBuffer);
 };
 
 VISRCEND

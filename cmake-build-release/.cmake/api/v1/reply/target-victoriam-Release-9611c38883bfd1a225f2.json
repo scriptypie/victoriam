@@ -198,7 +198,8 @@
 				79,
 				80,
 				83,
-				84
+				84,
+				85
 			]
 		},
 		{
@@ -681,6 +682,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "SourceCode/Accessors/AVertexBuffer.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "PublicCode/Victoriam/Math/MVector4.hpp",
 			"sourceGroupIndex" : 0
 		}
 	],

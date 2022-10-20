@@ -25,9 +25,10 @@ class VIDECL cVulkanVertexBuffer : public cVertexBuffer
 public:
 	cVulkanVertexBuffer(pDevice& device, const List<sVertex>& vertices);
 	~cVulkanVertexBuffer() override;
+
+	void Bind(const sCommandBuffer& buffer) override;
+	void Draw(const sCommandBuffer& buffer) const override;
 private:
-	void Bind(const VkCommandBuffer& buffer);
-	void Draw(const VkCommandBuffer& buffer);
 
 	VIDECL void CreateVertexBuffer(const List<sVertex>& vertices);
 };

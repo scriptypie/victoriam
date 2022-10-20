@@ -84,9 +84,9 @@ void cVulkanPipeline::CreatePipelineLayout()
 		throw std::runtime_error("Failed to create pipeline layout!");
 }
 
-void cVulkanPipeline::BindDrawCommandBuffer(VkCommandBuffer const &commandBuffer) {
+void cVulkanPipeline::BindDrawCommandBuffer(const sCommandBuffer &commandBuffer) {
 	if (m_GraphicsPipeline != VK_NULL_HANDLE)
-		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
+		vkCmdBindPipeline(CCast<VkCommandBuffer>(commandBuffer), VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
 	else
 		throw std::runtime_error("Failed to bind command buffer because graphics pipeline is null!");
 }

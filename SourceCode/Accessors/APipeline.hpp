@@ -15,10 +15,7 @@ namespace Accessors
 	class VIDECL Pipeline
 	{
 	public:
-		VIDECL inline static void BindDrawCommandBuffer(const pPipeline& pipeline, const VkCommandBuffer&commandBuffer)
-		{
-			CCast<cVulkanPipeline*>(pipeline.get())->BindDrawCommandBuffer(commandBuffer);
-		}
+
 	};
 
 }

@@ -44,6 +44,11 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 
 	auto fullscreen = (m_Data.Flags.Contains(WindowCreateWindowFlags_Fullscreen)) ? glfwGetPrimaryMonitor() : nullptr;
 
+	if (m_Data.Flags.Contains(WindowCreateWindowFlags_NoResize))
+	{
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+	}
+
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	m_Window = glfwCreateWindow(
 	CCast<Int32>(m_Data.Resolution.Width),

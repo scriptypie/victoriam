@@ -65,7 +65,7 @@ set(SOURCE_FILES
         SourceCode/VulkanDevice.cpp
         SourceCode/GPipeline.cpp
         SourceCode/VulkanPipeline.cpp
-        PublicCode/Victoriam/Graphics/GSwapchain.hpp SourceCode/GSwapchain.cpp SourceCode/VulkanSwapchain.cpp SourceCode/VulkanSwapchain.hpp SourceCode/Accessors/ASwapchain.hpp PublicCode/Victoriam/Graphics/GRenderer.hpp PublicCode/Victoriam/Graphics/Structs/GRendererCreateInfo.hpp SourceCode/GRenderer.cpp PublicCode/Victoriam/Graphics/GDrawCommandBuffer.hpp SourceCode/GDrawCommandBuffer.cpp SourceCode/VulkanDrawCommandBuffer.cpp SourceCode/VulkanDrawCommandBuffer.hpp SourceCode/Accessors/APipeline.hpp SourceCode/VulkanRenderer.cpp SourceCode/VulkanRenderer.hpp SourceCode/Accessors/ADrawCommandBuffer.hpp PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp PublicCode/Victoriam/Utils/UCryptogen.hpp SourceCode/UCryptogen.cpp PublicCode/Victoriam/Utils/UFile.hpp SourceCode/UFile.cpp PublicCode/Victoriam/Graphics/GVertexBuffer.hpp PublicCode/Victoriam/Graphics/Structs/GVertex.hpp SourceCode/VulkanVertex.hpp SourceCode/GVertexBuffer.cpp SourceCode/VulkanVertexBuffer.cpp SourceCode/VulkanVertexBuffer.hpp SourceCode/Accessors/AVertexBuffer.hpp)
+        PublicCode/Victoriam/Graphics/GSwapchain.hpp SourceCode/GSwapchain.cpp SourceCode/VulkanSwapchain.cpp SourceCode/VulkanSwapchain.hpp SourceCode/Accessors/ASwapchain.hpp PublicCode/Victoriam/Graphics/GRenderer.hpp PublicCode/Victoriam/Graphics/Structs/GRendererCreateInfo.hpp SourceCode/GRenderer.cpp PublicCode/Victoriam/Graphics/GDrawCommandBuffer.hpp SourceCode/GDrawCommandBuffer.cpp SourceCode/VulkanDrawCommandBuffer.cpp SourceCode/VulkanDrawCommandBuffer.hpp SourceCode/Accessors/APipeline.hpp SourceCode/VulkanRenderer.cpp SourceCode/VulkanRenderer.hpp SourceCode/Accessors/ADrawCommandBuffer.hpp PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp PublicCode/Victoriam/Utils/UCryptogen.hpp SourceCode/UCryptogen.cpp PublicCode/Victoriam/Utils/UFile.hpp SourceCode/UFile.cpp PublicCode/Victoriam/Graphics/GVertexBuffer.hpp PublicCode/Victoriam/Graphics/Structs/GVertex.hpp SourceCode/VulkanVertex.hpp SourceCode/GVertexBuffer.cpp SourceCode/VulkanVertexBuffer.cpp SourceCode/VulkanVertexBuffer.hpp SourceCode/Accessors/AVertexBuffer.hpp PublicCode/Victoriam/Math/MVector4.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 
@@ -84,8 +84,8 @@ target_link_libraries(victoriam PUBLIC glfw PUBLIC OpenGL::GL PUBLIC Vulkan::Vul
 set(VISUAL_SOURCES
         PublicCode/VIsual/VEditorState.hpp
 
-        SourceCode/VIsual/VEditorState.cpp
-        SourceCode/VIsual/VIsualApp.cpp
+        SourceCode/Ved/VEditorState.cpp
+        SourceCode/Ved/VIsualApp.cpp
 )
 
 add_executable(VIsual ${VISUAL_SOURCES})
