@@ -46,159 +46,173 @@ cmake_ninja_workdir = /Volumes/cdev/victoriam/cmake-build-release/
 
 build cmake_object_order_depends_target_victoriam: phony || CMakeFiles/victoriam.dir
 
-build CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/EngineInfo.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/EngineInfo.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/EngineInfo.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/EngineInfo.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/AppStateController.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/AppStateController.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/AppStateController.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/AAppStateController.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/AAppStateController.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/AAppStateController.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/RuntimeApp.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/ARuntimeApp.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/ARuntimeApp.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/ARuntimeApp.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/Comparator.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/Comparator.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/Comparator.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/Comparator.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/Comparator.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/Comparator.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/FuncVector2.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/FuncVector2.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/FuncVector2.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/FuncVector2.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/FuncVector2.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/FuncVector2.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/ScalarRsqrt.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/ScalarRsqrt.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/ScalarRsqrt.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/ScalarRsqrt.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/ScalarRsqrt.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/ScalarRsqrt.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/Window.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/Window.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/Window.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/GWindow.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/GWindow.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/GWindow.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/GLFWWindow.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/GLFWWindow.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/GLFWWindow.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/GLFWWindow.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/GLFWWindow.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/GLFWWindow.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/Input.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/Input.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/Input.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/IInput.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/IInput.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/IInput.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/ShaderCooker.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/ShaderCooker.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/ShaderCooker.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/UShaderCooker.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/UShaderCooker.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/UShaderCooker.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/Device.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/Device.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/Device.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/GDevice.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/GDevice.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/GDevice.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/VulkanDevice.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/VulkanDevice.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/VulkanDevice.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/VulkanDevice.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/VulkanDevice.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/VulkanDevice.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/Pipeline.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/Pipeline.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/Pipeline.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/GPipeline.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/GPipeline.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/GPipeline.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/VulkanPipeline.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/VulkanPipeline.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/VulkanPipeline.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/VulkanPipeline.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/VulkanPipeline.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/VulkanPipeline.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/Swapchain.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/Swapchain.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/Swapchain.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/GSwapchain.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/GSwapchain.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/GSwapchain.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/VulkanSwapchain.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/VulkanSwapchain.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/VulkanSwapchain.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/VulkanSwapchain.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/VulkanSwapchain.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/VulkanSwapchain.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/Renderer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/Renderer.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/Renderer.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/GRenderer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/GRenderer.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/GRenderer.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/DrawCommandBuffer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/DrawCommandBuffer.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/DrawCommandBuffer.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/GDrawCommandBuffer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/GDrawCommandBuffer.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/GDrawCommandBuffer.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/VulkanDrawCommandBuffer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/VulkanDrawCommandBuffer.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/VulkanDrawCommandBuffer.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/VulkanDrawCommandBuffer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/VulkanDrawCommandBuffer.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/VulkanDrawCommandBuffer.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/VulkanRenderer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/VulkanRenderer.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/VulkanRenderer.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/VulkanRenderer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/VulkanRenderer.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/VulkanRenderer.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/Cryptogen.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/Cryptogen.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/Cryptogen.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/UCryptogen.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/UCryptogen.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/UCryptogen.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
-build CMakeFiles/victoriam.dir/src/File.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/src/File.cpp || cmake_object_order_depends_target_victoriam
-  DEP_FILE = CMakeFiles/victoriam.dir/src/File.cpp.o.d
+build CMakeFiles/victoriam.dir/SourceCode/UFile.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/UFile.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/UFile.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/victoriam.dir
-  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
+
+build CMakeFiles/victoriam.dir/SourceCode/GVertexBuffer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/GVertexBuffer.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/GVertexBuffer.cpp.o.d
+  FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/victoriam.dir
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
+
+build CMakeFiles/victoriam.dir/SourceCode/VulkanVertexBuffer.cpp.o: CXX_COMPILER__victoriam_Release /Volumes/cdev/victoriam/SourceCode/VulkanVertexBuffer.cpp || cmake_object_order_depends_target_victoriam
+  DEP_FILE = CMakeFiles/victoriam.dir/SourceCode/VulkanVertexBuffer.cpp.o.d
+  FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/victoriam.dir
+  OBJECT_FILE_DIR = CMakeFiles/victoriam.dir/SourceCode
 
 
 # =============================================================================
@@ -208,7 +222,7 @@ build CMakeFiles/victoriam.dir/src/File.cpp.o: CXX_COMPILER__victoriam_Release /
 #############################################
 # Link the static library libvictoriam.a
 
-build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Release CMakeFiles/victoriam.dir/src/EngineInfo.cpp.o CMakeFiles/victoriam.dir/src/AppStateController.cpp.o CMakeFiles/victoriam.dir/src/RuntimeApp.cpp.o CMakeFiles/victoriam.dir/src/Comparator.cpp.o CMakeFiles/victoriam.dir/src/FuncVector2.cpp.o CMakeFiles/victoriam.dir/src/ScalarRsqrt.cpp.o CMakeFiles/victoriam.dir/src/Window.cpp.o CMakeFiles/victoriam.dir/src/GLFWWindow.cpp.o CMakeFiles/victoriam.dir/src/Input.cpp.o CMakeFiles/victoriam.dir/src/ShaderCooker.cpp.o CMakeFiles/victoriam.dir/src/Device.cpp.o CMakeFiles/victoriam.dir/src/VulkanDevice.cpp.o CMakeFiles/victoriam.dir/src/Pipeline.cpp.o CMakeFiles/victoriam.dir/src/VulkanPipeline.cpp.o CMakeFiles/victoriam.dir/src/Swapchain.cpp.o CMakeFiles/victoriam.dir/src/VulkanSwapchain.cpp.o CMakeFiles/victoriam.dir/src/Renderer.cpp.o CMakeFiles/victoriam.dir/src/DrawCommandBuffer.cpp.o CMakeFiles/victoriam.dir/src/VulkanDrawCommandBuffer.cpp.o CMakeFiles/victoriam.dir/src/VulkanRenderer.cpp.o CMakeFiles/victoriam.dir/src/Cryptogen.cpp.o CMakeFiles/victoriam.dir/src/File.cpp.o || /opt/homebrew/lib/libglfw.3.3.dylib
+build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Release CMakeFiles/victoriam.dir/SourceCode/EngineInfo.cpp.o CMakeFiles/victoriam.dir/SourceCode/AAppStateController.cpp.o CMakeFiles/victoriam.dir/SourceCode/ARuntimeApp.cpp.o CMakeFiles/victoriam.dir/SourceCode/Comparator.cpp.o CMakeFiles/victoriam.dir/SourceCode/FuncVector2.cpp.o CMakeFiles/victoriam.dir/SourceCode/ScalarRsqrt.cpp.o CMakeFiles/victoriam.dir/SourceCode/GWindow.cpp.o CMakeFiles/victoriam.dir/SourceCode/GLFWWindow.cpp.o CMakeFiles/victoriam.dir/SourceCode/IInput.cpp.o CMakeFiles/victoriam.dir/SourceCode/UShaderCooker.cpp.o CMakeFiles/victoriam.dir/SourceCode/GDevice.cpp.o CMakeFiles/victoriam.dir/SourceCode/VulkanDevice.cpp.o CMakeFiles/victoriam.dir/SourceCode/GPipeline.cpp.o CMakeFiles/victoriam.dir/SourceCode/VulkanPipeline.cpp.o CMakeFiles/victoriam.dir/SourceCode/GSwapchain.cpp.o CMakeFiles/victoriam.dir/SourceCode/VulkanSwapchain.cpp.o CMakeFiles/victoriam.dir/SourceCode/GRenderer.cpp.o CMakeFiles/victoriam.dir/SourceCode/GDrawCommandBuffer.cpp.o CMakeFiles/victoriam.dir/SourceCode/VulkanDrawCommandBuffer.cpp.o CMakeFiles/victoriam.dir/SourceCode/VulkanRenderer.cpp.o CMakeFiles/victoriam.dir/SourceCode/UCryptogen.cpp.o CMakeFiles/victoriam.dir/SourceCode/UFile.cpp.o CMakeFiles/victoriam.dir/SourceCode/GVertexBuffer.cpp.o CMakeFiles/victoriam.dir/SourceCode/VulkanVertexBuffer.cpp.o || /opt/homebrew/lib/libglfw.3.3.dylib
   ARCH_FLAGS = -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LANGUAGE_COMPILE_FLAGS = -O3 -DNDEBUG
   OBJECT_DIR = CMakeFiles/victoriam.dir
@@ -226,19 +240,19 @@ build libvictoriam.a: CXX_STATIC_LIBRARY_LINKER__victoriam_Release CMakeFiles/vi
 
 build cmake_object_order_depends_target_VIsual: phony || cmake_object_order_depends_target_victoriam
 
-build CMakeFiles/VIsual.dir/src/VIsual/EditorState.cpp.o: CXX_COMPILER__VIsual_Release /Volumes/cdev/victoriam/src/VIsual/EditorState.cpp || cmake_object_order_depends_target_VIsual
-  DEP_FILE = CMakeFiles/VIsual.dir/src/VIsual/EditorState.cpp.o.d
+build CMakeFiles/VIsual.dir/SourceCode/VIsual/VEditorState.cpp.o: CXX_COMPILER__VIsual_Release /Volumes/cdev/victoriam/SourceCode/VIsual/VEditorState.cpp || cmake_object_order_depends_target_VIsual
+  DEP_FILE = CMakeFiles/VIsual.dir/SourceCode/VIsual/VEditorState.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/VIsual.dir
-  OBJECT_FILE_DIR = CMakeFiles/VIsual.dir/src/VIsual
+  OBJECT_FILE_DIR = CMakeFiles/VIsual.dir/SourceCode/VIsual
 
-build CMakeFiles/VIsual.dir/src/VIsual/VIsualApp.cpp.o: CXX_COMPILER__VIsual_Release /Volumes/cdev/victoriam/src/VIsual/VIsualApp.cpp || cmake_object_order_depends_target_VIsual
-  DEP_FILE = CMakeFiles/VIsual.dir/src/VIsual/VIsualApp.cpp.o.d
+build CMakeFiles/VIsual.dir/SourceCode/VIsual/VIsualApp.cpp.o: CXX_COMPILER__VIsual_Release /Volumes/cdev/victoriam/SourceCode/VIsual/VIsualApp.cpp || cmake_object_order_depends_target_VIsual
+  DEP_FILE = CMakeFiles/VIsual.dir/SourceCode/VIsual/VIsualApp.cpp.o.d
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -std=gnu++17
-  INCLUDES = -I/Volumes/cdev/victoriam/include -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Volumes/cdev/victoriam/PublicCode -I/opt/homebrew/Cellar/glfw/3.3.8/include -I/Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include -isystem /opt/homebrew/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/VIsual.dir
-  OBJECT_FILE_DIR = CMakeFiles/VIsual.dir/src/VIsual
+  OBJECT_FILE_DIR = CMakeFiles/VIsual.dir/SourceCode/VIsual
 
 
 # =============================================================================
@@ -248,7 +262,7 @@ build CMakeFiles/VIsual.dir/src/VIsual/VIsualApp.cpp.o: CXX_COMPILER__VIsual_Rel
 #############################################
 # Link the executable VIsual
 
-build VIsual: CXX_EXECUTABLE_LINKER__VIsual_Release CMakeFiles/VIsual.dir/src/VIsual/EditorState.cpp.o CMakeFiles/VIsual.dir/src/VIsual/VIsualApp.cpp.o | libvictoriam.a /opt/homebrew/lib/libglfw.3.3.dylib /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd /usr/local/lib/libvulkan.dylib || libvictoriam.a
+build VIsual: CXX_EXECUTABLE_LINKER__VIsual_Release CMakeFiles/VIsual.dir/SourceCode/VIsual/VEditorState.cpp.o CMakeFiles/VIsual.dir/SourceCode/VIsual/VIsualApp.cpp.o | libvictoriam.a /opt/homebrew/lib/libglfw.3.3.dylib /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd /usr/local/lib/libvulkan.dylib || libvictoriam.a
   FLAGS = -O3 -DNDEBUG -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/lib -Wl,-rpath,/usr/local/lib  libvictoriam.a  /opt/homebrew/lib/libglfw.3.3.dylib  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd  /usr/local/lib/libvulkan.dylib
   OBJECT_DIR = CMakeFiles/VIsual.dir

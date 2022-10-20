@@ -3,69 +3,69 @@ project(victoriam)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(include /opt/homebrew/Cellar/glfw/3.3.8/include /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
+include_directories(PublicCode /opt/homebrew/Cellar/glfw/3.3.8/include /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
 
 set(SOURCE_FILES
-        include/Victoriam/Core/Base.hpp
-        include/Victoriam/EngineInfo.hpp
-        include/Victoriam/Application/AppState.hpp
-        include/Victoriam/Application/AppStateController.hpp
-        include/Victoriam/Core/Memory/StandardAllocator.hpp
-        include/Victoriam/Core/MacroDefinitions.hpp
-        include/Victoriam/Core/Memory/SmartPointers.hpp
-        include/Victoriam/Application/StartPoint.hpp
-        include/Victoriam/Application/StartPoint.hpp
-        include/Victoriam/Application/RuntimeApp.hpp
-        include/Victoriam/Application/ArgumentLineTool.hpp
-        include/Victoriam/Application/RuntimeAppCreateInfo.hpp
-        include/Victoriam/Graphics/Window.hpp
-        include/Victoriam/Graphics/WindowCreateInfo.hpp
-        include/Victoriam/Math/Common/Scalar.hpp
-        include/Victoriam/Math/Common/MinMax.hpp
-        include/Victoriam/Math/Common/ScalarArray.hpp
-        include/Victoriam/Math/Common/Comparator.hpp
-        include/Victoriam/Math/Vector/VectorBase.hpp
-        include/Victoriam/Math/Vector/TypeVector2.hpp
-        include/Victoriam/Math/Vector/TypeVector3.hpp
-        include/Victoriam/Math/Vector/TypeVector4.hpp
-        include/Victoriam/Math/Vector/FuncVector2.hpp
-        include/Victoriam/Math/Vector2.hpp
-        include/Victoriam/Core/Flags.hpp
-        include/Victoriam/EventSystem/Event.hpp
-        include/Victoriam/EventSystem/EventDispatcher.hpp
-        include/Victoriam/EventSystem/WindowEvents.hpp
-        include/Victoriam/Input/Keycode.hpp
-        include/Victoriam/Input/Mousecode.hpp
-        include/Victoriam/Input/Padcode.hpp
-        include/Victoriam/Input/Padaxis.hpp
-        include/Victoriam/Core/Cast.hpp
-        include/Victoriam/Input/Input.hpp
-        include/Victoriam/Utils/ShaderCooker.hpp
-        include/Victoriam/Graphics/Basics.hpp
-        include/Victoriam/Graphics/Device.hpp
-        include/Victoriam/Graphics/Pipeline.hpp
-        include/Victoriam/Graphics/PipelineCreateInfo.hpp
-        src/VulkanDevice.hpp
-        src/Accessors/AWindow.hpp
-        src/VulkanPipeline.hpp
-        src/Accessors/ADevice.hpp
-        src/GLFWWindow.hpp
+        PublicCode/Victoriam/Core/CBase.hpp
+        PublicCode/Victoriam/EngineInfo.hpp
+        PublicCode/Victoriam/Application/AAppState.hpp
+        PublicCode/Victoriam/Application/AAppStateController.hpp
+        PublicCode/Victoriam/Core/Memory/MStandardAllocator.hpp
+        PublicCode/Victoriam/Core/CMacroDefinitions.hpp
+        PublicCode/Victoriam/Core/Memory/MSmartPointers.hpp
+        PublicCode/Victoriam/Application/AStartPoint.hpp
+        PublicCode/Victoriam/Application/AStartPoint.hpp
+        PublicCode/Victoriam/Application/ARuntimeApp.hpp
+        PublicCode/Victoriam/Application/AArgumentLineTool.hpp
+        PublicCode/Victoriam/Application/ARuntimeAppCreateInfo.hpp
+        PublicCode/Victoriam/Graphics/GWindow.hpp
+        PublicCode/Victoriam/Graphics/Structs/GWindowCreateInfo.hpp
+        PublicCode/Victoriam/Math/Common/Scalar.hpp
+        PublicCode/Victoriam/Math/Common/MinMax.hpp
+        PublicCode/Victoriam/Math/Common/ScalarArray.hpp
+        PublicCode/Victoriam/Math/Common/Comparator.hpp
+        PublicCode/Victoriam/Math/Vector/VectorBase.hpp
+        PublicCode/Victoriam/Math/Vector/TypeVector2.hpp
+        PublicCode/Victoriam/Math/Vector/TypeVector3.hpp
+        PublicCode/Victoriam/Math/Vector/TypeVector4.hpp
+        PublicCode/Victoriam/Math/Vector/FuncVector2.hpp
+        PublicCode/Victoriam/Math/MVector2.hpp
+        PublicCode/Victoriam/Core/CFlags.hpp
+        PublicCode/Victoriam/EventSystem/EEvent.hpp
+        PublicCode/Victoriam/EventSystem/EEventDispatcher.hpp
+        PublicCode/Victoriam/EventSystem/EWindowEvents.hpp
+        PublicCode/Victoriam/Input/IKeycode.hpp
+        PublicCode/Victoriam/Input/IMousecode.hpp
+        PublicCode/Victoriam/Input/IPadcode.hpp
+        PublicCode/Victoriam/Input/IPadaxis.hpp
+        PublicCode/Victoriam/Core/CCast.hpp
+        PublicCode/Victoriam/Input/IInput.hpp
+        PublicCode/Victoriam/Utils/UShaderCooker.hpp
+        PublicCode/Victoriam/Graphics/Basics.hpp
+        PublicCode/Victoriam/Graphics/GDevice.hpp
+        PublicCode/Victoriam/Graphics/GPipeline.hpp
+        PublicCode/Victoriam/Graphics/Structs/GPipelineCreateInfo.hpp
+        SourceCode/VulkanDevice.hpp
+        SourceCode/Accessors/AWindow.hpp
+        SourceCode/VulkanPipeline.hpp
+        SourceCode/Accessors/ADevice.hpp
+        SourceCode/GLFWWindow.hpp
 
-        src/EngineInfo.cpp
-        src/AppStateController.cpp
-        src/RuntimeApp.cpp
-        src/Comparator.cpp
-        src/FuncVector2.cpp
-        src/ScalarRsqrt.cpp
-        src/Window.cpp
-        src/GLFWWindow.cpp
-        src/Input.cpp
-        src/ShaderCooker.cpp
-        src/Device.cpp
-        src/VulkanDevice.cpp
-        src/Pipeline.cpp
-        src/VulkanPipeline.cpp
-        include/Victoriam/Graphics/Swapchain.hpp src/Swapchain.cpp src/VulkanSwapchain.cpp src/VulkanSwapchain.hpp src/Accessors/ASwapchain.hpp include/Victoriam/Graphics/Renderer.hpp include/Victoriam/Graphics/RendererCreateInfo.hpp src/Renderer.cpp include/Victoriam/Graphics/DrawCommandBuffer.hpp src/DrawCommandBuffer.cpp src/VulkanDrawCommandBuffer.cpp src/VulkanDrawCommandBuffer.hpp src/Accessors/APipeline.hpp src/VulkanRenderer.cpp src/VulkanRenderer.hpp src/Accessors/ADrawCommandBuffer.hpp include/Victoriam/Graphics/WindowExtent.hpp include/Victoriam/Utils/Cryptogen.hpp src/Cryptogen.cpp include/Victoriam/Utils/File.hpp src/File.cpp)
+        SourceCode/EngineInfo.cpp
+        SourceCode/AAppStateController.cpp
+        SourceCode/ARuntimeApp.cpp
+        SourceCode/Comparator.cpp
+        SourceCode/FuncVector2.cpp
+        SourceCode/ScalarRsqrt.cpp
+        SourceCode/GWindow.cpp
+        SourceCode/GLFWWindow.cpp
+        SourceCode/IInput.cpp
+        SourceCode/UShaderCooker.cpp
+        SourceCode/GDevice.cpp
+        SourceCode/VulkanDevice.cpp
+        SourceCode/GPipeline.cpp
+        SourceCode/VulkanPipeline.cpp
+        PublicCode/Victoriam/Graphics/GSwapchain.hpp SourceCode/GSwapchain.cpp SourceCode/VulkanSwapchain.cpp SourceCode/VulkanSwapchain.hpp SourceCode/Accessors/ASwapchain.hpp PublicCode/Victoriam/Graphics/GRenderer.hpp PublicCode/Victoriam/Graphics/Structs/GRendererCreateInfo.hpp SourceCode/GRenderer.cpp PublicCode/Victoriam/Graphics/GDrawCommandBuffer.hpp SourceCode/GDrawCommandBuffer.cpp SourceCode/VulkanDrawCommandBuffer.cpp SourceCode/VulkanDrawCommandBuffer.hpp SourceCode/Accessors/APipeline.hpp SourceCode/VulkanRenderer.cpp SourceCode/VulkanRenderer.hpp SourceCode/Accessors/ADrawCommandBuffer.hpp PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp PublicCode/Victoriam/Utils/UCryptogen.hpp SourceCode/UCryptogen.cpp PublicCode/Victoriam/Utils/UFile.hpp SourceCode/UFile.cpp PublicCode/Victoriam/Graphics/GVertexBuffer.hpp PublicCode/Victoriam/Graphics/Structs/GVertex.hpp SourceCode/VulkanVertex.hpp SourceCode/GVertexBuffer.cpp SourceCode/VulkanVertexBuffer.cpp SourceCode/VulkanVertexBuffer.hpp SourceCode/Accessors/AVertexBuffer.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 
@@ -82,10 +82,10 @@ find_package(Vulkan REQUIRED)
 target_link_libraries(victoriam PUBLIC glfw PUBLIC OpenGL::GL PUBLIC Vulkan::Vulkan)
 
 set(VISUAL_SOURCES
-        include/VIsual/EditorState.hpp
+        PublicCode/VIsual/VEditorState.hpp
 
-        src/VIsual/EditorState.cpp
-        src/VIsual/VIsualApp.cpp
+        SourceCode/VIsual/VEditorState.cpp
+        SourceCode/VIsual/VIsualApp.cpp
 )
 
 add_executable(VIsual ${VISUAL_SOURCES})
