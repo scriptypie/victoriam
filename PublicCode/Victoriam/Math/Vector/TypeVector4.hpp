@@ -23,9 +23,9 @@ struct VIDECL sVector4 : sVectorBase<4>
 	{}
 
 	VIDECL inline explicit sVector4(const sVector3& v) : sVectorBase(((Scalar[DIM]){v.data[0], v.data[1], v.data[2], 0})) {}
-	VIDECL inline explicit sVector4(const sVector2& v) : sVectorBase(((Scalar[DIM]){v.data[0], v.data[1], 0, 0})) {}
+	VIDECL inline explicit sVector4(const SVector2& v) : sVectorBase(((Scalar[DIM]){v.data[0], v.data[1], 0, 0})) {}
 
-	VIDECL inline sVector2& xy() { return(*(sVector2*)this); }
+	VIDECL inline SVector2& xy() { return(*(SVector2*)this); }
 	VIDECL inline sVector3& xyz() { return(*(sVector3*)this); }
 
 	template<class U>

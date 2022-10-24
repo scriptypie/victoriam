@@ -6,7 +6,7 @@
 
 #include "GLFWWindow.hpp"
 
-Vi::pWindow Vi::cWindow::Create(const Vi::sWindowCreateInfo &info)
+Vi::PWindow Vi::CWindow::Create(const Vi::SWindowCreateInfo &info)
 {
-	return Vi::CreateSPtr<Vi::cGLFWWindow>(info);
+	return Vi::CreateSPtr<Vi::CGLFWWindow>(info);
 }

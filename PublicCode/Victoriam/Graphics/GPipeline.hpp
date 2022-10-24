@@ -12,17 +12,17 @@
 
 VISRCBEG
 
-class cPipeline
+class CPipeline
 {
 public:
-	virtual ~cPipeline() = default;
+	virtual ~CPipeline() = default;
 
-	virtual void BindDrawCommandBuffer(const sCommandBuffer& buffer) = 0;
+	virtual void BindDrawCommandBuffer(const SCommandBuffer& buffer) = 0;
 
-	static UPtr<cPipeline> Create(const String& name, pDevice& device, pSwapchain& swapchain);
+	static UPtr<CPipeline> Create(const String& name, PDevice& device, PSwapchain& swapchain);
 };
 
-VIDECL typedef UPtr<cPipeline> pPipeline;
+VIDECL typedef UPtr<CPipeline> PPipeline;
 
 VISRCEND
 

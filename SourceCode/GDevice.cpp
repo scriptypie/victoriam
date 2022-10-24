@@ -8,8 +8,8 @@
 
 VISRCBEG
 
-pDevice cDevice::Create(const SPtr<cWindow> &window) {
-	return CreateSPtr<cVulkanDevice>(window);
+PDevice CDevice::Create(const SPtr<CWindow> &window) {
+	return CreateSPtr<CVulkanDevice>(window);
 }
 
 VISRCEND

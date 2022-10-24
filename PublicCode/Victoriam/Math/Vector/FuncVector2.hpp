@@ -11,29 +11,29 @@
 
 VISRCBEG
 
-	VIDECL Bool operator==(const sVector2& a, const sVector2& b);
-	VIDECL Bool operator!=(const sVector2& a, const sVector2& b);
-	VIDECL Bool operator<=(const sVector2& a, const sVector2& b);
-	VIDECL Bool operator>=(const sVector2& a, const sVector2& b);
-	VIDECL Bool operator< (const sVector2& a, const sVector2& b);
-	VIDECL Bool operator> (const sVector2& a, const sVector2& b);
+	VIDECL Bool operator==(const SVector2& a, const SVector2& b);
+	VIDECL Bool operator!=(const SVector2& a, const SVector2& b);
+	VIDECL Bool operator<=(const SVector2& a, const SVector2& b);
+	VIDECL Bool operator>=(const SVector2& a, const SVector2& b);
+	VIDECL Bool operator< (const SVector2& a, const SVector2& b);
+	VIDECL Bool operator> (const SVector2& a, const SVector2& b);
 
-	VIDECL sVector2 max(const sVector2& a, const sVector2& b);
-	VIDECL sVector2 min(const sVector2& a, const sVector2& b);
+	VIDECL SVector2 max(const SVector2& a, const SVector2& b);
+	VIDECL SVector2 min(const SVector2& a, const SVector2& b);
 
-	VIDECL Scalar fDot(const sVector2& a, const sVector2& b);
-	VIDECL Scalar fSkew(const sVector2& a, const sVector2& b);
-	VIDECL Scalar fCross(const sVector2& a, const sVector2& b);
-	VIDECL Scalar fLength(const sVector2& a);
-	VIDECL Scalar fLength2(const sVector2& a);
-	VIDECL Scalar fDistance(const sVector2& from, const sVector2& to);
-	VIDECL sVector2 fNormalize(const sVector2& a);
-	VIDECL sVector2 fFloor(const sVector2& a);
-	VIDECL sVector2 fCeil(const sVector2& a);
-	VIDECL Scalar fMagnitude(const sVector2& a);
-	VIDECL Scalar fRMagnitude(const sVector2& a);
+	VIDECL Scalar fDot(const SVector2& a, const SVector2& b);
+	VIDECL Scalar fSkew(const SVector2& a, const SVector2& b);
+	VIDECL Scalar fCross(const SVector2& a, const SVector2& b);
+	VIDECL Scalar fLength(const SVector2& a);
+	VIDECL Scalar fLength2(const SVector2& a);
+	VIDECL Scalar fDistance(const SVector2& from, const SVector2& to);
+	VIDECL SVector2 fNormalize(const SVector2& a);
+	VIDECL SVector2 fFloor(const SVector2& a);
+	VIDECL SVector2 fCeil(const SVector2& a);
+	VIDECL Scalar fMagnitude(const SVector2& a);
+	VIDECL Scalar fRMagnitude(const SVector2& a);
 
-	VIDECL std::ostream& operator<<(std::ostream& os, const sVector2& v);
+	VIDECL std::ostream& operator<<(std::ostream& os, const SVector2& v);
 
 VISRCEND
 

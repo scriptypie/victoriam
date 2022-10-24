@@ -8,7 +8,7 @@
 
 VISRCBEG
 
-cVulkanPipeline::cVulkanPipeline(const String& name, pDevice &device, pSwapchain& swapchain)
+CVulkanPipeline::CVulkanPipeline(const String& name, PDevice &device, PSwapchain& swapchain)
 		: m_Device(device), m_Info(Accessors::Swapchain::GetRenderPass(swapchain))
 {
 	// I know, it's wrong, but in this case it's okay 'cause our virtual function will be existed
@@ -18,7 +18,7 @@ cVulkanPipeline::cVulkanPipeline(const String& name, pDevice &device, pSwapchain
 	CreateGraphicsPipeline();
 }
 
-cVulkanPipeline::~cVulkanPipeline()
+CVulkanPipeline::~CVulkanPipeline()
 {
 	vkDestroyShaderModule(Accessors::Device::GetDevice(m_Device), m_VertexShaderModule, nullptr);
 	vkDestroyShaderModule(Accessors::Device::GetDevice(m_Device), m_FragmentShaderModule, nullptr);
@@ -26,7 +26,7 @@ cVulkanPipeline::~cVulkanPipeline()
 	vkDestroyPipeline(Accessors::Device::GetDevice(m_Device), m_GraphicsPipeline, nullptr);
 }
 
-void cVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderModule *shaderModule)
+void CVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderModule *shaderModule)
 {
 	VkShaderModuleCreateInfo createInfo = { VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO };
 	createInfo.codeSize = sourceData.size();
@@ -36,7 +36,7 @@ void cVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderM
 		 throw std::runtime_error("Failed to create shader module!");
 }
 
-void cVulkanPipeline::CreateGraphicsPipeline()
+void CVulkanPipeline::CreateGraphicsPipeline()
 {
 	assert(m_Info.RenderPass && "Cannot create graphics pipeline, cause RenderPass object is nullptr!");
 	assert(m_Info.PipelineLayout && "Cannot create graphics pipeline, cause PipelineLayout object is nullptr!");
@@ -49,8 +49,8 @@ void cVulkanPipeline::CreateGraphicsPipeline()
 	shaderStagesCreateInfo[1].module = m_FragmentShaderModule;
 	shaderStagesCreateInfo[1].pName = "main";
 
-	auto bindingDescriptions = GetVertexBindingDesctiptions();
-	auto attributeDescriptions = GetVertexAttributeDescriptions();
+	auto bindingDescriptions = FGetVertexBindingDesctiptions();
+	auto attributeDescriptions = FGetVertexAttributeDescriptions();
 
 	VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO };
 	vertexInputStateCreateInfo.vertexAttributeDescriptionCount = CCast<UInt32>(attributeDescriptions.size());
@@ -78,14 +78,14 @@ void cVulkanPipeline::CreateGraphicsPipeline()
 		throw std::runtime_error("Failed to create graphics pipeline!");
 }
 
-void cVulkanPipeline::CreatePipelineLayout()
+void CVulkanPipeline::CreatePipelineLayout()
 {
 	VkPipelineLayoutCreateInfo createInfo = { VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO };
 	if (vkCreatePipelineLayout(Accessors::Device::GetDevice(m_Device), &createInfo, nullptr, &m_Info.PipelineLayout) != VK_SUCCESS)
 		throw std::runtime_error("Failed to create pipeline layout!");
 }
 
-void cVulkanPipeline::BindDrawCommandBuffer(const sCommandBuffer &commandBuffer) {
+void CVulkanPipeline::BindDrawCommandBuffer(const SCommandBuffer &commandBuffer) {
 	if (m_GraphicsPipeline != VK_NULL_HANDLE)
 		vkCmdBindPipeline(CCast<VkCommandBuffer>(commandBuffer), VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
 	else

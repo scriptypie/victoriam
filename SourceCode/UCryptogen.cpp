@@ -28,40 +28,40 @@ VISRCBEG
 #define GET(n) (md5_ctx.block[(n)])
 #endif
 
-cCryptogen::cCryptogen(const String &str, const ecHashingAlgorithm &algorithm)
+CCryptogen::CCryptogen(const String &str, const ECHashingAlgorithm &algorithm)
 	: m_Buffer(str), m_Algorithm(algorithm)
 {}
 
-cCryptogen::cCryptogen(CString dat, const UInt64 &len, const ecHashingAlgorithm &algorithm)
+CCryptogen::CCryptogen(CString dat, const UInt64 &len, const ECHashingAlgorithm &algorithm)
 	: m_Buffer(dat, len), m_Algorithm(algorithm)
 {}
 
-void cCryptogen::SetInputString(const String &str)
+void CCryptogen::SetInputString(const String &str)
 {
 	m_Buffer = str;
 }
 
-void cCryptogen::SetAlgorithm(const ecHashingAlgorithm &algorithm) {
+void CCryptogen::SetAlgorithm(const ECHashingAlgorithm &algorithm) {
 	m_Algorithm = algorithm;
 }
 
-String cCryptogen::ProcessFromString() {
+String CCryptogen::ProcessFromString() {
 	switch (m_Algorithm)
 	{
-		case ecHashingAlgorithm::MD5: return GetStringFromStringMD5(m_Buffer);
+		case ECHashingAlgorithm::MD5: return GetStringFromStringMD5(m_Buffer);
 		default: return "";
 	}
 }
 
-String cCryptogen::ProcessFromFile() {
+String CCryptogen::ProcessFromFile() {
 	switch (m_Algorithm)
 	{
-		case ecHashingAlgorithm::MD5: return GetStringFromFileMD5(m_Buffer);
+		case ECHashingAlgorithm::MD5: return GetStringFromFileMD5(m_Buffer);
 		default: return "";
 	}
 }
 
-void cCryptogen::CreateMD5Context() {
+void CCryptogen::CreateMD5Context() {
 	md5_ctx = {};
 	md5_ctx.a = { 0x67452301 };
 	md5_ctx.b = { 0xefcdab89 };
@@ -69,11 +69,11 @@ void cCryptogen::CreateMD5Context() {
 	md5_ctx.d = { 0x10325476 };
 }
 
-void cCryptogen::ResetMD5Context() {
+void CCryptogen::ResetMD5Context() {
 	CreateMD5Context();
 }
 
-void cCryptogen::UpdateMD5(const void *data, UInt64 size) {
+void CCryptogen::UpdateMD5(const void *data, UInt64 size) {
 	UInt32 saved_lo;
 	unsigned long used, free;
 
@@ -104,7 +104,7 @@ void cCryptogen::UpdateMD5(const void *data, UInt64 size) {
 	memcpy(md5_ctx.buffer, data, size);
 }
 
-void cCryptogen::EndMD5(UInt8 *result) {
+void CCryptogen::EndMD5(UInt8 *result) {
 	unsigned long used, free;
 	used = md5_ctx.lo & 0x3f;
 	md5_ctx.buffer[used++] = 0x80;
@@ -148,7 +148,7 @@ void cCryptogen::EndMD5(UInt8 *result) {
 	md5_ctx = {};
 }
 
-const void *cCryptogen::ProcessMD5(const void *data, UInt64 size) {
+const void *CCryptogen::ProcessMD5(const void *data, UInt64 size) {
 	const UInt8 *ptr;
 	UInt32 a, b, c, d;
 	UInt32 saved_a, saved_b, saved_c, saved_d;
@@ -247,19 +247,19 @@ const void *cCryptogen::ProcessMD5(const void *data, UInt64 size) {
 	return ptr;
 }
 
-void cCryptogen::GetBinaryMD5(const void *dat, UInt64 len, UInt8 *out) {
+void CCryptogen::GetBinaryMD5(const void *dat, UInt64 len, UInt8 *out) {
 	CreateMD5Context();
 	UpdateMD5(dat, len);
 	EndMD5(out);
 	ResetMD5Context();
 }
 
-char cCryptogen::HexByteToHex(UInt8 hb) {
+char CCryptogen::HexByteToHex(UInt8 hb) {
 	hb = hb & 0xF;
 	return hb < 10 ? '0' + hb : hb - 10 + 'a';
 }
 
-String cCryptogen::GetStringFromStringMD5(const void *dat, const UInt64 &len) {
+String CCryptogen::GetStringFromStringMD5(const void *dat, const UInt64 &len) {
 	String result = {};
 	UInt8 out[BLOCK_SIZE] = {};
 	GetBinaryMD5(dat, len, out);
@@ -271,11 +271,11 @@ String cCryptogen::GetStringFromStringMD5(const void *dat, const UInt64 &len) {
 	return result;
 }
 
-String cCryptogen::GetStringFromStringMD5(const String &str) {
+String CCryptogen::GetStringFromStringMD5(const String &str) {
 	return GetStringFromStringMD5(str.data(), str.size());
 }
 
-String cCryptogen::GetStringFromFileMD5(const String &filename) {
+String CCryptogen::GetStringFromFileMD5(const String &filename) {
 	std::fstream file(filename, std::ios::in | std::ios::binary);
 	String result = {};
 	if (file.is_open())

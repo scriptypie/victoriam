@@ -12,14 +12,14 @@
 
 VISRCBEG
 
-struct VIDECL sSwapchainSupportDetails
+struct VIDECL SSwapchainSupportDetails
 {
 	VkSurfaceCapabilitiesKHR capabilities;
 	List<VkSurfaceFormatKHR> formats;
 	List<VkPresentModeKHR> presentModes;
 };
 
-struct VIDECL sQueueFamilyIndices
+struct VIDECL SQueueFamilyIndices
 {
 	UInt32 GraphicsFamily = {};
 	UInt32 PresentFamily = {};
@@ -30,16 +30,16 @@ struct VIDECL sQueueFamilyIndices
 
 namespace Accessors { class Device; }
 
-class cVulkanDevice : public cDevice
+class CVulkanDevice : public CDevice
 {
 	friend class Accessors::Device;
-	friend class cVulkanRenderer;
+	friend class CVulkanRenderer;
 #ifdef NDEBUG
 		const Bool m_EnableValidation = false;
 #else
 		const Bool m_EnableValidation = true;
 #endif
-	SPtr<cWindow> m_Window;
+	SPtr<CWindow> m_Window;
 	VkInstance m_Instance{};
 	VkDebugUtilsMessengerEXT m_DebugMessenger{};
 	VkPhysicalDevice m_PhysicalDevice{};
@@ -54,8 +54,8 @@ class cVulkanDevice : public cDevice
 	List<CString> DEVICE_EXTENSIONS =
 	{ VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 public:
-	explicit cVulkanDevice(const SPtr<cWindow> &window);
-	~cVulkanDevice() override;
+	explicit CVulkanDevice(const SPtr<CWindow> &window);
+	~CVulkanDevice() override;
 
 private:
 	void CreateGraphicsInstance();
@@ -68,12 +68,12 @@ private:
 	VIDECL Bool IsPhysicalDeviceSuitable(VkPhysicalDevice device);
 	VIDECL VIREQOUT List<CString> GetRequiredExtensions() const;
 	VIDECL Bool CheckValidationLayerSupport();
-	VIDECL sQueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
+	VIDECL SQueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
 	VIDECL VkFormat FindSupportedFormat(const List<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 	VIDECL static void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& info);
 	VIDECL void HasGLFWRequiredInstanceExtensions();
 	VIDECL Bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
-	VIDECL sSwapchainSupportDetails QuerySwapchainSupport(VkPhysicalDevice device);
+	VIDECL SSwapchainSupportDetails QuerySwapchainSupport(VkPhysicalDevice device);
 
 private:
 	// API defined
@@ -88,7 +88,7 @@ private:
 	VIDECL VIREQOUT inline VkCommandPool GetCommandPool() { return m_CmdPool; }
 	VIDECL VIREQOUT inline VkDevice GetDevice() { return m_Device; }
 	VIDECL VIREQOUT inline VkSurfaceKHR GetSurface() { return m_Surface; }
-	VIDECL VIREQOUT inline sSwapchainSupportDetails GetSwapchainSupport() { return QuerySwapchainSupport(m_PhysicalDevice); }
+	VIDECL VIREQOUT inline SSwapchainSupportDetails GetSwapchainSupport() { return QuerySwapchainSupport(m_PhysicalDevice); }
 	VIDECL VIREQOUT inline VkQueue GetGraphicsQueue() { return m_GraphicsQueue; }
 	VIDECL VIREQOUT inline VkQueue GetPresentQueue() { return m_PresentQueue; }
 };

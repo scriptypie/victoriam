@@ -10,12 +10,12 @@
 
 VISRCBEG
 
-struct sPipelineCreateInfo
+struct SPipelineCreateInfo
 {
 	VIDECL UInt32 Width;
 	VIDECL UInt32 Height;
 
-	inline sPipelineCreateInfo()
+	inline SPipelineCreateInfo()
 	{
 	}
 };

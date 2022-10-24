@@ -13,7 +13,7 @@ VISRCBEG
 
 extern Bool g_Reload;
 
-cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
+CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	: m_info(std::move(createInfo))
 {
 	s_instance = this;
@@ -28,23 +28,23 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 			std::filesystem::current_path(m_info.CWD);
 #endif
 	}
-	sRendererCreateInfo rendererCreateInfo = {};
+	SRendererCreateInfo rendererCreateInfo = {};
 	{
-		sWindowCreateInfo info;
+		SWindowCreateInfo info;
 		info.Name = m_info.AppName + " - NewWindow";
 		info.Offset = {100, 100};
 		info.Resolution = {1280, 720};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
-		m_Window = cWindow::Create(info);
+		m_Window = CWindow::Create(info);
 	}
-	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(cRuntimeApp::OnEvent));
-	cInput::Init(m_Window);
+	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(CRuntimeApp::OnEvent));
+	CInput::Init(m_Window);
 
 	rendererCreateInfo.WindowPtr = m_Window;
 
-	m_Renderer = cRenderer::Create(rendererCreateInfo);
+	m_Renderer = CRenderer::Create(rendererCreateInfo);
 
-	const List<sVertex> vertices = {
+	const List<SVertex> vertices = {
 			{ { 0.0F, -0.5F }, { 1.0F, 0.0F, 0.0F, 1.0F } },
 			{ { 0.5F,  0.5F }, { 0.0F, 1.0F, 0.0F, 1.0F } },
 			{ {-0.5F,  0.5F }, { 0.0F, 0.0F, 1.0F, 1.0F } },
@@ -55,32 +55,32 @@ cRuntimeApp::cRuntimeApp(sRuntimeAppCreateInfo createInfo)
 	m_running = true;
 }
 
-cRuntimeApp::~cRuntimeApp() {
+CRuntimeApp::~CRuntimeApp() {
 	if (m_running)
 		Reload();
 }
 
-void cRuntimeApp::AddState(cAppState* state) {
+void CRuntimeApp::AddState(CAppState* state) {
 	m_stateController.AddState(state);
 	state->OnCreate();
 }
 
-void cRuntimeApp::AddOverlayState(cAppState* overlay) {
+void CRuntimeApp::AddOverlayState(CAppState* overlay) {
 	m_stateController.AddOverlayState(overlay);
 	overlay->OnCreate();
 }
 
-void cRuntimeApp::Reload() {
+void CRuntimeApp::Reload() {
 	m_running = false;
 }
 
-void cRuntimeApp::Close()
+void CRuntimeApp::Close()
 {
 	g_Reload = false;
 	m_running = false;
 }
 
-void Vi::cRuntimeApp::Startup() {
+void Vi::CRuntimeApp::Startup() {
 	while (m_running) {
 		m_Window->Update();
 
@@ -97,19 +97,19 @@ void Vi::cRuntimeApp::Startup() {
 	m_Renderer->Shutdown();
 }
 
-void cRuntimeApp::OnEvent(cEvent &e) {
-	cEventDispatcher dispatcher(e);
-	dispatcher.Dispatch<cWindowResizeEvent>(BIND_EVENT_FN(cRuntimeApp::OnWindowResize));
-	dispatcher.Dispatch<cWindowCloseEvent>(BIND_EVENT_FN(cRuntimeApp::OnWindowClose));
+void CRuntimeApp::OnEvent(CEvent &e) {
+	CEventDispatcher dispatcher(e);
+	dispatcher.Dispatch<CWindowResizeEvent>(BIND_EVENT_FN(CRuntimeApp::OnWindowResize));
+	dispatcher.Dispatch<CWindowCloseEvent>(BIND_EVENT_FN(CRuntimeApp::OnWindowClose));
 }
 
-bool cRuntimeApp::OnWindowResize(const cWindowResizeEvent &e) {
+bool CRuntimeApp::OnWindowResize(const CWindowResizeEvent &e) {
 	printf("%s\n", e.ToString().c_str());
 	m_Renderer->OnWindowResize(e.GetExtent());
 	return true;
 }
 
-bool cRuntimeApp::OnWindowClose(const cWindowCloseEvent &e) {
+bool CRuntimeApp::OnWindowClose(const CWindowCloseEvent &e) {
 	Close();
 	return true;
 }

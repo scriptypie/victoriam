@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-enum eGamepadAxis : UInt32
+enum EGamepadAxis : UInt32
 {
 	AxisLeftX       = 0,
 	AxisLeftY       = 1,

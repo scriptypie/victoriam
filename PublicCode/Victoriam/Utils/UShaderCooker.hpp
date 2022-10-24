@@ -10,15 +10,15 @@
 
 VISRCBEG
 
-struct EngineShader
+struct SEngineShader
 {
 	String Name;
 	String Source;
 	String Checksum;
 };
-struct SPIRVShader
+struct SSPIRVShader
 {
-	enum ShaderType
+	enum EShaderType
 	{
 		Vertex, Fragment,
 		NumTypes
@@ -26,14 +26,14 @@ struct SPIRVShader
 	String Source;
 	String Name;
 
-	static String toString(const ShaderType& type) ;
+	static String toString(const EShaderType& type) ;
 
-	SPIRVShader(const ShaderType& type, String src, String name)
+	SSPIRVShader(const EShaderType& type, String src, String name)
 			: Type(type), Source(std::move(src)), Name(std::move(name))
 	{}
 };
 
-class VIDECL cShaderCooker
+class VIDECL CShaderCooker
 {
 	const List<CString> EXT = { ".vert.spv", ".frag.spv" };
 	String INFO;
@@ -42,10 +42,10 @@ class VIDECL cShaderCooker
 	const String COOKEDDIR = SHADERDIR + "Cooked/";
 	const String TEMPDIR = SHADERDIR + ".TMP/";
 	bool IsCookedExists(const String& name);
-	bool IsShaderChanged(const EngineShader& shader, const String& name);
-	EngineShader ReadShader(const String& name);
-	String CookShader(const List<SPIRVShader>& sshader);
-	BinaryData LoadCookedShaderFromName(const String& name, const SPIRVShader::ShaderType& type);
+	bool IsShaderChanged(const SEngineShader& shader, const String& name);
+	SEngineShader ReadShader(const String& name);
+	String CookShader(const List<SSPIRVShader>& sshader);
+	BinaryData LoadCookedShaderFromName(const String& name, const SSPIRVShader::EShaderType& type);
 public:
 	VIDECL BinaryData LoadVertexShader(const String& name);
 	VIDECL BinaryData LoadFragmentShader(const String& name);

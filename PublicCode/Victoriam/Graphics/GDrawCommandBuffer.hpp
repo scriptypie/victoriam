@@ -13,17 +13,17 @@
 
 VISRCBEG
 
-class cDrawCommandBuffer
+class CDrawCommandBuffer
 {
 public:
-	virtual ~cDrawCommandBuffer() = default;
+	virtual ~CDrawCommandBuffer() = default;
 
 	virtual void RecordCommandBuffer(UInt32 imageIndex) = 0;
 
-	VIDECL VIREQOUT static SPtr<cDrawCommandBuffer> Create(pSwapchain& swapchain, pDevice& device, pPipeline& pipeline, const List<pVertexBuffer>& vertexBuffers);
+	VIDECL VIREQOUT static SPtr<CDrawCommandBuffer> Create(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline, const List<PVertexBuffer>& vertexBuffers);
 };
 
-VIDECL typedef SPtr<cDrawCommandBuffer> pDrawCommandBuffer;
+VIDECL typedef SPtr<CDrawCommandBuffer> PDrawCommandBuffer;
 
 VISRCEND
 

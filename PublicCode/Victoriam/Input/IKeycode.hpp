@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-enum VIDECL eKeyboardCode : UInt32
+enum VIDECL EKeyboardCode : UInt32
 {
 	// From glfw3.h
 	Space               = 32,
@@ -147,7 +147,7 @@ enum VIDECL eKeyboardCode : UInt32
 	KeyboardMax
 };
 
-using eKeyCode = eKeyboardCode;
+using EKeyCode = EKeyboardCode;
 
 VISRCEND
 

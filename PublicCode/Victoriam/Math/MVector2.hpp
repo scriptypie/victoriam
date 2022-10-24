@@ -10,7 +10,7 @@
 
 VISRCBEG
 
-VIDECL typedef sVector2 Vector2;
+VIDECL typedef SVector2 Vector2;
 
 VISRCEND
 

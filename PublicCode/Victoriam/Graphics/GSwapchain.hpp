@@ -10,10 +10,10 @@
 
 VISRCBEG
 
-class cSwapchain
+class CSwapchain
 {
 public:
-	virtual ~cSwapchain() = default;
+	virtual ~CSwapchain() = default;
 
 	VIDECL VIREQOUT virtual UInt32 AcquireNextImage(UInt32* imageIndex) = 0;
 	VIDECL VIREQOUT virtual UInt32 GetImageCount() const = 0;
@@ -21,11 +21,11 @@ public:
 	VIDECL VIREQOUT virtual UInt32 GetHeight() const = 0;
 	VIDECL VIREQOUT virtual Float32 GetExtentAspectRatio() const = 0;
 
-	VIDECL static UPtr<cSwapchain> Create(pDevice& device, const sWindowExtent& extent);
-	VIDECL static UPtr<cSwapchain> Create(pDevice& device, const sWindowExtent& extent, cSwapchain* prev);
+	VIDECL static UPtr<CSwapchain> Create(PDevice& device, const SWindowExtent& extent);
+	VIDECL static UPtr<CSwapchain> Create(PDevice& device, const SWindowExtent& extent, CSwapchain* prev);
 };
 
-VIDECL typedef UPtr<cSwapchain> pSwapchain;
+VIDECL typedef UPtr<CSwapchain> PSwapchain;
 
 VISRCEND
 

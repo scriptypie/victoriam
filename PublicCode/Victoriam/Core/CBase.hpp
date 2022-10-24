@@ -12,6 +12,7 @@
 #include <cstdint>
 #include <functional>
 
+#include <Victoriam/Core/CLog.hpp>
 #include <Victoriam/Core/CCast.hpp>
 #include <Victoriam/Core/CFlags.hpp>
 #include <Victoriam/Core/CMacroDefinitions.hpp>

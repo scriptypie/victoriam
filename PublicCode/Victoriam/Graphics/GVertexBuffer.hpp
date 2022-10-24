@@ -11,18 +11,18 @@
 
 VISRCBEG
 
-class VIDECL cVertexBuffer
+class VIDECL CVertexBuffer
 {
 public:
-	virtual ~cVertexBuffer() = default;
+	virtual ~CVertexBuffer() = default;
 
-	virtual void Bind(const sCommandBuffer& buffer) = 0;
-	virtual void Draw(const sCommandBuffer& buffer) const = 0;
+	virtual void Bind(const SCommandBuffer& buffer) = 0;
+	virtual void Draw(const SCommandBuffer& buffer) const = 0;
 
-	VIDECL VIREQOUT static SPtr<cVertexBuffer> Create(pDevice& device, const List<sVertex>& vertices);
+	VIDECL VIREQOUT static SPtr<CVertexBuffer> Create(PDevice& device, const List<SVertex>& vertices);
 };
 
-VIDECL typedef SPtr<cVertexBuffer> pVertexBuffer;
+VIDECL typedef SPtr<CVertexBuffer> PVertexBuffer;
 
 VISRCEND
 

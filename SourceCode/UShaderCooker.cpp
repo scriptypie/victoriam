@@ -26,9 +26,9 @@ namespace {
 		return true;
 	}
 
-	List<SPIRVShader> SplitShader(const EngineShader &shader)
+	List<SSPIRVShader> SplitShader(const SEngineShader &shader)
 	{
-		List<SPIRVShader> result;
+		List<SSPIRVShader> result;
 		String tmp, source = shader.Source;
 		const char keyword[4][9] =
 				{
@@ -48,8 +48,8 @@ namespace {
 						while ((*++it) != 64) tmp.push_back(*it);
 						if (CheckKeyword(it, keyword[3]))
 						{
-							SPIRVShader s(
-									SPIRVShader::Vertex,
+							SSPIRVShader s(
+									SSPIRVShader::Vertex,
 									tmp,
 									shader.Name
 							);
@@ -63,8 +63,8 @@ namespace {
 						while ((*++it) != 64) tmp.push_back(*it);
 						if (CheckKeyword(it, keyword[3]))
 						{
-							SPIRVShader s(
-									SPIRVShader::Fragment,
+							SSPIRVShader s(
+									SSPIRVShader::Fragment,
 									tmp,
 									shader.Name
 							);
@@ -81,7 +81,7 @@ namespace {
 
 }
 
-bool cShaderCooker::IsCookedExists(const String &name)
+bool CShaderCooker::IsCookedExists(const String &name)
 {
 	return std::all_of(EXT.begin(), EXT.end(),[=](const char* ext) -> Bool
 	{
@@ -91,7 +91,7 @@ bool cShaderCooker::IsCookedExists(const String &name)
 	});
 }
 
-bool cShaderCooker::IsShaderChanged(const EngineShader& shader, const String& name)
+bool CShaderCooker::IsShaderChanged(const SEngineShader& shader, const String& name)
 {
 	std::fstream file(SHADERDIR + name + ".sum", std::ios::in);
 	String sum; sum.resize(32);
@@ -117,7 +117,7 @@ bool cShaderCooker::IsShaderChanged(const EngineShader& shader, const String& na
 	}
 }
 
-EngineShader cShaderCooker::ReadShader(const String &name)
+SEngineShader CShaderCooker::ReadShader(const String &name)
 {
 	String source = {};
 	String checksum; checksum.resize(32);
@@ -132,7 +132,7 @@ EngineShader cShaderCooker::ReadShader(const String &name)
 			file.read(CCast<char*>(source.data()), CCast<UInt32>(source.size()));
 			file.close();
 
-			cCryptogen cryptogen(source, ecHashingAlgorithm::MD5);
+			CCryptogen cryptogen(source, ECHashingAlgorithm::MD5);
 			checksum = cryptogen.ProcessFromString();
 		}
 		else
@@ -150,7 +150,7 @@ EngineShader cShaderCooker::ReadShader(const String &name)
 	return { name, source, checksum };
 }
 
-String cShaderCooker::CookShader(const List<SPIRVShader> &sshader)
+String CShaderCooker::CookShader(const List<SSPIRVShader> &sshader)
 {
 	String info = "\nCooked shader: {\n", tempfile, cookedfile;
 
@@ -166,9 +166,9 @@ String cShaderCooker::CookShader(const List<SPIRVShader> &sshader)
 	{
 		// create meta info string
 		String tmp = "\t{\n\t\tName: \"" + shader.Name + "\"";
-		tmp += ",\n\t\tType: " + SPIRVShader::toString(shader.Type);
-		tempfile = TEMPDIR + shader.Name + "." + SPIRVShader::toString(shader.Type);
-		cookedfile = COOKEDDIR + shader.Name + "." + SPIRVShader::toString(shader.Type) + ".spv";
+		tmp += ",\n\t\tType: " + SSPIRVShader::toString(shader.Type);
+		tempfile = TEMPDIR + shader.Name + "." + SSPIRVShader::toString(shader.Type);
+		cookedfile = COOKEDDIR + shader.Name + "." + SSPIRVShader::toString(shader.Type) + ".spv";
 		tmp += ",\n\t\tCooked: \"" + cookedfile + "\"";
 		tmp += ",\n\t},\n";
 		info += tmp;
@@ -191,8 +191,8 @@ String cShaderCooker::CookShader(const List<SPIRVShader> &sshader)
 	return info;
 }
 
-BinaryData cShaderCooker::LoadCookedShaderFromName(const String &name,
-                                                       const SPIRVShader::ShaderType &type)
+BinaryData CShaderCooker::LoadCookedShaderFromName(const String &name,
+                                                   const SSPIRVShader::EShaderType &type)
 {
 	BinaryData data = {};
 	std::ifstream f(COOKEDDIR + name + EXT[(uint32_t)(type)]);
@@ -207,31 +207,31 @@ BinaryData cShaderCooker::LoadCookedShaderFromName(const String &name,
 	return data;
 }
 
-BinaryData cShaderCooker::LoadVertexShader(const String &name)
+BinaryData CShaderCooker::LoadVertexShader(const String &name)
 {
-	EngineShader shader = ReadShader(name);
+	SEngineShader shader = ReadShader(name);
 	if (IsShaderChanged(shader, name) || !IsCookedExists(name))
 	{
-		List<SPIRVShader> shaders = SplitShader(shader);
+		List<SSPIRVShader> shaders = SplitShader(shader);
 		INFO += CookShader(shaders);
         printf("%s\n", INFO.c_str());
 	}
-	return LoadCookedShaderFromName(name, SPIRVShader::Vertex);
+	return LoadCookedShaderFromName(name, SSPIRVShader::Vertex);
 }
 
-BinaryData cShaderCooker::LoadFragmentShader(const String &name)
+BinaryData CShaderCooker::LoadFragmentShader(const String &name)
 {
-	EngineShader shader = ReadShader(name);
+	SEngineShader shader = ReadShader(name);
 	if (IsShaderChanged(shader, name) || !IsCookedExists(name))
 	{
-		List<SPIRVShader> shaders = SplitShader(shader);
+		List<SSPIRVShader> shaders = SplitShader(shader);
 		INFO += CookShader(shaders);
 		printf("%s\n", INFO.c_str());
 	}
-	return LoadCookedShaderFromName(name, SPIRVShader::Fragment);
+	return LoadCookedShaderFromName(name, SSPIRVShader::Fragment);
 }
 
-String SPIRVShader::toString(const SPIRVShader::ShaderType &type)
+String SSPIRVShader::toString(const SSPIRVShader::EShaderType &type)
 {
 	switch (type)
 	{

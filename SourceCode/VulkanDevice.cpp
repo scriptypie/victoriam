@@ -22,7 +22,7 @@ namespace
 			void*
 	)
 	{
-		std::cerr << "Validation layer: " << pCallbackData->pMessage << std::endl;
+		std::cout << "Validation layer: " << pCallbackData->pMessage << std::endl;
 		return VK_FALSE;
 	}
 
@@ -43,7 +43,7 @@ namespace
 
 }
 
-cVulkanDevice::cVulkanDevice(const SPtr<cWindow> &window)
+CVulkanDevice::CVulkanDevice(const SPtr<CWindow> &window)
 	: m_Window(window)
 {
 	CreateGraphicsInstance();
@@ -54,7 +54,7 @@ cVulkanDevice::cVulkanDevice(const SPtr<cWindow> &window)
 	CreateCommandPool();
 }
 
-cVulkanDevice::~cVulkanDevice()
+CVulkanDevice::~CVulkanDevice()
 {
 	vkDestroyCommandPool(m_Device, m_CmdPool, nullptr);
 	vkDestroyDevice(m_Device, nullptr);
@@ -66,7 +66,7 @@ cVulkanDevice::~cVulkanDevice()
 	vkDestroyInstance(m_Instance, nullptr);
 }
 
-void cVulkanDevice::CreateGraphicsInstance()
+void CVulkanDevice::CreateGraphicsInstance()
 {
 	if (m_EnableValidation && !CheckValidationLayerSupport())
 		throw std::runtime_error("Validation layers requested, but not available!");
@@ -104,7 +104,7 @@ void cVulkanDevice::CreateGraphicsInstance()
 	HasGLFWRequiredInstanceExtensions();
 }
 
-void cVulkanDevice::SetupDebugMessenger()
+void CVulkanDevice::SetupDebugMessenger()
 {
 	if (!m_EnableValidation) return;
 	VkDebugUtilsMessengerCreateInfoEXT createInfo = {};
@@ -113,12 +113,12 @@ void cVulkanDevice::SetupDebugMessenger()
 		throw std::runtime_error("Failed to set up debug messenger!");
 }
 
-void cVulkanDevice::CreateSurface()
+void CVulkanDevice::CreateSurface()
 {
 	Accessors::Window::CreateWindowSurface(m_Window, m_Instance, &m_Surface);
 }
 
-void cVulkanDevice::ChoosePhysicalDevice()
+void CVulkanDevice::ChoosePhysicalDevice()
 {
 	UInt32 deviceCount = {};
 	vkEnumeratePhysicalDevices(m_Instance, &deviceCount, nullptr);
@@ -139,9 +139,9 @@ void cVulkanDevice::ChoosePhysicalDevice()
 	// log here
 }
 
-void cVulkanDevice::CreateLogicalDevice()
+void CVulkanDevice::CreateLogicalDevice()
 {
-	sQueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice);
+	SQueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice);
 	List<VkDeviceQueueCreateInfo> queueCreateInfos;
 	std::set<UInt32> uniqueQueueFamilies = { indices.GraphicsFamily, indices.PresentFamily };
 	Float32 queuePriority = 1.0F;
@@ -178,9 +178,9 @@ void cVulkanDevice::CreateLogicalDevice()
 	vkGetDeviceQueue(m_Device, indices.PresentFamily, 0, &m_PresentQueue);
 }
 
-void cVulkanDevice::CreateCommandPool()
+void CVulkanDevice::CreateCommandPool()
 {
-	sQueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice);
+	SQueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice);
 
 	VkCommandPoolCreateInfo createInfo = { VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO };
 	createInfo.queueFamilyIndex = indices.GraphicsFamily;
@@ -190,14 +190,14 @@ void cVulkanDevice::CreateCommandPool()
 		throw std::runtime_error("Failed to create command pool!");
 }
 
-Bool cVulkanDevice::IsPhysicalDeviceSuitable(VkPhysicalDevice device)
+Bool CVulkanDevice::IsPhysicalDeviceSuitable(VkPhysicalDevice device)
 {
-	sQueueFamilyIndices indices = FindQueueFamilies(device);
+	SQueueFamilyIndices indices = FindQueueFamilies(device);
 	Bool extensionsSupported = CheckDeviceExtensionSupport(device);
 	Bool swapchainIsOkay;
 	if (extensionsSupported)
 	{
-		sSwapchainSupportDetails swapchainSupportDetails = QuerySwapchainSupport(device);
+		SSwapchainSupportDetails swapchainSupportDetails = QuerySwapchainSupport(device);
 		swapchainIsOkay = !swapchainSupportDetails.formats.empty() && !swapchainSupportDetails.presentModes.empty();
 	}
 	VkPhysicalDeviceFeatures supportedFeatures;
@@ -206,7 +206,7 @@ Bool cVulkanDevice::IsPhysicalDeviceSuitable(VkPhysicalDevice device)
 	return indices.IsCompleted() && extensionsSupported && swapchainIsOkay && supportedFeatures.samplerAnisotropy;
 }
 
-List<CString> cVulkanDevice::GetRequiredExtensions() const {
+List<CString> CVulkanDevice::GetRequiredExtensions() const {
 	UInt32 glfwExtensionCount = {};
 	CString* glfwExtensions;
 	glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
@@ -217,7 +217,7 @@ List<CString> cVulkanDevice::GetRequiredExtensions() const {
 	return requiredExtensions;
 }
 
-Bool cVulkanDevice::CheckValidationLayerSupport()
+Bool CVulkanDevice::CheckValidationLayerSupport()
 {
 	UInt32 layerCount = {};
 	vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
@@ -240,9 +240,9 @@ Bool cVulkanDevice::CheckValidationLayerSupport()
 	return true;
 }
 
-sQueueFamilyIndices cVulkanDevice::FindQueueFamilies(VkPhysicalDevice device)
+SQueueFamilyIndices CVulkanDevice::FindQueueFamilies(VkPhysicalDevice device)
 {
-	sQueueFamilyIndices indices;
+	SQueueFamilyIndices indices;
 
 	UInt32 queueFamilyCount = 0;
 	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
@@ -272,7 +272,7 @@ sQueueFamilyIndices cVulkanDevice::FindQueueFamilies(VkPhysicalDevice device)
 	return indices;
 }
 
-void cVulkanDevice::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &info)
+void CVulkanDevice::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &info)
 {
 	info                    = { VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT };
 	info.messageSeverity    =   VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
@@ -284,7 +284,7 @@ void cVulkanDevice::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreate
 	info.pUserData = nullptr;  // Optional
 }
 
-void cVulkanDevice::HasGLFWRequiredInstanceExtensions()
+void CVulkanDevice::HasGLFWRequiredInstanceExtensions()
 {
 	UInt32 extensionCount = {};
 	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
@@ -301,7 +301,7 @@ void cVulkanDevice::HasGLFWRequiredInstanceExtensions()
 			throw std::runtime_error("Missing required glfw extension");
 }
 
-Bool cVulkanDevice::CheckDeviceExtensionSupport(VkPhysicalDevice device)
+Bool CVulkanDevice::CheckDeviceExtensionSupport(VkPhysicalDevice device)
 {
 	UInt32 extensionCount;
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
@@ -317,9 +317,9 @@ Bool cVulkanDevice::CheckDeviceExtensionSupport(VkPhysicalDevice device)
 	return requiredExtensions.empty();
 }
 
-sSwapchainSupportDetails cVulkanDevice::QuerySwapchainSupport(VkPhysicalDevice device)
+SSwapchainSupportDetails CVulkanDevice::QuerySwapchainSupport(VkPhysicalDevice device)
 {
-	auto details = sSwapchainSupportDetails();
+	auto details = SSwapchainSupportDetails();
 
 	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, m_Surface, &details.capabilities);
 	UInt32 formatCount;
@@ -341,7 +341,7 @@ sSwapchainSupportDetails cVulkanDevice::QuerySwapchainSupport(VkPhysicalDevice d
 	return details;
 }
 
-void cVulkanDevice::CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties,
+void CVulkanDevice::CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties,
                                  VkBuffer &buffer, VkDeviceMemory &bufferMemory)
  {
 	 VkBufferCreateInfo bufferInfo = { VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO };
@@ -364,7 +364,7 @@ void cVulkanDevice::CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, Vk
 	 vkBindBufferMemory(m_Device, buffer, bufferMemory, 0);
 }
 
-VkCommandBuffer cVulkanDevice::BeginSingleTimeCommands()
+VkCommandBuffer CVulkanDevice::BeginSingleTimeCommands()
 {
 	VkCommandBufferAllocateInfo allocInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO };
 	allocInfo.commandPool = m_CmdPool;
@@ -380,7 +380,7 @@ VkCommandBuffer cVulkanDevice::BeginSingleTimeCommands()
 	return commandBuffer;
 }
 
-void cVulkanDevice::EndSingleTimeCommands(VkCommandBuffer commandBuffer) {
+void CVulkanDevice::EndSingleTimeCommands(VkCommandBuffer commandBuffer) {
 	vkEndCommandBuffer(commandBuffer);
 
 	VkSubmitInfo submitInfo = { VK_STRUCTURE_TYPE_SUBMIT_INFO };
@@ -393,7 +393,7 @@ void cVulkanDevice::EndSingleTimeCommands(VkCommandBuffer commandBuffer) {
 	vkFreeCommandBuffers(m_Device, m_CmdPool, 1, &commandBuffer);
 }
 
-void cVulkanDevice::CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
+void CVulkanDevice::CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
 	VkCommandBuffer commandBuffer = BeginSingleTimeCommands();
 
 	VkBufferCopy copyRegion = {};
@@ -403,7 +403,7 @@ void cVulkanDevice::CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceS
 	EndSingleTimeCommands(commandBuffer);
 }
 
-void cVulkanDevice::CopyBufferToImage(VkBuffer buffer, VkImage image, UInt32 width, UInt32 height, UInt32 layerCount)
+void CVulkanDevice::CopyBufferToImage(VkBuffer buffer, VkImage image, UInt32 width, UInt32 height, UInt32 layerCount)
 {
 	VkCommandBuffer commandBuffer = BeginSingleTimeCommands();
 
@@ -416,7 +416,7 @@ void cVulkanDevice::CopyBufferToImage(VkBuffer buffer, VkImage image, UInt32 wid
 	EndSingleTimeCommands(commandBuffer);
 }
 
-void cVulkanDevice::CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory)
+void CVulkanDevice::CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory)
 {
 	if (vkCreateImage(m_Device, &imageInfo, nullptr, &image) != VK_SUCCESS)
 		throw std::runtime_error("Failed to create image!");
@@ -435,7 +435,7 @@ void cVulkanDevice::CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMe
 		throw std::runtime_error("Failed to bind image memory!");
 }
 
-UInt32 cVulkanDevice::FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags properties)
+UInt32 CVulkanDevice::FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags properties)
 {
 	VkPhysicalDeviceMemoryProperties memProperties = {};
 	vkGetPhysicalDeviceMemoryProperties(m_PhysicalDevice, &memProperties);
@@ -449,7 +449,7 @@ UInt32 cVulkanDevice::FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags pr
 	throw std::runtime_error("Failed to find suitable memory type!");
 }
 
-VkFormat cVulkanDevice::FindSupportedFormat(const List<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
+VkFormat CVulkanDevice::FindSupportedFormat(const List<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
 {
 	for (VkFormat format : candidates) {
 		VkFormatProperties props = {};

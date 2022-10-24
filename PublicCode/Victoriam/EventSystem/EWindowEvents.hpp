@@ -9,15 +9,15 @@
 
 VISRCBEG
 
-class cWindowCloseEvent : public cEvent
+class CWindowCloseEvent : public CEvent
 {
 public:
-	inline cWindowCloseEvent() = default;
+	inline CWindowCloseEvent() = default;
 
 	VIREQOUT String ToString() const override
 	{
 		StringStream ss;
-		ss << "cWindowCloseEvent()";
+		ss << "CWindowCloseEvent()";
 		return ss.str();
 	}
 
@@ -25,20 +25,20 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
-class cWindowResizeEvent : public cEvent
+class CWindowResizeEvent : public CEvent
 {
 	UInt32 m_Width, m_Height;
 public:
-	cWindowResizeEvent(UInt32 width, UInt32 height) : m_Width(width), m_Height(height) {}
+	CWindowResizeEvent(UInt32 width, UInt32 height) : m_Width(width), m_Height(height) {}
 
 	VIREQOUT inline UInt32 GetWidth() const { return m_Width; }
 	VIREQOUT inline UInt32 GetHeight() const { return m_Height; }
-	VIREQOUT inline sWindowExtent GetExtent() const { return { m_Width, m_Height }; }
+	VIREQOUT inline SWindowExtent GetExtent() const { return {m_Width, m_Height }; }
 
 	VIREQOUT String ToString() const override
 	{
 		StringStream ss;
-		ss << "cWindowResizeEvent(" << m_Width << ", " << m_Height << ")";
+		ss << "CWindowResizeEvent(" << m_Width << ", " << m_Height << ")";
 		return ss.str();
 	}
 
@@ -46,15 +46,15 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
-class cWindowLostFocusEvent : public cEvent
+class CWindowLostFocusEvent : public CEvent
 {
 public:
-	inline cWindowLostFocusEvent() = default;
+	inline CWindowLostFocusEvent() = default;
 
 	VIREQOUT String ToString() const override
 	{
 		StringStream ss;
-		ss << "cWindowLostFocusEvent()";
+		ss << "CWindowLostFocusEvent()";
 		return ss.str();
 	}
 
@@ -62,15 +62,15 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
-class cWindowGetFocusEvent : public cEvent
+class CWindowGetFocusEvent : public CEvent
 {
 public:
-	inline cWindowGetFocusEvent() = default;
+	inline CWindowGetFocusEvent() = default;
 
 	VIREQOUT String ToString() const override
 	{
 		StringStream ss;
-		ss << "cWindowGetFocusEvent()";
+		ss << "CWindowGetFocusEvent()";
 		return ss.str();
 	}
 

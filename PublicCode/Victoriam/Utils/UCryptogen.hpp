@@ -9,21 +9,21 @@
 
 VISRCBEG
 
-enum class ecHashingAlgorithm : UInt32
+enum class ECHashingAlgorithm : UInt32
 {
 	None VIDECL = 0x00000000,
 	MD5  VIDECL = 0x0000000f,
 };
 
-class VIDECL cCryptogen
+class VIDECL CCryptogen
 {
-	VIDECL ecHashingAlgorithm  m_Algorithm     = { ecHashingAlgorithm::None };
+	VIDECL ECHashingAlgorithm  m_Algorithm     = {ECHashingAlgorithm::None };
 	VIDECL String              m_Buffer        = {};
 
 	VIDECL inline static constexpr UInt32  BUFFER_SIZE     = 0x40;
 	VIDECL inline static constexpr UInt32  BLOCK_SIZE      = 0x10;
 
-	struct VIDECL sMD5ALGCTX
+	struct VIDECL SMD5ALGCTX
 	{
 		VIDECL UInt32 lo, hi;
 		VIDECL UInt32 a, b, c, d;
@@ -32,14 +32,14 @@ class VIDECL cCryptogen
 	} md5_ctx = {};
 
 public:
-	inline cCryptogen() = default;
-	inline ~cCryptogen() = default;
+	inline CCryptogen() = default;
+	inline ~CCryptogen() = default;
 
-	VIDECL cCryptogen(const String& str, const ecHashingAlgorithm& algorithm);
-	VIDECL cCryptogen(CString dat, const UInt64& len, const ecHashingAlgorithm& algorithm);
+	VIDECL CCryptogen(const String& str, const ECHashingAlgorithm& algorithm);
+	VIDECL CCryptogen(CString dat, const UInt64& len, const ECHashingAlgorithm& algorithm);
 
 	VIDECL void SetInputString(const String& str);
-	VIDECL void SetAlgorithm(const ecHashingAlgorithm& algorithm);
+	VIDECL void SetAlgorithm(const ECHashingAlgorithm& algorithm);
 
 	VIDECL String ProcessFromString();
 	VIDECL String ProcessFromFile();

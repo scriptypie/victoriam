@@ -17,58 +17,58 @@
 
 VISRCBEG
 
-struct VIDECL sInputState
+struct VIDECL SInputState
 {
-	struct VIDECL sKeyboardInputState
+	struct VIDECL SKeyboardInputState
 	{
 		Bool pressed[KeyboardMax];
 		Bool released[KeyboardMax];
 		String input;
 	} keyboard;
-	struct VIDECL sMouseInputState
+	struct VIDECL SMouseInputState
 	{
-		sVector2 position;
-		sVector2 scroll;
+		SVector2 position;
+		SVector2 scroll;
 		Bool pressed[MouseMax];
 		Bool released[MouseMax];
 	} mouse;
 };
 
-struct sGLFWWindowData
+struct SGLFWWindowData
 {
 	String Name;
-	sWindowExtent Offset;
-	sWindowExtent Resolution;
-	sFlags Flags;
+	SWindowExtent Offset;
+	SWindowExtent Resolution;
+	SFlags Flags;
 
-	sInputState InputState;
-	cWindow::EventCallbackFn Callback;
+	SInputState InputState;
+	CWindow::EventCallbackFn Callback;
 };
 
 namespace Accessors { class Window; }
 
-class cGLFWWindow : public cWindow {
-	friend class cInput;
+class CGLFWWindow : public CWindow {
+	friend class CInput;
 	friend class Accessors::Window;
 
-	sGLFWWindowData m_Data = {};
+	SGLFWWindowData m_Data = {};
 	GLFWwindow* m_Window = nullptr;
 
 public:
-	~cGLFWWindow() override;
-	explicit cGLFWWindow(const sWindowCreateInfo& info);
+	~CGLFWWindow() override;
+	explicit CGLFWWindow(const SWindowCreateInfo& info);
 
 	void Update() override;
 	VIREQOUT inline UInt32 GetWidth() const override { return m_Data.Resolution.Width; }
 	VIREQOUT inline UInt32 GetHeight() const override { return m_Data.Resolution.Height; }
 	VIREQOUT inline UInt32 GetOffsetX() const override { return m_Data.Offset.Width; }
 	VIREQOUT inline UInt32 GetOffsetY() const override { return m_Data.Offset.Height; }
-	VIREQOUT inline sWindowExtent GetExtent() const override { return { GetWidth(), GetHeight() }; }
-	inline void SetExtent(const sWindowExtent& extent) override { m_Data.Resolution = extent; }
+	VIREQOUT inline SWindowExtent GetExtent() const override { return {GetWidth(), GetHeight() }; }
+	inline void SetExtent(const SWindowExtent& extent) override { m_Data.Resolution = extent; }
 	inline void SetEventCallbackFunction(const EventCallbackFn& fn) override { m_Data.Callback = fn; }
 	void WaitForEvents() override;
 private:
-	void CreateWindow(const sWindowCreateInfo& info);
+	void CreateWindow(const SWindowCreateInfo& info);
 	void CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface);
 	void DestroyWindow();
 };

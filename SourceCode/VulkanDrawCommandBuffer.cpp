@@ -6,20 +6,20 @@
 
 VISRCBEG
 
-cVulkanDrawCommandBuffer::cVulkanDrawCommandBuffer(pSwapchain &swapchain, pDevice& device, pPipeline& pipeline, const List<pVertexBuffer>& vertexBuffers)
+CVulkanDrawCommandBuffer::CVulkanDrawCommandBuffer(PSwapchain &swapchain, PDevice& device, PPipeline& pipeline, const List<PVertexBuffer>& vertexBuffers)
 	: m_Swapchain(swapchain), m_Device(device), m_Pipeline(pipeline)
 {
 	m_VertexBuffers = vertexBuffers;
 	CreateCommandBuffers();
 }
 
-cVulkanDrawCommandBuffer::~cVulkanDrawCommandBuffer()
+CVulkanDrawCommandBuffer::~CVulkanDrawCommandBuffer()
 {
 	vkFreeCommandBuffers(Accessors::Device::GetDevice(m_Device), Accessors::Device::GetCommandPool(m_Device), CCast<UInt32>(m_CommandBuffers.size()), m_CommandBuffers.data());
 	m_CommandBuffers.clear();
 }
 
-void cVulkanDrawCommandBuffer::CreateCommandBuffers()
+void CVulkanDrawCommandBuffer::CreateCommandBuffers()
 {
 	m_CommandBuffers.resize(m_Swapchain->GetImageCount());
 
@@ -32,7 +32,7 @@ void cVulkanDrawCommandBuffer::CreateCommandBuffers()
 		throw std::runtime_error("Failed to allocate command buffers!");
 }
 
-void cVulkanDrawCommandBuffer::RecordCommandBuffer(UInt32 imageIndex)
+void CVulkanDrawCommandBuffer::RecordCommandBuffer(UInt32 imageIndex)
 {
 	VkCommandBufferBeginInfo beginInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO };
 	if (vkBeginCommandBuffer(m_CommandBuffers.at(imageIndex), &beginInfo) != VK_SUCCESS)
@@ -64,11 +64,11 @@ void cVulkanDrawCommandBuffer::RecordCommandBuffer(UInt32 imageIndex)
 	vkCmdSetViewport(m_CommandBuffers.at(imageIndex), 0, 1, &viewport);
 	vkCmdSetScissor(m_CommandBuffers.at(imageIndex), 0, 1, &scissor);
 
-	m_Pipeline->BindDrawCommandBuffer(CCast<sCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+	m_Pipeline->BindDrawCommandBuffer(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 	for (const auto& m_VertexBuffer : m_VertexBuffers)
 	{
-		m_VertexBuffer->Bind(CCast<sCommandBuffer>(m_CommandBuffers.at(imageIndex)));
-		m_VertexBuffer->Draw(CCast<sCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+		m_VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+		m_VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 	}
 
 	vkCmdEndRenderPass(m_CommandBuffers.at(imageIndex));

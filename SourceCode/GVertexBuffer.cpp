@@ -8,9 +8,9 @@
 
 VISRCBEG
 
-pVertexBuffer cVertexBuffer::Create(pDevice& device, const List<sVertex>& vertices)
+PVertexBuffer CVertexBuffer::Create(PDevice& device, const List<SVertex>& vertices)
 {
-	return CreateSPtr<cVulkanVertexBuffer>(device, vertices);
+	return CreateSPtr<CVulkanVertexBuffer>(device, vertices);
 }
 
 VISRCEND

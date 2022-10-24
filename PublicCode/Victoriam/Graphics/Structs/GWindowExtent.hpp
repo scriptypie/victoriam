@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-struct VIDECL sWindowExtent
+struct VIDECL SWindowExtent
 {
 	VIDECL UInt32 Width;
 	VIDECL UInt32 Height;

@@ -10,15 +10,15 @@
 
 VISRCBEG
 
-class cDevice
+class CDevice
 {
 public:
-	virtual ~cDevice() = default;
+	virtual ~CDevice() = default;
 
-	VIDECL static SPtr<cDevice> Create(const SPtr<cWindow>& window);
+	VIDECL static SPtr<CDevice> Create(const SPtr<CWindow>& window);
 };
 
-VIDECL typedef SPtr<cDevice> pDevice;
+VIDECL typedef SPtr<CDevice> PDevice;
 
 VISRCEND
 

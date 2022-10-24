@@ -8,59 +8,59 @@
 
 VISRCBEG
 
-cFile::cFile(const String& filename, const ecOpenMode& omode, const ecFileFormat& fformat)
+CFile::CFile(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat)
 		: m_Filename(filename)
 {
 	Open(filename, omode, fformat);
 }
 
-cFile::cFile(const char* filename, const ecOpenMode& omode, const ecFileFormat& fformat)
+CFile::CFile(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat)
 		: m_Filename(filename)
 {
 	Open(filename, omode, fformat);
 }
 
-cFile::~cFile()
+CFile::~CFile()
 {
 	if (!m_Signal)
 		Release();
 }
 
-void cFile::Close()
+void CFile::Close()
 {
 	Release();
 }
 
-void cFile::Clear()
+void CFile::Clear()
 {
 	m_Handle.clear();
 }
 
-void cFile::Release()
+void CFile::Release()
 {
 	m_Handle.close();
 	m_Filename.clear();
 	m_Signal = true;
 }
 
-bool cFile::Valid() const
+bool CFile::Valid() const
 {
 	return m_Handle.is_open();
 }
 
-UInt32 cFile::ToStandardOpenMode(const ecOpenMode& omode)
+UInt32 CFile::ToStandardOpenMode(const ECOpenMode& omode)
 {
 	return CCast<UInt32>(omode);
 }
 
-UInt32 cFile::ToStandardFormat(const ecFileFormat& format)
+UInt32 CFile::ToStandardFormat(const ECFileFormat& format)
 {
 	return CCast<UInt32>(format);
 }
 
-sFileView cFile::View()
+SFileView CFile::View()
 {
-	sFileView view = {};
+	SFileView view = {};
 	if (Valid())
 	{
 		struct stat st = {};
@@ -87,50 +87,50 @@ sFileView cFile::View()
 	return view;
 }
 
-void cFile::Open(const String& filename, const ecOpenMode& omode, const ecFileFormat& fformat)
+void CFile::Open(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat)
 {
 	m_Handle.open(filename, ToStandardOpenMode(omode) | ToStandardFormat(fformat));
 }
 
-void cFile::Open(const char* filename, const ecOpenMode& omode, const ecFileFormat& fformat)
+void CFile::Open(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat)
 {
 	m_Handle.open(filename, ToStandardOpenMode(omode) | ToStandardFormat(fformat));
 }
 
 
-ecFileResult cFile::Read(String& output)
+ECFileResult CFile::Read(String& output)
 {
 	if (!Valid())
-		return ecFileResult::FileNotFound;
+		return ECFileResult::FileNotFound;
 
-	sFileView view = View();
+	SFileView view = View();
 	output.resize(view.Size);
 	m_Handle.read(CCast<char*>(output.data()), CCast<long>(output.size()));
 	Clear();
 
-	return ecFileResult::Ok;
+	return ECFileResult::Ok;
 }
 
-ecFileResult cFile::Write(const String& data)
+ECFileResult CFile::Write(const String& data)
 {
 	if (data.empty())
-		return ecFileResult::NullInput;
+		return ECFileResult::NullInput;
 
 	m_Handle.write(data.data(), CCast<long>(data.size()));
 	Clear();
 
-	return ecFileResult::Ok;
+	return ECFileResult::Ok;
 }
 
-ecFileResult cFile::Write(const char* data, const UInt64& size)
+ECFileResult CFile::Write(const char* data, const UInt64& size)
 {
 	if (!size || !data)
-		return ecFileResult::NullInput;
+		return ECFileResult::NullInput;
 
 	m_Handle.write(data, CCast<long>(size));
 	Clear();
 
-	return ecFileResult::Ok;
+	return ECFileResult::Ok;
 }
 
 VISRCEND

@@ -15,33 +15,33 @@ namespace Accessors
 	class Swapchain
 	{
 	public:
-		VIDECL VIREQOUT static VkFramebuffer GetFramebuffer(const pSwapchain& swapchain, const UInt32& index)
+		VIDECL VIREQOUT static VkFramebuffer GetFramebuffer(const PSwapchain& swapchain, const UInt32& index)
 		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->GetFramebuffer(index);
+			return CCast<CVulkanSwapchain*>(swapchain.get())->GetFramebuffer(index);
 		}
-		VIDECL VIREQOUT static VkRenderPass GetRenderPass(const pSwapchain& swapchain)
+		VIDECL VIREQOUT static VkRenderPass GetRenderPass(const PSwapchain& swapchain)
 		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->GetRenderPass();
+			return CCast<CVulkanSwapchain*>(swapchain.get())->GetRenderPass();
 		}
-		VIDECL VIREQOUT static VkImageView GetImageView(const pSwapchain& swapchain, const UInt32& index)
+		VIDECL VIREQOUT static VkImageView GetImageView(const PSwapchain& swapchain, const UInt32& index)
 		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->GetImageView(index);
+			return CCast<CVulkanSwapchain*>(swapchain.get())->GetImageView(index);
 		}
-		VIDECL VIREQOUT static VkFormat GetSwapchainImageFormat(const pSwapchain& swapchain)
+		VIDECL VIREQOUT static VkFormat GetSwapchainImageFormat(const PSwapchain& swapchain)
 		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->GetSwapchainImageFormat();
+			return CCast<CVulkanSwapchain*>(swapchain.get())->GetSwapchainImageFormat();
 		}
-		VIDECL VIREQOUT static VkExtent2D GetSwapchainExtent(const pSwapchain& swapchain)
+		VIDECL VIREQOUT static VkExtent2D GetSwapchainExtent(const PSwapchain& swapchain)
 		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->GetSwapchainExtent();
+			return CCast<CVulkanSwapchain*>(swapchain.get())->GetSwapchainExtent();
 		}
-		VIDECL VIREQOUT static VkFormat FindDepthFormat(const pSwapchain& swapchain)
+		VIDECL VIREQOUT static VkFormat FindDepthFormat(const PSwapchain& swapchain)
 		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->FindDepthFormat();
+			return CCast<CVulkanSwapchain*>(swapchain.get())->FindDepthFormat();
 		}
-		VIDECL static VkResult SubmitCommandBuffers(const pSwapchain& swapchain, const VkCommandBuffer* buffers, UInt32* imageIndex)
+		VIDECL static VkResult SubmitCommandBuffers(const PSwapchain& swapchain, const VkCommandBuffer* buffers, UInt32* imageIndex)
 		{
-			return CCast<cVulkanSwapchain*>(swapchain.get())->SubmitCommandBuffers(buffers, imageIndex);
+			return CCast<CVulkanSwapchain*>(swapchain.get())->SubmitCommandBuffers(buffers, imageIndex);
 		}
 	};
 

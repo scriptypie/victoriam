@@ -15,17 +15,17 @@
 
 VISRCBEG
 
-class VIDECL cInput
+class VIDECL CInput
 {
-	inline static struct sInputState* m_InputStatePtr = nullptr;
+	inline static struct SInputState* m_InputStatePtr = nullptr;
 public:
-	VIDECL static void Init(const SPtr<cWindow>& window);
-	VIDECL static Bool IsKeyDown(const eKeyCode& code);
-	VIDECL static Bool IsKeyUp(const eKeyCode& code);
-	VIDECL static Bool IsMouseDown(const eMouseCode& code);
-	VIDECL static Bool IsMouseUp(const eMouseCode& code);
+	VIDECL static void Init(const SPtr<CWindow>& window);
+	VIDECL static Bool IsKeyDown(const EKeyCode& code);
+	VIDECL static Bool IsKeyUp(const EKeyCode& code);
+	VIDECL static Bool IsMouseDown(const EMouseCode& code);
+	VIDECL static Bool IsMouseUp(const EMouseCode& code);
 	VIDECL static String GetInput();
-	VIDECL static sVector2 GetMousePosition();
+	VIDECL static SVector2 GetMousePosition();
 	VIDECL static Float32 GetMousePositionX();
 	VIDECL static Float32 GetMousePositionY();
 };

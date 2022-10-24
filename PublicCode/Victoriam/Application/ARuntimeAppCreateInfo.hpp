@@ -10,9 +10,9 @@
 
 VISRCBEG
 
-struct sRuntimeAppCreateInfo
+struct SRuntimeAppCreateInfo
 {
-	cArgumentLineTool Arguments = {};
+	CArgumentLineTool Arguments = {};
 	String AppName = {};
 	String CWD = {};
 };

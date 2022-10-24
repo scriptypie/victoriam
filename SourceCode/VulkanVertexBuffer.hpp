@@ -13,24 +13,24 @@ VISRCBEG
 
 namespace Accessors { class VertexBuffer; }
 
-class VIDECL cVulkanVertexBuffer : public cVertexBuffer
+class VIDECL CVulkanVertexBuffer : public CVertexBuffer
 {
 	friend class Accessors::VertexBuffer;
 
-	pDevice& m_Device;
+	PDevice& m_Device;
 	VkBuffer m_VertexBuffer = {};
 	VkDeviceMemory m_VertexBufferMemory = {};
 	UInt64 m_VertexCount = {};
 
 public:
-	cVulkanVertexBuffer(pDevice& device, const List<sVertex>& vertices);
-	~cVulkanVertexBuffer() override;
+	CVulkanVertexBuffer(PDevice& device, const List<SVertex>& vertices);
+	~CVulkanVertexBuffer() override;
 
-	void Bind(const sCommandBuffer& buffer) override;
-	void Draw(const sCommandBuffer& buffer) const override;
+	void Bind(const SCommandBuffer& buffer) override;
+	void Draw(const SCommandBuffer& buffer) const override;
 private:
 
-	VIDECL void CreateVertexBuffer(const List<sVertex>& vertices);
+	VIDECL void CreateVertexBuffer(const List<SVertex>& vertices);
 };
 
 VISRCEND

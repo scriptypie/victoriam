@@ -9,14 +9,14 @@
 
 VISRCBEG
 
-class cArgumentLineTool
+class CArgumentLineTool
 {
 	UInt32 Count = {};
 	Int8** Args = nullptr;
 public:
-	VIDECL inline cArgumentLineTool() = default;
-	VIDECL inline ~cArgumentLineTool() = default;
-	VIDECL inline cArgumentLineTool(Int32 argc, Int8** argv) : Count(argc), Args(argv) {}
+	VIDECL inline CArgumentLineTool() = default;
+	VIDECL inline ~CArgumentLineTool() = default;
+	VIDECL inline CArgumentLineTool(Int32 argc, Int8** argv) : Count(argc), Args(argv) {}
 
 	VIDECL inline String operator[](UInt32 n) const
 	{

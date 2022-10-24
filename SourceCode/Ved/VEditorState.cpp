@@ -15,8 +15,8 @@ void VEditorState::OnCreate() {
 }
 
 void VEditorState::OnUpdate() {
-	if (cInput::IsKeyDown(eKeyCode::Q) && cInput::IsKeyDown(eKeyCode::LeftCommand)) // Shortcut for fast (safe) exit
-		cRuntimeApp::Get().Close();
+	if (CInput::IsKeyDown(EKeyCode::Q) && CInput::IsKeyDown(EKeyCode::LeftCommand)) // Shortcut for fast (safe) exit
+		CRuntimeApp::Get().Close();
 
 }
 

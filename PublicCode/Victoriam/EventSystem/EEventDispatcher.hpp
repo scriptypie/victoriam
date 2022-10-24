@@ -9,11 +9,11 @@
 
 VISRCBEG
 
-class cEventDispatcher
+class CEventDispatcher
 {
-	cEvent& m_Event;
+	CEvent& m_Event;
 public:
-	inline explicit cEventDispatcher(cEvent& event) : m_Event(event) {}
+	inline explicit CEventDispatcher(CEvent& event) : m_Event(event) {}
 
 	template<class T, class FN>
 	inline Bool Dispatch(const FN& func)
@@ -27,7 +27,7 @@ public:
 	}
 };
 
-inline std::ostream& operator<<(std::ostream& os, const cEvent& event)
+inline std::ostream& operator<<(std::ostream& os, const CEvent& event)
 {
 	return os << event.ToString();
 }

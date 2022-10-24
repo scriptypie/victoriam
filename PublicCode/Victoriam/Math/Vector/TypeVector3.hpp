@@ -22,9 +22,9 @@ struct VIDECL sVector3 : sVectorBase<3>
 			: sVectorBase(((Scalar[DIM]){x, y, z}))
 	{}
 
-	sVector2& xy()
+	SVector2& xy()
 	{
-		return *(sVector2*) this;
+		return *(SVector2*) this;
 	}
 
 	template<class U>

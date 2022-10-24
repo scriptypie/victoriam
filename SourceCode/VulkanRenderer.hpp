@@ -16,21 +16,21 @@
 
 VISRCBEG
 
-class cVulkanRenderer : public cRenderer {
-	VIDECL pDevice m_Device = {};
-	VIDECL pSwapchain m_Swapchain = {};
-	VIDECL pPipeline m_Pipeline = {};
-	VIDECL pDrawCommandBuffer m_DrawCommandBuffer = {};
-	VIDECL List<pVertexBuffer> m_VertexBuffers = {};
-	VIDECL pWindow m_Window = {};
+class CVulkanRenderer : public CRenderer {
+	VIDECL PDevice m_Device = {};
+	VIDECL PSwapchain m_Swapchain = {};
+	VIDECL PPipeline m_Pipeline = {};
+	VIDECL PDrawCommandBuffer m_DrawCommandBuffer = {};
+	VIDECL List<PVertexBuffer> m_VertexBuffers = {};
+	VIDECL PWindow m_Window = {};
 public:
-	explicit cVulkanRenderer(const sRendererCreateInfo& createInfo);
-	~cVulkanRenderer() override;
+	explicit CVulkanRenderer(const SRendererCreateInfo& createInfo);
+	~CVulkanRenderer() override;
 
 	void Setup() override;
-	void PushVertexBuffer(const List<sVertex>& vertices) override;
+	void PushVertexBuffer(const List<SVertex>& vertices) override;
 
-	void OnWindowResize(const sWindowExtent& extent) override;
+	void OnWindowResize(const SWindowExtent& extent) override;
 	void DrawFrame() override;
 	void Shutdown() override;
 private:
@@ -38,7 +38,7 @@ private:
 	void EndFrame();
 
 	void CreatePipeline();
-	void RecreateSwapchain(const sWindowExtent& newExtent);
+	void RecreateSwapchain(const SWindowExtent& newExtent);
 };
 
 VISRCEND

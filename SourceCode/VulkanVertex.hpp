@@ -11,17 +11,17 @@
 
 VISRCBEG
 
-VIDECL VIREQOUT inline static List<VkVertexInputBindingDescription> GetVertexBindingDesctiptions()
+VIDECL VIREQOUT inline static List<VkVertexInputBindingDescription> FGetVertexBindingDesctiptions()
 {
-	return {{0, sizeof(sVertex), VK_VERTEX_INPUT_RATE_VERTEX}};
+	return {{0, sizeof(SVertex), VK_VERTEX_INPUT_RATE_VERTEX}};
 }
 
-VIDECL VIREQOUT inline static List<VkVertexInputAttributeDescription> GetVertexAttributeDescriptions()
+VIDECL VIREQOUT inline static List<VkVertexInputAttributeDescription> FGetVertexAttributeDescriptions()
 {
 	return
 	{
-		{ 0, 0, VK_FORMAT_R32G32_SFLOAT,       offsetof(sVertex, Position) },
-		{ 1, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(sVertex, Color)    },
+		{ 0, 0, VK_FORMAT_R32G32_SFLOAT,       offsetof(SVertex, Position) },
+		{ 1, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(SVertex, Color)    },
 	};
 }
 

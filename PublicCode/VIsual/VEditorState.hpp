@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-class VEditorState : public cAppState {
+class VEditorState : public CAppState {
 public:
 	~VEditorState() override;
 

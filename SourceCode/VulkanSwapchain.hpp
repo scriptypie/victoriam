@@ -12,10 +12,10 @@ VISRCBEG
 
 namespace Accessors { class VIDECL Swapchain; }
 
-class VIDECL cVulkanSwapchain : public cSwapchain
+class VIDECL CVulkanSwapchain : public CSwapchain
 {
 	friend class Accessors::Swapchain;
-	friend class cVulkanRenderer;
+	friend class CVulkanRenderer;
 
 	VIDECL inline static constexpr UInt32 MAX_FRAMES_PER_STEP = 2; // TODO: configurable MAX_FRAMES_PER_STEP
 	VIDECL VkFormat m_SwapchainImageFormat = {};
@@ -27,20 +27,20 @@ class VIDECL cVulkanSwapchain : public cSwapchain
 	VIDECL List<VkImageView> m_DepthImageViews = {};
 	VIDECL List<VkImage> m_SwapchainImages = {};
 	VIDECL List<VkImageView> m_SwapchainImageViews = {};
-	VIDECL pDevice& m_Device;
-	VIDECL sWindowExtent m_WindowExtent = {};
+	VIDECL PDevice& m_Device;
+	VIDECL SWindowExtent m_WindowExtent = {};
 	VIDECL VkSwapchainKHR m_Swapchain = {};
 	VIDECL List<VkSemaphore> m_ImageAvailableSemaphores = {};
 	VIDECL List<VkSemaphore> m_RenderFinishedSemaphores = {};
 	VIDECL List<VkFence> m_InFlightFences = {};
 	VIDECL List<VkFence> m_ImagesInFlight = {};
 	VIDECL UInt32 m_CurrentFrame = {};
-	VIDECL cSwapchain* m_OldSwapchain = {};
+	VIDECL CSwapchain* m_OldSwapchain = {};
 
 public:
-	explicit cVulkanSwapchain(pDevice& device, const sWindowExtent& extent);
-	explicit cVulkanSwapchain(pDevice& device, const sWindowExtent& extent, cSwapchain* prev);
-	~cVulkanSwapchain() override;
+	explicit CVulkanSwapchain(PDevice& device, const SWindowExtent& extent);
+	explicit CVulkanSwapchain(PDevice& device, const SWindowExtent& extent, CSwapchain* prev);
+	~CVulkanSwapchain() override;
 
 	VIDECL UInt32 AcquireNextImage(UInt32* imageIndex) override;
 	VIDECL VIREQOUT inline UInt32 GetImageCount() const override { return m_SwapchainImages.size(); }

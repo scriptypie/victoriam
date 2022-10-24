@@ -16,17 +16,17 @@ VISRCBEG
 
 namespace Accessors { class DrawCommandBuffer; }
 
-class cVulkanDrawCommandBuffer : public cDrawCommandBuffer {
+class CVulkanDrawCommandBuffer : public CDrawCommandBuffer {
 	friend class Accessors::DrawCommandBuffer;
 
 	List<VkCommandBuffer> m_CommandBuffers = {};
-	pSwapchain& m_Swapchain;
-	pDevice& m_Device;
-	pPipeline& m_Pipeline;
-	List<pVertexBuffer> m_VertexBuffers = {};
+	PSwapchain& m_Swapchain;
+	PDevice& m_Device;
+	PPipeline& m_Pipeline;
+	List<PVertexBuffer> m_VertexBuffers = {};
 public:
-	cVulkanDrawCommandBuffer(pSwapchain& swapchain, pDevice& device, pPipeline& pipeline, const List<pVertexBuffer>& vertexBuffers);
-	~cVulkanDrawCommandBuffer() override;
+	CVulkanDrawCommandBuffer(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline, const List<PVertexBuffer>& vertexBuffers);
+	~CVulkanDrawCommandBuffer() override;
 
 	void RecordCommandBuffer(UInt32 imageIndex) override;
 

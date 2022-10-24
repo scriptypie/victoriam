@@ -6,27 +6,27 @@
 
 VISRCBEG
 
-cVulkanRenderer::cVulkanRenderer(const sRendererCreateInfo &createInfo)
+CVulkanRenderer::CVulkanRenderer(const SRendererCreateInfo &createInfo)
 	: m_Window(createInfo.WindowPtr)
 {
-	m_Device = cDevice::Create(m_Window);
+	m_Device = CDevice::Create(m_Window);
 	RecreateSwapchain(m_Window->GetExtent());
 	CreatePipeline();
 }
 
-void cVulkanRenderer::Setup()
+void CVulkanRenderer::Setup()
 {
-	m_DrawCommandBuffer = cDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline, m_VertexBuffers);
+	m_DrawCommandBuffer = CDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline, m_VertexBuffers);
 }
 
-void cVulkanRenderer::PushVertexBuffer(const List<sVertex>& vertices)
+void CVulkanRenderer::PushVertexBuffer(const List<SVertex>& vertices)
 {
-	m_VertexBuffers.push_back(cVertexBuffer::Create(m_Device, vertices));
+	m_VertexBuffers.push_back(CVertexBuffer::Create(m_Device, vertices));
 }
 
-cVulkanRenderer::~cVulkanRenderer() = default;
+CVulkanRenderer::~CVulkanRenderer() = default;
 
-void cVulkanRenderer::DrawFrame()
+void CVulkanRenderer::DrawFrame()
 {
 	UInt32 imageIndex;
 	auto result = m_Swapchain->AcquireNextImage(&imageIndex);
@@ -43,25 +43,25 @@ void cVulkanRenderer::DrawFrame()
 
 }
 
-void cVulkanRenderer::BeginFrame()
+void CVulkanRenderer::BeginFrame()
 {
 
 }
 
-void cVulkanRenderer::EndFrame()
+void CVulkanRenderer::EndFrame()
 {
 
 }
 
-void cVulkanRenderer::Shutdown() {
+void CVulkanRenderer::Shutdown() {
 	vkDeviceWaitIdle(Accessors::Device::GetDevice(m_Device));
 }
 
-void cVulkanRenderer::OnWindowResize(const sWindowExtent &extent) {
+void CVulkanRenderer::OnWindowResize(const SWindowExtent &extent) {
 	RecreateSwapchain(extent);
 }
 
-void cVulkanRenderer::RecreateSwapchain(const sWindowExtent &newExtent) {
+void CVulkanRenderer::RecreateSwapchain(const SWindowExtent &newExtent) {
 	if (!newExtent.Width || !newExtent.Height) {
 		m_Window->WaitForEvents();
 		return;
@@ -70,22 +70,22 @@ void cVulkanRenderer::RecreateSwapchain(const sWindowExtent &newExtent) {
 	vkDeviceWaitIdle(Accessors::Device::GetDevice(m_Device));
 
 	if (!m_Swapchain)
-		m_Swapchain = cSwapchain::Create(m_Device, newExtent);
+		m_Swapchain = CSwapchain::Create(m_Device, newExtent);
 	else
 	{
-		m_Swapchain = cSwapchain::Create(m_Device, newExtent, std::move(m_Swapchain).get());
+		m_Swapchain = CSwapchain::Create(m_Device, newExtent, std::move(m_Swapchain).get());
 		if (m_Swapchain->GetImageCount() != Accessors::DrawCommandBuffer::GetCommandBufferList(m_DrawCommandBuffer).size())
 		{
 			m_DrawCommandBuffer = nullptr;
-			m_DrawCommandBuffer = cDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline, m_VertexBuffers);
+			m_DrawCommandBuffer = CDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline, m_VertexBuffers);
 		}
 	}
 	CreatePipeline();
 }
 
-void cVulkanRenderer::CreatePipeline()
+void CVulkanRenderer::CreatePipeline()
 {
-	m_Pipeline = cPipeline::Create("Default", m_Device, m_Swapchain);
+	m_Pipeline = CPipeline::Create("Default", m_Device, m_Swapchain);
 }
 
 VISRCEND

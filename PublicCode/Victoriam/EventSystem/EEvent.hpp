@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-enum class ecEventType : UInt32
+enum class ECEventType : UInt32
 {
 	None = 0,
 	WindowClosed,       WindowResized,      WindowLostFocus,        WindowGetFocus,
@@ -18,7 +18,7 @@ enum class ecEventType : UInt32
 };
 
 typedef UInt32  EventCategory;
-constexpr       EventCategory None = 0x00000000;
+constexpr       EventCategory None                        = 0x00000000;
 constexpr       EventCategory EventCategoryApplication    = 0x00000001;
 constexpr       EventCategory EventCategoryInput          = 0x00000010;
 constexpr       EventCategory EventCategoryKeyboard       = 0x00000100;
@@ -28,22 +28,22 @@ constexpr       EventCategory EventCategoryMouseButton    = 0x00010000;
 // Helper macros only for event system internal usage
 
 #define EVENT_CLASS_TYPE(type) \
-	inline static ecEventType GetStaticType() { return ecEventType::type; } \
-	inline ecEventType GetEventType() const override { return GetStaticType(); } \
+	inline static ECEventType GetStaticType() { return ECEventType::type; } \
+	inline ECEventType GetEventType() const override { return GetStaticType(); } \
 	inline CString GetName() const override { return #type; }
 #define EVENT_CLASS_CATEGORY(cat) \
 	inline EventCategory GetCategoryFlags() const override { return cat; }
 
 // end helpers
 
-class cEvent
+class CEvent
 {
 public:
-	virtual ~cEvent() = default;
+	virtual ~CEvent() = default;
 
 	Bool m_Handled = false;
 
-	VIREQOUT virtual ecEventType GetEventType() const = 0;
+	VIREQOUT virtual ECEventType GetEventType() const = 0;
 	VIREQOUT virtual CString GetName() const = 0;
 	VIREQOUT virtual EventCategory GetCategoryFlags() const = 0;
 	VIREQOUT virtual String ToString() const { return GetName(); }

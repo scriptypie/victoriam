@@ -11,14 +11,14 @@
 
 VISRCBEG
 
-enum class VIDECL ecFileResult : UInt32
+enum class VIDECL ECFileResult : UInt32
 {
 	Ok              VIDECL = 0x00000000,
 	FileNotFound    VIDECL = 0x0000000F,
 	NullInput       VIDECL = 0x000000F0,
 };
 
-struct VIDECL sFileTimestamp
+struct VIDECL SFileTimestamp
 {
 	VIDECL UInt32 Second = {};
 	VIDECL UInt32 Minute = {};
@@ -28,52 +28,52 @@ struct VIDECL sFileTimestamp
 	VIDECL UInt32 Year   = {};
 };
 
-struct VIDECL sFileView
+struct VIDECL SFileView
 {
 	VIDECL UInt64 Size                  = {};
-	VIDECL sFileTimestamp CreateDate    = {};
-	VIDECL sFileTimestamp LastEditDate  = {};
+	VIDECL SFileTimestamp CreateDate    = {};
+	VIDECL SFileTimestamp LastEditDate  = {};
 	VIDECL char FirstFourBytes[4]       = {};
 };
 
-enum class VIDECL ecOpenMode : UInt32
+enum class VIDECL ECOpenMode : UInt32
 {
 	Read    VIDECL = 0x00000008,
 	Write   VIDECL = 0x00000010,
 };
 
-enum class VIDECL ecFileFormat : UInt32
+enum class VIDECL ECFileFormat : UInt32
 {
 	ASCII   VIDECL = 0x00000000,
 	Bin     VIDECL = 0x00000004,
 };
 
-class VIDECL cFile
+class VIDECL CFile
 {
 	VIDECL String m_Filename = {};
 	VIDECL std::fstream m_Handle = {};
 	VIDECL Bool m_Signal = {};
 
 public:
-	VIDECL cFile(const String& filename, const ecOpenMode& omode, const ecFileFormat& fformat = ecFileFormat::ASCII);
-	VIDECL cFile(const char* filename, const ecOpenMode& omode, const ecFileFormat& fformat = ecFileFormat::ASCII);
-	cFile() = default;
-	~cFile();
+	VIDECL CFile(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
+	VIDECL CFile(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
+	CFile() = default;
+	~CFile();
 
-	VIDECL void Open(const String& filename, const ecOpenMode& omode, const ecFileFormat& fformat = ecFileFormat::ASCII);
-	VIDECL void Open(const char* filename, const ecOpenMode& omode, const ecFileFormat& fformat = ecFileFormat::ASCII);
+	VIDECL void Open(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
+	VIDECL void Open(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
 
 	VIDECL VIREQOUT bool Valid() const;
-	VIDECL VIREQOUT sFileView View();
-	VIDECL VIREQOUT ecFileResult Read(String& output);
-	VIDECL VIREQOUT ecFileResult Write(const String& data);
-	VIDECL VIREQOUT ecFileResult Write(const char* data, const UInt64& size);
+	VIDECL VIREQOUT SFileView View();
+	VIDECL VIREQOUT ECFileResult Read(String& output);
+	VIDECL VIREQOUT ECFileResult Write(const String& data);
+	VIDECL VIREQOUT ECFileResult Write(const char* data, const UInt64& size);
 	VIDECL void Release();
 	VIDECL void Clear();
 	VIDECL void Close();
 private:
-	VIDECL VIREQOUT static UInt32 ToStandardOpenMode(const ecOpenMode& omode);
-	VIDECL VIREQOUT static UInt32 ToStandardFormat(const ecFileFormat& format);
+	VIDECL VIREQOUT static UInt32 ToStandardOpenMode(const ECOpenMode& omode);
+	VIDECL VIREQOUT static UInt32 ToStandardFormat(const ECFileFormat& format);
 };
 
 VISRCEND

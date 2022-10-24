@@ -10,7 +10,7 @@
 
 VISRCBEG
 
-VIDECL typedef struct esCommandBuffer* sCommandBuffer;
+VIDECL typedef struct TSCommandBuffer* SCommandBuffer;
 
 VISRCEND
 

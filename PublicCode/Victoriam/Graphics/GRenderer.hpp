@@ -10,22 +10,22 @@
 
 VISRCBEG
 
-class cRenderer
+class CRenderer
 {
 public:
-	virtual ~cRenderer() = default;
+	virtual ~CRenderer() = default;
 
-	VIDECL VIREQOUT static UPtr<cRenderer> Create(const sRendererCreateInfo& createInfo);
+	VIDECL VIREQOUT static UPtr<CRenderer> Create(const SRendererCreateInfo& createInfo);
 
 	virtual void Setup() = 0;
-	virtual void PushVertexBuffer(const List<sVertex>& vertices) = 0;
+	virtual void PushVertexBuffer(const List<SVertex>& vertices) = 0;
 
-	virtual void OnWindowResize(const sWindowExtent& extent) = 0;
+	virtual void OnWindowResize(const SWindowExtent& extent) = 0;
 	virtual void DrawFrame() = 0;
 	virtual void Shutdown() = 0;
 };
 
-VIDECL typedef UPtr<cRenderer> pRenderer;
+VIDECL typedef UPtr<CRenderer> PRenderer;
 
 VISRCEND
 

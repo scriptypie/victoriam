@@ -9,23 +9,23 @@
 
 VISRCBEG
 
-class cAppStateController
+class CAppStateController
 {
-    List<cAppState*> m_states = {};
+    List<CAppState*> m_states = {};
     UInt32 m_insertIndex = {};
 public:
-    cAppStateController() = default;
-    ~cAppStateController();
+    CAppStateController() = default;
+    ~CAppStateController();
 
-    void AddState(cAppState* state);
-    void RemoveState(cAppState* state);
-    void AddOverlayState(cAppState* state);
-    void RemoveOverlayState(cAppState* state);
+    void AddState(CAppState* state);
+    void RemoveState(CAppState* state);
+    void AddOverlayState(CAppState* state);
+    void RemoveOverlayState(CAppState* state);
 
-    VIDECL inline List<cAppState*>::iterator begin() { return m_states.begin(); }
-    VIDECL inline List<cAppState*>::iterator end() { return m_states.end(); }
-    VIDECL inline List<cAppState*>::reverse_iterator rbegin() { return m_states.rbegin(); }
-    VIDECL inline List<cAppState*>::reverse_iterator rend() { return m_states.rend(); }
+    VIDECL inline List<CAppState*>::iterator begin() { return m_states.begin(); }
+    VIDECL inline List<CAppState*>::iterator end() { return m_states.end(); }
+    VIDECL inline List<CAppState*>::reverse_iterator rbegin() { return m_states.rbegin(); }
+    VIDECL inline List<CAppState*>::reverse_iterator rend() { return m_states.rend(); }
 };
 
 VISRCEND

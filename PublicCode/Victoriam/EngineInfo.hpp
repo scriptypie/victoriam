@@ -9,12 +9,12 @@
 
 VISRCBEG
 
-struct sEngineInfo
+struct SEngineInfo
 {
     String version;
 };
 
-void fGetEngineInfo(sEngineInfo& info);
+void FGetEngineInfo(SEngineInfo& info);
 
 VISRCEND
 

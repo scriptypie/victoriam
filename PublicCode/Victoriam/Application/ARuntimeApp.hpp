@@ -11,41 +11,41 @@
 
 VISRCBEG
 
-class cRuntimeApp
+class CRuntimeApp
 {
 	friend Int32 Main(Int32, Int8**);
-	friend class cRenderer;
-	inline static cRuntimeApp* s_instance = nullptr;
-	sRuntimeAppCreateInfo m_info = {};
+	friend class CRenderer;
+	inline static CRuntimeApp* s_instance = nullptr;
+	SRuntimeAppCreateInfo m_info = {};
 	Bool m_running = {};
-	cAppStateController m_stateController = {};
-	pRenderer m_Renderer = {};
-	pWindow m_Window = nullptr;
-	List<pVertexBuffer> m_VertexBuffers = {};
+	CAppStateController m_stateController = {};
+	PRenderer m_Renderer = {};
+	PWindow m_Window = nullptr;
+	List<PVertexBuffer> m_VertexBuffers = {};
 public:
-	VIDECL explicit cRuntimeApp(sRuntimeAppCreateInfo  createInfo);
-	virtual ~cRuntimeApp();
+	VIDECL explicit CRuntimeApp(SRuntimeAppCreateInfo  createInfo);
+	virtual ~CRuntimeApp();
 
-	VIDECL void AddState(cAppState* state);
-	VIDECL void AddOverlayState(cAppState* overlay);
+	VIDECL void AddState(CAppState* state);
+	VIDECL void AddOverlayState(CAppState* overlay);
 
 	VIDECL void Close();
 	VIDECL void Reload();
 
-	VIDECL inline static cRuntimeApp& Get() { return *s_instance; }
-	VIDECL inline pRenderer& Renderer() { return m_Renderer; }
+	VIDECL inline static CRuntimeApp& Get() { return *s_instance; }
+	VIDECL inline PRenderer& Renderer() { return m_Renderer; }
 	VIDECL VIREQOUT inline String CWD() const { return m_info.CWD; }
-	VIDECL VIREQOUT inline const sRuntimeAppCreateInfo& GetInfo() const { return m_info; }
+	VIDECL VIREQOUT inline const SRuntimeAppCreateInfo& GetInfo() const { return m_info; }
 private:
 	void Startup();
-	void OnEvent(cEvent& e);
+	void OnEvent(CEvent& e);
 
-	bool OnWindowResize(const cWindowResizeEvent& e);
-	bool OnWindowClose(const cWindowCloseEvent& e);
+	bool OnWindowResize(const CWindowResizeEvent& e);
+	bool OnWindowClose(const CWindowCloseEvent& e);
 };
 
 // Needs to be defined on the client side
-cRuntimeApp* CreateRuntimeApp(const cArgumentLineTool& args);
+CRuntimeApp* CreateRuntimeApp(const CArgumentLineTool& args);
 
 VISRCEND
 

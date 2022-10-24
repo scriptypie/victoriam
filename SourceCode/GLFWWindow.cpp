@@ -16,19 +16,19 @@ namespace
 	}
 }
 
-cGLFWWindow::cGLFWWindow(const sWindowCreateInfo &info) {
+CGLFWWindow::CGLFWWindow(const SWindowCreateInfo &info) {
 	CreateWindow(info);
 }
 
-cGLFWWindow::~cGLFWWindow() {
+CGLFWWindow::~CGLFWWindow() {
 	DestroyWindow();
 }
 
-void cGLFWWindow::Update() {
+void CGLFWWindow::Update() {
 	glfwPollEvents();
 }
 
-void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
+void CGLFWWindow::CreateWindow(const SWindowCreateInfo &info) {
 	m_Data.Offset = info.Offset;
 	m_Data.Resolution = info.Resolution;
 	m_Data.Flags = info.Flags;
@@ -63,32 +63,32 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 
 	glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 	{
-		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
-		cWindowCloseEvent close_event;
+		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		CWindowCloseEvent close_event;
 		if (data.Callback)
 			data.Callback(close_event);
 	});
 
 	glfwSetWindowRefreshCallback(m_Window, [](GLFWwindow* window)
 	{
-		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
-		cWindowResizeEvent resize_event(CCast<UInt32>(data.Resolution.Width), CCast<UInt32>(data.Resolution.Height));
+		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		CWindowResizeEvent resize_event(CCast<UInt32>(data.Resolution.Width), CCast<UInt32>(data.Resolution.Height));
 		if (data.Callback)
 			data.Callback(resize_event);
 	});
 
 	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, Int32 width, Int32 height)
 	{
-		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
 		data.Resolution = { CCast<UInt32>(width), CCast<UInt32>(height) };
-		cWindowResizeEvent resize_event(CCast<UInt32>(width), CCast<UInt32>(height));
+		CWindowResizeEvent resize_event(CCast<UInt32>(width), CCast<UInt32>(height));
 		if (data.Callback)
 			data.Callback(resize_event);
 	});
 
 	glfwSetKeyCallback(m_Window, [](GLFWwindow* window, Int32 key, Int32 scancode, Int32 action, Int32 mode)
 	{
-		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
 
 		if (data.Callback)
 			switch (action)
@@ -111,13 +111,13 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 
 	glfwSetCharCallback(m_Window, [](GLFWwindow* window, UInt32 keycode)
 	{
-		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
 		data.InputState.keyboard.input = { CCast<char>(keycode) };
 	});
 
 	glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, Int32 button, Int32 action, Int32 mods)
 	{
-		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
 
 		switch (action)
 		{
@@ -139,30 +139,30 @@ void cGLFWWindow::CreateWindow(const sWindowCreateInfo &info) {
 
 	glfwSetScrollCallback(m_Window, [](GLFWwindow* window, Float64 x, Float64 y)
 	{
-		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
 		data.InputState.mouse.scroll = { CCast<Float32>(x), CCast<Float32>(y) };
 	});
 
 	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, Float64 x, Float64 y)
 	{
-		auto& data = Cast<sGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
 		data.InputState.mouse.position = { CCast<Float32>(x), CCast<Float32>(y) };
 	});
 
 }
 
-void cGLFWWindow::DestroyWindow() {
+void CGLFWWindow::DestroyWindow() {
 	if (m_Window)
 		glfwDestroyWindow(m_Window);
 	glfwTerminate();
 }
 
-void cGLFWWindow::CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface) {
+void CGLFWWindow::CreateWindowSurface(VkInstance instance, VkSurfaceKHR* surface) {
 	if (glfwCreateWindowSurface(instance, m_Window, nullptr, surface) != VK_SUCCESS)
 		throw std::runtime_error("Failed to create window surface!");
 }
 
-void cGLFWWindow::WaitForEvents()
+void CGLFWWindow::WaitForEvents()
 {
 	glfwWaitEvents();
 }

@@ -9,10 +9,10 @@
 
 VISRCBEG
 
-class cAppState
+class CAppState
 {
 public:
-    virtual ~cAppState() = default;
+    virtual ~CAppState() = default;
 
     virtual void OnCreate() = 0;
     virtual void OnUpdate() = 0;
@@ -20,7 +20,7 @@ public:
 	virtual void OnDestroy() = 0;
 };
 
-using AppState = UPtr<cAppState>;
+using AppState = UPtr<CAppState>;
 
 VISRCEND
 

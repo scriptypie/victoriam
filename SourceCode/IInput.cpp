@@ -8,39 +8,39 @@
 
 VISRCBEG
 
-void cInput::Init(const SPtr<cWindow> &window) {
-	m_InputStatePtr = &((cGLFWWindow*)window.get())->m_Data.InputState;
+void CInput::Init(const SPtr<CWindow> &window) {
+	m_InputStatePtr = &((CGLFWWindow*)window.get())->m_Data.InputState;
 }
 
-Bool cInput::IsKeyDown(const eKeyCode &code) {
+Bool CInput::IsKeyDown(const EKeyCode &code) {
 	return m_InputStatePtr->keyboard.pressed[code];
 }
 
-Bool cInput::IsKeyUp(const eKeyCode &code) {
+Bool CInput::IsKeyUp(const EKeyCode &code) {
 	return m_InputStatePtr->keyboard.released[code];
 }
 
-Bool cInput::IsMouseDown(const eMouseCode &code) {
+Bool CInput::IsMouseDown(const EMouseCode &code) {
 	return m_InputStatePtr->mouse.pressed[code];
 }
 
-Bool cInput::IsMouseUp(const eMouseCode &code) {
+Bool CInput::IsMouseUp(const EMouseCode &code) {
 	return m_InputStatePtr->mouse.released[code];
 }
 
-sVector2 cInput::GetMousePosition() {
+SVector2 CInput::GetMousePosition() {
 	return m_InputStatePtr->mouse.position;
 }
 
-Float32 cInput::GetMousePositionX() {
+Float32 CInput::GetMousePositionX() {
 	return GetMousePosition().x;
 }
 
-Float32 cInput::GetMousePositionY() {
+Float32 CInput::GetMousePositionY() {
 	return GetMousePosition().y;
 }
 
-String cInput::GetInput() {
+String CInput::GetInput() {
 	return m_InputStatePtr->keyboard.input;
 }
 

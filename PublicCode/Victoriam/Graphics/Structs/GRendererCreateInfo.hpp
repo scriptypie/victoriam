@@ -12,9 +12,9 @@
 
 VISRCBEG
 
-struct VIDECL sRendererCreateInfo
+struct VIDECL SRendererCreateInfo
 {
-	VIDECL pWindow WindowPtr = nullptr;
+	VIDECL PWindow WindowPtr = nullptr;
 };
 
 VISRCEND

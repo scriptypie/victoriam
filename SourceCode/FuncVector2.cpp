@@ -8,7 +8,7 @@
 
 VISRCBEG
 
-Bool operator==(const sVector2 &a, const sVector2 &b) {
+Bool operator==(const SVector2 &a, const SVector2 &b) {
 	return
 			(
 					cComparator::Equal(a.data[0], b.data[0]) &&
@@ -16,7 +16,7 @@ Bool operator==(const sVector2 &a, const sVector2 &b) {
 			);
 }
 
-Bool operator!=(const sVector2 &a, const sVector2 &b) {
+Bool operator!=(const SVector2 &a, const SVector2 &b) {
 	return
 			(
 					!cComparator::Equal(a.data[0], b.data[0]) ||
@@ -24,7 +24,7 @@ Bool operator!=(const sVector2 &a, const sVector2 &b) {
 			);
 }
 
-Bool operator<=(const sVector2 &a, const sVector2 &b) {
+Bool operator<=(const SVector2 &a, const SVector2 &b) {
 	return
 			(
 					a.data[0] < b.data[0] &&
@@ -32,7 +32,7 @@ Bool operator<=(const sVector2 &a, const sVector2 &b) {
 			);
 }
 
-Bool operator>=(const sVector2 &a, const sVector2 &b) {
+Bool operator>=(const SVector2 &a, const SVector2 &b) {
 	return
 			(
 					a.data[0] >= b.data[0] &&
@@ -40,7 +40,7 @@ Bool operator>=(const sVector2 &a, const sVector2 &b) {
 			);
 }
 
-Bool operator<(const sVector2 &a, const sVector2 &b) {
+Bool operator<(const SVector2 &a, const SVector2 &b) {
 	return
 			(
 					cComparator::Less(a.data[0], b.data[0]) &&
@@ -48,7 +48,7 @@ Bool operator<(const sVector2 &a, const sVector2 &b) {
 			);
 }
 
-Bool operator>(const sVector2 &a, const sVector2 &b) {
+Bool operator>(const SVector2 &a, const SVector2 &b) {
 	return
 			(
 					cComparator::Greater(a.data[0], b.data[0]) &&
@@ -56,27 +56,27 @@ Bool operator>(const sVector2 &a, const sVector2 &b) {
 			);
 }
 
-sVector2 max(const sVector2 &a, const sVector2 &b) {
+SVector2 max(const SVector2 &a, const SVector2 &b) {
 	return (a > b) ? a : b;
 }
 
-sVector2 min(const sVector2 &a, const sVector2 &b) {
+SVector2 min(const SVector2 &a, const SVector2 &b) {
 	return (a < b) ? a : b;
 }
 
-Scalar fDot(const sVector2 &a, const sVector2 &b) {
+Scalar fDot(const SVector2 &a, const SVector2 &b) {
 	return a.x * b.x + a.y * b.y;
 }
 
-Scalar fSkew(const sVector2 &a, const sVector2 &b) {
+Scalar fSkew(const SVector2 &a, const SVector2 &b) {
 	return fCross(a, b);
 }
 
-Scalar fCross(const sVector2 &a, const sVector2 &b) {
+Scalar fCross(const SVector2 &a, const SVector2 &b) {
 	return a.x * b.y - a.y * b.x;
 }
 
-Scalar fLength(const sVector2 &a) {
+Scalar fLength(const SVector2 &a) {
 	return
 			(
 					std::sqrtf(
@@ -86,11 +86,11 @@ Scalar fLength(const sVector2 &a) {
 			);
 }
 
-Scalar fLength2(const sVector2 &a) {
+Scalar fLength2(const SVector2 &a) {
 	return fLength(a) * fLength(a);
 }
 
-Scalar fDistance(const sVector2 &from, const sVector2 &to) {
+Scalar fDistance(const SVector2 &from, const SVector2 &to) {
 	return fLength(
 			{
 	                   to.data[0] - from.data[0],
@@ -98,15 +98,15 @@ Scalar fDistance(const sVector2 &from, const sVector2 &to) {
                });
 }
 
-sVector2 fNormalize(const sVector2 &a) {
+SVector2 fNormalize(const SVector2 &a) {
 	Scalar len = fLength(a);
 	if (len == 0.0f) return a;
-	sVector2 b(a);
+	SVector2 b(a);
 	b *= (static_cast<Scalar>(1) / len);
 	return b;
 }
 
-sVector2 fFloor(const sVector2 &a) {
+SVector2 fFloor(const SVector2 &a) {
 	return
 			{
 					std::floorf(a.x),
@@ -114,7 +114,7 @@ sVector2 fFloor(const sVector2 &a) {
 			};
 }
 
-sVector2 fCeil(const sVector2 &a) {
+SVector2 fCeil(const SVector2 &a) {
 	return
 			{
 					std::ceil(a.x),
@@ -122,15 +122,15 @@ sVector2 fCeil(const sVector2 &a) {
 			};
 }
 
-Scalar fMagnitude(const sVector2 &a) {
+Scalar fMagnitude(const SVector2 &a) {
 	return std::sqrt(fDot(a, a));
 }
 
-Scalar fRMagnitude(const sVector2 &a) {
+Scalar fRMagnitude(const SVector2 &a) {
 	return rsqrt(fDot(a, a));
 }
 
-std::ostream& operator<<(std::ostream &os, const sVector2 &v) {
+std::ostream& operator<<(std::ostream &os, const SVector2 &v) {
 	return os << "(" << v.x << ", " << v.y << ")";
 }
 

@@ -15,7 +15,7 @@ VISRCBEG
 
 namespace Accessors { class Pipeline; }
 
-struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
+struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 {
 	VIDECL VkPipelineInputAssemblyStateCreateInfo InputAssemblyStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO };
 	VIDECL VkPipelineRasterizationStateCreateInfo RasterizationStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO };
@@ -30,14 +30,14 @@ struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 	VIDECL VkRenderPass RenderPass = VK_NULL_HANDLE;
 	VIDECL UInt32 Subpass = {};
 
-	VIDECL inline explicit sVulkanPipelineCreateInfo(const VkRenderPass& renderPass)
-		: sVulkanPipelineCreateInfo()
+	VIDECL inline explicit SVulkanPipelineCreateInfo(const VkRenderPass& renderPass)
+		: SVulkanPipelineCreateInfo()
 	{
 		// RenderPass
 		RenderPass = renderPass;
 	}
 
-	VIDECL inline sVulkanPipelineCreateInfo()
+	VIDECL inline SVulkanPipelineCreateInfo()
 	{
 		// InputAssembly
 		InputAssemblyStateCreateInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
@@ -77,22 +77,22 @@ struct VIDECL sVulkanPipelineCreateInfo : sPipelineCreateInfo
 	}
 };
 
-class cVulkanPipeline : public cPipeline
+class CVulkanPipeline : public CPipeline
 {
 	friend class Accessors::Pipeline;
-	friend class cVulkanRenderer;
+	friend class CVulkanRenderer;
 
-	VIDECL cShaderCooker m_ShaderCooker = {};
-	VIDECL pDevice& m_Device;
+	VIDECL CShaderCooker m_ShaderCooker = {};
+	VIDECL PDevice& m_Device;
 	VIDECL VkPipeline m_GraphicsPipeline = {};
 	VIDECL VkShaderModule m_VertexShaderModule = {};
 	VIDECL VkShaderModule m_FragmentShaderModule = {};
-	VIDECL sVulkanPipelineCreateInfo m_Info = {};
+	VIDECL SVulkanPipelineCreateInfo m_Info = {};
 public:
-	cVulkanPipeline(const String& name, pDevice& device, pSwapchain& swapchain);
-	~cVulkanPipeline() override;
+	CVulkanPipeline(const String& name, PDevice& device, PSwapchain& swapchain);
+	~CVulkanPipeline() override;
 
-	void BindDrawCommandBuffer(const sCommandBuffer& buffer) override;
+	void BindDrawCommandBuffer(const SCommandBuffer& buffer) override;
 private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();

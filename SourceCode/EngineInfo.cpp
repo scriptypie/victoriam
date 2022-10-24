@@ -5,7 +5,7 @@
 
 VISRCBEG
 
-void fGetEngineInfo(sEngineInfo& info)
+void FGetEngineInfo(SEngineInfo& info)
 {
     info.version = "0.0.1";
 }

@@ -5,17 +5,17 @@
 
 VISRCBEG
 
-class VIsualApp : public cRuntimeApp
+class VIsualApp : public CRuntimeApp
 {
 public:
-	explicit VIsualApp(sRuntimeAppCreateInfo createInfo) : cRuntimeApp(std::move(createInfo)) {
+	explicit VIsualApp(SRuntimeAppCreateInfo createInfo) : CRuntimeApp(std::move(createInfo)) {
 		AddState(new VEditorState());
 	}
 };
 
-cRuntimeApp* CreateRuntimeApp(const cArgumentLineTool& args)
+CRuntimeApp* CreateRuntimeApp(const CArgumentLineTool& args)
 {
-	sRuntimeAppCreateInfo createInfo = {};
+	SRuntimeAppCreateInfo createInfo = {};
 	createInfo.Arguments = args;
 	createInfo.CWD = args[0].substr(0, args[0].size() - 6); // current path
 	createInfo.AppName = "Ved";

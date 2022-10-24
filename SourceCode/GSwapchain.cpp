@@ -9,13 +9,13 @@
 VISRCBEG
 
 
-pSwapchain cSwapchain::Create(pDevice &device, const sWindowExtent &extent) {
-	return CreateUPtr<cVulkanSwapchain>(device, extent);
+PSwapchain CSwapchain::Create(PDevice &device, const SWindowExtent &extent) {
+	return CreateUPtr<CVulkanSwapchain>(device, extent);
 }
 
-pSwapchain cSwapchain::Create(pDevice &device, const sWindowExtent &extent, cSwapchain* prev)
+PSwapchain CSwapchain::Create(PDevice &device, const SWindowExtent &extent, CSwapchain* prev)
 {
-	return CreateUPtr<cVulkanSwapchain>(device, extent, prev);
+	return CreateUPtr<CVulkanSwapchain>(device, extent, prev);
 }
 
 VISRCEND

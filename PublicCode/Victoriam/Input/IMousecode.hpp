@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-enum VIDECL eMouseCode : UInt32
+enum VIDECL EMouseCode : UInt32
 {
 	// From glfw3.h
 	Button0                = 0,

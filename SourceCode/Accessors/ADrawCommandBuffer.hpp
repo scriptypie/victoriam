@@ -14,9 +14,9 @@ namespace Accessors
 	class VIDECL DrawCommandBuffer
 	{
 	public:
-		VIDECL VIREQOUT inline static auto GetCommandBufferList(const pDrawCommandBuffer& drawCommandBuffer)
+		VIDECL VIREQOUT inline static auto GetCommandBufferList(const PDrawCommandBuffer& drawCommandBuffer)
 		{
-			return CCast<cVulkanDrawCommandBuffer*>(drawCommandBuffer.get())->GetCommandBufferList();
+			return CCast<CVulkanDrawCommandBuffer*>(drawCommandBuffer.get())->GetCommandBufferList();
 		}
 	};
 }
