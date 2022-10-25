@@ -7,11 +7,13 @@
 
 #include <Victoriam/Math/MVector2.hpp>
 #include <Victoriam/Math/MVector3.hpp>
+#include <Victoriam/Math/MMatrix4.hpp>
 
 VISRCBEG
 
 struct VIDECL SMaterialData
 {
+	Matrix4 Transform;
 	Vector2 Offset;
 	alignas(16)
 	Vector3 Color;
