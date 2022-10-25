@@ -33,7 +33,7 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 		SWindowCreateInfo info;
 		info.Name = m_info.AppName + " - NewWindow";
 		info.Offset = {100, 100};
-		info.Resolution = {1280, 720};
+		info.Resolution = {500, 500};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = CWindow::Create(info);
 	}
@@ -49,10 +49,30 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 			{ { 0.5F,  0.5F }, { 0.0F, 1.0F, 0.0F, 1.0F } },
 			{ {-0.5F,  0.5F }, { 0.0F, 0.0F, 1.0F, 1.0F } },
 	};
-	m_Renderer->PushVertexBuffer(vertices);
-
 	m_Renderer->Setup();
 	m_running = true;
+
+	PVertexBuffer vertexBuffer = m_Renderer->CreateVertexBuffer(vertices);
+	m_World = CWorld::Create();
+
+	{
+		auto triangle = m_World->CreateGameObject();
+		auto &trc = triangle->AddComponent<SComponentRenderable>();
+		trc.VertexBuffer = vertexBuffer;
+		trc.Color = {0.1F, 0.8F, 0.1F};
+		auto &ttc = triangle->AddComponent<SComponentTransform>();
+		ttc.Translation = {};
+	}
+	{
+		auto triangle2 = m_World->CreateGameObject();
+		auto &trc = triangle2->AddComponent<SComponentRenderable>();
+		trc.VertexBuffer = vertexBuffer;
+		trc.Color = {0.8F, 0.1F, 0.2F};
+		auto &ttc = triangle2->AddComponent<SComponentTransform>();
+		ttc.Translation = { 0.3F, 0.4F };
+		ttc.Scale = { 1.5F, 0.2F };
+	}
+
 }
 
 CRuntimeApp::~CRuntimeApp() {
@@ -92,7 +112,7 @@ void Vi::CRuntimeApp::Startup() {
 		}
 		// end gui update
 
-		m_Renderer->DrawFrame();
+		m_Renderer->DrawFrame(m_World);
 	}
 	m_Renderer->Shutdown();
 }

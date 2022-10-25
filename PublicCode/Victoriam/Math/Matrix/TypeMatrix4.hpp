@@ -26,6 +26,8 @@ struct VIDECL SMatrix4 : SMatrixBase<4, 4>
 	SMatrix4& operator*=(const Scalar& s);
 	SMatrix4& operator/=(const Scalar& s);
 
+	SMatrix4  operator*(const SMatrix4& m);
+
 };
 
 VISRCEND

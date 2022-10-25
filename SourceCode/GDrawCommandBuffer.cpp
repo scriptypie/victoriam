@@ -8,9 +8,9 @@
 
 VISRCBEG
 
-PDrawCommandBuffer CDrawCommandBuffer::Create(PSwapchain &swapchain, PDevice& device, PPipeline& pipeline, const List<PVertexBuffer>& vertexBuffers)
+PDrawCommandBuffer CDrawCommandBuffer::Create(PSwapchain &swapchain, PDevice& device, PPipeline& pipeline)
 {
-	return CreateSPtr<CVulkanDrawCommandBuffer>(swapchain, device, pipeline, vertexBuffers);
+	return CreateSPtr<CVulkanDrawCommandBuffer>(swapchain, device, pipeline);
 }
 
 VISRCEND

@@ -16,17 +16,17 @@ CVulkanRenderer::CVulkanRenderer(const SRendererCreateInfo &createInfo)
 
 void CVulkanRenderer::Setup()
 {
-	m_DrawCommandBuffer = CDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline, m_VertexBuffers);
+	m_DrawCommandBuffer = CDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline);
 }
 
-void CVulkanRenderer::PushVertexBuffer(const List<SVertex>& vertices)
+PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
 {
-	m_VertexBuffers.push_back(CVertexBuffer::Create(m_Device, vertices));
+	return CVertexBuffer::Create(m_Device, vertices);
 }
 
-CVulkanRenderer::~CVulkanRenderer() = default;
+	CVulkanRenderer::~CVulkanRenderer() = default;
 
-void CVulkanRenderer::DrawFrame()
+void CVulkanRenderer::DrawFrame(const PWorld& world)
 {
 	UInt32 imageIndex;
 	auto result = m_Swapchain->AcquireNextImage(&imageIndex);
@@ -38,7 +38,7 @@ void CVulkanRenderer::DrawFrame()
 	if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 		throw std::runtime_error("Failed to acquire next image!");
 
-	m_DrawCommandBuffer->RecordCommandBuffer(imageIndex);
+	m_DrawCommandBuffer->RecordCommandBuffer(world, imageIndex);
 	Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, &Accessors::DrawCommandBuffer::GetCommandBufferList(m_DrawCommandBuffer).at(imageIndex), &imageIndex);
 
 }
@@ -77,7 +77,7 @@ void CVulkanRenderer::RecreateSwapchain(const SWindowExtent &newExtent) {
 		if (m_Swapchain->GetImageCount() != Accessors::DrawCommandBuffer::GetCommandBufferList(m_DrawCommandBuffer).size())
 		{
 			m_DrawCommandBuffer = nullptr;
-			m_DrawCommandBuffer = CDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline, m_VertexBuffers);
+			m_DrawCommandBuffer = CDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline);
 		}
 	}
 	CreatePipeline();

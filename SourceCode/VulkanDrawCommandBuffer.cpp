@@ -8,10 +8,9 @@
 
 VISRCBEG
 
-CVulkanDrawCommandBuffer::CVulkanDrawCommandBuffer(PSwapchain &swapchain, PDevice& device, PPipeline& pipeline, const List<PVertexBuffer>& vertexBuffers)
+CVulkanDrawCommandBuffer::CVulkanDrawCommandBuffer(PSwapchain &swapchain, PDevice& device, PPipeline& pipeline)
 	: m_Swapchain(swapchain), m_Device(device), m_Pipeline(pipeline)
 {
-	m_VertexBuffers = vertexBuffers;
 	CreateCommandBuffers();
 }
 
@@ -34,11 +33,8 @@ void CVulkanDrawCommandBuffer::CreateCommandBuffers()
 		throw std::runtime_error("Failed to allocate command buffers!");
 }
 
-void CVulkanDrawCommandBuffer::RecordCommandBuffer(UInt32 imageIndex)
+void CVulkanDrawCommandBuffer::RecordCommandBuffer(const PWorld& world, UInt32 imageIndex)
 {
-	static UInt32 frame = 0;
-	frame = (frame + 1) % 100;
-
 	VkCommandBufferBeginInfo beginInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO };
 	if (vkBeginCommandBuffer(m_CommandBuffers.at(imageIndex), &beginInfo) != VK_SUCCESS)
 		throw std::runtime_error("Failed to call vkBeginCommandBuffer()");
@@ -70,7 +66,7 @@ void CVulkanDrawCommandBuffer::RecordCommandBuffer(UInt32 imageIndex)
 	vkCmdSetScissor(m_CommandBuffers.at(imageIndex), 0, 1, &scissor);
 
 	m_Pipeline->BindDrawCommandBuffer(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
-	for (const auto& m_VertexBuffer : m_VertexBuffers)
+	/* for (const auto& m_VertexBuffer : m_VertexBuffers)
 	{
 		m_VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 
@@ -83,6 +79,21 @@ void CVulkanDrawCommandBuffer::RecordCommandBuffer(UInt32 imageIndex)
 
 			m_VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 		}
+	} */
+
+	auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
+	for (auto renderable_obj : renderable_objs)
+	{
+		auto rrc = renderable_obj->GetComponent<SComponentRenderable>();
+		auto& trc = renderable_obj->GetComponent<SComponentTransform>();
+
+		SMaterialData materialData = {};
+		materialData.Transform = trc.Transform();
+		materialData.Offset = trc.Translation;
+		materialData.Color  = rrc.Color;
+		m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0, &materialData);
+		rrc.VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+		rrc.VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 	}
 
 	vkCmdEndRenderPass(m_CommandBuffers.at(imageIndex));

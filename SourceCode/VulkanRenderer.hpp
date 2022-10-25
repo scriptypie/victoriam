@@ -21,17 +21,16 @@ class CVulkanRenderer : public CRenderer {
 	VIDECL PSwapchain m_Swapchain = {};
 	VIDECL PPipeline m_Pipeline = {};
 	VIDECL PDrawCommandBuffer m_DrawCommandBuffer = {};
-	VIDECL List<PVertexBuffer> m_VertexBuffers = {};
 	VIDECL PWindow m_Window = {};
 public:
 	explicit CVulkanRenderer(const SRendererCreateInfo& createInfo);
 	~CVulkanRenderer() override;
 
 	void Setup() override;
-	void PushVertexBuffer(const List<SVertex>& vertices) override;
+	PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) override;
 
 	void OnWindowResize(const SWindowExtent& extent) override;
-	void DrawFrame() override;
+	void DrawFrame(const PWorld& world) override;
 	void Shutdown() override;
 private:
 	void BeginFrame();

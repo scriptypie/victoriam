@@ -10,6 +10,7 @@
 #include <Victoriam/Graphics/GDevice.hpp>
 #include <Victoriam/Graphics/GPipeline.hpp>
 #include <Victoriam/Graphics/GVertexBuffer.hpp>
+#include <Victoriam/World/WWorld.hpp>
 
 VISRCBEG
 
@@ -18,9 +19,9 @@ class CDrawCommandBuffer
 public:
 	virtual ~CDrawCommandBuffer() = default;
 
-	virtual void RecordCommandBuffer(UInt32 imageIndex) = 0;
+	virtual void RecordCommandBuffer(const PWorld& world, UInt32 imageIndex) = 0;
 
-	VIDECL VIREQOUT static SPtr<CDrawCommandBuffer> Create(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline, const List<PVertexBuffer>& vertexBuffers);
+	VIDECL VIREQOUT static SPtr<CDrawCommandBuffer> Create(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline);
 };
 
 VIDECL typedef SPtr<CDrawCommandBuffer> PDrawCommandBuffer;

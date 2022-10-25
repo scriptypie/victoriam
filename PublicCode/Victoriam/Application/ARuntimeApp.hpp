@@ -8,6 +8,7 @@
 #include <Victoriam/Application/AAppStateController.hpp>
 #include <Victoriam/Application/ARuntimeAppCreateInfo.hpp>
 #include <Victoriam/Graphics/GRenderer.hpp>
+#include <Victoriam/World/WWorld.hpp>
 
 VISRCBEG
 
@@ -22,6 +23,7 @@ class CRuntimeApp
 	PRenderer m_Renderer = {};
 	PWindow m_Window = nullptr;
 	List<PVertexBuffer> m_VertexBuffers = {};
+	PWorld m_World = {};
 public:
 	VIDECL explicit CRuntimeApp(SRuntimeAppCreateInfo  createInfo);
 	virtual ~CRuntimeApp();

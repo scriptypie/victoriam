@@ -12,7 +12,7 @@
 VISRCBEG
 
 #ifndef NDEBUG
-#define ViLog(...) std::cout << __VA_ARGS__ << std::end
+#define ViLog(...) printf(__VA_ARGS__)
 #else
 #define ViLog(...) (void)0
 #endif

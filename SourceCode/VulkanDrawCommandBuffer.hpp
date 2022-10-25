@@ -23,12 +23,11 @@ class CVulkanDrawCommandBuffer : public CDrawCommandBuffer {
 	PSwapchain& m_Swapchain;
 	PDevice& m_Device;
 	PPipeline& m_Pipeline;
-	List<PVertexBuffer> m_VertexBuffers = {};
 public:
-	CVulkanDrawCommandBuffer(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline, const List<PVertexBuffer>& vertexBuffers);
+	CVulkanDrawCommandBuffer(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline);
 	~CVulkanDrawCommandBuffer() override;
 
-	void RecordCommandBuffer(UInt32 imageIndex) override;
+	void RecordCommandBuffer(const PWorld& world, UInt32 imageIndex) override;
 
 private:
 	void CreateCommandBuffers();

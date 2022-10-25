@@ -7,6 +7,7 @@
 
 #include "Victoriam/Graphics/Structs/GRendererCreateInfo.hpp"
 #include <Victoriam/Graphics/GVertexBuffer.hpp>
+#include <Victoriam/World/WWorld.hpp>
 
 VISRCBEG
 
@@ -18,10 +19,10 @@ public:
 	VIDECL VIREQOUT static UPtr<CRenderer> Create(const SRendererCreateInfo& createInfo);
 
 	virtual void Setup() = 0;
-	virtual void PushVertexBuffer(const List<SVertex>& vertices) = 0;
+	virtual PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) = 0;
 
 	virtual void OnWindowResize(const SWindowExtent& extent) = 0;
-	virtual void DrawFrame() = 0;
+	virtual void DrawFrame(const PWorld& world) = 0;
 	virtual void Shutdown() = 0;
 };
 

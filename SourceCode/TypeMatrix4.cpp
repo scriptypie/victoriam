@@ -36,4 +36,11 @@ SMatrix4& SMatrix4::operator/=(const Scalar& s)
 	return *this;
 }
 
+SMatrix4 SMatrix4::operator*(const SMatrix4 &m)
+{
+	SMatrix4 result = *this;
+	for (auto i = 0; i < NUMELMS; i++) result.data[i] *= m.data[i];
+	return result;
+}
+
 VISRCEND
