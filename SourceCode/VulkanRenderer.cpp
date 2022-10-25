@@ -43,16 +43,6 @@ void CVulkanRenderer::DrawFrame(const PWorld& world)
 
 }
 
-void CVulkanRenderer::BeginFrame()
-{
-
-}
-
-void CVulkanRenderer::EndFrame()
-{
-
-}
-
 void CVulkanRenderer::Shutdown(const PWorld& world) {
 
 	vkDeviceWaitIdle(Accessors::Device::GetDevice(m_Device));

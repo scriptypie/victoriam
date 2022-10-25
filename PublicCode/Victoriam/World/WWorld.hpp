@@ -16,9 +16,10 @@ class CWorld
 
 	List<CGameObject*> m_Registry;
 public:
-	VIDECL CGameObject* CreateGameObject();
+	VIDECL VIREQOUT CGameObject* CreateGameObject();
+	VIDECL VIREQOUT CGameObject* CreateGameObject(const CString& name);
 	VIDECL void DestroyGameObject(CGameObject* object);
-	VIDECL CGameObject* FindGameObjectByUID(const UID& id);
+	VIDECL VIREQOUT CGameObject* FindGameObjectByUID(const UID& id);
 
 	template<class T>
 	VIDECL VIREQOUT List<CGameObject*> FindGameObjectsWithComponent()

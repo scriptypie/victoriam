@@ -12,6 +12,14 @@ CGameObject* CWorld::CreateGameObject()
 	return new CGameObject(this);
 }
 
+CGameObject* CWorld::CreateGameObject(const CString &name)
+{
+	CGameObject* obj = CreateGameObject();
+	auto& nc = obj->AddComponent<SComponentName>();
+	nc.Name = name;
+	return obj;
+}
+
 void CWorld::DestroyGameObject(CGameObject* object)
 {
 	object->Destroy();

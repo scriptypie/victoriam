@@ -56,18 +56,17 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	m_World = CWorld::Create();
 
 	{
-		auto triangle = m_World->CreateGameObject();
+		auto triangle = m_World->CreateGameObject("Triangle");
 		auto &trc = triangle->AddComponent<SComponentRenderable>();
 		trc.VertexBuffer = vertexBuffer;
 		trc.Color = {0.1F, 0.8F, 0.1F};
-		auto &ttc = triangle->AddComponent<SComponentTransform>();
-		ttc.Translation = {};
+		triangle->AddComponent<SComponentTransform>();
 	}
 	{
-		auto triangle2 = m_World->CreateGameObject();
+		auto triangle2 = m_World->CreateGameObject("Triangle 2");
 		auto &trc = triangle2->AddComponent<SComponentRenderable>();
 		trc.VertexBuffer = vertexBuffer;
-		trc.Color = {0.8F, 0.1F, 0.2F};
+		trc.Color = {0.005F, 0.05F, 0.005F};
 		auto &ttc = triangle2->AddComponent<SComponentTransform>();
 		ttc.Translation = { 0.3F, 0.4F };
 		ttc.Scale = { 1.5F, 0.2F };
@@ -124,7 +123,7 @@ void CRuntimeApp::OnEvent(CEvent &e) {
 }
 
 bool CRuntimeApp::OnWindowResize(const CWindowResizeEvent &e) {
-	printf("%s\n", e.ToString().c_str());
+	ViLog("%s\n", e.ToString().c_str());
 	m_Renderer->OnWindowResize(e.GetExtent());
 	return true;
 }

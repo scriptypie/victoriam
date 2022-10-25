@@ -13,7 +13,6 @@
 #include <Victoriam/Input/IMousecode.hpp>
 #include <Victoriam/Input/IPadcode.hpp>
 #include <Victoriam/Input/IPadaxis.hpp>
-#include <Victoriam/Math/MVector2.hpp>
 
 VISRCBEG
 
@@ -27,8 +26,8 @@ struct VIDECL SInputState
 	} keyboard;
 	struct VIDECL SMouseInputState
 	{
-		SVector2 position;
-		SVector2 scroll;
+		glm::vec2 position;
+		glm::vec2 scroll;
 		Bool pressed[MouseMax];
 		Bool released[MouseMax];
 	} mouse;

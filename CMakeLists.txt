@@ -3,7 +3,7 @@ project(victoriam)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(PublicCode /opt/homebrew/Cellar/glfw/3.3.8/include /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
+include_directories(PublicCode /opt/homebrew/Cellar/glfw/3.3.8/include ThirdParty /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
 
 set(SOURCE_FILES
         PublicCode/Victoriam/Core/CBase.hpp
@@ -20,16 +20,6 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Application/ARuntimeAppCreateInfo.hpp
         PublicCode/Victoriam/Graphics/GWindow.hpp
         PublicCode/Victoriam/Graphics/Structs/GWindowCreateInfo.hpp
-        PublicCode/Victoriam/Math/Common/Scalar.hpp
-        PublicCode/Victoriam/Math/Common/MinMax.hpp
-        PublicCode/Victoriam/Math/Common/ScalarArray.hpp
-        PublicCode/Victoriam/Math/Common/Comparator.hpp
-        PublicCode/Victoriam/Math/Vector/VectorBase.hpp
-        PublicCode/Victoriam/Math/Vector/TypeVector2.hpp
-        PublicCode/Victoriam/Math/Vector/TypeVector3.hpp
-        PublicCode/Victoriam/Math/Vector/TypeVector4.hpp
-        PublicCode/Victoriam/Math/Vector/FuncVector2.hpp
-        PublicCode/Victoriam/Math/MVector2.hpp
         PublicCode/Victoriam/Core/CFlags.hpp
         PublicCode/Victoriam/EventSystem/EEvent.hpp
         PublicCode/Victoriam/EventSystem/EEventDispatcher.hpp
@@ -50,13 +40,35 @@ set(SOURCE_FILES
         SourceCode/VulkanPipeline.hpp
         SourceCode/Accessors/ADevice.hpp
         SourceCode/GLFWWindow.hpp
+        PublicCode/Victoriam/Graphics/GDrawCommandBuffer.hpp
+        SourceCode/VulkanDrawCommandBuffer.hpp
+        SourceCode/Accessors/APipeline.hpp
+        SourceCode/VulkanRenderer.hpp
+        SourceCode/Accessors/ADrawCommandBuffer.hpp
+        PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp
+        PublicCode/Victoriam/Utils/UCryptogen.hpp
+        PublicCode/Victoriam/Utils/UFile.hpp
+        PublicCode/Victoriam/Graphics/GVertexBuffer.hpp
+        PublicCode/Victoriam/Graphics/Structs/GVertex.hpp
+        SourceCode/VulkanVertex.hpp
+        SourceCode/VulkanVertexBuffer.hpp
+        SourceCode/Accessors/AVertexBuffer.hpp
+        PublicCode/Victoriam/Core/CLog.hpp
+        PublicCode/Victoriam/Graphics/Structs/GMaterialData.hpp
+        PublicCode/Victoriam/World/WGameObject.hpp
+        PublicCode/Victoriam/World/WWorld.hpp
+        PublicCode/Victoriam/World/Components/ComponentBase.hpp
+        PublicCode/Victoriam/World/Components/ComponentRenderable.hpp
+        PublicCode/Victoriam/World/Components/ComponentTransform.hpp
+        SourceCode/Accessors/ASwapchain.hpp
+        PublicCode/Victoriam/Graphics/GRenderer.hpp
+        PublicCode/Victoriam/Graphics/Structs/GRendererCreateInfo.hpp
+        SourceCode/VulkanSwapchain.hpp
+        PublicCode/Victoriam/Graphics/GSwapchain.hpp
 
         SourceCode/EngineInfo.cpp
         SourceCode/AAppStateController.cpp
         SourceCode/ARuntimeApp.cpp
-        SourceCode/Comparator.cpp
-        SourceCode/FuncVector2.cpp
-        SourceCode/ScalarRsqrt.cpp
         SourceCode/GWindow.cpp
         SourceCode/GLFWWindow.cpp
         SourceCode/IInput.cpp
@@ -65,7 +77,19 @@ set(SOURCE_FILES
         SourceCode/VulkanDevice.cpp
         SourceCode/GPipeline.cpp
         SourceCode/VulkanPipeline.cpp
-        PublicCode/Victoriam/Graphics/GSwapchain.hpp SourceCode/GSwapchain.cpp SourceCode/VulkanSwapchain.cpp SourceCode/VulkanSwapchain.hpp SourceCode/Accessors/ASwapchain.hpp PublicCode/Victoriam/Graphics/GRenderer.hpp PublicCode/Victoriam/Graphics/Structs/GRendererCreateInfo.hpp SourceCode/GRenderer.cpp PublicCode/Victoriam/Graphics/GDrawCommandBuffer.hpp SourceCode/GDrawCommandBuffer.cpp SourceCode/VulkanDrawCommandBuffer.cpp SourceCode/VulkanDrawCommandBuffer.hpp SourceCode/Accessors/APipeline.hpp SourceCode/VulkanRenderer.cpp SourceCode/VulkanRenderer.hpp SourceCode/Accessors/ADrawCommandBuffer.hpp PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp PublicCode/Victoriam/Utils/UCryptogen.hpp SourceCode/UCryptogen.cpp PublicCode/Victoriam/Utils/UFile.hpp SourceCode/UFile.cpp PublicCode/Victoriam/Graphics/GVertexBuffer.hpp PublicCode/Victoriam/Graphics/Structs/GVertex.hpp SourceCode/VulkanVertex.hpp SourceCode/GVertexBuffer.cpp SourceCode/VulkanVertexBuffer.cpp SourceCode/VulkanVertexBuffer.hpp SourceCode/Accessors/AVertexBuffer.hpp PublicCode/Victoriam/Math/MVector4.hpp PublicCode/Victoriam/Core/CLog.hpp PublicCode/Victoriam/Math/Vector/FuncVector3.hpp SourceCode/FuncVector3.cpp PublicCode/Victoriam/Math/MVector3.hpp PublicCode/Victoriam/Math/Vector/FuncVector4.hpp SourceCode/FuncVector4.cpp PublicCode/Victoriam/Math/Matrix/MatrixBase.hpp PublicCode/Victoriam/Math/Matrix/TypeMatrix4.hpp SourceCode/TypeMatrix4.cpp PublicCode/Victoriam/Math/Matrix/FuncMatrix4.hpp PublicCode/Victoriam/Math/Ext/TransformData.hpp SourceCode/FuncMatrix4.cpp PublicCode/Victoriam/Math/MMatrix4.hpp PublicCode/Victoriam/Graphics/Structs/GMaterialData.hpp PublicCode/Victoriam/World/WGameObject.hpp PublicCode/Victoriam/World/WWorld.hpp SourceCode/WGameObject.cpp SourceCode/WWorld.cpp PublicCode/Victoriam/World/Components/ComponentBase.hpp PublicCode/Victoriam/World/Components/ComponentRenderable.hpp PublicCode/Victoriam/World/Components/ComponentTransform.hpp)
+        SourceCode/GSwapchain.cpp
+        SourceCode/VulkanSwapchain.cpp
+        SourceCode/GRenderer.cpp
+        SourceCode/GDrawCommandBuffer.cpp
+        SourceCode/VulkanDrawCommandBuffer.cpp
+        SourceCode/VulkanRenderer.cpp
+        SourceCode/UCryptogen.cpp
+        SourceCode/UFile.cpp
+        SourceCode/GVertexBuffer.cpp
+        SourceCode/VulkanVertexBuffer.cpp
+        SourceCode/WGameObject.cpp
+        SourceCode/WWorld.cpp
+        PublicCode/Victoriam/World/Components/ComponentName.hpp PublicCode/Victoriam/World/Components/Components.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

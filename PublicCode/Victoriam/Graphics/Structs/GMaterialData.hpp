@@ -5,18 +5,16 @@
 #ifndef VICTORIAM_GMATERIALDATA_HPP
 #define VICTORIAM_GMATERIALDATA_HPP
 
-#include <Victoriam/Math/MVector2.hpp>
-#include <Victoriam/Math/MVector3.hpp>
-#include <Victoriam/Math/MMatrix4.hpp>
+#include <Victoriam/Core/CBase.hpp>
 
 VISRCBEG
 
 struct VIDECL SMaterialData
 {
-	Matrix4 Transform;
-	Vector2 Offset;
+	SMatrix2 Transform;
+	SVector2 Offset;
 	alignas(16)
-	Vector3 Color;
+	SVector3 Color;
 };
 
 VISRCEND

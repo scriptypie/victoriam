@@ -12,6 +12,7 @@
 #include <cstdint>
 #include <functional>
 #include <unordered_map>
+#include <glm/glm.hpp>
 
 #include <Victoriam/Core/CLog.hpp>
 #include <Victoriam/Core/CCast.hpp>

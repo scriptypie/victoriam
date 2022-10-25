@@ -33,9 +33,6 @@ public:
 	void DrawFrame(const PWorld& world) override;
 	void Shutdown(const PWorld& world) override;
 private:
-	void BeginFrame();
-	void EndFrame();
-
 	void CreatePipeline();
 	void RecreateSwapchain(const SWindowExtent& newExtent);
 };

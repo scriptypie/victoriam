@@ -7,15 +7,12 @@
 
 #include <Victoriam/World/Components/ComponentBase.hpp>
 #include <Victoriam/Graphics/GVertexBuffer.hpp>
-#include <Victoriam/Math/MVector3.hpp>
 
 VISRCBEG
 
-struct VIDECL SComponentRenderable : public SComponentBase
+struct VIDECL SComponentRenderable : SComponentBase
 {
-	friend class CGameObject;
-	inline static UInt32 GetStaticComponentID() { return 1; }
-	UInt32 GetComponentID() override { return GetStaticComponentID(); }
+	COMPONENT_DECL(ComponentRenderable)
 
 	PVertexBuffer VertexBuffer;
 	SVector3 Color;

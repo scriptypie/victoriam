@@ -7,26 +7,20 @@
 
 #include <Victoriam/World/Components/ComponentBase.hpp>
 
-#include <Victoriam/Math/MVector2.hpp>
-#include <Victoriam/Math/MMatrix4.hpp>
-
 VISRCBEG
 
-struct SComponentTransform : public SComponentBase
+struct VIDECL SComponentTransform : SComponentBase
 {
-	friend class CGameObject;
-	inline static UInt32 GetStaticComponentID() { return 2; }
-	UInt32 GetComponentID() override { return GetStaticComponentID(); }
+	COMPONENT_DECL(ComponentTransform)
 
 	SVector2 Translation;
 	SVector2 Scale = { 1.0F, 1.0F };
 
-	SMatrix4 Transform()
+	SMatrix2 Transform()
 	{
-		SMatrix4 scalemat = { Scale.x, 0.0f, 0.0f, 0.0f,
-							  0.0f, Scale.y, 0.0f, 0.0f,
-							  0.0f, 0.0f,    1.0f, 0.0f,
-							  0.0f, 0.0f,    0.0f, 1.0f};
+		SMatrix2 scalemat = { { Scale.x, 0.0f },
+		                       { 0.0f, Scale.y } };
+
 		return scalemat;
 	}
 

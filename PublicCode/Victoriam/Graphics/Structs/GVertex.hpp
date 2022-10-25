@@ -6,15 +6,13 @@
 #define VICTORIAM_GVERTEX_HPP
 
 #include <Victoriam/Graphics/Basics.hpp>
-#include <Victoriam/Math/MVector2.hpp>
-#include <Victoriam/Math/MVector4.hpp>
 
 VISRCBEG
 
 struct VIDECL SVertex
 {
-	Vector2 Position;
-	Vector4 Color;
+	SVector2 Position;
+	SVector4 Color;
 };
 
 VISRCEND

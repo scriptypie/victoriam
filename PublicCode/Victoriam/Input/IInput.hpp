@@ -10,7 +10,6 @@
 #include <Victoriam/Input/IMousecode.hpp>
 #include <Victoriam/Input/IPadcode.hpp>
 #include <Victoriam/Input/IPadaxis.hpp>
-#include <Victoriam/Math/MVector2.hpp>
 #include <Victoriam/Graphics/GWindow.hpp>
 
 VISRCBEG

@@ -11,10 +11,20 @@ VISRCBEG
 
 class CGameObject;
 
+enum class EComponentType
+{
+	SComponentBase = 0,
+	SComponentRenderable,
+	SComponentTransform,
+	SComponentName
+};
+
+#define COMPONENT_DECL(name) friend class CGameObject; inline static UInt32 GetStaticComponentID() { return CCast<UInt32>(EComponentType::S##name); } UInt32 GetComponentID() override { return GetStaticComponentID(); }
+
 struct VIDECL SComponentBase
 {
 	friend class CGameObject;
-	inline static UInt32 GetStaticComponentID() { return 0; } // Root component
+	inline static UInt32 GetStaticComponentID() { return CCast<UInt32>(EComponentType::SComponentBase); } // Root component
 	virtual UInt32 GetComponentID() = 0;
 public:
 	virtual ~SComponentBase() = default;

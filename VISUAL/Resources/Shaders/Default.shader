@@ -7,14 +7,14 @@ layout (location = 1) in vec4 m_Color;
 
 layout (push_constant) uniform MaterialData
 {
-    layout(row_major) mat4 Transform;
+    mat2 Transform;
     vec2 Offset;
     vec3 Color;
 } m_Data;
 
 void main()
 {
-    gl_Position = vec4(mat2(m_Data.Transform) * m_Position + m_Data.Offset, 0, 1);
+    gl_Position = vec4(m_Data.Transform * m_Position + m_Data.Offset, 0, 1);
 }
 
 @endgroup
@@ -27,7 +27,7 @@ layout (location = 0) out vec4 o_Color;
 
 layout (push_constant) uniform MaterialData
 {
-    layout(row_major) mat4 Transform;
+    mat2 Transform;
     vec2 Offset;
     vec3 Color;
 } m_Data;

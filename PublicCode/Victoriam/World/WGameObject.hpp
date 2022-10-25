@@ -6,9 +6,7 @@
 #define VICTORIAM_WGAMEOBJECT_HPP
 
 #include <Victoriam/Core/CBase.hpp>
-#include <Victoriam/World/Components/ComponentBase.hpp>
-#include <Victoriam/World/Components/ComponentRenderable.hpp>
-#include <Victoriam/World/Components/ComponentTransform.hpp>
+#include <Victoriam/World/Components/Components.hpp>
 
 VISRCBEG
 

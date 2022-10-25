@@ -6,7 +6,6 @@
 #define VICTORIAM_GPIPELINECREATEINFO_HPP
 
 #include "Victoriam/Graphics/Basics.hpp"
-#include "Victoriam/Math/MVector2.hpp"
 
 VISRCBEG
 
