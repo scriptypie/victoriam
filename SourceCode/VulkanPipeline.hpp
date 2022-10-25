@@ -93,6 +93,7 @@ public:
 	~CVulkanPipeline() override;
 
 	void BindDrawCommandBuffer(const SCommandBuffer& buffer) override;
+	void PushSharedMaterialData(const SCommandBuffer& buffer, const UInt32& offset, const SMaterialData* materialData) override;
 private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();

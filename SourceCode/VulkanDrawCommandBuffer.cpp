@@ -4,6 +4,8 @@
 
 #include "VulkanDrawCommandBuffer.hpp"
 
+#include <Victoriam/Graphics/Structs/GMaterialData.hpp>
+
 VISRCBEG
 
 CVulkanDrawCommandBuffer::CVulkanDrawCommandBuffer(PSwapchain &swapchain, PDevice& device, PPipeline& pipeline, const List<PVertexBuffer>& vertexBuffers)
@@ -34,6 +36,9 @@ void CVulkanDrawCommandBuffer::CreateCommandBuffers()
 
 void CVulkanDrawCommandBuffer::RecordCommandBuffer(UInt32 imageIndex)
 {
+	static UInt32 frame = 0;
+	frame = (frame + 1) % 100;
+
 	VkCommandBufferBeginInfo beginInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO };
 	if (vkBeginCommandBuffer(m_CommandBuffers.at(imageIndex), &beginInfo) != VK_SUCCESS)
 		throw std::runtime_error("Failed to call vkBeginCommandBuffer()");
@@ -68,7 +73,16 @@ void CVulkanDrawCommandBuffer::RecordCommandBuffer(UInt32 imageIndex)
 	for (const auto& m_VertexBuffer : m_VertexBuffers)
 	{
 		m_VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
-		m_VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+
+		for (auto i = 0; i < 4; i++)
+		{
+			SMaterialData materialData = {};
+			materialData.Offset = { -0.5F + (frame * 0.007F), -0.4F + CCast<Float32>(i) * 0.25F };
+			materialData.Color = { 0.8, 0.2, 0.3F + (0.15F * CCast<Float32>(i)) };
+			m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0, &materialData);
+
+			m_VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+		}
 	}
 
 	vkCmdEndRenderPass(m_CommandBuffers.at(imageIndex));

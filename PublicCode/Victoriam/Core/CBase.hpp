@@ -52,6 +52,18 @@ using Function = std::function<T>;
 
 VIDECL typedef List<char> BinaryData;
 
+template<class T>
+constexpr inline T min(const T& a, const T& b)
+{
+	return (a < b) ? a : b;
+}
+
+template<class T>
+constexpr inline T max(const T& a, const T& b)
+{
+	return (b < a) ? a : b;
+}
+
 template<class T, auto N>
 VIDECL constexpr auto StaticSize(T(&)[N]) { return N; }
 

@@ -9,79 +9,79 @@
 
 VISRCBEG
 
-struct VIDECL sVector3 : sVectorBase<3>
+struct VIDECL SVector3 : SVectorBase<3>
 {
-	inline sVector3() = default;
-	inline ~sVector3() = default;
-	inline sVector3(const sVector3&) = default;
-	inline sVector3& operator=(const sVector3&) = default;
-	inline sVector3(sVector3&&) = default;
-	inline sVector3& operator=(sVector3&&) = default;
+	inline SVector3() = default;
+	inline ~SVector3() = default;
+	inline SVector3(const SVector3&) = default;
+	inline SVector3& operator=(const SVector3&) = default;
+	inline SVector3(SVector3&&) = default;
+	inline SVector3& operator=(SVector3&&) = default;
 
-	VIDECL inline sVector3(const Scalar& x, const Scalar& y, const Scalar& z)
-			: sVectorBase(((Scalar[DIM]){x, y, z}))
+	VIDECL inline SVector3(const Scalar& x, const Scalar& y, const Scalar& z)
+			: SVectorBase(((Scalar[DIM]){x, y, z}))
 	{}
 
-	SVector2& xy()
+	VIDECL inline SVector2& xy()
 	{
 		return *(SVector2*) this;
 	}
 
 	template<class U>
-	sVector3 operator + (const U& other) {
-		sVector3 result = {};
+	VIDECL inline SVector3 operator + (const U& other) {
+		SVector3 result = {};
 		for (short i = 0; i < DIM; i++)
 			result.data[i] = data[i] + static_cast<Scalar>(other);
 		return result;
 	}
 
-	sVector3 operator + (const sVector3& other) {
-		sVector3 result = {};
+	VIDECL inline SVector3 operator + (const SVector3& other) {
+		SVector3 result = {};
 		for (short i = 0; i < DIM; i++)
 			result.data[i] = data[i] + other.data[i];
 		return result;
 	}
 
 	template<class U>
-	sVector3 operator - (const U& other) {
-		sVector3 result = {};
+	VIDECL inline SVector3 operator - (const U& other) {
+		SVector3 result = {};
 		for (short i = 0; i < DIM; i++)
 			result.data[i] = data[i] - static_cast<Scalar>(other);
 		return result;
 	}
 
-	sVector3 operator - (const sVector3& other) {
-		sVector3 result = {};
+	VIDECL inline SVector3 operator - (const SVector3& other) {
+		SVector3 result = {};
 		for (short i = 0; i < DIM; i++)
 			result.data[i] = data[i] - other.data[i];
 		return result;
 	}
 
 	template<class U>
-	sVector3 operator * (const U& other) {
-		sVector3 result = {};
+	VIDECL inline SVector3 operator * (const U& other) {
+		SVector3 result = {};
 		for (short i = 0; i < DIM; i++)
 			result.data[i] = data[i] * static_cast<Scalar>(other);
 		return result;
 	}
 
-	sVector3 operator * (const sVector3& other) {
-		sVector3 result = {};
+	VIDECL inline SVector3 operator * (const SVector3& other) {
+		SVector3 result = {};
 		for (short i = 0; i < DIM; i++)
 			result.data[i] = data[i] * other.data[i];
 		return result;
 	}
 
 	template<class U>
-	sVector3 operator / (const U& other) {
-		sVector3 result = {};
+	VIDECL inline SVector3 operator / (const U& other) {
+		SVector3 result = {};
 		for (short i = 0; i < DIM; i++)
 			result.data[i] = data[i] / static_cast<Scalar>(other);
 		return result;
 	}
 
-	sVector3 operator / (const sVector3& other) {
-		sVector3 result = {};
+	VIDECL inline SVector3 operator / (const SVector3& other) {
+		SVector3 result = {};
 		for (short i = 0; i < DIM; i++)
 			result.data[i] = data[i] / other.data[i];
 		return result;
@@ -89,52 +89,52 @@ struct VIDECL sVector3 : sVectorBase<3>
 
 
 	template<class U>
-	sVector3& operator += (const U& other) {
+	VIDECL inline SVector3& operator += (const U& other) {
 		for (short i = 0; i < DIM; i++)
 			data[i] += other;
 		return *this;
 	}
 
-	sVector3& operator += (const sVector3& other) {
+	VIDECL inline SVector3& operator += (const SVector3& other) {
 		for (short i = 0; i < DIM; i++)
 			data[i] += other.data[i];
 		return *this;
 	}
 
 	template<class U>
-	sVector3& operator -= (const U& other) {
+	VIDECL inline SVector3& operator -= (const U& other) {
 		for (short i = 0; i < DIM; i++)
 			data[i] -= other;
 		return *this;
 	}
 
-	sVector3& operator -= (const sVector3& other) {
+	VIDECL inline SVector3& operator -= (const SVector3& other) {
 		for (short i = 0; i < DIM; i++)
 			data[i] -= other.data[i];
 		return *this;
 	}
 
 	template<class U>
-	sVector3& operator *= (const U& other) {
+	VIDECL inline SVector3& operator *= (const U& other) {
 		for (short i = 0; i < DIM; i++)
 			data[i] *= other;
 		return *this;
 	}
 
-	sVector3& operator *= (const sVector3& other) {
+	VIDECL inline SVector3& operator *= (const SVector3& other) {
 		for (short i = 0; i < DIM; i++)
 			data[i] *= other.data[i];
 		return *this;
 	}
 
 	template<class U>
-	sVector3& operator /= (const U& other) {
+	VIDECL inline SVector3& operator /= (const U& other) {
 		for (short i = 0; i < DIM; i++)
 			data[i] /= other;
 		return *this;
 	}
 
-	sVector3& operator /= (const sVector3& other) {
+	VIDECL inline SVector3& operator /= (const SVector3& other) {
 		for (short i = 0; i < DIM; i++)
 			data[i] /= other.data[i];
 		return *this;

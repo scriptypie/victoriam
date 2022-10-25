@@ -10,10 +10,10 @@
 
 VISRCBEG
 
-template<UInt16 NUM_DIMENSIONS> struct VIDECL sVectorBase;
+template<UInt16 NUM_DIMENSIONS> struct VIDECL SVectorBase;
 
 template<>
-struct VIDECL sVectorBase<2>
+struct VIDECL SVectorBase<2>
 {
 	VIDECL inline static constexpr UInt16 DIM = 2;
 
@@ -23,12 +23,12 @@ struct VIDECL sVectorBase<2>
 		{
 			Scalar x, y;
 		};
-		sScalarArray<2> data = {};
+		SScalarArray<2> data = {};
 	};
 
-	sVectorBase() = default;
-	~sVectorBase() = default;
-	VIDECL explicit sVectorBase(const Scalar _data[DIM])
+	SVectorBase() = default;
+	~SVectorBase() = default;
+	VIDECL explicit SVectorBase(const Scalar _data[DIM])
 	{
 		for (Int16 i = 0; i < DIM; i++) data[i] = _data[i];
 	}
@@ -36,7 +36,7 @@ struct VIDECL sVectorBase<2>
 };
 
 template<>
-struct VIDECL sVectorBase<3>
+struct VIDECL SVectorBase<3>
 {
 	VIDECL inline static constexpr UInt16 DIM = 3;
 
@@ -46,12 +46,12 @@ struct VIDECL sVectorBase<3>
 		{
 			Scalar x, y, z;
 		};
-		sScalarArray<3> data = {};
+		SScalarArray<3> data = {};
 	};
 
-	sVectorBase() = default;
-	~sVectorBase() = default;
-	VIDECL sVectorBase(const Scalar _data[DIM])
+	SVectorBase() = default;
+	~SVectorBase() = default;
+	VIDECL SVectorBase(const Scalar _data[DIM])
 	{
 		for (Int16 i = 0; i < DIM; i++) data[i] = _data[i];
 	}
@@ -59,7 +59,7 @@ struct VIDECL sVectorBase<3>
 };
 
 template<>
-struct VIDECL sVectorBase<4>
+struct VIDECL SVectorBase<4>
 {
 	VIDECL inline static constexpr UInt16 DIM = 4;
 
@@ -69,12 +69,12 @@ struct VIDECL sVectorBase<4>
 		{
 			Scalar x, y, z, w;
 		};
-		sScalarArray<4> data = {};
+		SScalarArray<4> data = {};
 	};
 
-	sVectorBase() = default;
-	~sVectorBase() = default;
-	VIDECL sVectorBase(const Scalar _data[DIM])
+	SVectorBase() = default;
+	~SVectorBase() = default;
+	VIDECL SVectorBase(const Scalar _data[DIM])
 	{
 		for (Int16 i = 0; i < DIM; i++) data[i] = _data[i];
 	}

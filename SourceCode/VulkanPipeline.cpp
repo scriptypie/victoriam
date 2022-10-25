@@ -6,6 +6,8 @@
 
 #include "VulkanVertex.hpp"
 
+#include <Victoriam/Graphics/Structs/GMaterialData.hpp>
+
 VISRCBEG
 
 CVulkanPipeline::CVulkanPipeline(const String& name, PDevice &device, PSwapchain& swapchain)
@@ -80,7 +82,14 @@ void CVulkanPipeline::CreateGraphicsPipeline()
 
 void CVulkanPipeline::CreatePipelineLayout()
 {
+	VkPushConstantRange pushConstantRange = {};
+	pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
+	pushConstantRange.size = sizeof(SMaterialData);
+
 	VkPipelineLayoutCreateInfo createInfo = { VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO };
+	createInfo.pushConstantRangeCount = 1;
+	createInfo.pPushConstantRanges = &pushConstantRange;
+
 	if (vkCreatePipelineLayout(Accessors::Device::GetDevice(m_Device), &createInfo, nullptr, &m_Info.PipelineLayout) != VK_SUCCESS)
 		throw std::runtime_error("Failed to create pipeline layout!");
 }
@@ -90,6 +99,12 @@ void CVulkanPipeline::BindDrawCommandBuffer(const SCommandBuffer &commandBuffer)
 		vkCmdBindPipeline(CCast<VkCommandBuffer>(commandBuffer), VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
 	else
 		throw std::runtime_error("Failed to bind command buffer because graphics pipeline is null!");
+}
+
+void CVulkanPipeline::PushSharedMaterialData(SCommandBuffer const &buffer, const UInt32 &offset,
+                                             const SMaterialData *materialData)
+{
+	vkCmdPushConstants(CCast<VkCommandBuffer>(buffer), m_Info.PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, offset, sizeof(SMaterialData), materialData);
 }
 
 VISRCEND

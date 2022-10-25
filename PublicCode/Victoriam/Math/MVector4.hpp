@@ -6,10 +6,11 @@
 #define VICTORIAM_MVECTOR4_HPP
 
 #include <Victoriam/Math/Vector/TypeVector4.hpp>
+#include <Victoriam/Math/Vector/FuncVector4.hpp>
 
 VISRCBEG
 
-VIDECL typedef sVector4 Vector4;
+VIDECL typedef SVector4 Vector4;
 
 VISRCEND
 

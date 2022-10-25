@@ -10,17 +10,17 @@
 VISRCBEG
 
 template<UInt16 SIZE>
-struct sScalarArray
+struct SScalarArray
 {
 	Scalar data[SIZE] = {};
 
-	VIDECL inline sScalarArray() = default;
-	VIDECL inline sScalarArray(sScalarArray&&) noexcept = default;
-	VIDECL inline sScalarArray(const sScalarArray&) = default;
-	VIDECL inline sScalarArray& operator=(sScalarArray&&) noexcept = default;
-	VIDECL inline sScalarArray& operator=(const sScalarArray&) = default;
-	VIDECL inline ~sScalarArray() = default;
-	VIDECL inline explicit sScalarArray(const Scalar _data[SIZE]) : data(_data) {}
+	VIDECL inline SScalarArray() = default;
+	VIDECL inline SScalarArray(SScalarArray&&) noexcept = default;
+	VIDECL inline SScalarArray(const SScalarArray&) = default;
+	VIDECL inline SScalarArray& operator=(SScalarArray&&) noexcept = default;
+	VIDECL inline SScalarArray& operator=(const SScalarArray&) = default;
+	VIDECL inline ~SScalarArray() = default;
+	VIDECL inline explicit SScalarArray(const Scalar _data[SIZE]) : data(_data) {}
 
 	Scalar& operator[](UInt16 n) { return data[n]; }
 	const Scalar& operator[](UInt16 n) const { return data[n]; }

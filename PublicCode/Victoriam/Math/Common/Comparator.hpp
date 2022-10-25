@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-class cComparator
+class CComparator
 {
 public:
 	VIDECL static Bool Equal(const Scalar& a, const Scalar& b);
