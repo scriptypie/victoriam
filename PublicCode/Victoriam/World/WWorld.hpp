@@ -16,7 +16,6 @@ class CWorld
 
 	List<CGameObject*> m_Registry;
 public:
-	VIDECL ~CWorld();
 	VIDECL CGameObject* CreateGameObject();
 	VIDECL void DestroyGameObject(CGameObject* object);
 	VIDECL CGameObject* FindGameObjectByUID(const UID& id);
@@ -34,6 +33,7 @@ public:
 	}
 
 	static SPtr<CWorld> Create();
+	VIDECL void Clear();
 private:
 	void OnGameObjectCreated(CGameObject* object);
 	void OnGameObjectDestroyed(CGameObject* object);

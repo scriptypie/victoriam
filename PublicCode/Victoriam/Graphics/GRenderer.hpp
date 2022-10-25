@@ -23,7 +23,7 @@ public:
 
 	virtual void OnWindowResize(const SWindowExtent& extent) = 0;
 	virtual void DrawFrame(const PWorld& world) = 0;
-	virtual void Shutdown() = 0;
+	virtual void Shutdown(const PWorld& world) = 0;
 };
 
 VIDECL typedef UPtr<CRenderer> PRenderer;

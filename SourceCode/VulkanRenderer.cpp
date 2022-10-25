@@ -53,8 +53,18 @@ void CVulkanRenderer::EndFrame()
 
 }
 
-void CVulkanRenderer::Shutdown() {
+void CVulkanRenderer::Shutdown(const PWorld& world) {
+
 	vkDeviceWaitIdle(Accessors::Device::GetDevice(m_Device));
+
+	auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
+	for (auto renderable_obj : renderable_objs)
+	{
+		auto& rrc = renderable_obj->GetComponent<SComponentRenderable>();
+		rrc.VertexBuffer.reset();
+	}
+
+	world->Clear();
 }
 
 void CVulkanRenderer::OnWindowResize(const SWindowExtent &extent) {

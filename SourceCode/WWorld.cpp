@@ -50,11 +50,10 @@ SPtr<CWorld> CWorld::Create() {
 	return CreateSPtr<CWorld>();
 }
 
-CWorld::~CWorld()
+void CWorld::Clear()
 {
 	for (auto object : m_Registry)
 		object->Destroy();
 }
-
 
 VISRCEND

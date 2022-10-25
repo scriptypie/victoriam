@@ -31,7 +31,7 @@ public:
 
 	void OnWindowResize(const SWindowExtent& extent) override;
 	void DrawFrame(const PWorld& world) override;
-	void Shutdown() override;
+	void Shutdown(const PWorld& world) override;
 private:
 	void BeginFrame();
 	void EndFrame();

@@ -114,7 +114,7 @@ void Vi::CRuntimeApp::Startup() {
 
 		m_Renderer->DrawFrame(m_World);
 	}
-	m_Renderer->Shutdown();
+	m_Renderer->Shutdown(m_World);
 }
 
 void CRuntimeApp::OnEvent(CEvent &e) {

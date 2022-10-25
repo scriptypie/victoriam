@@ -24,11 +24,6 @@ UID CGameObject::GetUID() const
 void CGameObject::Destroy()
 {
 	m_Owner->OnGameObjectDestroyed(this);
-
-	for (auto component : m_Components)
-		delete component;
-
-	delete this;
 }
 
 
