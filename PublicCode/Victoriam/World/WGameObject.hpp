@@ -27,11 +27,11 @@ public:
 	VIDECL VIREQOUT UID GetUID() const;
 
 	template<class T>
-	VIDECL T& AddComponent()
+	VIDECL T* AddComponent()
 	{
 		T* component = new T();
 		m_Components.push_back(component);
-		return *component;
+		return component;
 	}
 	template<class T>
 	VIDECL VIREQOUT Bool HasComponent() const
@@ -43,13 +43,12 @@ public:
 		return false;
 	}
 	template<class T>
-	VIDECL T& GetComponent()
+	VIDECL T* GetComponent()
 	{
 		for (auto component : m_Components)
 			if (component->GetComponentID() == T::GetStaticComponentID())
-				return *(T*)component;
-		ViLog("GameObject doesn't have such component! Creating new one...\n");
-		return AddComponent<T>();
+				return CCast<T*>(component);
+		return nullptr;
 	}
 
 };
