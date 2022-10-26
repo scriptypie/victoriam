@@ -2,19 +2,21 @@
 
 #version 450
 
-layout (location = 0) in vec2 m_Position;
+layout (location = 0) in vec3 m_Position;
 layout (location = 1) in vec4 m_Color;
+
+layout (location = 0) out vec4 o_Color;
 
 layout (push_constant) uniform MaterialData
 {
-    mat2 Transform;
-    vec2 Offset;
-    vec3 Color;
+    mat4 Transform;
+    vec4 Color;
 } m_Data;
 
 void main()
 {
-    gl_Position = vec4(m_Data.Transform * m_Position + m_Data.Offset, 0, 1);
+    gl_Position = m_Data.Transform * vec4(m_Position, 1);
+    o_Color = m_Color;
 }
 
 @endgroup
@@ -23,17 +25,18 @@ void main()
 
 #version 450
 
+layout (location = 0) in vec4 m_Color;
+
 layout (location = 0) out vec4 o_Color;
 
 layout (push_constant) uniform MaterialData
 {
-    mat2 Transform;
-    vec2 Offset;
+    mat4 Transform;
     vec3 Color;
 } m_Data;
 
 void main() {
-    o_Color = vec4(m_Data.Color, 1.0);
+    o_Color = m_Color;
 }
 
 @endgroup

@@ -27,7 +27,9 @@ public:
 	CVulkanDrawCommandBuffer(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline);
 	~CVulkanDrawCommandBuffer() override;
 
-	void RecordCommandBuffer(const PWorld& world, UInt32 imageIndex) override;
+	SCommandBuffer Begin(UInt32 imageIndex) override;
+	void End(UInt32 imageIndex) override;
+	void SubmitDraw(const PWorld& world, UInt32 imageIndex) override;
 
 private:
 	void CreateCommandBuffers();

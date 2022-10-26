@@ -11,7 +11,7 @@ VISRCBEG
 
 struct VIDECL SVertex
 {
-	SVector2 Position;
+	SVector3 Position;
 	SVector4 Color;
 };
 

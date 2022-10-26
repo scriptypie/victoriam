@@ -33,73 +33,49 @@ void CVulkanDrawCommandBuffer::CreateCommandBuffers()
 		throw std::runtime_error("Failed to allocate command buffers!");
 }
 
-void CVulkanDrawCommandBuffer::RecordCommandBuffer(const PWorld& world, UInt32 imageIndex)
+SCommandBuffer CVulkanDrawCommandBuffer::Begin(UInt32 imageIndex)
 {
 	VkCommandBufferBeginInfo beginInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO };
 	if (vkBeginCommandBuffer(m_CommandBuffers.at(imageIndex), &beginInfo) != VK_SUCCESS)
 		throw std::runtime_error("Failed to call vkBeginCommandBuffer()");
 
-	VkRenderPassBeginInfo renderPassBeginInfo = { VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO };
-	renderPassBeginInfo.renderPass = Accessors::Swapchain::GetRenderPass(m_Swapchain);
-	renderPassBeginInfo.framebuffer = Accessors::Swapchain::GetFramebuffer(m_Swapchain, imageIndex);
+	m_Swapchain->BeginRenderPass(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), imageIndex);
 
-	renderPassBeginInfo.renderArea.offset = {0, 0};
-	renderPassBeginInfo.renderArea.extent = Accessors::Swapchain::GetSwapchainExtent(m_Swapchain);
+	return CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex));
+}
 
-	Array<VkClearValue, 2> clearValues = {};
-	clearValues.at(0).color = { 0.01F, 0.01F, 0.01F, 1.0F };
-	clearValues.at(1).depthStencil = { 1.0F, 0 };
+void CVulkanDrawCommandBuffer::End(UInt32 imageIndex)
+{
+	if (vkEndCommandBuffer(m_CommandBuffers.at(imageIndex)) != VK_SUCCESS)
+		throw std::runtime_error("Failed to record command buffer!");
+}
 
-	renderPassBeginInfo.clearValueCount = CCast<UInt32>(clearValues.size());
-	renderPassBeginInfo.pClearValues = clearValues.data();
-
-	vkCmdBeginRenderPass(m_CommandBuffers.at(imageIndex), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-	auto extent = Accessors::Swapchain::GetSwapchainExtent(m_Swapchain);
-	VkViewport viewport = {};
-	viewport.width = CCast<Float32>(extent.width);
-	viewport.height = CCast<Float32>(extent.height);
-	viewport.maxDepth = 1.0F;
-	VkRect2D scissor = {};
-	scissor.extent = extent;
-	vkCmdSetViewport(m_CommandBuffers.at(imageIndex), 0, 1, &viewport);
-	vkCmdSetScissor(m_CommandBuffers.at(imageIndex), 0, 1, &scissor);
-
+void CVulkanDrawCommandBuffer::SubmitDraw(const PWorld& world, UInt32 imageIndex)
+{
 	m_Pipeline->BindDrawCommandBuffer(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
-	/* for (const auto& m_VertexBuffer : m_VertexBuffers)
-	{
-		m_VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 
-		for (auto i = 0; i < 4; i++)
-		{
-			SMaterialData materialData = {};
-			materialData.Offset = { -0.5F + (frame * 0.007F), -0.4F + CCast<Float32>(i) * 0.25F };
-			materialData.Color = { 0.8, 0.2, 0.3F + (0.15F * CCast<Float32>(i)) };
-			m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0, &materialData);
-
-			m_VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
-		}
-	} */
+	UInt32 i = 0;
 
 	auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
 	for (auto renderable_obj : renderable_objs)
 	{
 		auto rrc = renderable_obj->GetComponent<SComponentRenderable>();
-		auto& trc = renderable_obj->GetComponent<SComponentTransform>();
+		auto& rtc = renderable_obj->GetComponent<SComponentTransform>();
+		rtc.Rotation.y = glm::mod(rtc.Rotation.y + 0.01F , glm::two_pi<Float32>());
+		rtc.Rotation.x = glm::mod(rtc.Rotation.x + 0.01F , glm::two_pi<Float32>());
+		rtc.Rotation.z = glm::mod(rtc.Rotation.z + 0.01F , glm::two_pi<Float32>());
 
-		SMaterialData materialData = {};
-		materialData.Transform = trc.Transform();
-		materialData.Offset = trc.Translation;
-		materialData.Color  = rrc.Color;
-		m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0, &materialData);
-		rrc.VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
-		rrc.VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+		if (rrc.VertexBuffer)
+		{
+			SMaterialData materialData = {};
+			materialData.Transform  = rtc.Transform();
+			materialData.Color      = SVector4(rrc.Color, 1.0f);
+			m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0, &materialData);
+			rrc.VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+			rrc.VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+		}
 	}
 
-	vkCmdEndRenderPass(m_CommandBuffers.at(imageIndex));
-
-	if (vkEndCommandBuffer(m_CommandBuffers.at(imageIndex)) != VK_SUCCESS)
-		throw std::runtime_error("Failed to record command buffer!");
 }
 
 VISRCEND

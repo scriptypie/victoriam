@@ -57,6 +57,7 @@ public:
 	explicit CVulkanDevice(const SPtr<CWindow> &window);
 	~CVulkanDevice() override;
 
+	void WaitReleaseResources() override;
 private:
 	void CreateGraphicsInstance();
 	void SetupDebugMessenger();
@@ -84,7 +85,7 @@ private:
 	VIDECL void CopyBufferToImage(VkBuffer buffer, VkImage image, UInt32 width, UInt32 height, UInt32 layerCount);
 	VIDECL void CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory);
 	VIDECL UInt32 FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags properties);
-	private:
+private:
 	VIDECL VIREQOUT inline VkCommandPool GetCommandPool() { return m_CmdPool; }
 	VIDECL VIREQOUT inline VkDevice GetDevice() { return m_Device; }
 	VIDECL VIREQOUT inline VkSurfaceKHR GetSurface() { return m_Surface; }

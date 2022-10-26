@@ -15,6 +15,8 @@ class CDevice
 public:
 	virtual ~CDevice() = default;
 
+	virtual void WaitReleaseResources() = 0;
+
 	VIDECL static SPtr<CDevice> Create(const SPtr<CWindow>& window);
 };
 

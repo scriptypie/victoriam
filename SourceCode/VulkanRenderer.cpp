@@ -24,33 +24,43 @@ PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
 	return CVertexBuffer::Create(m_Device, vertices);
 }
 
-	CVulkanRenderer::~CVulkanRenderer() = default;
+CVulkanRenderer::~CVulkanRenderer() = default;
 
-void CVulkanRenderer::DrawFrame(const PWorld& world)
+SCommandBuffer CVulkanRenderer::BeginFrame()
 {
-	UInt32 imageIndex;
-	auto result = m_Swapchain->AcquireNextImage(&imageIndex);
+	auto result = m_Swapchain->AcquireNextImage(&m_ImageIndex);
 	if (result == VK_ERROR_OUT_OF_DATE_KHR)
 	{
 		RecreateSwapchain(m_Window->GetExtent());
-		return;
+		return nullptr;
 	}
 	if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 		throw std::runtime_error("Failed to acquire next image!");
 
-	m_DrawCommandBuffer->RecordCommandBuffer(world, imageIndex);
-	Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, &Accessors::DrawCommandBuffer::GetCommandBufferList(m_DrawCommandBuffer).at(imageIndex), &imageIndex);
-
+	return m_DrawCommandBuffer->Begin(m_ImageIndex);
 }
 
-void CVulkanRenderer::Shutdown(const PWorld& world) {
+void CVulkanRenderer::DrawFrame(const SCommandBuffer& commandBuffer, const PWorld& world)
+{
+	m_DrawCommandBuffer->SubmitDraw(world, m_ImageIndex);
+}
 
-	vkDeviceWaitIdle(Accessors::Device::GetDevice(m_Device));
+void CVulkanRenderer::EndFrame(const SCommandBuffer& commandBuffer)
+{
+	m_Swapchain->EndRenderPass(commandBuffer);
+	m_DrawCommandBuffer->End(m_ImageIndex);
+	Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, CCast<VkCommandBuffer*>(&commandBuffer), &m_ImageIndex);
+}
+
+void CVulkanRenderer::Shutdown(const PWorld& world)
+{
+	m_Device->WaitReleaseResources();
 
 	auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
 	for (auto renderable_obj : renderable_objs)
 	{
 		auto& rrc = renderable_obj->GetComponent<SComponentRenderable>();
+
 		rrc.VertexBuffer.reset();
 	}
 
@@ -73,12 +83,10 @@ void CVulkanRenderer::RecreateSwapchain(const SWindowExtent &newExtent) {
 		m_Swapchain = CSwapchain::Create(m_Device, newExtent);
 	else
 	{
-		m_Swapchain = CSwapchain::Create(m_Device, newExtent, std::move(m_Swapchain).get());
-		if (m_Swapchain->GetImageCount() != Accessors::DrawCommandBuffer::GetCommandBufferList(m_DrawCommandBuffer).size())
-		{
-			m_DrawCommandBuffer = nullptr;
-			m_DrawCommandBuffer = CDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline);
-		}
+		PSwapchain oldSwapchain = std::move(m_Swapchain);
+		m_Swapchain = CSwapchain::Create(m_Device, newExtent, oldSwapchain.get());
+		if (!oldSwapchain->CompareFormats(m_Swapchain))
+			throw std::runtime_error("Swapchain image or depth format is changed!!!");
 	}
 	CreatePipeline();
 }

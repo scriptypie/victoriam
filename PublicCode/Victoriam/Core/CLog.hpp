@@ -17,6 +17,8 @@ VISRCBEG
 #define ViLog(...) (void)0
 #endif
 
+#define ViAbort(...) ViLog(__VA_ARGS__); abort()
+
 VISRCEND
 
 #endif //VICTORIAM_CLOG_HPP

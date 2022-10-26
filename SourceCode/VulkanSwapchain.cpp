@@ -141,6 +141,7 @@ void CVulkanSwapchain::CreateImageViews()
 void CVulkanSwapchain::CreateDepthResources()
 {
 	VkFormat depthFormat = FindDepthFormat();
+	m_SwapchainDepthFormat = depthFormat;
 	VkExtent2D swapChainExtent = GetSwapchainExtent();
 
 	m_DepthImages.resize(GetImageCount());
@@ -155,7 +156,7 @@ void CVulkanSwapchain::CreateDepthResources()
 		imageInfo.extent.depth = 1;
 		imageInfo.mipLevels = 1;
 		imageInfo.arrayLayers = 1;
-		imageInfo.format = depthFormat;
+		imageInfo.format = m_SwapchainDepthFormat;
 		imageInfo.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
 		imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
 
@@ -168,7 +169,7 @@ void CVulkanSwapchain::CreateDepthResources()
 		VkImageViewCreateInfo viewInfo = { VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO };
 		viewInfo.image = m_DepthImages[i];
 		viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-		viewInfo.format = depthFormat;
+		viewInfo.format = m_SwapchainDepthFormat;
 		viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
 		viewInfo.subresourceRange.levelCount = 1;
 		viewInfo.subresourceRange.layerCount = 1;
@@ -227,6 +228,39 @@ void CVulkanSwapchain::CreateRenderPass()
 
 	if (vkCreateRenderPass(Accessors::Device::GetDevice(m_Device), &renderPassInfo, nullptr, &m_RenderPass) != VK_SUCCESS)
 		throw std::runtime_error("Failed to create render pass!");
+}
+
+void CVulkanSwapchain::BeginRenderPass(const SCommandBuffer& commandBuffer, UInt32 imageIndex)
+{
+	VkRenderPassBeginInfo renderPassBeginInfo = { VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO };
+	renderPassBeginInfo.renderPass = GetRenderPass();
+	renderPassBeginInfo.framebuffer = GetFramebuffer(imageIndex);
+
+	renderPassBeginInfo.renderArea.extent = GetSwapchainExtent();
+
+	Array<VkClearValue, 2> clearValues = {};
+	clearValues.at(0).color = { 0.01F, 0.01F, 0.01F, 1.0F };
+	clearValues.at(1).depthStencil = { 1.0F, 0 };
+
+	renderPassBeginInfo.clearValueCount = CCast<UInt32>(clearValues.size());
+	renderPassBeginInfo.pClearValues = clearValues.data();
+
+	vkCmdBeginRenderPass(CCast<VkCommandBuffer>(commandBuffer), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+	auto extent = GetSwapchainExtent();
+	VkViewport viewport = {};
+	viewport.width = CCast<Float32>(extent.width);
+	viewport.height = CCast<Float32>(extent.height);
+	viewport.maxDepth = 1.0F;
+	VkRect2D scissor = {};
+	scissor.extent = extent;
+	vkCmdSetViewport(CCast<VkCommandBuffer>(commandBuffer), 0, 1, &viewport);
+	vkCmdSetScissor(CCast<VkCommandBuffer>(commandBuffer), 0, 1, &scissor);
+}
+
+void CVulkanSwapchain::EndRenderPass(const SCommandBuffer& commandBuffer)
+{
+	vkCmdEndRenderPass(CCast<VkCommandBuffer>(commandBuffer));
 }
 
 void CVulkanSwapchain::CreateFramebuffers()
@@ -351,6 +385,13 @@ VkResult CVulkanSwapchain::SubmitCommandBuffers(const VkCommandBuffer *buffers, 
 	m_CurrentFrame = (m_CurrentFrame + 1) % MAX_FRAMES_PER_STEP;
 
 	return result;
+}
+
+Bool CVulkanSwapchain::CompareFormats(const UPtr<CSwapchain> &swapchain) const
+{
+	if (!swapchain) return false;
+	return  m_SwapchainImageFormat == CCast<CVulkanSwapchain*>(swapchain.get())->m_SwapchainImageFormat &&
+			m_SwapchainDepthFormat == CCast<CVulkanSwapchain*>(swapchain.get())->m_SwapchainDepthFormat;
 }
 
 VISRCEND

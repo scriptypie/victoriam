@@ -3,7 +3,6 @@
 //
 
 #include <set>
-#include <iostream>
 #include <unordered_set>
 
 #include "VulkanDevice.hpp"
@@ -22,7 +21,7 @@ namespace
 			void*
 	)
 	{
-		std::cout << "Validation layer: " << pCallbackData->pMessage << std::endl;
+		ViLog("%s\n", pCallbackData->pMessage);
 		return VK_FALSE;
 	}
 
@@ -69,7 +68,9 @@ CVulkanDevice::~CVulkanDevice()
 void CVulkanDevice::CreateGraphicsInstance()
 {
 	if (m_EnableValidation && !CheckValidationLayerSupport())
-		throw std::runtime_error("Validation layers requested, but not available!");
+	{
+		ViAbort("Validation layers requested, but not available!");
+	}
 
 	VkInstanceCreateInfo instanceCreateInfo = { VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO };
 	VkApplicationInfo info = { VK_STRUCTURE_TYPE_APPLICATION_INFO };
@@ -100,7 +101,9 @@ void CVulkanDevice::CreateGraphicsInstance()
 		instanceCreateInfo.pNext = nullptr;
 	}
 	if (vkCreateInstance(&instanceCreateInfo, nullptr, &m_Instance) != VK_SUCCESS)
-		throw std::runtime_error("Failed to create instance!");
+	{
+		ViAbort("Failed to create graphics engine instance!");
+	}
 	HasGLFWRequiredInstanceExtensions();
 }
 
@@ -110,7 +113,9 @@ void CVulkanDevice::SetupDebugMessenger()
 	VkDebugUtilsMessengerCreateInfoEXT createInfo = {};
 	PopulateDebugMessengerCreateInfo(createInfo);
 	if (CreateDebugMessengerEXT(m_Instance, &createInfo, &m_DebugMessenger) != VK_SUCCESS)
-		throw std::runtime_error("Failed to set up debug messenger!");
+	{
+		ViAbort("Failed to set up debug messenger!");
+	}
 }
 
 void CVulkanDevice::CreateSurface()
@@ -122,7 +127,7 @@ void CVulkanDevice::ChoosePhysicalDevice()
 {
 	UInt32 deviceCount = {};
 	vkEnumeratePhysicalDevices(m_Instance, &deviceCount, nullptr);
-	if (!deviceCount) throw std::runtime_error("There no supported GPU!");
+	if (!deviceCount) { ViAbort("There's no supported GPU!"); }
 	List<VkPhysicalDevice> physicalDevices(deviceCount);
 	vkEnumeratePhysicalDevices(m_Instance, &deviceCount, physicalDevices.data());
 
@@ -134,7 +139,9 @@ void CVulkanDevice::ChoosePhysicalDevice()
 		}
 
 	if (m_PhysicalDevice == nullptr)
-		throw std::runtime_error("Failed to find a suitable GPU!");
+	{
+		ViAbort("Failed to find a suitable GPU!");
+	}
 	vkGetPhysicalDeviceProperties(m_PhysicalDevice, &m_Properties);
 	// log here
 }
@@ -172,7 +179,9 @@ void CVulkanDevice::CreateLogicalDevice()
 		createInfo.enabledLayerCount = 0;
 
 	if (vkCreateDevice(m_PhysicalDevice, &createInfo, nullptr, &m_Device) != VK_SUCCESS)
-		throw std::runtime_error("Failed to create logical device!");
+	{
+		ViAbort("Failed to create logical device!");
+	}
 
 	vkGetDeviceQueue(m_Device, indices.GraphicsFamily, 0, &m_GraphicsQueue);
 	vkGetDeviceQueue(m_Device, indices.PresentFamily, 0, &m_PresentQueue);
@@ -187,7 +196,9 @@ void CVulkanDevice::CreateCommandPool()
 	createInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
 	if (vkCreateCommandPool(m_Device, &createInfo, nullptr, &m_CmdPool) != VK_SUCCESS)
-		throw std::runtime_error("Failed to create command pool!");
+	{
+		ViAbort("Failed to create command pool!");
+	}
 }
 
 Bool CVulkanDevice::IsPhysicalDeviceSuitable(VkPhysicalDevice device)
@@ -349,7 +360,9 @@ void CVulkanDevice::CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, Vk
 	 bufferInfo.usage = usage;
 
 	 if (vkCreateBuffer(m_Device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
-		 throw std::runtime_error("Failed to create buffer!");
+	 {
+		 ViAbort("Failed to create buffer!!!\n");
+	 }
 
 	 VkMemoryRequirements memRequirements;
 	 vkGetBufferMemoryRequirements(m_Device, buffer, &memRequirements);
@@ -359,7 +372,9 @@ void CVulkanDevice::CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, Vk
 	 allocInfo.memoryTypeIndex = FindMemoryType(memRequirements.memoryTypeBits, properties);
 
 	 if (vkAllocateMemory(m_Device, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
-		 throw std::runtime_error("Failed to allocate buffer memory!");
+	 {
+		 ViAbort("Failed to allocate buffer memory!\n");
+	 }
 
 	 vkBindBufferMemory(m_Device, buffer, bufferMemory, 0);
 }
@@ -419,7 +434,9 @@ void CVulkanDevice::CopyBufferToImage(VkBuffer buffer, VkImage image, UInt32 wid
 void CVulkanDevice::CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory)
 {
 	if (vkCreateImage(m_Device, &imageInfo, nullptr, &image) != VK_SUCCESS)
-		throw std::runtime_error("Failed to create image!");
+	{
+		ViAbort("Failed to create image!");
+	}
 
 	VkMemoryRequirements memRequirements;
 	vkGetImageMemoryRequirements(m_Device, image, &memRequirements);
@@ -428,11 +445,14 @@ void CVulkanDevice::CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMe
 	allocInfo.allocationSize = memRequirements.size;
 	allocInfo.memoryTypeIndex = FindMemoryType(memRequirements.memoryTypeBits, properties);
 
-	if (vkAllocateMemory(m_Device, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS)
-		throw std::runtime_error("Failed to allocate image memory!");
+	if (vkAllocateMemory(m_Device, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS) {
+		ViAbort("Failed to allocate image memory!");
+	}
 
 	if (vkBindImageMemory(m_Device, image, imageMemory, 0) != VK_SUCCESS)
-		throw std::runtime_error("Failed to bind image memory!");
+	{
+		ViAbort("Failed to bind image memory!");
+	}
 }
 
 UInt32 CVulkanDevice::FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags properties)
@@ -446,7 +466,7 @@ UInt32 CVulkanDevice::FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags pr
 		}
 	}
 
-	throw std::runtime_error("Failed to find suitable memory type!");
+	ViAbort("Failed to find suitable memory type!");
 }
 
 VkFormat CVulkanDevice::FindSupportedFormat(const List<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
@@ -454,10 +474,18 @@ VkFormat CVulkanDevice::FindSupportedFormat(const List<VkFormat> &candidates, Vk
 	for (VkFormat format : candidates) {
 		VkFormatProperties props = {};
 		vkGetPhysicalDeviceFormatProperties(m_PhysicalDevice, format, &props);
-		if ((tiling == VK_IMAGE_TILING_LINEAR) && ((props.linearTilingFeatures & features) == features)) return format;
-		else if ((tiling == VK_IMAGE_TILING_OPTIMAL) && ((props.optimalTilingFeatures & features) == features)) return format;
+		if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features) {
+			return format;
+		} else if (tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features) {
+			return format;
+		}
 	}
-	throw std::runtime_error("Failed to find supported format!");
+	ViAbort("Failed to find supported format!");
+}
+
+void CVulkanDevice::WaitReleaseResources()
+{
+	vkDeviceWaitIdle(m_Device);
 }
 
 VISRCEND

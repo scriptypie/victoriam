@@ -22,6 +22,7 @@ class CVulkanRenderer : public CRenderer {
 	VIDECL PPipeline m_Pipeline = {};
 	VIDECL PDrawCommandBuffer m_DrawCommandBuffer = {};
 	VIDECL PWindow m_Window = {};
+	VIDECL UInt32 m_ImageIndex = {};
 public:
 	explicit CVulkanRenderer(const SRendererCreateInfo& createInfo);
 	~CVulkanRenderer() override;
@@ -30,7 +31,9 @@ public:
 	PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) override;
 
 	void OnWindowResize(const SWindowExtent& extent) override;
-	void DrawFrame(const PWorld& world) override;
+	SCommandBuffer BeginFrame() override;
+	void DrawFrame(const SCommandBuffer& commandBuffer, const PWorld& world) override;
+	void EndFrame(const SCommandBuffer& commandBuffer) override;
 	void Shutdown(const PWorld& world) override;
 private:
 	void CreatePipeline();

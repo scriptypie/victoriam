@@ -32,46 +32,81 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	{
 		SWindowCreateInfo info;
 		info.Name = m_info.AppName + " - NewWindow";
-		info.Offset = {100, 100};
-		info.Resolution = {500, 500};
+		info.Resolution = {680, 680};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = CWindow::Create(info);
 	}
 	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(CRuntimeApp::OnEvent));
 	CInput::Init(m_Window);
-
-	rendererCreateInfo.WindowPtr = m_Window;
-
-	m_Renderer = CRenderer::Create(rendererCreateInfo);
-
-	const List<SVertex> vertices = {
-			{ { 0.0F, -0.5F }, { 1.0F, 0.0F, 0.0F, 1.0F } },
-			{ { 0.5F,  0.5F }, { 0.0F, 1.0F, 0.0F, 1.0F } },
-			{ {-0.5F,  0.5F }, { 0.0F, 0.0F, 1.0F, 1.0F } },
-	};
-	m_Renderer->Setup();
-	m_running = true;
-
-	PVertexBuffer vertexBuffer = m_Renderer->CreateVertexBuffer(vertices);
 	m_World = CWorld::Create();
 
+	rendererCreateInfo.WindowPtr = m_Window;
+	m_Renderer = CRenderer::Create(rendererCreateInfo);
+	m_Renderer->Setup();
+
+	const List<SVertex> vertices = {
+			// left face (white)
+			{{-.5f, -.5f, -.5f}, {.9f, .9f, .9f, 1}},
+			{{-.5f, .5f, .5f}, {.9f, .9f, .9f, 1}},
+			{{-.5f, -.5f, .5f}, {.9f, .9f, .9f, 1}},
+			{{-.5f, -.5f, -.5f}, {.9f, .9f, .9f, 1}},
+			{{-.5f, .5f, -.5f}, {.9f, .9f, .9f, 1}},
+			{{-.5f, .5f, .5f}, {.9f, .9f, .9f, 1}},
+
+			// right face (yellow)
+			{{.5f, -.5f, -.5f}, {.8f, .8f, .1f, 1}},
+			{{.5f, .5f, .5f}, {.8f, .8f, .1f, 1}},
+			{{.5f, -.5f, .5f}, {.8f, .8f, .1f, 1}},
+			{{.5f, -.5f, -.5f}, {.8f, .8f, .1f, 1}},
+			{{.5f, .5f, -.5f}, {.8f, .8f, .1f, 1}},
+			{{.5f, .5f, .5f}, {.8f, .8f, .1f, 1}},
+
+			// top face (orange, remember y axis points down)
+			{{-.5f, -.5f, -.5f}, {.9f, .6f, .1f, 1}},
+			{{.5f, -.5f, .5f}, {.9f, .6f, .1f, 1}},
+			{{-.5f, -.5f, .5f}, {.9f, .6f, .1f, 1}},
+			{{-.5f, -.5f, -.5f}, {.9f, .6f, .1f, 1}},
+			{{.5f, -.5f, -.5f}, {.9f, .6f, .1f, 1}},
+			{{.5f, -.5f, .5f}, {.9f, .6f, .1f, 1}},
+
+			// bottom face (red)
+			{{-.5f, .5f, -.5f}, {.8f, .1f, .1f, 1}},
+			{{.5f, .5f, .5f}, {.8f, .1f, .1f, 1}},
+			{{-.5f, .5f, .5f}, {.8f, .1f, .1f, 1}},
+			{{-.5f, .5f, -.5f}, {.8f, .1f, .1f, 1}},
+			{{.5f, .5f, -.5f}, {.8f, .1f, .1f, 1}},
+			{{.5f, .5f, .5f}, {.8f, .1f, .1f, 1}},
+
+			// nose face (blue)
+			{{-.5f, -.5f, 0.5f}, {.1f, .1f, .8f, 1}},
+			{{.5f, .5f, 0.5f}, {.1f, .1f, .8f, 1}},
+			{{-.5f, .5f, 0.5f}, {.1f, .1f, .8f, 1}},
+			{{-.5f, -.5f, 0.5f}, {.1f, .1f, .8f, 1}},
+			{{.5f, -.5f, 0.5f}, {.1f, .1f, .8f, 1}},
+			{{.5f, .5f, 0.5f}, {.1f, .1f, .8f, 1}},
+
+			// tail face (green)
+			{{-.5f, -.5f, -0.5f}, {.1f, .8f, .1f, 1}},
+			{{.5f, .5f, -0.5f}, {.1f, .8f, .1f, 1}},
+			{{-.5f, .5f, -0.5f}, {.1f, .8f, .1f, 1}},
+			{{-.5f, -.5f, -0.5f}, {.1f, .8f, .1f, 1}},
+			{{.5f, -.5f, -0.5f}, {.1f, .8f, .1f, 1}},
+			{{.5f, .5f, -0.5f}, {.1f, .8f, .1f, 1}}
+	};
+
+	PVertexBuffer vertexBuffer = m_Renderer->CreateVertexBuffer(vertices);
+
 	{
-		auto triangle = m_World->CreateGameObject("Triangle");
+		auto triangle = m_World->CreateGameObject();
 		auto &trc = triangle->AddComponent<SComponentRenderable>();
 		trc.VertexBuffer = vertexBuffer;
-		trc.Color = {0.1F, 0.8F, 0.1F};
-		triangle->AddComponent<SComponentTransform>();
-	}
-	{
-		auto triangle2 = m_World->CreateGameObject("Triangle 2");
-		auto &trc = triangle2->AddComponent<SComponentRenderable>();
-		trc.VertexBuffer = vertexBuffer;
-		trc.Color = {0.005F, 0.05F, 0.005F};
-		auto &ttc = triangle2->AddComponent<SComponentTransform>();
-		ttc.Translation = { 0.3F, 0.4F };
-		ttc.Scale = { 1.5F, 0.2F };
+		trc.Color = {0.2F, 0.8F, 0.3F};
+		auto& ttc = triangle->AddComponent<SComponentTransform>();
+		ttc.Translation = { 0, 0, 0.5F };
+		ttc.Scale = { 0.2F, 0.2F, 0.2F };
 	}
 
+	m_running = true;
 }
 
 CRuntimeApp::~CRuntimeApp() {
@@ -110,8 +145,11 @@ void Vi::CRuntimeApp::Startup() {
 			state->OnUpdateGUI();
 		}
 		// end gui update
-
-		m_Renderer->DrawFrame(m_World);
+		if (auto commandBuffer = m_Renderer->BeginFrame())
+		{
+			m_Renderer->DrawFrame(commandBuffer, m_World);
+			m_Renderer->EndFrame(commandBuffer);
+		}
 	}
 	m_Renderer->Shutdown(m_World);
 }

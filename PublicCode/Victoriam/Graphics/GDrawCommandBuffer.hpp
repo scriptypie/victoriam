@@ -19,7 +19,9 @@ class CDrawCommandBuffer
 public:
 	virtual ~CDrawCommandBuffer() = default;
 
-	virtual void RecordCommandBuffer(const PWorld& world, UInt32 imageIndex) = 0;
+	virtual SCommandBuffer Begin(UInt32 imageIndex) = 0;
+	virtual void End(UInt32 imageIndex) = 0;
+	virtual void SubmitDraw(const PWorld& world, UInt32 imageIndex) = 0;
 
 	VIDECL VIREQOUT static SPtr<CDrawCommandBuffer> Create(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline);
 };

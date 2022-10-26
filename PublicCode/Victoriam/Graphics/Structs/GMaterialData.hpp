@@ -11,10 +11,9 @@ VISRCBEG
 
 struct VIDECL SMaterialData
 {
-	SMatrix2 Transform;
-	SVector2 Offset;
+	SMatrix4 Transform;
 	alignas(16)
-	SVector3 Color;
+	SVector4 Color;
 };
 
 VISRCEND

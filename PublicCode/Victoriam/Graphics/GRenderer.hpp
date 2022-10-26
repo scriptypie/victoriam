@@ -22,7 +22,9 @@ public:
 	virtual PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) = 0;
 
 	virtual void OnWindowResize(const SWindowExtent& extent) = 0;
-	virtual void DrawFrame(const PWorld& world) = 0;
+	virtual SCommandBuffer BeginFrame() = 0;
+	virtual void DrawFrame(const SCommandBuffer& commandBuffer, const PWorld& world) = 0;
+	virtual void EndFrame(const SCommandBuffer& commandBuffer) = 0;
 	virtual void Shutdown(const PWorld& world) = 0;
 };
 

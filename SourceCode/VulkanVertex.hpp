@@ -20,7 +20,7 @@ VIDECL VIREQOUT inline static List<VkVertexInputAttributeDescription> FGetVertex
 {
 	return
 	{
-		{ 0, 0, VK_FORMAT_R32G32_SFLOAT,       offsetof(SVertex, Position) },
+		{ 0, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Position) },
 		{ 1, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(SVertex, Color)    },
 	};
 }
