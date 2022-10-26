@@ -5,6 +5,7 @@
 #include "VulkanDrawCommandBuffer.hpp"
 
 #include <Victoriam/Graphics/Structs/GMaterialData.hpp>
+#include <Victoriam/Graphics/GCamera.hpp>
 
 VISRCBEG
 
@@ -54,28 +55,46 @@ void CVulkanDrawCommandBuffer::SubmitDraw(const PWorld& world, UInt32 imageIndex
 {
 	m_Pipeline->BindDrawCommandBuffer(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 
-	UInt32 i = 0;
-
-	auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
-	for (auto renderable_obj : renderable_objs)
+	CCamera* mainCamera = nullptr;
+	SMatrix4 cameraTransform;
+	auto camera_objs = world->FindGameObjectsWithComponent<SComponentCamera>();
+	for (auto cam_obj : camera_objs)
 	{
-		auto rrc = renderable_obj->GetComponent<SComponentRenderable>();
-		auto& rtc = renderable_obj->GetComponent<SComponentTransform>();
-		rtc.Rotation.y = glm::mod(rtc.Rotation.y + 0.01F , glm::two_pi<Float32>());
-		rtc.Rotation.x = glm::mod(rtc.Rotation.x + 0.01F , glm::two_pi<Float32>());
-		rtc.Rotation.z = glm::mod(rtc.Rotation.z + 0.01F , glm::two_pi<Float32>());
-
-		if (rrc.VertexBuffer)
-		{
-			SMaterialData materialData = {};
-			materialData.Transform  = rtc.Transform();
-			materialData.Color      = SVector4(rrc.Color, 1.0f);
-			m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0, &materialData);
-			rrc.VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
-			rrc.VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+		auto& componentCamera = cam_obj->GetComponent<SComponentCamera>();
+		componentCamera.Camera = CCamera::CreatePerspectiveCamera(65.0F, m_Swapchain->GetExtentAspectRatio(), 0.01F, 1000.0F);
+		auto componentTransform = cam_obj->GetComponent<SComponentTransform>();
+		if (componentCamera.Primary) {
+			if (!mainCamera) {
+				mainCamera = &componentCamera.Camera;
+				cameraTransform = componentTransform.Transform();
+			} else {
+				ViLog("There is impossible to have a two cameras within the single scene!!!\n");
+			}
 		}
 	}
 
+	if (mainCamera)
+	{
+		auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
+		for (auto renderable_obj: renderable_objs) {
+			auto rrc = renderable_obj->GetComponent<SComponentRenderable>();
+			auto &rtc = renderable_obj->GetComponent<SComponentTransform>();
+			rtc.Rotation.y = glm::mod(rtc.Rotation.y + 0.01F, glm::two_pi<Float32>());
+			rtc.Rotation.x = glm::mod(rtc.Rotation.x + 0.01F, glm::two_pi<Float32>());
+			rtc.Rotation.z = glm::mod(rtc.Rotation.z + 0.01F, glm::two_pi<Float32>());
+
+			if (rrc.VertexBuffer) {
+				SMaterialData materialData = {};
+				materialData.Transform = rtc.Transform();
+				materialData.ViewProjection = mainCamera->GetProjection() * glm::inverse(cameraTransform);
+				materialData.Color = SVector4(rrc.Color, 1.0f);
+				m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0,
+				                                   &materialData);
+				rrc.VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+				rrc.VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+			}
+		}
+	}
 }
 
 VISRCEND

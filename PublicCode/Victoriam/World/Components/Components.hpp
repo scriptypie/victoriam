@@ -8,6 +8,7 @@
 #include <Victoriam/World/Components/ComponentBase.hpp>
 #include <Victoriam/World/Components/ComponentName.hpp>
 #include <Victoriam/World/Components/ComponentRenderable.hpp>
+#include <Victoriam/World/Components/ComponentCamera.hpp>
 #include <Victoriam/World/Components/ComponentTransform.hpp>
 
 #endif //VICTORIAM_COMPONENTS_HPP

@@ -12,6 +12,7 @@ VISRCBEG
 struct VIDECL SMaterialData
 {
 	SMatrix4 Transform;
+	SMatrix4 ViewProjection;
 	alignas(16)
 	SVector4 Color;
 };

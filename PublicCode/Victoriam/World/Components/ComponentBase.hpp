@@ -16,7 +16,8 @@ enum class EComponentType
 	SComponentBase = 0,
 	SComponentRenderable,
 	SComponentTransform,
-	SComponentName
+	SComponentName,
+	SComponentCamera,
 };
 
 #define COMPONENT_DECL(name) friend class CGameObject; inline static UInt32 GetStaticComponentID() { return CCast<UInt32>(EComponentType::S##name); } UInt32 GetComponentID() override { return GetStaticComponentID(); }

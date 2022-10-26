@@ -102,8 +102,13 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 		trc.VertexBuffer = vertexBuffer;
 		trc.Color = {0.2F, 0.8F, 0.3F};
 		auto& ttc = triangle->AddComponent<SComponentTransform>();
-		ttc.Translation = { 0, 0, 0.5F };
-		ttc.Scale = { 0.2F, 0.2F, 0.2F };
+		ttc.Translation = { 0, 0, 1.0F };
+	}
+	{
+		auto camera = m_World->CreateGameObject("MainCamera");
+		auto& cc = camera->AddComponent<SComponentCamera>();
+		auto& ctc = camera->AddComponent<SComponentTransform>();
+		ctc.Translation = { 0.0F, 0.0F, -0.5F };
 	}
 
 	m_running = true;
