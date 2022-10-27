@@ -97,8 +97,18 @@ void CFile::Open(const char* filename, const ECOpenMode& omode, const ECFileForm
 	m_Handle.open(filename, ToStandardOpenMode(omode) | ToStandardFormat(fformat));
 }
 
+ECFileResult CFile::Read(char *outdata, size_t sizedata)
+{
+	if (!Valid())
+		return ECFileResult::FileNotFound;
 
-ECFileResult CFile::Read(String& output)
+	m_Handle.read(outdata, CCast<long>(sizedata));
+	Clear();
+
+	return ECFileResult::Ok;
+}
+
+	ECFileResult CFile::Read(String& output)
 {
 	if (!Valid())
 		return ECFileResult::FileNotFound;

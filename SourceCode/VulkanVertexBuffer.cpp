@@ -34,12 +34,22 @@ void CVulkanVertexBuffer::CreateVertexBuffer(const List<SVertex> &vertices) {
 	assert(m_VertexCount >= 3 && "There MUST be at least 3 vertices!");
 
 	VkDeviceSize bufferSize = sizeof(vertices.front()) * m_VertexCount;
-	Accessors::Device::CreateBuffer(m_Device, bufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_VertexBuffer, m_VertexBufferMemory);
+
+	VkBuffer stagingBuffer = nullptr;
+	VkDeviceMemory stagingBufferMemory = nullptr;
+	Accessors::Device::CreateBuffer(m_Device, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
 
 	void* data = nullptr;
-	vkMapMemory(Accessors::Device::GetDevice(m_Device), m_VertexBufferMemory, 0, bufferSize, 0, &data);
+	vkMapMemory(Accessors::Device::GetDevice(m_Device), stagingBufferMemory, 0, bufferSize, 0, &data);
 	memcpy(data, vertices.data(), CCast<size_t>(bufferSize));
-	vkUnmapMemory(Accessors::Device::GetDevice(m_Device), m_VertexBufferMemory);
+	vkUnmapMemory(Accessors::Device::GetDevice(m_Device), stagingBufferMemory);
+
+	Accessors::Device::CreateBuffer(m_Device, bufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_VertexBuffer, m_VertexBufferMemory);
+	Accessors::Device::CopyBuffer(m_Device, stagingBuffer, m_VertexBuffer, bufferSize);
+
+	vkDestroyBuffer(Accessors::Device::GetDevice(m_Device), stagingBuffer, nullptr);
+	vkFreeMemory(Accessors::Device::GetDevice(m_Device), stagingBufferMemory, nullptr);
+
 }
 
 VISRCEND

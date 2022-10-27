@@ -20,30 +20,37 @@ void VEditorState::OnUpdate(const Float32& dt) {
 	auto transform = camera->GetComponent<SComponentTransform>();
 	auto cam = camera->GetComponent<SComponentCamera>()->Camera;
 
+	Float32 speed;
+
+	if (CInput::IsKeyDown(EKeyCode::LeftShift))
+		speed = 3.0F;
+	else
+		speed = 1.0F;
+
 	if (CInput::IsKeyDown(EKeyCode::E))
 	{
-		transform->Translation -= cam.Up() * dt;
+		transform->Translation -= cam.Up() * dt * speed;
 	}
 	if (CInput::IsKeyDown(EKeyCode::Q))
 	{
-		transform->Translation += cam.Up() * dt;
+		transform->Translation += cam.Up() * dt * speed;
 	}
 	if (CInput::IsKeyDown(EKeyCode::W))
 	{
-		transform->Translation += cam.Front() * dt;
+		transform->Translation += cam.Front() * dt * speed;
 	}
 	if (CInput::IsKeyDown(EKeyCode::S))
 	{
-		transform->Translation -= cam.Front() * dt;
+		transform->Translation -= cam.Front() * dt * speed;
 	}
 
 	if (CInput::IsKeyDown(EKeyCode::A))
 	{
-		transform->Translation -= cam.Right() * dt;
+		transform->Translation -= cam.Right() * dt * speed;
 	}
 	if (CInput::IsKeyDown(EKeyCode::D))
 	{
-		transform->Translation += cam.Right() * dt;
+		transform->Translation += cam.Right() * dt * speed;
 	}
 
 }

@@ -6,7 +6,7 @@
 #define VICTORIAM_COMPONENTRENDERABLE_HPP
 
 #include <Victoriam/World/Components/ComponentBase.hpp>
-#include <Victoriam/Graphics/GVertexBuffer.hpp>
+#include <Victoriam/Graphics/GGeometryData.hpp>
 
 VISRCBEG
 
@@ -14,7 +14,7 @@ struct VIDECL SComponentRenderable : SComponentBase
 {
 	COMPONENT_DECL(ComponentRenderable)
 
-	PVertexBuffer VertexBuffer;
+	CGeometryData Geometry;
 	SVector3 Color;
 
 };

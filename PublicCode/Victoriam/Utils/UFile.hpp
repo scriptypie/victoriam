@@ -66,6 +66,14 @@ public:
 	VIDECL VIREQOUT bool Valid() const;
 	VIDECL VIREQOUT SFileView View();
 	VIDECL VIREQOUT ECFileResult Read(String& output);
+	VIDECL VIREQOUT ECFileResult Read(char* outdata, size_t sizedata);
+	template<class T>
+	VIDECL VIREQOUT ECFileResult Read(T& output)
+	{
+		SFileView view = View();
+		output.resize(view.Size);
+		return Read(CCast<char*>(output.data()), view.Size * sizeof(typename T::value_type));
+	}
 	VIDECL VIREQOUT ECFileResult Write(const String& data);
 	VIDECL VIREQOUT ECFileResult Write(const char* data, const UInt64& size);
 	VIDECL void Release();

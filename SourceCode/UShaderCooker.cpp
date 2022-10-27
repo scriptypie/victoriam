@@ -8,6 +8,7 @@
 
 #include <Victoriam/Utils/UShaderCooker.hpp>
 #include <Victoriam/Utils/UCryptogen.hpp>
+#include <Victoriam/Utils/UFile.hpp>
 
 VISRCBEG
 
@@ -93,26 +94,26 @@ bool CShaderCooker::IsCookedExists(const String &name)
 
 bool CShaderCooker::IsShaderChanged(const SEngineShader& shader, const String& name)
 {
-	std::fstream file(SHADERDIR + name + ".sum", std::ios::in);
+	CFile file(SHADERDIR + name + ".sum", ECOpenMode::Read);
 	String sum; sum.resize(32);
-	if (file.is_open())
+	if (file.Valid()) // if (file.is_open())
 	{
-		file.read(CCast<char*>(sum.data()), 32);
-		file.close();
+		VIGNORE file.Read(sum);
+		file.Close();
 		bool result = shader.Checksum != sum;
 		if (result)
 		{
-			file.open(SHADERDIR + name + ".sum", std::ios::out);
-			file.write(shader.Checksum.c_str(), 32);
-			file.close();
+			file.Open(SHADERDIR + name + ".sum", ECOpenMode::Write);
+			VIGNORE file.Write(shader.Checksum);
+			file.Close();
 		}
 		return result;
 	}
 	else
 	{
-		file.open(SHADERDIR + name + ".sum", std::ios::out);
-		file.write(shader.Checksum.c_str(), 32);
-		file.close();
+		file.Open(SHADERDIR + name + ".sum", ECOpenMode::Write);
+		VIGNORE file.Write(shader.Checksum);
+		file.Close();
 		return true;
 	}
 }
@@ -122,15 +123,11 @@ SEngineShader CShaderCooker::ReadShader(const String &name)
 	String source = {};
 	String checksum; checksum.resize(32);
 	{
-		std::ifstream file(SHADERDIR + name + ".shader");
-		if (file.is_open())
+		CFile file(SHADERDIR + name + ".shader", ECOpenMode::Read);
+		if (file.Valid())
 		{
-			file.seekg(0, std::ios::end);
-			size_t size = file.tellg();
-			file.seekg(0, std::ios::beg);
-			source.resize(size);
-			file.read(CCast<char*>(source.data()), CCast<UInt32>(source.size()));
-			file.close();
+			VIGNORE file.Read(source);
+			file.Close();
 
 			CCryptogen cryptogen(source, ECHashingAlgorithm::MD5);
 			checksum = cryptogen.ProcessFromString();
@@ -173,11 +170,11 @@ String CShaderCooker::CookShader(const List<SSPIRVShader> &sshader)
 		tmp += ",\n\t},\n";
 		info += tmp;
 		// create tmp file of out shader
-		std::ofstream f(tempfile, std::ios::binary);
-		if (f.is_open())
+		CFile f(tempfile, ECOpenMode::Write, ECFileFormat::Bin);
+		if (f.Valid())
 		{
-			f.write(shader.Source.c_str(), CCast<UInt32>(shader.Source.size()));
-			f.close();
+			VIGNORE f.Write(shader.Source);
+			f.Close();
 		}
 		// cook shader using glslc tool
 		String command = COMPILER;
@@ -195,14 +192,11 @@ BinaryData CShaderCooker::LoadCookedShaderFromName(const String &name,
                                                    const SSPIRVShader::EShaderType &type)
 {
 	BinaryData data = {};
-	std::ifstream f(COOKEDDIR + name + EXT[(uint32_t)(type)]);
-	if (f.is_open())
+	CFile f(COOKEDDIR + name + EXT[(uint32_t)(type)], ECOpenMode::Read);
+	if (f.Valid())
 	{
-		f.seekg(0, std::ios::end);
-		data.resize(f.tellg());
-		f.seekg(0, std::ios::beg);
-		f.read(CCast<char*>(data.data()), CCast<UInt32>(data.size()));
-		f.close();
+		VIGNORE f.Read(data);
+		f.Close();
 	}
 	return data;
 }

@@ -87,15 +87,15 @@ void CVulkanDrawCommandBuffer::SubmitDraw(const PWorld& world, UInt32 imageIndex
 			// rtc.Rotation.x = glm::mod(rtc.Rotation.x + 0.01F, glm::two_pi<Float32>());
 			// rtc.Rotation.z = glm::mod(rtc.Rotation.z + 0.01F, glm::two_pi<Float32>());
 
-			if (rrc->VertexBuffer) {
+			if (!rrc->Geometry.Empty()) {
 				SMaterialData materialData = {};
 				materialData.Transform = rtc->Transform();
 				materialData.ViewProjection = mainCamera->GetViewProjection();
 				materialData.Color = SVector4(rrc->Color, 1.0f);
 				m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0,
 				                                   &materialData);
-				rrc->VertexBuffer->Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
-				rrc->VertexBuffer->Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+				rrc->Geometry.Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+				rrc->Geometry.Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 			}
 		}
 	}

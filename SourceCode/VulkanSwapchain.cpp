@@ -318,11 +318,11 @@ VkPresentModeKHR CVulkanSwapchain::ChooseSwapchainPresentMode(const List<VkPrese
 		if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR)
 			return availablePresentMode;
 
-	for (const auto &availablePresentMode : available) {
-	  if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR) {
-	    return availablePresentMode;
-	  }
-	}
+	// for (const auto &availablePresentMode : available) {
+	//   if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR) {
+	//     return availablePresentMode;
+	//   }
+	// }
 
 	return VK_PRESENT_MODE_FIFO_KHR;
 }

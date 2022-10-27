@@ -6,7 +6,7 @@
 #define VICTORIAM_GRENDERER_HPP
 
 #include "Victoriam/Graphics/Structs/GRendererCreateInfo.hpp"
-#include <Victoriam/Graphics/GVertexBuffer.hpp>
+#include <Victoriam/Graphics/GGeometryData.hpp>
 #include <Victoriam/World/WWorld.hpp>
 
 VISRCBEG
@@ -20,6 +20,9 @@ public:
 
 	virtual void Setup() = 0;
 	virtual PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) = 0;
+	virtual PIndexBuffer CreateIndexBuffer(const List<UInt32>& indices) = 0;
+	virtual CGeometryData CreateGeometryData(const List<SVertex>& vertices) = 0;
+	virtual CGeometryData CreateGeometryData(const List<SVertex>& vertices, const List<UInt32>& indices) = 0;
 
 	virtual void OnWindowResize(const SWindowExtent& extent) = 0;
 	virtual SCommandBuffer BeginFrame() = 0;

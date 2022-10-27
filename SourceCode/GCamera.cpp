@@ -56,11 +56,9 @@ void CCamera::Update()
 
 	if (CInput::IsMouseDown(EMouseCode::ButtonLeft)) {
 
-		float sensitivity = 0.3f; // change this value to your liking
-
 		float yawSign = Up().y < 0 ? -1.0f : 1.0f;
-		yaw += (yawSign * offset.x * sensitivity);
-		pitch += (offset.y * sensitivity);
+		yaw += (yawSign * offset.x * m_Sensitivity);
+		pitch += (offset.y * m_Sensitivity);
 
 		// make sure that when pitch is out of bounds, screen doesn't get flipped
 		if (pitch > 89.0f)
@@ -82,6 +80,11 @@ void CCamera::SetViewportSize(const SVector2 &extent) {
 	m_Width = extent.x;
 	m_Height = extent.y;
 	m_LastPos = { m_Width / 2.0F, m_Height / 2.0F };
+}
+
+Float32 &CCamera::Sensetivity()
+{
+	return m_Sensitivity;
 }
 
 VISRCEND

@@ -60,7 +60,7 @@ void CVulkanRenderer::Shutdown(const PWorld& world)
 	for (auto renderable_obj : renderable_objs)
 	{
 		auto rrc = renderable_obj->GetComponent<SComponentRenderable>();
-		rrc->VertexBuffer.reset();
+		rrc->Geometry.Release();
 	}
 
 	world->Clear();
@@ -93,6 +93,18 @@ void CVulkanRenderer::RecreateSwapchain(const SWindowExtent &newExtent) {
 void CVulkanRenderer::CreatePipeline()
 {
 	m_Pipeline = CPipeline::Create("Default", m_Device, m_Swapchain);
+}
+
+PIndexBuffer CVulkanRenderer::CreateIndexBuffer(const List<UInt32> &indices) {
+	return CIndexBuffer::Create(m_Device, indices);
+}
+
+CGeometryData CVulkanRenderer::CreateGeometryData(const List<SVertex> &vertices) {
+	return CGeometryData::Create(m_Device, vertices);
+}
+
+CGeometryData CVulkanRenderer::CreateGeometryData(const List<SVertex> &vertices, const List<UInt32> &indices) {
+	return CGeometryData::Create(m_Device, vertices, indices);
 }
 
 VISRCEND

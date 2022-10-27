@@ -32,7 +32,7 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	{
 		SWindowCreateInfo info;
 		info.Name = m_info.AppName + " - NewWindow";
-		info.Resolution = {680, 680};
+		info.Resolution = {1280, 800};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = CWindow::Create(info);
 	}
@@ -49,57 +49,50 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 			{{-.5f, -.5f, -.5f}, {.9f, .9f, .9f, 1}},
 			{{-.5f, .5f, .5f}, {.9f, .9f, .9f, 1}},
 			{{-.5f, -.5f, .5f}, {.9f, .9f, .9f, 1}},
-			{{-.5f, -.5f, -.5f}, {.9f, .9f, .9f, 1}},
 			{{-.5f, .5f, -.5f}, {.9f, .9f, .9f, 1}},
-			{{-.5f, .5f, .5f}, {.9f, .9f, .9f, 1}},
 
 			// right face (yellow)
 			{{.5f, -.5f, -.5f}, {.8f, .8f, .1f, 1}},
 			{{.5f, .5f, .5f}, {.8f, .8f, .1f, 1}},
 			{{.5f, -.5f, .5f}, {.8f, .8f, .1f, 1}},
-			{{.5f, -.5f, -.5f}, {.8f, .8f, .1f, 1}},
 			{{.5f, .5f, -.5f}, {.8f, .8f, .1f, 1}},
-			{{.5f, .5f, .5f}, {.8f, .8f, .1f, 1}},
 
 			// top face (orange, remember y axis points down)
 			{{-.5f, -.5f, -.5f}, {.9f, .6f, .1f, 1}},
 			{{.5f, -.5f, .5f}, {.9f, .6f, .1f, 1}},
 			{{-.5f, -.5f, .5f}, {.9f, .6f, .1f, 1}},
-			{{-.5f, -.5f, -.5f}, {.9f, .6f, .1f, 1}},
 			{{.5f, -.5f, -.5f}, {.9f, .6f, .1f, 1}},
-			{{.5f, -.5f, .5f}, {.9f, .6f, .1f, 1}},
 
 			// bottom face (red)
 			{{-.5f, .5f, -.5f}, {.8f, .1f, .1f, 1}},
 			{{.5f, .5f, .5f}, {.8f, .1f, .1f, 1}},
 			{{-.5f, .5f, .5f}, {.8f, .1f, .1f, 1}},
-			{{-.5f, .5f, -.5f}, {.8f, .1f, .1f, 1}},
 			{{.5f, .5f, -.5f}, {.8f, .1f, .1f, 1}},
-			{{.5f, .5f, .5f}, {.8f, .1f, .1f, 1}},
 
 			// nose face (blue)
 			{{-.5f, -.5f, 0.5f}, {.1f, .1f, .8f, 1}},
 			{{.5f, .5f, 0.5f}, {.1f, .1f, .8f, 1}},
 			{{-.5f, .5f, 0.5f}, {.1f, .1f, .8f, 1}},
-			{{-.5f, -.5f, 0.5f}, {.1f, .1f, .8f, 1}},
 			{{.5f, -.5f, 0.5f}, {.1f, .1f, .8f, 1}},
-			{{.5f, .5f, 0.5f}, {.1f, .1f, .8f, 1}},
 
 			// tail face (green)
 			{{-.5f, -.5f, -0.5f}, {.1f, .8f, .1f, 1}},
 			{{.5f, .5f, -0.5f}, {.1f, .8f, .1f, 1}},
 			{{-.5f, .5f, -0.5f}, {.1f, .8f, .1f, 1}},
-			{{-.5f, -.5f, -0.5f}, {.1f, .8f, .1f, 1}},
 			{{.5f, -.5f, -0.5f}, {.1f, .8f, .1f, 1}},
-			{{.5f, .5f, -0.5f}, {.1f, .8f, .1f, 1}}
 	};
 
-	PVertexBuffer vertexBuffer = m_Renderer->CreateVertexBuffer(vertices);
+	const List<UInt32> indices = {
+			0, 1, 2, 0, 3, 1, 4, 5, 6, 4, 7, 5, 8, 9, 10, 8, 11, 9,
+			12, 13, 14, 12, 15, 13, 16, 17, 18, 16, 19, 17, 20, 21, 22, 20, 23, 21
+	};
+
+	CGeometryData geometryData = m_Renderer->CreateGeometryData(vertices, indices);
 
 	{
 		auto cube = m_World->CreateGameObject("TestCube");
 		auto crc = cube->AddComponent<SComponentRenderable>();
-		crc->VertexBuffer = vertexBuffer;
+		crc->Geometry = geometryData;
 		crc->Color = {0.2F, 0.8F, 0.3F};
 		cube->AddComponent<SComponentTransform>();
 	}
@@ -147,7 +140,6 @@ void Vi::CRuntimeApp::Startup() {
 
 		CTimestep newTime = {};
 		Float32 frameTime = currentTime.Delta() - newTime.Delta();
-		ViLog("Frametime: %.3fs\n", frameTime);
 		currentTime = newTime;
 
 		//m_World->Update(frameTime);

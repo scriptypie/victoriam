@@ -14,6 +14,7 @@ class VIDECL CCamera
 	Float32 m_Width = 1280.0F;
 	Float32 m_Height = 720.0F;
 
+	Float32 m_Sensitivity = 0.3F;
 	Bool firstMouse = true;
 	Float32 yaw   = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
 	Float32 pitch =  0.0f;
@@ -33,6 +34,7 @@ public:
 	VIDECL void SetViewMatrix(const SMatrix4& view);
 	VIDECL void SetViewportSize(const SVector2 & extent);
 
+	VIDECL VIREQOUT Float32& Sensetivity();
 	VIDECL VIREQOUT SVector3 Front() const;
 	VIDECL VIREQOUT SVector3 Up() const;
 	VIDECL VIREQOUT SVector3 Right() const;

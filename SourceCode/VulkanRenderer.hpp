@@ -28,7 +28,10 @@ public:
 	~CVulkanRenderer() override;
 
 	void Setup() override;
-	PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) override;
+	VIDECL VIREQOUT PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) override;
+	VIDECL VIREQOUT PIndexBuffer CreateIndexBuffer(const List<UInt32>& indices) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices, const List<UInt32>& indices) override;
 
 	void OnWindowResize(const SWindowExtent& extent) override;
 	SCommandBuffer BeginFrame() override;
