@@ -8,6 +8,7 @@
 #include <Victoriam/Application/AAppStateController.hpp>
 #include <Victoriam/Application/ARuntimeAppCreateInfo.hpp>
 #include <Victoriam/Graphics/GRenderer.hpp>
+#include <Victoriam/Utils/UTimestep.hpp>
 #include <Victoriam/World/WWorld.hpp>
 
 VISRCBEG
@@ -34,6 +35,7 @@ public:
 	VIDECL void Close();
 	VIDECL void Reload();
 
+	VIDECL inline PWorld World() { return m_World;}
 	VIDECL inline static CRuntimeApp& Get() { return *s_instance; }
 	VIDECL inline PRenderer& Renderer() { return m_Renderer; }
 	VIDECL VIREQOUT inline String CWD() const { return m_info.CWD; }

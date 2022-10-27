@@ -33,6 +33,7 @@ layout (location = 0) out vec4 o_Color;
 layout (push_constant) uniform MaterialData
 {
     mat4 Transform;
+    mat4 ViewProjection;
     vec3 Color;
 } m_Data;
 

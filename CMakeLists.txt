@@ -89,7 +89,7 @@ set(SOURCE_FILES
         SourceCode/VulkanVertexBuffer.cpp
         SourceCode/WGameObject.cpp
         SourceCode/WWorld.cpp
-        PublicCode/Victoriam/World/Components/ComponentName.hpp PublicCode/Victoriam/World/Components/Components.hpp PublicCode/Victoriam/Graphics/GCamera.hpp SourceCode/GCamera.cpp PublicCode/Victoriam/World/Components/ComponentCamera.hpp)
+        PublicCode/Victoriam/World/Components/ComponentName.hpp PublicCode/Victoriam/World/Components/Components.hpp PublicCode/Victoriam/Graphics/GCamera.hpp SourceCode/GCamera.cpp PublicCode/Victoriam/World/Components/ComponentCamera.hpp PublicCode/Victoriam/Utils/UTimestep.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

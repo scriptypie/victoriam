@@ -15,7 +15,7 @@ public:
     virtual ~CAppState() = default;
 
     virtual void OnCreate() = 0;
-    virtual void OnUpdate() = 0;
+    virtual void OnUpdate(const Float32& dt) = 0;
 	virtual void OnUpdateGUI() = 0;
 	virtual void OnDestroy() = 0;
 };

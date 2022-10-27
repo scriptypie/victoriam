@@ -131,12 +131,15 @@ void CVulkanDevice::ChoosePhysicalDevice()
 	List<VkPhysicalDevice> physicalDevices(deviceCount);
 	vkEnumeratePhysicalDevices(m_Instance, &deviceCount, physicalDevices.data());
 
-	for (auto& device : physicalDevices)
+	VIGNORE std::find_if(physicalDevices.begin(), physicalDevices.end(), [&](const auto& device) -> Bool
+	{
 		if (IsPhysicalDeviceSuitable(device))
 		{
 			m_PhysicalDevice = device;
-			break;
+			return true;
 		}
+		return false;
+	});
 
 	if (m_PhysicalDevice == nullptr)
 	{
@@ -474,11 +477,9 @@ VkFormat CVulkanDevice::FindSupportedFormat(const List<VkFormat> &candidates, Vk
 	for (VkFormat format : candidates) {
 		VkFormatProperties props = {};
 		vkGetPhysicalDeviceFormatProperties(m_PhysicalDevice, format, &props);
-		if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features) {
+		if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features ||
+			tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features)
 			return format;
-		} else if (tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features) {
-			return format;
-		}
 	}
 	ViAbort("Failed to find supported format!");
 }

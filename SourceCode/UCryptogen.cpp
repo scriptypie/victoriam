@@ -75,7 +75,7 @@ void CCryptogen::ResetMD5Context() {
 
 void CCryptogen::UpdateMD5(const void *data, UInt64 size) {
 	UInt32 saved_lo;
-	unsigned long used, free;
+	unsigned long used;
 
 	saved_lo = md5_ctx.lo;
 	if ((md5_ctx.lo = (saved_lo + size) & 0x1fffffff) < saved_lo)
@@ -84,6 +84,8 @@ void CCryptogen::UpdateMD5(const void *data, UInt64 size) {
 	used = saved_lo & 0x3f;
 
 	if (used){
+		unsigned long free;
+
 		free = 64 - used;
 		if (size < free) {
 			memcpy(&md5_ctx.buffer[used], data, size);
@@ -91,7 +93,7 @@ void CCryptogen::UpdateMD5(const void *data, UInt64 size) {
 		}
 
 		memcpy(&md5_ctx.buffer[used], data, free);
-		data = (UInt8*)data + free;
+		data = CCast<UInt8*>(data) + free;
 		size -= free;
 		ProcessMD5(md5_ctx.buffer, 64);
 	}
@@ -153,7 +155,7 @@ const void *CCryptogen::ProcessMD5(const void *data, UInt64 size) {
 	UInt32 a, b, c, d;
 	UInt32 saved_a, saved_b, saved_c, saved_d;
 
-	ptr = (const UInt8*)data;
+	ptr = CCast<const UInt8*>(data);
 
 	a = md5_ctx.a;
 	b = md5_ctx.b;

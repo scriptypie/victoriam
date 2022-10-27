@@ -97,18 +97,18 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	PVertexBuffer vertexBuffer = m_Renderer->CreateVertexBuffer(vertices);
 
 	{
-		auto triangle = m_World->CreateGameObject();
-		auto &trc = triangle->AddComponent<SComponentRenderable>();
-		trc.VertexBuffer = vertexBuffer;
-		trc.Color = {0.2F, 0.8F, 0.3F};
-		auto& ttc = triangle->AddComponent<SComponentTransform>();
-		ttc.Translation = { 0, 0, 1.0F };
+		auto cube = m_World->CreateGameObject("TestCube");
+		auto crc = cube->AddComponent<SComponentRenderable>();
+		crc->VertexBuffer = vertexBuffer;
+		crc->Color = {0.2F, 0.8F, 0.3F};
+		cube->AddComponent<SComponentTransform>();
 	}
 	{
 		auto camera = m_World->CreateGameObject("MainCamera");
-		auto& cc = camera->AddComponent<SComponentCamera>();
-		auto& ctc = camera->AddComponent<SComponentTransform>();
-		ctc.Translation = { 0.0F, 0.0F, -0.5F };
+		auto camcomp = camera->AddComponent<SComponentCamera>();
+		camcomp->Camera.SetViewBounds(0.01F, 1000.0F);
+		auto ctc = camera->AddComponent<SComponentTransform>();
+		ctc->Translation = { 0.0F, 1.0F, 2.0F };
 	}
 
 	m_running = true;
@@ -140,13 +140,21 @@ void CRuntimeApp::Close()
 }
 
 void Vi::CRuntimeApp::Startup() {
+	CTimestep currentTime = {};
+
 	while (m_running) {
 		m_Window->Update();
 
+		CTimestep newTime = {};
+		Float32 frameTime = currentTime.Delta() - newTime.Delta();
+		ViLog("Frametime: %.3fs\n", frameTime);
+		currentTime = newTime;
+
+		//m_World->Update(frameTime);
 		// begin gui update
 		for (auto & state : m_stateController)
 		{
-			state->OnUpdate();
+			state->OnUpdate(frameTime);
 			state->OnUpdateGUI();
 		}
 		// end gui update

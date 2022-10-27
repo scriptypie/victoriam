@@ -15,7 +15,7 @@ public:
 
 	void OnCreate() override;
 
-	void OnUpdate() override;
+	void OnUpdate(const Float32& dt) override;
 
 	void OnDestroy() override;
 

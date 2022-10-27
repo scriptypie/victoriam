@@ -9,7 +9,7 @@
 VISRCBEG
 
 void CInput::Init(const SPtr<CWindow> &window) {
-	m_InputStatePtr = &((CGLFWWindow*)window.get())->m_Data.InputState;
+	m_InputStatePtr = &CCast<CGLFWWindow*>(window.get())->m_Data.InputState;
 }
 
 Bool CInput::IsKeyDown(const EKeyCode &code) {

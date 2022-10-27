@@ -3,44 +3,85 @@
 //
 
 #include <Victoriam/Graphics/GCamera.hpp>
+#include <Victoriam/Input/IInput.hpp>
 
 VISRCBEG
 
-SMatrix4 CCamera::GetProjection() const
-{
-	return m_ProjectionMat;
+void CCamera::SetViewBounds(const Float32 &near, const Float32 &far) {
+	m_Near = near;
+	m_Far = far;
+	Update();
 }
 
-CCamera CCamera::CreateOrthographicCamera(const Float32 &left, const Float32 &right, const Float32 &top,
-                                          const Float32 &bottom, const Float32 &near, const Float32 &far)
-{
-	SMatrix4
-	projectionMatrix = glm::mat4{1.0F};
-	projectionMatrix[0][0] = 2.F / (right - left);
-	projectionMatrix[1][1] = 2.F / (bottom - top);
-	projectionMatrix[2][2] = 1.F / (far - near);
-	projectionMatrix[3][0] = -(right + left) / (right - left);
-	projectionMatrix[3][1] = -(bottom + top) / (bottom - top);
-	projectionMatrix[3][2] = -near / (far - near);
-	return CCamera(projectionMatrix);
+void CCamera::SetPerspective(const Float32 &fovy, const Float32 &aspect) {
+	m_Fov = fovy;
+	m_Aspect = aspect;
+	Update();
 }
 
-CCamera CCamera::CreatePerspectiveCamera(const Float32 &fovy, const Float32 &aspect, const Float32 &near,
-                                         const Float32 &far)
-{
-	assert(glm::abs(aspect - std::numeric_limits<float>::epsilon()) > 0.0F);
-	const float tanHalfFovy = tan(fovy / 2.F);
-	SMatrix4
-	projectionMatrix = glm::mat4{0.0F};
-	projectionMatrix[0][0] = 1.F / (aspect * tanHalfFovy);
-	projectionMatrix[1][1] = 1.F / (tanHalfFovy);
-	projectionMatrix[2][2] = far / (far - near);
-	projectionMatrix[2][3] = 1.F;
-	projectionMatrix[3][2] = -(far * near) / (far - near);
-	return CCamera(projectionMatrix);
+void CCamera::SetPerspective(const Float32 &aspect) {
+	m_Aspect = aspect;
 }
 
-CCamera::CCamera() : m_ProjectionMat(SMatrix4(1.0F))
-{}
+SVector3 CCamera::Front() const {
+	return m_Front;
+}
+
+SVector3 CCamera::Up() const {
+	return m_Up;
+}
+
+SVector3 CCamera::Right() const {
+	return glm::cross(Front(), Up());
+}
+
+SMatrix4 CCamera::GetViewProjection() const {
+	return m_Projection * m_View;
+}
+
+void CCamera::Update()
+{
+	if (m_Aspect != Float32(m_Width / m_Height))
+		m_Projection = glm::perspective(m_Fov, m_Aspect, m_Near, m_Far);
+
+	SVector2 pos = CInput::GetMousePosition();
+
+	if (firstMouse) {
+		m_LastPos += pos;
+		firstMouse = false;
+	}
+
+	SVector2 offset = pos - m_LastPos;
+	m_LastPos = pos;
+
+	if (CInput::IsMouseDown(EMouseCode::ButtonLeft)) {
+
+		float sensitivity = 0.3f; // change this value to your liking
+
+		float yawSign = Up().y < 0 ? -1.0f : 1.0f;
+		yaw += (yawSign * offset.x * sensitivity);
+		pitch += (offset.y * sensitivity);
+
+		// make sure that when pitch is out of bounds, screen doesn't get flipped
+		if (pitch > 89.0f)
+			pitch = 89.0f;
+		if (pitch < -89.0f)
+			pitch = -89.0f;
+
+		m_Front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+		m_Front.y = sin(glm::radians(pitch));
+		m_Front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	}
+}
+
+void CCamera::SetViewMatrix(const SMatrix4 &view) {
+	m_View = view;
+}
+
+void CCamera::SetViewportSize(const SVector2 &extent) {
+	m_Width = extent.x;
+	m_Height = extent.y;
+	m_LastPos = { m_Width / 2.0F, m_Height / 2.0F };
+}
 
 VISRCEND

@@ -7,6 +7,7 @@
 
 #define VIDECL [[maybe_unused]]
 #define VIREQOUT [[nodiscard]]
+#define VIGNORE (void)
 
 #define VISRCBEG namespace Vi {
 #define VISRCEND }

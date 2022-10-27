@@ -4,6 +4,7 @@
 
 #include <Victoriam/World/WWorld.hpp>
 #include <Victoriam/World/WGameObject.hpp>
+#include <Victoriam/Input/IInput.hpp>
 
 VISRCBEG
 
@@ -12,11 +13,11 @@ CGameObject* CWorld::CreateGameObject()
 	return new CGameObject(this);
 }
 
-CGameObject* CWorld::CreateGameObject(const CString &name)
+CGameObject* CWorld::CreateGameObject(const String &name)
 {
 	CGameObject* obj = CreateGameObject();
-	auto& nc = obj->AddComponent<SComponentName>();
-	nc.Name = name;
+	auto nc = obj->AddComponent<SComponentName>();
+	nc->Name = name;
 	return obj;
 }
 
@@ -49,7 +50,7 @@ CGameObject* CWorld::FindGameObjectByUID(const UID &id)
 		return m_Registry.at(id);
 	else
 	{
-		ViLog("GameObject not found. Creating new one...");
+		ViLog("GameObject not found. Creating new one...\n");
 		return CreateGameObject();
 	}
 }
@@ -62,6 +63,29 @@ void CWorld::Clear()
 {
 	for (auto object : m_Registry)
 		object->Destroy();
+}
+
+CGameObject *CWorld::FindGameObjectByName(const String &name)
+{
+	for (auto obj : m_Registry)
+	{
+		auto namec = obj->GetComponent<SComponentName>();
+		if (namec && namec->Name == name)
+			return obj;
+	}
+	ViLog("GameObject '%s' not found. Creating new one with the given name...\n", name.c_str());
+	return CreateGameObject(name);
+}
+
+void CWorld::Update(const Float32 &dt)
+{
+	auto cameras = FindGameObjectsWithComponent<SComponentCamera>();
+	for (auto camobj : cameras)
+	{
+		auto cam = camobj->GetComponent<SComponentCamera>();
+		cam->Camera.SetViewportSize({});
+		cam->Camera.Update();
+	}
 }
 
 VISRCEND

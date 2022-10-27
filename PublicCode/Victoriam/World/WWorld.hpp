@@ -35,6 +35,7 @@ public:
 	}
 
 	static SPtr<CWorld> Create();
+	void Update(const Float32& dt);
 	VIDECL void Clear();
 private:
 	void OnGameObjectCreated(CGameObject* object);
