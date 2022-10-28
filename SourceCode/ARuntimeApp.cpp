@@ -87,7 +87,11 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 			12, 13, 14, 12, 15, 13, 16, 17, 18, 16, 19, 17, 20, 21, 22, 20, 23, 21
 	};
 
-	CGeometryData geometryData = m_Renderer->CreateGeometryData(vertices, indices);
+	SGeometryDataCreateInfo geometryDataCreateInfo = {};
+	geometryDataCreateInfo.pVertices = &vertices;
+	geometryDataCreateInfo.pIndices = &indices;
+
+	CGeometryData geometryData = m_Renderer->CreateGeometryData(geometryDataCreateInfo);
 
 	{
 		auto cube = m_World->CreateGameObject("TestCube");

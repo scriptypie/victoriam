@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "VIsual/VEditorState.hpp"
-#include "Victoriam/Application/AStartPoint.hpp"
+#include <Ved/VEditorState.hpp>
+#include <Victoriam/Application/AStartPoint.hpp>
 
 VISRCBEG
 

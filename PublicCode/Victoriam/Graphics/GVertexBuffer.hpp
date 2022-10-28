@@ -24,6 +24,8 @@ public:
 
 VIDECL typedef SPtr<CVertexBuffer> PVertexBuffer;
 
+VIDECL static PVertexBuffer DefaultVertexBuffer;
+
 VISRCEND
 
 #endif //VICTORIAM_GVERTEXBUFFER_HPP

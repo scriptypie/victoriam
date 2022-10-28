@@ -20,6 +20,7 @@ public:
 
 	VIDECL void Bind(const SCommandBuffer& buffer);
 	VIDECL void Draw(const SCommandBuffer& buffer);
+	VIDECL void SubmitDraw(const SCommandBuffer& buffer);
 
 	VIDECL VIREQOUT Bool HasVertexBuffer() const;
 	VIDECL VIREQOUT Bool HasIndexBuffer() const;
@@ -27,8 +28,9 @@ public:
 	VIDECL void Release();
 
 	static CGeometryData Create(PDevice& device, const List<SVertex>& vertices);
-	static CGeometryData Create(PDevice& device, const PVertexBuffer& vertexBuffer);
 	static CGeometryData Create(PDevice& device, const List<SVertex>& vertices, const List<UInt32>& indices);
+	static CGeometryData Create(PDevice& device, const PVertexBuffer& vertexBuffer);
+	static CGeometryData Create(PDevice& device, const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer);
 };
 
 VISRCEND

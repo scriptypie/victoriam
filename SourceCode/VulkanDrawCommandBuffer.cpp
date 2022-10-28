@@ -94,8 +94,7 @@ void CVulkanDrawCommandBuffer::SubmitDraw(const PWorld& world, UInt32 imageIndex
 				materialData.Color = SVector4(rrc->Color, 1.0f);
 				m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0,
 				                                   &materialData);
-				rrc->Geometry.Bind(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
-				rrc->Geometry.Draw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
+				rrc->Geometry.SubmitDraw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 			}
 		}
 	}

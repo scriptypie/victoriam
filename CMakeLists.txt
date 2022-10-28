@@ -89,7 +89,7 @@ set(SOURCE_FILES
         SourceCode/VulkanVertexBuffer.cpp
         SourceCode/WGameObject.cpp
         SourceCode/WWorld.cpp
-        PublicCode/Victoriam/World/Components/ComponentName.hpp PublicCode/Victoriam/World/Components/Components.hpp PublicCode/Victoriam/Graphics/GCamera.hpp SourceCode/GCamera.cpp PublicCode/Victoriam/World/Components/ComponentCamera.hpp PublicCode/Victoriam/Utils/UTimestep.hpp PublicCode/Victoriam/Graphics/GIndexBuffer.hpp SourceCode/GIndexBuffer.cpp SourceCode/VulkanIndexBuffer.cpp SourceCode/VulkanIndexBuffer.hpp PublicCode/Victoriam/Graphics/GGeometryData.hpp SourceCode/GGeometryData.cpp)
+        PublicCode/Victoriam/World/Components/ComponentName.hpp PublicCode/Victoriam/World/Components/Components.hpp PublicCode/Victoriam/Graphics/GCamera.hpp SourceCode/GCamera.cpp PublicCode/Victoriam/World/Components/ComponentCamera.hpp PublicCode/Victoriam/Utils/UTimestep.hpp PublicCode/Victoriam/Graphics/GIndexBuffer.hpp SourceCode/GIndexBuffer.cpp SourceCode/VulkanIndexBuffer.cpp SourceCode/VulkanIndexBuffer.hpp PublicCode/Victoriam/Graphics/GGeometryData.hpp SourceCode/GGeometryData.cpp PublicCode/Victoriam/Graphics/Structs/GGeometryDataCreateInfo.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 
@@ -106,7 +106,7 @@ find_package(Vulkan REQUIRED)
 target_link_libraries(victoriam PUBLIC glfw PUBLIC OpenGL::GL PUBLIC Vulkan::Vulkan)
 
 set(VISUAL_SOURCES
-        PublicCode/VIsual/VEditorState.hpp
+        PublicCode/Ved/VEditorState.hpp
 
         SourceCode/Ved/VEditorState.cpp
         SourceCode/Ved/VIsualApp.cpp

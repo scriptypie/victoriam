@@ -17,6 +17,9 @@ CVulkanRenderer::CVulkanRenderer(const SRendererCreateInfo &createInfo)
 void CVulkanRenderer::Setup()
 {
 	m_DrawCommandBuffer = CDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline);
+
+	DefaultVertexBuffer = CVertexBuffer::Create(m_Device, DefaultVertices);
+	DefaultIndexBuffer  = CIndexBuffer ::Create(m_Device, DefaultIndices);
 }
 
 PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
@@ -63,6 +66,9 @@ void CVulkanRenderer::Shutdown(const PWorld& world)
 		rrc->Geometry.Release();
 	}
 
+	DefaultVertexBuffer.reset();
+	DefaultIndexBuffer.reset();
+
 	world->Clear();
 }
 
@@ -105,6 +111,23 @@ CGeometryData CVulkanRenderer::CreateGeometryData(const List<SVertex> &vertices)
 
 CGeometryData CVulkanRenderer::CreateGeometryData(const List<SVertex> &vertices, const List<UInt32> &indices) {
 	return CGeometryData::Create(m_Device, vertices, indices);
+}
+
+CGeometryData CVulkanRenderer::CreateGeometryData(const SGeometryDataCreateInfo &createInfo)
+{
+	if (createInfo.pIndices)
+		return CGeometryData::Create(m_Device, *createInfo.pVertices, *createInfo.pIndices);
+	else
+		return CGeometryData::Create(m_Device, *createInfo.pVertices);
+}
+
+CGeometryData CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuffer) {
+	return CGeometryData::Create(m_Device, vertexBuffer);
+}
+
+CGeometryData
+CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuffer, const PIndexBuffer &indexBuffer) {
+	return CGeometryData::Create(m_Device, vertexBuffer, indexBuffer);
 }
 
 VISRCEND

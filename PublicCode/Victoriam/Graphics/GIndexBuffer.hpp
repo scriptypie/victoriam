@@ -23,6 +23,8 @@ public:
 
 VIDECL typedef SPtr<CIndexBuffer> PIndexBuffer;
 
+VIDECL static PIndexBuffer DefaultIndexBuffer;
+
 VISRCEND
 
 #endif //VICTORIAM_GINDEXBUFFER_HPP

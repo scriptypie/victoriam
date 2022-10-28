@@ -32,6 +32,9 @@ public:
 	VIDECL VIREQOUT PIndexBuffer CreateIndexBuffer(const List<UInt32>& indices) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices, const List<UInt32>& indices) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const SGeometryDataCreateInfo& createInfo) override;
 
 	void OnWindowResize(const SWindowExtent& extent) override;
 	SCommandBuffer BeginFrame() override;

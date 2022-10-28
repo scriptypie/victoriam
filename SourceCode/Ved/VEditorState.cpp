@@ -2,9 +2,9 @@
 // Created by Вячеслав Кривенко on 07.10.2022.
 //
 
-#include "VIsual/VEditorState.hpp"
+#include <Ved/VEditorState.hpp>
 #include <Victoriam/Application/ARuntimeApp.hpp>
-#include "Victoriam/Input/IInput.hpp"
+#include <Victoriam/Input/IInput.hpp>
 
 VISRCBEG
 
