@@ -17,7 +17,7 @@ VISRCBEG
 #define ViLog(...) (void)0
 #endif
 
-#define ViAbort(...) ViLog(__VA_ARGS__); abort()
+#define ViAbort(...) { ViLog(__VA_ARGS__); abort(); }
 
 VISRCEND
 

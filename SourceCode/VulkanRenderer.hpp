@@ -40,6 +40,8 @@ public:
 	SCommandBuffer BeginFrame() override;
 	void DrawFrame(const SCommandBuffer& commandBuffer, const PWorld& world) override;
 	void EndFrame(const SCommandBuffer& commandBuffer) override;
+	void BeginUIFrame() override;
+	void EndUIFrame() override;
 	void Shutdown(const PWorld& world) override;
 private:
 	void CreatePipeline();

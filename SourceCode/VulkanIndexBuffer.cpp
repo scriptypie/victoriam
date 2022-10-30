@@ -6,7 +6,7 @@
 
 VISRCBEG
 
-CVulkanIndexBuffer::CVulkanIndexBuffer(PDevice &device, const List<UInt32> &indices) : m_Device(device)
+CVulkanIndexBuffer::CVulkanIndexBuffer(PDevice &device, const List<UInt32> &indices) : m_Device(device), m_Recreated(false)
 {
 	CreateIndexBuffer(indices);
 }

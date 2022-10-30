@@ -17,6 +17,7 @@ public:
 
 	virtual void Bind(const SCommandBuffer& buffer) = 0;
 	virtual void Draw(const SCommandBuffer& buffer) const = 0;
+	virtual void Recreated() = 0;
 
 	static SPtr<CIndexBuffer> Create(PDevice& device, const List<UInt32>& indices);
 };

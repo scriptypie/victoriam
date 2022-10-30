@@ -79,13 +79,7 @@ CGameObject *CWorld::FindGameObjectByName(const String &name)
 
 void CWorld::Update(const Float32 &dt)
 {
-	auto cameras = FindGameObjectsWithComponent<SComponentCamera>();
-	for (auto camobj : cameras)
-	{
-		auto cam = camobj->GetComponent<SComponentCamera>();
-		cam->Camera.SetViewportSize({});
-		cam->Camera.Update();
-	}
+
 }
 
 VISRCEND

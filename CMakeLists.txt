@@ -3,7 +3,9 @@ project(victoriam)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(PublicCode /opt/homebrew/Cellar/glfw/3.3.8/include ThirdParty /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
+include_directories(PublicCode /opt/homebrew/Cellar/glfw/3.3.8/include ThirdParty ThirdParty/imgui/include ThirdParty/assimp/include /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
+
+find_library(ASSIMP_LIB assimp ThirdParty/assimp/lib)
 
 set(SOURCE_FILES
         PublicCode/Victoriam/Core/CBase.hpp
@@ -65,6 +67,19 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Graphics/Structs/GRendererCreateInfo.hpp
         SourceCode/VulkanSwapchain.hpp
         PublicCode/Victoriam/Graphics/GSwapchain.hpp
+        PublicCode/Victoriam/World/Components/ComponentName.hpp
+        PublicCode/Victoriam/World/Components/Components.hpp
+        PublicCode/Victoriam/Graphics/GCamera.hpp
+        PublicCode/Victoriam/World/Components/ComponentCamera.hpp
+        PublicCode/Victoriam/Utils/UTimestep.hpp
+        PublicCode/Victoriam/Graphics/GIndexBuffer.hpp
+        SourceCode/VulkanIndexBuffer.hpp
+        PublicCode/Victoriam/Graphics/GGeometryData.hpp
+        PublicCode/Victoriam/Graphics/Structs/GGeometryDataCreateInfo.hpp
+        PublicCode/Victoriam/Utils/UGeometryBuilder.hpp
+        PublicCode/Victoriam/Utils/UJobWorker.hpp
+        ThirdParty/tinyobjloader/TinyObjLoader.hpp
+        PublicCode/Victoriam/Utils/UHash.hpp
 
         SourceCode/EngineInfo.cpp
         SourceCode/AAppStateController.cpp
@@ -89,7 +104,21 @@ set(SOURCE_FILES
         SourceCode/VulkanVertexBuffer.cpp
         SourceCode/WGameObject.cpp
         SourceCode/WWorld.cpp
-        PublicCode/Victoriam/World/Components/ComponentName.hpp PublicCode/Victoriam/World/Components/Components.hpp PublicCode/Victoriam/Graphics/GCamera.hpp SourceCode/GCamera.cpp PublicCode/Victoriam/World/Components/ComponentCamera.hpp PublicCode/Victoriam/Utils/UTimestep.hpp PublicCode/Victoriam/Graphics/GIndexBuffer.hpp SourceCode/GIndexBuffer.cpp SourceCode/VulkanIndexBuffer.cpp SourceCode/VulkanIndexBuffer.hpp PublicCode/Victoriam/Graphics/GGeometryData.hpp SourceCode/GGeometryData.cpp PublicCode/Victoriam/Graphics/Structs/GGeometryDataCreateInfo.hpp)
+        SourceCode/GCamera.cpp
+        SourceCode/GIndexBuffer.cpp
+        SourceCode/VulkanIndexBuffer.cpp
+        SourceCode/GGeometryData.cpp
+        SourceCode/UJobWorker.cpp
+        SourceCode/UGeometryBuilder.cpp
+        ThirdParty/tinyobjloader/TinyObjLoader.cpp
+        ThirdParty/imgui/src/ImGui/imgui.cpp
+        ThirdParty/imgui/src/ImGui/imgui_impl_glfw.cpp
+        ThirdParty/imgui/src/ImGui/imgui_impl_vulkan.cpp
+        ThirdParty/imgui/src/ImGui/imgui_tables.cpp
+        ThirdParty/imgui/src/ImGui/imgui_widgets.cpp
+        ThirdParty/imgui/src/ImGui/imgui_draw.cpp
+        ThirdParty/imgui/src/ImGui/imgui_demo.cpp
+        SourceCode/GVertex.cpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 
@@ -103,7 +132,7 @@ find_package(glfw3 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(Vulkan REQUIRED)
 
-target_link_libraries(victoriam PUBLIC glfw PUBLIC OpenGL::GL PUBLIC Vulkan::Vulkan)
+target_link_libraries(victoriam PUBLIC glfw PUBLIC OpenGL::GL PUBLIC Vulkan::Vulkan PUBLIC ${ASSIMP_LIB})
 
 set(VISUAL_SOURCES
         PublicCode/Ved/VEditorState.hpp

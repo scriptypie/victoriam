@@ -47,9 +47,9 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 		ViewportStateCreateInfo.scissorCount = 1; // ...as well as scissor
 		ViewportStateCreateInfo.pScissors = nullptr;
 		// RasterizationState
-		RasterizationStateCreateInfo.polygonMode = VK_POLYGON_MODE_FILL; // TODO: Maybe add a wireframe mode?
+		RasterizationStateCreateInfo.polygonMode = VK_POLYGON_MODE_FILL; // // VK_POLYGON_MODE_FILL or VK_POLYGON_MODE_LINE TODO: Maybe add a wireframe mode?
 		RasterizationStateCreateInfo.lineWidth = 1.0f;                   // LINE_WIDTH FOR WIREFRAME MODE
-		RasterizationStateCreateInfo.cullMode = VK_CULL_MODE_NONE;   // VK_CULL_MODE_NONE or VK_CULL_MODE_BACK_BIT
+		RasterizationStateCreateInfo.cullMode = VK_CULL_MODE_BACK_BIT;   // VK_CULL_MODE_NONE or VK_CULL_MODE_BACK_BIT
 		RasterizationStateCreateInfo.frontFace = VK_FRONT_FACE_CLOCKWISE;
 		// MultisampleStateCreateInfo
 		MultisampleStateCreateInfo.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;

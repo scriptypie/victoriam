@@ -92,6 +92,8 @@ private:
 	VIDECL VIREQOUT inline SSwapchainSupportDetails GetSwapchainSupport() { return QuerySwapchainSupport(m_PhysicalDevice); }
 	VIDECL VIREQOUT inline VkQueue GetGraphicsQueue() { return m_GraphicsQueue; }
 	VIDECL VIREQOUT inline VkQueue GetPresentQueue() { return m_PresentQueue; }
+	VIDECL VIREQOUT inline VkInstance GetInstance() { return m_Instance; }
+	VIDECL VIREQOUT inline VkPhysicalDevice GetPhysicalDevice() { return m_PhysicalDevice; }
 };
 
 VISRCEND

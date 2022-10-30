@@ -8,7 +8,7 @@
 VISRCBEG
 
 CVulkanVertexBuffer::CVulkanVertexBuffer(PDevice &device, const List<SVertex> &vertices)
-	: m_Device(device)
+	: m_Device(device), m_Recreated(false)
 {
 	CreateVertexBuffer(vertices);
 }

@@ -21,6 +21,7 @@ class VIDECL CVulkanVertexBuffer : public CVertexBuffer
 	VkBuffer m_VertexBuffer = {};
 	VkDeviceMemory m_VertexBufferMemory = {};
 	UInt64 m_VertexCount = {};
+	Bool m_Recreated = false;
 
 public:
 	CVulkanVertexBuffer(PDevice& device, const List<SVertex>& vertices);
@@ -28,6 +29,7 @@ public:
 
 	void Bind(const SCommandBuffer& buffer) override;
 	void Draw(const SCommandBuffer& buffer) const override;
+	inline void Recreated() override { m_Recreated = true; }
 private:
 
 	VIDECL void CreateVertexBuffer(const List<SVertex>& vertices);

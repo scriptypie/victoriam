@@ -10,6 +10,7 @@
 #include <vector>
 #include <array>
 #include <cstdint>
+#include <thread>
 #include <functional>
 #include <unordered_map>
 #include <glm/glm.hpp>
@@ -49,6 +50,9 @@ VIDECL typedef std::basic_stringstream<char, std::char_traits<char>, StdAllocato
 
 template<class T>
 using List = std::vector<T, StdAllocator<T>>;
+
+template<class K, class V>
+using UnorderedMap = std::unordered_map<K, V>;
 
 template<class T, UInt32 N>
 using Array = std::array<T, N>;

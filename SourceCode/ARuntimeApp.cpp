@@ -7,6 +7,7 @@
 
 #include <Victoriam/Application/ARuntimeApp.hpp>
 #include <Victoriam/EventSystem/EEventDispatcher.hpp>
+#include <Victoriam/Utils/UGeometryBuilder.hpp>
 #include "Victoriam/Input/IInput.hpp"
 
 VISRCBEG
@@ -88,8 +89,10 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	};
 
 	SGeometryDataCreateInfo geometryDataCreateInfo = {};
-	geometryDataCreateInfo.pVertices = &vertices;
-	geometryDataCreateInfo.pIndices = &indices;
+	geometryDataCreateInfo.Vertices = vertices;
+	geometryDataCreateInfo.Indices = indices;
+
+	geometryDataCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testcube.obj");
 
 	CGeometryData geometryData = m_Renderer->CreateGeometryData(geometryDataCreateInfo);
 
@@ -98,7 +101,8 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 		auto crc = cube->AddComponent<SComponentRenderable>();
 		crc->Geometry = geometryData;
 		crc->Color = {0.2F, 0.8F, 0.3F};
-		cube->AddComponent<SComponentTransform>();
+		auto transform = cube->AddComponent<SComponentTransform>();
+		transform->Scale = { 2, 2, 2 };
 	}
 	{
 		auto camera = m_World->CreateGameObject("MainCamera");
@@ -146,14 +150,16 @@ void Vi::CRuntimeApp::Startup() {
 		Float32 frameTime = currentTime.Delta() - newTime.Delta();
 		currentTime = newTime;
 
-		//m_World->Update(frameTime);
-		// begin gui update
 		for (auto & state : m_stateController)
 		{
 			state->OnUpdate(frameTime);
+		}
+		m_Renderer->BeginUIFrame();
+		for (auto& state : m_stateController)
+		{
 			state->OnUpdateGUI();
 		}
-		// end gui update
+		m_Renderer->EndUIFrame();
 		if (auto commandBuffer = m_Renderer->BeginFrame())
 		{
 			m_Renderer->DrawFrame(commandBuffer, m_World);

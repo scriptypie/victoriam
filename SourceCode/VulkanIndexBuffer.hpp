@@ -21,12 +21,14 @@ class CVulkanIndexBuffer : public CIndexBuffer
 	VkBuffer m_IndexBuffer = {};
 	VkDeviceMemory m_IndexBufferMemory = {};
 	UInt64 m_IndexCount = {};
+	Bool m_Recreated = false;
 public:
 	CVulkanIndexBuffer(PDevice& device, const List<UInt32>& indices);
 	~CVulkanIndexBuffer() override;
 
 	void Bind(const SCommandBuffer& buffer) override;
 	void Draw(const SCommandBuffer& buffer) const override;
+	inline void Recreated() override { m_Recreated = true; }
 private:
 
 	VIDECL void CreateIndexBuffer(const List<UInt32>& indices);

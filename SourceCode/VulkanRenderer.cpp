@@ -4,6 +4,10 @@
 
 #include "VulkanRenderer.hpp"
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_vulkan.h>
+
 VISRCBEG
 
 CVulkanRenderer::CVulkanRenderer(const SRendererCreateInfo &createInfo)
@@ -20,6 +24,33 @@ void CVulkanRenderer::Setup()
 
 	DefaultVertexBuffer = CVertexBuffer::Create(m_Device, DefaultVertices);
 	DefaultIndexBuffer  = CIndexBuffer ::Create(m_Device, DefaultIndices);
+
+	/*
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	VIGNORE io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsClassic();
+
+	ImGui_ImplGlfw_InitForVulkan(Accessors::Window::GetGLFWWindow(m_Window), true);
+	ImGui_ImplVulkan_InitInfo createInfo = {};
+	createInfo.Instance = Accessors::Device::GetInstance(m_Device);
+	createInfo.PhysicalDevice = Accessors::Device::GetPhysicalDevice(m_Device);
+	createInfo.Device = Accessors::Device::GetDevice(m_Device);
+	createInfo.QueueFamily = Accessors::Device::FindQueueFamilies(m_Device).GraphicsFamily;
+	createInfo.Queue = Accessors::Device::GetGraphicsQueue(m_Device);
+	createInfo.PipelineCache = VK_NULL_HANDLE;
+	createInfo.MinImageCount = 2;
+	createInfo.ImageCount = m_Swapchain->GetImageCount();
+
+	ImGui_ImplVulkan_Init(&createInfo, Accessors::Swapchain::GetRenderPass(m_Swapchain));
+	*/
 }
 
 PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
@@ -58,7 +89,10 @@ void CVulkanRenderer::EndFrame(const SCommandBuffer& commandBuffer)
 void CVulkanRenderer::Shutdown(const PWorld& world)
 {
 	m_Device->WaitReleaseResources();
-
+	/*
+	ImGui_ImplVulkan_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	*/
 	auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
 	for (auto renderable_obj : renderable_objs)
 	{
@@ -115,10 +149,10 @@ CGeometryData CVulkanRenderer::CreateGeometryData(const List<SVertex> &vertices,
 
 CGeometryData CVulkanRenderer::CreateGeometryData(const SGeometryDataCreateInfo &createInfo)
 {
-	if (createInfo.pIndices)
-		return CGeometryData::Create(m_Device, *createInfo.pVertices, *createInfo.pIndices);
+	if (!createInfo.Indices.empty())
+		return CGeometryData::Create(m_Device, createInfo.Vertices, createInfo.Indices);
 	else
-		return CGeometryData::Create(m_Device, *createInfo.pVertices);
+		return CGeometryData::Create(m_Device, createInfo.Vertices);
 }
 
 CGeometryData CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuffer) {
@@ -128,6 +162,16 @@ CGeometryData CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuf
 CGeometryData
 CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuffer, const PIndexBuffer &indexBuffer) {
 	return CGeometryData::Create(m_Device, vertexBuffer, indexBuffer);
+}
+
+void CVulkanRenderer::BeginUIFrame()
+{
+
+}
+
+void CVulkanRenderer::EndUIFrame()
+{
+
 }
 
 VISRCEND
