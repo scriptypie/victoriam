@@ -10,5 +10,6 @@
 #include <Victoriam/World/Components/ComponentRenderable.hpp>
 #include <Victoriam/World/Components/ComponentCamera.hpp>
 #include <Victoriam/World/Components/ComponentTransform.hpp>
+#include <Victoriam/World/Components/ComponentSun.hpp>
 
 #endif //VICTORIAM_COMPONENTS_HPP

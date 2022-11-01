@@ -60,17 +60,13 @@ void CVulkanDrawCommandBuffer::SubmitDraw(const PWorld& world, UInt32 imageIndex
 	for (auto cam_obj : camera_objs)
 	{
 		auto componentCamera = cam_obj->GetComponent<SComponentCamera>();
-
 		componentCamera->Camera.SetPerspective(glm::radians(65.0F), m_Swapchain->GetExtentAspectRatio());
-
 		auto componentTransform = cam_obj->GetComponent<SComponentTransform>();
-
 		if (componentCamera->Primary) {
 			if (!mainCamera) {
 				auto view = glm::lookAt(componentTransform->Translation, componentTransform->Translation + componentCamera->Camera.Front(), componentCamera->Camera.Up());
 				componentCamera->Camera.SetViewMatrix(view);
 				mainCamera = &componentCamera->Camera;
-
 			} else {
 				ViLog("There is impossible to have a two cameras within the single scene!!!\n");
 			}
@@ -80,6 +76,7 @@ void CVulkanDrawCommandBuffer::SubmitDraw(const PWorld& world, UInt32 imageIndex
 	if (mainCamera)
 	{
 		auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
+		auto sunobj = world->FindGameObjectWithComponent<SComponentSun>(); // There CAN be single wun on a scene
 		for (auto renderable_obj: renderable_objs) {
 			auto rrc = renderable_obj->GetComponent<SComponentRenderable>();
 			auto rtc = renderable_obj->GetComponent<SComponentTransform>();
@@ -89,9 +86,10 @@ void CVulkanDrawCommandBuffer::SubmitDraw(const PWorld& world, UInt32 imageIndex
 
 			if (!rrc->Geometry.Empty()) {
 				SMaterialData materialData = {};
-				materialData.Transform = rtc->Transform();
-				materialData.ViewProjection = mainCamera->GetViewProjection();
-				materialData.Color = SVector4(rrc->Color, 1.0f);
+				auto modelMatrix = rtc->Transform();
+				materialData.Transform = mainCamera->GetViewProjection() * modelMatrix;
+				materialData.ModelMatrix = modelMatrix;
+				materialData.SunDirection = sunobj ? -sunobj->GetComponent<SComponentSun>()->Direction : SVector3{};
 				m_Pipeline->PushSharedMaterialData(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), 0,
 				                                   &materialData);
 				rrc->Geometry.SubmitDraw(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));

@@ -15,7 +15,8 @@ struct VIDECL SComponentRenderable : SComponentBase
 	COMPONENT_DECL(ComponentRenderable)
 
 	CGeometryData Geometry;
-	SVector3 Color;
+
+	VIDECL inline explicit SComponentRenderable(const CGeometryData& data) : Geometry(data) {}
 
 };
 

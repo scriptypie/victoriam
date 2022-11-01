@@ -12,14 +12,19 @@ layout (location = 0) out vec4 o_Color;
 layout (push_constant) uniform MaterialData
 {
     mat4 Transform;
-    mat4 ViewProjection;
-    vec4 Color;
+    mat4 ModelMatrix;
+    vec3 SunDirection;
 } m_Data;
 
 void main()
 {
-    gl_Position = m_Data.ViewProjection * m_Data.Transform * vec4(m_Position, 1);
-    o_Color = m_Color;
+    vec4 worldPos = m_Data.Transform * vec4(m_Position, 1);
+    gl_Position = worldPos;
+
+    vec3 normalWorldSpace = normalize(mat3(m_Data.ModelMatrix) * m_Normal);
+    float lightIntensity = max(dot(normalWorldSpace, m_Data.SunDirection), 0.0);
+
+    o_Color = m_Color * lightIntensity;
 }
 
 @endgroup
@@ -35,8 +40,8 @@ layout (location = 0) out vec4 o_Color;
 layout (push_constant) uniform MaterialData
 {
     mat4 Transform;
-    mat4 ViewProjection;
-    vec3 Color;
+    mat4 ModelMatrix;
+    vec3 SunDirection;
 } m_Data;
 
 void main() {

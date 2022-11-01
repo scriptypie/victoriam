@@ -23,6 +23,8 @@ SGeometryDataCreateInfo CGeometryBuilder::LoadDefaultFromFile(const String &file
 {
 	String fn = "../Resources/Assets/" + filename;
 	SGeometryDataCreateInfo geometryDataCreateInfo = {};
+	geometryDataCreateInfo.Vertices = DefaultVertices;
+	geometryDataCreateInfo.Indices = DefaultIndices;
 	InternalLoadModelFromFile(fn, geometryDataCreateInfo);
 	return geometryDataCreateInfo;
 }
@@ -78,7 +80,8 @@ void CGeometryBuilder::InternalLoadModelFromFile(const String &filename, SGeomet
 
 			if (!uniqueVertices.count(vertex))
 			{
-				uniqueVertices[vertex] = CCast<UInt32>(outinfo.Vertices.size());
+				uniqueVertices.emplace(vertex, CCast<UInt32>(outinfo.Vertices.size()));
+				uniqueVertices.at(vertex) = CCast<UInt32>(outinfo.Vertices.size());
 				outinfo.Vertices.push_back(vertex);
 			}
 			outinfo.Indices.push_back(uniqueVertices.at(vertex));

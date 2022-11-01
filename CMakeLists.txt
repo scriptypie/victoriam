@@ -80,6 +80,7 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Utils/UJobWorker.hpp
         ThirdParty/tinyobjloader/TinyObjLoader.hpp
         PublicCode/Victoriam/Utils/UHash.hpp
+        PublicCode/Victoriam/World/Components/ComponentSun.hpp
 
         SourceCode/EngineInfo.cpp
         SourceCode/AAppStateController.cpp
@@ -118,7 +119,8 @@ set(SOURCE_FILES
         ThirdParty/imgui/src/ImGui/imgui_widgets.cpp
         ThirdParty/imgui/src/ImGui/imgui_draw.cpp
         ThirdParty/imgui/src/ImGui/imgui_demo.cpp
-        SourceCode/GVertex.cpp)
+        SourceCode/GVertex.cpp
+)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

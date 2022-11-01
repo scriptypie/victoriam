@@ -45,71 +45,44 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	m_Renderer = CRenderer::Create(rendererCreateInfo);
 	m_Renderer->Setup();
 
-	const List<SVertex> vertices = {
-			// left face (white)
-			{{-.5f, -.5f, -.5f}, {.9f, .9f, .9f, 1}},
-			{{-.5f, .5f, .5f}, {.9f, .9f, .9f, 1}},
-			{{-.5f, -.5f, .5f}, {.9f, .9f, .9f, 1}},
-			{{-.5f, .5f, -.5f}, {.9f, .9f, .9f, 1}},
+	SGeometryDataCreateInfo sphereCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testsphere.obj");
+	SGeometryDataCreateInfo cubeCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testcube.obj");
+	SGeometryDataCreateInfo monkeyCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("monkey.obj");
 
-			// right face (yellow)
-			{{.5f, -.5f, -.5f}, {.8f, .8f, .1f, 1}},
-			{{.5f, .5f, .5f}, {.8f, .8f, .1f, 1}},
-			{{.5f, -.5f, .5f}, {.8f, .8f, .1f, 1}},
-			{{.5f, .5f, -.5f}, {.8f, .8f, .1f, 1}},
-
-			// top face (orange, remember y axis points down)
-			{{-.5f, -.5f, -.5f}, {.9f, .6f, .1f, 1}},
-			{{.5f, -.5f, .5f}, {.9f, .6f, .1f, 1}},
-			{{-.5f, -.5f, .5f}, {.9f, .6f, .1f, 1}},
-			{{.5f, -.5f, -.5f}, {.9f, .6f, .1f, 1}},
-
-			// bottom face (red)
-			{{-.5f, .5f, -.5f}, {.8f, .1f, .1f, 1}},
-			{{.5f, .5f, .5f}, {.8f, .1f, .1f, 1}},
-			{{-.5f, .5f, .5f}, {.8f, .1f, .1f, 1}},
-			{{.5f, .5f, -.5f}, {.8f, .1f, .1f, 1}},
-
-			// nose face (blue)
-			{{-.5f, -.5f, 0.5f}, {.1f, .1f, .8f, 1}},
-			{{.5f, .5f, 0.5f}, {.1f, .1f, .8f, 1}},
-			{{-.5f, .5f, 0.5f}, {.1f, .1f, .8f, 1}},
-			{{.5f, -.5f, 0.5f}, {.1f, .1f, .8f, 1}},
-
-			// tail face (green)
-			{{-.5f, -.5f, -0.5f}, {.1f, .8f, .1f, 1}},
-			{{.5f, .5f, -0.5f}, {.1f, .8f, .1f, 1}},
-			{{-.5f, .5f, -0.5f}, {.1f, .8f, .1f, 1}},
-			{{.5f, -.5f, -0.5f}, {.1f, .8f, .1f, 1}},
-	};
-
-	const List<UInt32> indices = {
-			0, 1, 2, 0, 3, 1, 4, 5, 6, 4, 7, 5, 8, 9, 10, 8, 11, 9,
-			12, 13, 14, 12, 15, 13, 16, 17, 18, 16, 19, 17, 20, 21, 22, 20, 23, 21
-	};
-
-	SGeometryDataCreateInfo geometryDataCreateInfo = {};
-	geometryDataCreateInfo.Vertices = vertices;
-	geometryDataCreateInfo.Indices = indices;
-
-	geometryDataCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testcube.obj");
-
-	CGeometryData geometryData = m_Renderer->CreateGeometryData(geometryDataCreateInfo);
+	CGeometryData sphereGeometryData = m_Renderer->CreateGeometryData(sphereCreateInfo);
+	CGeometryData cubeGeometryData = m_Renderer->CreateGeometryData(cubeCreateInfo);
+	CGeometryData monkeyGeometryData = m_Renderer->CreateGeometryData(monkeyCreateInfo);
 
 	{
-		auto cube = m_World->CreateGameObject("TestCube");
-		auto crc = cube->AddComponent<SComponentRenderable>();
-		crc->Geometry = geometryData;
-		crc->Color = {0.2F, 0.8F, 0.3F};
+		auto cube = m_World->CreateGameObject("TestSphere");
+		cube->AddComponent<SComponentRenderable>(sphereGeometryData);
 		auto transform = cube->AddComponent<SComponentTransform>();
+		transform->Translation = { -2, 0, 2 };
+	}
+	{
+		auto monkey = m_World->CreateGameObject("TestMonkey");
+		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
+		auto transform = monkey->AddComponent<SComponentTransform>();
+		transform->Translation = { 0, 2, 3 };
+		transform->Rotation = { 0, -76, 180 };
+	}
+	{
+		auto cube = m_World->CreateGameObject("TestCube");
+		cube->AddComponent<SComponentRenderable>(cubeGeometryData);
+		auto transform = cube->AddComponent<SComponentTransform>();
+		transform->Translation = { 2, 0, 3 };
 		transform->Scale = { 2, 2, 2 };
+	}
+	{
+		auto sun = m_World->CreateGameObject("Sun");
+		sun->AddComponent<SComponentSun>(SVector3(1.0F, 3.0F, -3.0F));
 	}
 	{
 		auto camera = m_World->CreateGameObject("MainCamera");
 		auto camcomp = camera->AddComponent<SComponentCamera>();
 		camcomp->Camera.SetViewBounds(0.01F, 1000.0F);
 		auto ctc = camera->AddComponent<SComponentTransform>();
-		ctc->Translation = { 0.0F, 1.0F, 2.0F };
+		ctc->Translation = { 0.3F, 0.7F, 9.5F };
 	}
 
 	m_running = true;

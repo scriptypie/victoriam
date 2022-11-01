@@ -15,16 +15,13 @@ struct VIDECL SComponentTransform : SComponentBase
 
 	SVector3 Translation;
 	SVector3 Scale = { 1.0F, 1.0F, 1.0F };
-	SVector3 Rotation; // YXZ
+	SVector3 Rotation;
 
-	VIDECL VIREQOUT SMatrix4 Transform() const
-	{
-		auto transform = glm::translate(SMatrix4{1.0F}, Translation);
-		transform = glm::rotate(transform, Rotation.y, SVector3(0.0F, 1.0F, 0.0F));
-		transform = glm::rotate(transform, Rotation.x, SVector3(1.0F, 0.0F, 0.0F));
-		transform = glm::rotate(transform, Rotation.z, SVector3(0.0F, 0.0F, 1.0F));
-		transform = glm::scale(transform, Scale);
-		return transform;
+	VIDECL VIREQOUT SMatrix4 Transform() const {
+		SMatrix4 rotation = glm::toMat4(glm::quat(glm::radians(Rotation)));
+		return glm::translate(SMatrix4(1.0f), Translation)
+		       * rotation
+		       * glm::scale(SMatrix4(1.0f), Scale);
 	}
 
 };

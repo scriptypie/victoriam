@@ -34,6 +34,15 @@ public:
 		return result;
 	}
 
+	template<class T>
+	VIDECL VIREQOUT CGameObject* FindGameObjectWithComponent()
+	{
+		for (auto obj : m_Registry)
+			if (obj->HasComponent<T>())
+				return obj;
+		return nullptr;
+	}
+
 	static SPtr<CWorld> Create();
 	void Update(const Float32& dt);
 	VIDECL void Clear();

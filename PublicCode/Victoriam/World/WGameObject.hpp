@@ -26,10 +26,10 @@ public:
 	VIDECL ~CGameObject() {}
 	VIDECL VIREQOUT UID GetUID() const;
 
-	template<class T>
-	VIDECL T* AddComponent()
+	template<class T, class...Args>
+	VIDECL T* AddComponent(Args&&...args)
 	{
-		T* component = new T();
+		T* component = new T(std::forward<Args>(args)...);
 		m_Components.push_back(component);
 		return component;
 	}

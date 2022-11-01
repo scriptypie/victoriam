@@ -16,7 +16,6 @@ VISRCBEG
 class VIDECL CGeometryBuilder
 {
 	//CJobWorker worker = {};
-	std::thread worker = {};
 public:
 	static CGeometryBuilder& Get();
 
