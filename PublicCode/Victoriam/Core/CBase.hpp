@@ -10,6 +10,7 @@
 #include <vector>
 #include <array>
 #include <cstdint>
+#include <tuple>
 #include <thread>
 #include <functional>
 #include <unordered_map>
@@ -52,6 +53,15 @@ VIDECL typedef std::basic_stringstream<char, std::char_traits<char>, StdAllocato
 
 template<class T>
 using List = std::vector<T, StdAllocator<T>>;
+
+template<class...T>
+using Tuple = std::tuple<T...>;
+
+template<class...T, class...Args>
+constexpr Tuple<T...> CreateTuple(Args&&...args)
+{
+	return std::make_tuple<T...>(std::forward<Args>(args)...);
+}
 
 template<class K, class V>
 using UnorderedMap = std::unordered_map<K, V>;

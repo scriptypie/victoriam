@@ -29,16 +29,22 @@ public:
 	template<class T, class...Args>
 	VIDECL T* AddComponent(Args&&...args)
 	{
+		if (HasComponent<T>()) return nullptr;
 		T* component = new T(std::forward<Args>(args)...);
 		m_Components.push_back(component);
 		return component;
 	}
-	template<class T>
+	template<class...T>
+	VIDECL Tuple<T*...> Group()
+	{
+		return CreateTuple<T*...>(GetComponent<T>()...);
+	}
+	template<class...T>
 	VIDECL VIREQOUT Bool HasComponent() const
 	{
 		if (m_Components.empty()) return false;
 		for (auto component : m_Components)
-			if (component->GetComponentID() == T::GetStaticComponentID())
+			if (((component->GetComponentID() == T::GetStaticComponentID()), ...))
 				return true;
 		return false;
 	}

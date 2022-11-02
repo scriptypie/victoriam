@@ -26,23 +26,23 @@ public:
 	VIDECL VIREQOUT CGameObject* FindGameObjectByUID(const UID& id);
 	VIDECL VIREQOUT CGameObject* FindGameObjectByName(const String& name);
 
-	template<class T>
-	VIDECL VIREQOUT List<CGameObject*> FindGameObjectsWithComponent()
+	template<class...T>
+	VIDECL VIREQOUT List<CGameObject*> AllWith()
 	{
 		List<CGameObject*> result;
 
 		for (auto obj : m_Registry)
-			if (obj->HasComponent<T>())
+			if ((obj->HasComponent<T>() && ...))
 				result.push_back(obj);
 
 		return result;
 	}
 
-	template<class T>
-	VIDECL VIREQOUT CGameObject* FindGameObjectWithComponent()
+	template<class...T>
+	VIDECL VIREQOUT CGameObject* OneWith()
 	{
 		for (auto obj : m_Registry)
-			if (obj->HasComponent<T>())
+			if ((obj->HasComponent<T>() && ...))
 				return obj;
 		return nullptr;
 	}

@@ -40,24 +40,14 @@ SCommandBuffer CVulkanCommandBufferDrawer::Begin(const PWorld& world, UInt32 ima
 	if (vkBeginCommandBuffer(m_CommandBuffers.at(imageIndex), &beginInfo) != VK_SUCCESS)
 		throw std::runtime_error("Failed to call vkBeginCommandBuffer()");
 
-	auto sunobj = world->FindGameObjectWithComponent<SComponentSun>(); // There CAN be single one on a scene
+	auto sunobj = world->OneWith<SComponentSun>(); // There CAN be single one on a scene
 	auto rendererSettings = world->GetRendererSettings(); // as well as renderer settings
 
 	CCamera* mainCamera = nullptr;
-	auto cam_obj = world->FindGameObjectWithComponent<SComponentCamera>();
-
+	auto cam_obj = world->OneWith<SComponentCamera>();
 	auto componentCamera = cam_obj->GetComponent<SComponentCamera>();
-	auto componentTransform = cam_obj->GetComponent<SComponentTransform>();
-
-	componentCamera->Camera.SetPerspective(glm::radians(65.0F), m_Swapchain->GetExtentAspectRatio());
 	if (componentCamera->Primary) {
-		if (!mainCamera) {
-			auto view = glm::lookAt(componentTransform->Translation, componentTransform->Translation + componentCamera->Camera.Front(), componentCamera->Camera.Up());
-			componentCamera->Camera.SetViewMatrix(view);
-			mainCamera = &componentCamera->Camera;
-		} else {
-			ViLog("There is impossible to have a two cameras within the single scene!!!\n");
-		}
+		mainCamera = &componentCamera->Camera;
 	}
 
 	// submit constant buffer
@@ -86,30 +76,20 @@ void CVulkanCommandBufferDrawer::SubmitDraw(const PWorld& world, UInt32 imageInd
 	m_Pipeline->BindDrawCommandBuffer(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)));
 
 	CCamera* mainCamera = nullptr;
-	auto camera_objs = world->FindGameObjectsWithComponent<SComponentCamera>();
-	for (auto cam_obj : camera_objs)
-	{
-		auto componentCamera = cam_obj->GetComponent<SComponentCamera>();
-		componentCamera->Camera.SetPerspective(glm::radians(65.0F), m_Swapchain->GetExtentAspectRatio());
-		auto componentTransform = cam_obj->GetComponent<SComponentTransform>();
-		if (componentCamera->Primary) {
-			if (!mainCamera) {
-				auto view = glm::lookAt(componentTransform->Translation, componentTransform->Translation + componentCamera->Camera.Front(), componentCamera->Camera.Up());
-				componentCamera->Camera.SetViewMatrix(view);
-				mainCamera = &componentCamera->Camera;
-			} else {
-				ViLog("There is impossible to have a two cameras within the single scene!!!\n");
-			}
-		}
+	auto cam_obj = world->OneWith<SComponentCamera>();
+	auto [componentCamera, componentTransform] = cam_obj->Group<SComponentCamera, SComponentTransform>();
+	componentCamera->Camera.SetPerspective(glm::radians(65.0F), m_Swapchain->GetExtentAspectRatio());
+	if (componentCamera->Primary) {
+		auto view = glm::lookAt(componentTransform->Translation, componentTransform->Translation + componentCamera->Camera.Front(), componentCamera->Camera.Up());
+		componentCamera->Camera.SetViewMatrix(view);
+		mainCamera = &componentCamera->Camera;
 	}
 
 	if (mainCamera)
 	{
-		auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
-
+		auto renderable_objs = world->AllWith<SComponentRenderable, SComponentTransform>(); // all renderables MUST have a transform component!!!
 		for (auto renderable_obj: renderable_objs) {
-			auto rrc = renderable_obj->GetComponent<SComponentRenderable>();
-			auto rtc = renderable_obj->GetComponent<SComponentTransform>();
+			auto [rrc, rtc] = renderable_obj->Group<SComponentRenderable, SComponentTransform>();
 
 			if (!rrc->Geometry.Empty()) {
 				SMaterialData materialData = {};

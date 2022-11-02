@@ -93,7 +93,7 @@ void CVulkanRenderer::Shutdown(const PWorld& world)
 	ImGui_ImplVulkan_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	*/
-	auto renderable_objs = world->FindGameObjectsWithComponent<SComponentRenderable>(); // all renderables MUST have a transform component!!!
+	auto renderable_objs = world->AllWith<SComponentRenderable>(); // all renderables MUST have a transform component!!!
 	for (auto renderable_obj : renderable_objs)
 	{
 		auto rrc = renderable_obj->GetComponent<SComponentRenderable>();
