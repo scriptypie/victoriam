@@ -23,7 +23,6 @@ class CRuntimeApp
 	CAppStateController m_stateController = {};
 	PRenderer m_Renderer = {};
 	PWindow m_Window = nullptr;
-	List<PVertexBuffer> m_VertexBuffers = {};
 	PWorld m_World = {};
 public:
 	VIDECL explicit CRuntimeApp(SRuntimeAppCreateInfo  createInfo);

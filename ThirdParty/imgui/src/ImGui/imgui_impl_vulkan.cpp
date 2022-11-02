@@ -388,12 +388,12 @@ static void ImGui_ImplVulkan_SetupRenderState(ImDrawData* draw_data, VkPipeline 
 {
     ImGui_ImplVulkan_Data* bd = ImGui_ImplVulkan_GetBackendData();
 
-    // Bind pipeline:
+    // SubmitUniformBuffer pipeline:
     {
         vkCmdBindPipeline(command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
     }
 
-    // Bind Vertex And Index Buffer:
+    // SubmitUniformBuffer Vertex And Index Buffer:
     if (draw_data->TotalVtxCount > 0)
     {
         VkBuffer vertex_buffers[1] = { rb->VertexBuffer };
@@ -541,7 +541,7 @@ void ImGui_ImplVulkan_RenderDrawData(ImDrawData* draw_data, VkCommandBuffer comm
                 scissor.extent.height = (uint32_t)(clip_max.y - clip_min.y);
                 vkCmdSetScissor(command_buffer, 0, 1, &scissor);
 
-                // Bind DescriptorSet with font or user texture
+                // SubmitUniformBuffer DescriptorSet with font or user texture
                 VkDescriptorSet desc_set[1] = { (VkDescriptorSet)pcmd->TextureId };
                 if (sizeof(ImTextureID) < sizeof(ImU64))
                 {

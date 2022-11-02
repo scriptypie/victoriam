@@ -17,6 +17,8 @@ public:
 
 	VIDECL VIREQOUT virtual UInt32 AcquireNextImage(UInt32* imageIndex) = 0;
 	VIDECL VIREQOUT virtual UInt32 GetImageCount() const = 0;
+	VIDECL VIREQOUT virtual UInt32 GetFrameIndex() const = 0;
+	VIDECL VIREQOUT virtual UInt32 GetMaxFramesInFlight() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetWidth() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetHeight() const = 0;
 	VIDECL VIREQOUT virtual Float32 GetExtentAspectRatio() const = 0;

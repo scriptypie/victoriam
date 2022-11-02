@@ -17,7 +17,7 @@ class VIDECL CVulkanSwapchain : public CSwapchain
 	friend class Accessors::Swapchain;
 	friend class CVulkanRenderer;
 
-	VIDECL inline static constexpr UInt32 MAX_FRAMES_PER_STEP = 2; // TODO: configurable MAX_FRAMES_PER_STEP
+	VIDECL inline static constexpr UInt32 MAX_FRAMES_IN_FLIGHT = 2; // TODO: configurable MAX_FRAMES_IN_FLIGHT
 	VIDECL VkFormat m_SwapchainImageFormat = {};
 	VIDECL VkFormat m_SwapchainDepthFormat = {};
 	VIDECL VkExtent2D m_SwapchainExtent = {};
@@ -45,6 +45,8 @@ public:
 
 	VIDECL UInt32 AcquireNextImage(UInt32* imageIndex) override;
 	VIDECL VIREQOUT inline UInt32 GetImageCount() const override { return m_SwapchainImages.size(); }
+	VIDECL VIREQOUT inline UInt32 GetFrameIndex() const override { return m_CurrentFrame; }
+	VIDECL VIREQOUT inline UInt32 GetMaxFramesInFlight() const override { return MAX_FRAMES_IN_FLIGHT; }
 	VIDECL VIREQOUT inline UInt32 GetWidth() const override { return m_SwapchainExtent.width; }
 	VIDECL VIREQOUT inline UInt32 GetHeight() const override { return m_SwapchainExtent.height; }
 	VIDECL VIREQOUT inline Float32 GetExtentAspectRatio() const override { return CCast<Float32>(m_SwapchainExtent.width) / CCast<Float32>(m_SwapchainExtent.height); }

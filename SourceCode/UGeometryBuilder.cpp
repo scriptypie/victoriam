@@ -80,11 +80,14 @@ void CGeometryBuilder::InternalLoadModelFromFile(const String &filename, SGeomet
 
 			if (!uniqueVertices.count(vertex))
 			{
-				uniqueVertices.emplace(vertex, CCast<UInt32>(outinfo.Vertices.size()));
-				uniqueVertices.at(vertex) = CCast<UInt32>(outinfo.Vertices.size());
+				if (uniqueVertices.find(vertex) != uniqueVertices.end())
+					uniqueVertices.at(vertex) = CCast<UInt32>(outinfo.Vertices.size());
+				else
+					uniqueVertices.emplace(vertex, CCast<UInt32>(outinfo.Vertices.size()));
 				outinfo.Vertices.push_back(vertex);
 			}
-			outinfo.Indices.push_back(uniqueVertices.at(vertex));
+			if (uniqueVertices.find(vertex) != uniqueVertices.end())
+				outinfo.Indices.push_back(uniqueVertices.at(vertex));
 		}
 	}
 

@@ -23,6 +23,10 @@ namespace Accessors {
 			return CCast<CVulkanDevice*>(device.get())->GetPhysicalDevice();
 		}
 
+		VIDECL static VkPhysicalDeviceProperties GetPhysicalDeviceProperties(const PDevice& device) {
+			return CCast<CVulkanDevice*>(device.get())->GetPhysicalDeviceProperties();
+		}
+
 		VIDECL static VkInstance GetInstance(const PDevice& device) {
 			return CCast<CVulkanDevice*>(device.get())->GetInstance();
 		}

@@ -10,9 +10,9 @@
 #include "VulkanDevice.hpp"
 #include "VulkanSwapchain.hpp"
 #include "VulkanPipeline.hpp"
-#include "VulkanDrawCommandBuffer.hpp"
+#include "VulkanCommandBufferDrawer.hpp"
 
-#include "Accessors/ADrawCommandBuffer.hpp"
+#include "Accessors/ACommandBufferDrawer.hpp"
 
 VISRCBEG
 
@@ -20,7 +20,7 @@ class CVulkanRenderer : public CRenderer {
 	VIDECL PDevice m_Device = {};
 	VIDECL PSwapchain m_Swapchain = {};
 	VIDECL PPipeline m_Pipeline = {};
-	VIDECL PDrawCommandBuffer m_DrawCommandBuffer = {};
+	VIDECL PDrawCommandBuffer m_CommandBufferDrawer = {};
 	VIDECL PWindow m_Window = {};
 	VIDECL UInt32 m_ImageIndex = {};
 public:
@@ -28,18 +28,19 @@ public:
 	~CVulkanRenderer() override;
 
 	void Setup() override;
-	VIDECL VIREQOUT PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) override;
-	VIDECL VIREQOUT PIndexBuffer CreateIndexBuffer(const List<UInt32>& indices) override;
+	VIDECL VIREQOUT PBuffer CreateVertexBuffer(const List<SVertex>& vertices) override;
+	VIDECL VIREQOUT PBuffer CreateIndexBuffer(const List<UInt32>& indices) override;
+	VIDECL VIREQOUT PBuffer CreateUniformBuffer() override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices, const List<UInt32>& indices) override;
-	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer) override;
-	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PBuffer& vertexBuffer) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PBuffer& vertexBuffer, const PBuffer& indexBuffer) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const SGeometryDataCreateInfo& createInfo) override;
 
 	void OnWindowResize(const SWindowExtent& extent) override;
-	SCommandBuffer BeginFrame() override;
-	void DrawFrame(const SCommandBuffer& commandBuffer, const PWorld& world) override;
-	void EndFrame(const SCommandBuffer& commandBuffer) override;
+	SFrameInfo BeginFrame(const PWorld& world) override;
+	void DrawFrame(const SFrameInfo& frameInfo, const PWorld& world) override;
+	void EndFrame(const SFrameInfo& frameInfo) override;
 	void BeginUIFrame() override;
 	void EndUIFrame() override;
 	void Shutdown(const PWorld& world) override;

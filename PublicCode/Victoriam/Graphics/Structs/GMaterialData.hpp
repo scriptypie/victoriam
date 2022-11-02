@@ -13,8 +13,6 @@ struct VIDECL SMaterialData
 {
 	SMatrix4 Transform;
 	SMatrix4 ModelMatrix;
-	alignas(16)
-	SVector3 SunDirection;
 };
 
 VISRCEND

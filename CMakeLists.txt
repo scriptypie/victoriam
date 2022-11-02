@@ -42,19 +42,16 @@ set(SOURCE_FILES
         SourceCode/VulkanPipeline.hpp
         SourceCode/Accessors/ADevice.hpp
         SourceCode/GLFWWindow.hpp
-        PublicCode/Victoriam/Graphics/GDrawCommandBuffer.hpp
-        SourceCode/VulkanDrawCommandBuffer.hpp
+        PublicCode/Victoriam/Graphics/GCommandBufferDrawer.hpp
+        SourceCode/VulkanCommandBufferDrawer.hpp
         SourceCode/Accessors/APipeline.hpp
         SourceCode/VulkanRenderer.hpp
-        SourceCode/Accessors/ADrawCommandBuffer.hpp
+        SourceCode/Accessors/ACommandBufferDrawer.hpp
         PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp
         PublicCode/Victoriam/Utils/UCryptogen.hpp
         PublicCode/Victoriam/Utils/UFile.hpp
-        PublicCode/Victoriam/Graphics/GVertexBuffer.hpp
         PublicCode/Victoriam/Graphics/Structs/GVertex.hpp
         SourceCode/VulkanVertex.hpp
-        SourceCode/VulkanVertexBuffer.hpp
-        SourceCode/Accessors/AVertexBuffer.hpp
         PublicCode/Victoriam/Core/CLog.hpp
         PublicCode/Victoriam/Graphics/Structs/GMaterialData.hpp
         PublicCode/Victoriam/World/WGameObject.hpp
@@ -72,8 +69,6 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Graphics/GCamera.hpp
         PublicCode/Victoriam/World/Components/ComponentCamera.hpp
         PublicCode/Victoriam/Utils/UTimestep.hpp
-        PublicCode/Victoriam/Graphics/GIndexBuffer.hpp
-        SourceCode/VulkanIndexBuffer.hpp
         PublicCode/Victoriam/Graphics/GGeometryData.hpp
         PublicCode/Victoriam/Graphics/Structs/GGeometryDataCreateInfo.hpp
         PublicCode/Victoriam/Utils/UGeometryBuilder.hpp
@@ -96,18 +91,14 @@ set(SOURCE_FILES
         SourceCode/GSwapchain.cpp
         SourceCode/VulkanSwapchain.cpp
         SourceCode/GRenderer.cpp
-        SourceCode/GDrawCommandBuffer.cpp
-        SourceCode/VulkanDrawCommandBuffer.cpp
+        SourceCode/GCommandBufferDrawer.cpp
+        SourceCode/VulkanCommandBufferDrawer.cpp
         SourceCode/VulkanRenderer.cpp
         SourceCode/UCryptogen.cpp
         SourceCode/UFile.cpp
-        SourceCode/GVertexBuffer.cpp
-        SourceCode/VulkanVertexBuffer.cpp
         SourceCode/WGameObject.cpp
         SourceCode/WWorld.cpp
         SourceCode/GCamera.cpp
-        SourceCode/GIndexBuffer.cpp
-        SourceCode/VulkanIndexBuffer.cpp
         SourceCode/GGeometryData.cpp
         SourceCode/UJobWorker.cpp
         SourceCode/UGeometryBuilder.cpp
@@ -120,7 +111,7 @@ set(SOURCE_FILES
         ThirdParty/imgui/src/ImGui/imgui_draw.cpp
         ThirdParty/imgui/src/ImGui/imgui_demo.cpp
         SourceCode/GVertex.cpp
-)
+        PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp SourceCode/VulkanMemoryBuffer.hpp SourceCode/VulkanMemoryBuffer.cpp PublicCode/Victoriam/Graphics/GBuffer.hpp SourceCode/GBuffer.cpp SourceCode/VulkanBuffer.hpp SourceCode/VulkanBuffer.cpp PublicCode/Victoriam/Graphics/Structs/GRendererConstants.hpp PublicCode/Victoriam/Graphics/Structs/GFrameInfo.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

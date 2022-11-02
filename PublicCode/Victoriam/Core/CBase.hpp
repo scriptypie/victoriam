@@ -25,6 +25,8 @@
 #include <Victoriam/Core/Memory/MSmartPointers.hpp>
 #include <Victoriam/Core/Memory/MStandardAllocator.hpp>
 
+#define ViAssert(e, ...) if (!(e)) ViAbort(__VA_ARGS__)
+
 VISRCBEG
 
 VIDECL typedef char       Int8;

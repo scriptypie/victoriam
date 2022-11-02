@@ -60,7 +60,7 @@ CVulkanSwapchain::~CVulkanSwapchain() {
 	vkDestroyRenderPass(Accessors::Device::GetDevice(m_Device), m_RenderPass, nullptr);
 
 	// cleanup synchronization objects
-	for (UInt32 i = 0; i < MAX_FRAMES_PER_STEP; i++) {
+	for (UInt32 i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
 		vkDestroySemaphore(Accessors::Device::GetDevice(m_Device), m_RenderFinishedSemaphores[i], nullptr);
 		vkDestroySemaphore(Accessors::Device::GetDevice(m_Device), m_ImageAvailableSemaphores[i], nullptr);
 		vkDestroyFence(Accessors::Device::GetDevice(m_Device), m_InFlightFences[i], nullptr);
@@ -285,16 +285,16 @@ void CVulkanSwapchain::CreateFramebuffers()
 
 void CVulkanSwapchain::SetupSynchronization()
 {
-	m_ImageAvailableSemaphores.resize(MAX_FRAMES_PER_STEP);
-	m_RenderFinishedSemaphores.resize(MAX_FRAMES_PER_STEP);
-	m_InFlightFences.resize(MAX_FRAMES_PER_STEP);
+	m_ImageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+	m_RenderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+	m_InFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
 	m_ImagesInFlight.resize(GetImageCount(), nullptr);
 
 	VkSemaphoreCreateInfo semaphoreInfo = { VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO };
 	VkFenceCreateInfo fenceInfo = { VK_STRUCTURE_TYPE_FENCE_CREATE_INFO };
 	fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-	for (UInt32 i = 0; i < MAX_FRAMES_PER_STEP; i++) {
+	for (UInt32 i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
 		if (vkCreateSemaphore(Accessors::Device::GetDevice(m_Device), &semaphoreInfo, nullptr, &m_ImageAvailableSemaphores[i]) != VK_SUCCESS ||
 		    vkCreateSemaphore(Accessors::Device::GetDevice(m_Device), &semaphoreInfo, nullptr, &m_RenderFinishedSemaphores[i]) != VK_SUCCESS ||
 		    vkCreateFence(Accessors::Device::GetDevice(m_Device), &fenceInfo, nullptr, &m_InFlightFences[i])                   != VK_SUCCESS)
@@ -381,7 +381,7 @@ VkResult CVulkanSwapchain::SubmitCommandBuffers(const VkCommandBuffer *buffers, 
 
 	auto result = vkQueuePresentKHR(Accessors::Device::GetPresentQueue(m_Device), &presentInfo);
 
-	m_CurrentFrame = (m_CurrentFrame + 1) % MAX_FRAMES_PER_STEP;
+	m_CurrentFrame = (m_CurrentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 
 	return result;
 }

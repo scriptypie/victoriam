@@ -20,10 +20,10 @@ CVulkanRenderer::CVulkanRenderer(const SRendererCreateInfo &createInfo)
 
 void CVulkanRenderer::Setup()
 {
-	m_DrawCommandBuffer = CDrawCommandBuffer::Create(m_Swapchain, m_Device, m_Pipeline);
+	m_CommandBufferDrawer = CCommandBufferDrawer::Create(m_Swapchain, m_Device, m_Pipeline);
 
-	DefaultVertexBuffer = CVertexBuffer::Create(m_Device, DefaultVertices);
-	DefaultIndexBuffer  = CIndexBuffer ::Create(m_Device, DefaultIndices);
+	DefaultVertexBuffer = CBuffer::CreateVertexBuffer(m_Device, DefaultVertices);
+	DefaultIndexBuffer  = CBuffer ::CreateIndexBuffer(m_Device, DefaultIndices);
 
 	/*
 	// Setup Dear ImGui context
@@ -53,37 +53,37 @@ void CVulkanRenderer::Setup()
 	*/
 }
 
-PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
+PBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
 {
-	return CVertexBuffer::Create(m_Device, vertices);
+	return CBuffer::CreateVertexBuffer(m_Device, vertices);
 }
 
 CVulkanRenderer::~CVulkanRenderer() = default;
 
-SCommandBuffer CVulkanRenderer::BeginFrame()
+SFrameInfo CVulkanRenderer::BeginFrame(const PWorld& world)
 {
-	auto result = m_Swapchain->AcquireNextImage(&m_ImageIndex);
+	auto result = CCast<VkResult>(m_Swapchain->AcquireNextImage(&m_ImageIndex));
 	if (result == VK_ERROR_OUT_OF_DATE_KHR)
 	{
 		RecreateSwapchain(m_Window->GetExtent());
-		return nullptr;
+		return { nullptr };
 	}
 	if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 		throw std::runtime_error("Failed to acquire next image!");
 
-	return m_DrawCommandBuffer->Begin(m_ImageIndex);
+	return {m_CommandBufferDrawer->Begin(world, m_ImageIndex)};
 }
 
-void CVulkanRenderer::DrawFrame(const SCommandBuffer& commandBuffer, const PWorld& world)
+void CVulkanRenderer::DrawFrame(const SFrameInfo& frameInfo, const PWorld& world)
 {
-	m_DrawCommandBuffer->SubmitDraw(world, m_ImageIndex);
+	m_CommandBufferDrawer->SubmitDraw(world, m_ImageIndex);
 }
 
-void CVulkanRenderer::EndFrame(const SCommandBuffer& commandBuffer)
+void CVulkanRenderer::EndFrame(const SFrameInfo& frameInfo)
 {
-	m_Swapchain->EndRenderPass(commandBuffer);
-	m_DrawCommandBuffer->End(m_ImageIndex);
-	Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, CCast<VkCommandBuffer*>(&commandBuffer), &m_ImageIndex);
+	m_Swapchain->EndRenderPass(frameInfo.CommandBuffer);
+	m_CommandBufferDrawer->End(m_ImageIndex);
+	Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, CCast<VkCommandBuffer*>(&frameInfo.CommandBuffer), &m_ImageIndex);
 }
 
 void CVulkanRenderer::Shutdown(const PWorld& world)
@@ -135,8 +135,8 @@ void CVulkanRenderer::CreatePipeline()
 	m_Pipeline = CPipeline::Create("Default", m_Device, m_Swapchain);
 }
 
-PIndexBuffer CVulkanRenderer::CreateIndexBuffer(const List<UInt32> &indices) {
-	return CIndexBuffer::Create(m_Device, indices);
+PBuffer CVulkanRenderer::CreateIndexBuffer(const List<UInt32> &indices) {
+	return CBuffer::CreateIndexBuffer(m_Device, indices);
 }
 
 CGeometryData CVulkanRenderer::CreateGeometryData(const List<SVertex> &vertices) {
@@ -155,12 +155,12 @@ CGeometryData CVulkanRenderer::CreateGeometryData(const SGeometryDataCreateInfo 
 		return CGeometryData::Create(m_Device, createInfo.Vertices);
 }
 
-CGeometryData CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuffer) {
+CGeometryData CVulkanRenderer::CreateGeometryData(const PBuffer &vertexBuffer) {
 	return CGeometryData::Create(m_Device, vertexBuffer);
 }
 
 CGeometryData
-CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuffer, const PIndexBuffer &indexBuffer) {
+CVulkanRenderer::CreateGeometryData(const PBuffer &vertexBuffer, const PBuffer &indexBuffer) {
 	return CGeometryData::Create(m_Device, vertexBuffer, indexBuffer);
 }
 
@@ -172,6 +172,10 @@ void CVulkanRenderer::BeginUIFrame()
 void CVulkanRenderer::EndUIFrame()
 {
 
+}
+
+PBuffer CVulkanRenderer::CreateUniformBuffer() {
+	return CBuffer::CreateUniformBuffer(m_Device, m_Swapchain);
 }
 
 VISRCEND

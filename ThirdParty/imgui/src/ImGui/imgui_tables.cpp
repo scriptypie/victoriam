@@ -3219,7 +3219,7 @@ void ImGui::TableSaveSettings(ImGuiTable* table)
     if (table->Flags & ImGuiTableFlags_NoSavedSettings)
         return;
 
-    // Bind or create settings data
+    // SubmitUniformBuffer or create settings data
     ImGuiContext& g = *GImGui;
     ImGuiTableSettings* settings = TableGetBoundSettings(table);
     if (settings == NULL)
@@ -3275,7 +3275,7 @@ void ImGui::TableLoadSettings(ImGuiTable* table)
     if (table->Flags & ImGuiTableFlags_NoSavedSettings)
         return;
 
-    // Bind settings
+    // SubmitUniformBuffer settings
     ImGuiTableSettings* settings;
     if (table->SettingsOffset == -1)
     {

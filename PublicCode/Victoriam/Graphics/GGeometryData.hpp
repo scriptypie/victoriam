@@ -5,15 +5,14 @@
 #ifndef VICTORIAM_GGEOMETRYDATA_HPP
 #define VICTORIAM_GGEOMETRYDATA_HPP
 
-#include <Victoriam/Graphics/GVertexBuffer.hpp>
-#include <Victoriam/Graphics/GIndexBuffer.hpp>
+#include <Victoriam/Graphics/GBuffer.hpp>
 
 VISRCBEG
 
 class VIDECL CGeometryData
 {
-	PVertexBuffer m_VertexBuffer = nullptr;
-	PIndexBuffer m_IndexBuffer = nullptr;
+	PBuffer m_VertexBuffer = nullptr;
+	PBuffer m_IndexBuffer = nullptr;
 public:
 	CGeometryData() = default;
 	~CGeometryData();
@@ -29,8 +28,8 @@ public:
 
 	static CGeometryData Create(PDevice& device, const List<SVertex>& vertices);
 	static CGeometryData Create(PDevice& device, const List<SVertex>& vertices, const List<UInt32>& indices);
-	static CGeometryData Create(PDevice& device, const PVertexBuffer& vertexBuffer);
-	static CGeometryData Create(PDevice& device, const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer);
+	static CGeometryData Create(PDevice& device, const PBuffer& vertexBuffer);
+	static CGeometryData Create(PDevice& device, const PBuffer& vertexBuffer, const PBuffer& indexBuffer);
 };
 
 VISRCEND

@@ -39,11 +39,11 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	}
 	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(CRuntimeApp::OnEvent));
 	CInput::Init(m_Window);
-	m_World = CWorld::Create();
-
 	rendererCreateInfo.WindowPtr = m_Window;
 	m_Renderer = CRenderer::Create(rendererCreateInfo);
 	m_Renderer->Setup();
+
+	m_World = CWorld::Create(m_Renderer->CreateUniformBuffer());
 
 	SGeometryDataCreateInfo sphereCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testsphere.obj");
 	SGeometryDataCreateInfo cubeCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testcube.obj");
@@ -64,14 +64,14 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		auto transform = monkey->AddComponent<SComponentTransform>();
 		transform->Translation = { 0, 2, 3 };
-		transform->Rotation = { 0, -76, 180 };
+		transform->Rotation = { 0, -30, 180 };
 	}
 	{
 		auto cube = m_World->CreateGameObject("TestCube");
 		cube->AddComponent<SComponentRenderable>(cubeGeometryData);
 		auto transform = cube->AddComponent<SComponentTransform>();
 		transform->Translation = { 2, 0, 3 };
-		transform->Scale = { 2, 2, 2 };
+		transform->Scale = 2.0F;
 	}
 	{
 		auto sun = m_World->CreateGameObject("Sun");
@@ -133,10 +133,10 @@ void Vi::CRuntimeApp::Startup() {
 			state->OnUpdateGUI();
 		}
 		m_Renderer->EndUIFrame();
-		if (auto commandBuffer = m_Renderer->BeginFrame())
+		if (auto frameInfo = m_Renderer->BeginFrame(m_World))
 		{
-			m_Renderer->DrawFrame(commandBuffer, m_World);
-			m_Renderer->EndFrame(commandBuffer);
+			m_Renderer->DrawFrame(frameInfo, m_World);
+			m_Renderer->EndFrame(frameInfo);
 		}
 	}
 	m_Renderer->Shutdown(m_World);

@@ -94,6 +94,7 @@ private:
 	VIDECL VIREQOUT inline VkQueue GetPresentQueue() { return m_PresentQueue; }
 	VIDECL VIREQOUT inline VkInstance GetInstance() { return m_Instance; }
 	VIDECL VIREQOUT inline VkPhysicalDevice GetPhysicalDevice() { return m_PhysicalDevice; }
+	VIDECL VIREQOUT inline VkPhysicalDeviceProperties GetPhysicalDeviceProperties() const { return m_Properties; }
 };
 
 VISRCEND

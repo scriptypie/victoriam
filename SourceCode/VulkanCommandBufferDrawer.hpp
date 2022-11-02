@@ -2,32 +2,31 @@
 // Created by Вячеслав Кривенко on 19.10.2022.
 //
 
-#ifndef VICTORIAM_VULKANDRAWCOMMANDBUFFER_HPP
-#define VICTORIAM_VULKANDRAWCOMMANDBUFFER_HPP
+#ifndef VICTORIAM_VULKANCOMMANDBUFFERDRAWER_HPP
+#define VICTORIAM_VULKANCOMMANDBUFFERDRAWER_HPP
 
-#include<Victoriam/Graphics/GDrawCommandBuffer.hpp>
+#include<Victoriam/Graphics/GCommandBufferDrawer.hpp>
 
 #include"Accessors/ASwapchain.hpp"
 #include"Accessors/ADevice.hpp"
 #include"Accessors/APipeline.hpp"
-#include"Accessors/AVertexBuffer.hpp"
 
 VISRCBEG
 
-namespace Accessors { class DrawCommandBuffer; }
+namespace Accessors { class CommandBufferDrawer; }
 
-class CVulkanDrawCommandBuffer : public CDrawCommandBuffer {
-	friend class Accessors::DrawCommandBuffer;
+class CVulkanCommandBufferDrawer : public CCommandBufferDrawer {
+	friend class Accessors::CommandBufferDrawer;
 
 	List<VkCommandBuffer> m_CommandBuffers = {};
 	PSwapchain& m_Swapchain;
 	PDevice& m_Device;
 	PPipeline& m_Pipeline;
 public:
-	CVulkanDrawCommandBuffer(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline);
-	~CVulkanDrawCommandBuffer() override;
+	CVulkanCommandBufferDrawer(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline);
+	~CVulkanCommandBufferDrawer() override;
 
-	SCommandBuffer Begin(UInt32 imageIndex) override;
+	SCommandBuffer Begin(const PWorld& world, UInt32 imageIndex) override;
 	void End(UInt32 imageIndex) override;
 	void SubmitDraw(const PWorld& world, UInt32 imageIndex) override;
 
@@ -39,4 +38,4 @@ private:
 
 VISRCEND
 
-#endif //VICTORIAM_VULKANDRAWCOMMANDBUFFER_HPP
+#endif //VICTORIAM_VULKANCOMMANDBUFFERDRAWER_HPP

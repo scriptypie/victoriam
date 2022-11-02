@@ -13,8 +13,10 @@ layout (push_constant) uniform MaterialData
 {
     mat4 Transform;
     mat4 ModelMatrix;
-    vec3 SunDirection;
 } m_Data;
+
+const vec3 SunDirection = vec3(1, 3, -3);
+const float Ambient = 0.1;
 
 void main()
 {
@@ -22,7 +24,7 @@ void main()
     gl_Position = worldPos;
 
     vec3 normalWorldSpace = normalize(mat3(m_Data.ModelMatrix) * m_Normal);
-    float lightIntensity = max(dot(normalWorldSpace, m_Data.SunDirection), 0.0);
+    float lightIntensity = min(Ambient + max(dot(normalWorldSpace, SunDirection), 0.0), 1.0);
 
     o_Color = m_Color * lightIntensity;
 }
@@ -42,6 +44,7 @@ layout (push_constant) uniform MaterialData
     mat4 Transform;
     mat4 ModelMatrix;
     vec3 SunDirection;
+    float Ambient;
 } m_Data;
 
 void main() {

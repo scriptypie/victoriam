@@ -55,8 +55,8 @@ CGameObject* CWorld::FindGameObjectByUID(const UID &id)
 	}
 }
 
-SPtr<CWorld> CWorld::Create() {
-	return CreateSPtr<CWorld>();
+SPtr<CWorld> CWorld::Create(const PBuffer& constantsUniformBuffer, const SWorldRendererSettings& rendererSettings) {
+	return CreateSPtr<CWorld>(constantsUniformBuffer, rendererSettings);
 }
 
 void CWorld::Clear()
@@ -69,8 +69,8 @@ CGameObject *CWorld::FindGameObjectByName(const String &name)
 {
 	for (auto obj : m_Registry)
 	{
-		auto namec = obj->GetComponent<SComponentName>();
-		if (namec && namec->Name == name)
+		auto componentName = obj->GetComponent<SComponentName>();
+		if (componentName && componentName->Name == name)
 			return obj;
 	}
 	ViLog("GameObject '%s' not found. Creating new one with the given name...\n", name.c_str());
@@ -80,6 +80,11 @@ CGameObject *CWorld::FindGameObjectByName(const String &name)
 void CWorld::Update(const Float32 &dt)
 {
 
+}
+
+CWorld::CWorld(const PBuffer& constantsUniformBuffer, const SWorldRendererSettings &rendererSettings) : m_RendererSettings(rendererSettings)
+{
+	m_RendererConstantsBuffer = constantsUniformBuffer;
 }
 
 VISRCEND

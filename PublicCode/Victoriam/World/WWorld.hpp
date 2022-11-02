@@ -7,6 +7,8 @@
 
 #include <Victoriam/Core/CBase.hpp>
 #include <Victoriam/World/WGameObject.hpp>
+#include <Victoriam/Graphics/Structs/GWorldRendererSettings.hpp>
+#include <Victoriam/Graphics/GBuffer.hpp>
 
 VISRCBEG
 
@@ -14,7 +16,9 @@ class CWorld
 {
 	friend class CGameObject;
 
-	List<CGameObject*> m_Registry;
+	List<CGameObject*> m_Registry = {};
+	SWorldRendererSettings m_RendererSettings = {};
+	PBuffer m_RendererConstantsBuffer = nullptr;
 public:
 	VIDECL VIREQOUT CGameObject* CreateGameObject();
 	VIDECL VIREQOUT CGameObject* CreateGameObject(const String& name);
@@ -43,10 +47,14 @@ public:
 		return nullptr;
 	}
 
-	static SPtr<CWorld> Create();
+	explicit CWorld(const PBuffer& constantsUniformBuffer, const SWorldRendererSettings& rendererSettings);
+	static SPtr<CWorld> Create(const PBuffer& constantsUniformBuffer, const SWorldRendererSettings& rendererSettings = SWorldRendererSettings());
+	VIDECL VIREQOUT inline SWorldRendererSettings GetRendererSettings() const { return m_RendererSettings; }
+	VIDECL VIREQOUT inline PBuffer& GetConstantBuffer() { return m_RendererConstantsBuffer; }
 	void Update(const Float32& dt);
 	VIDECL void Clear();
 private:
+
 	void OnGameObjectCreated(CGameObject* object);
 	void OnGameObjectDestroyed(CGameObject* object);
 };

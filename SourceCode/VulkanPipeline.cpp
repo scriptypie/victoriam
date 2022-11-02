@@ -101,8 +101,8 @@ void CVulkanPipeline::BindDrawCommandBuffer(const SCommandBuffer &commandBuffer)
 		throw std::runtime_error("Failed to bind command buffer because graphics pipeline is null!");
 }
 
-void CVulkanPipeline::PushSharedMaterialData(SCommandBuffer const &buffer, const UInt32 &offset,
-                                             const SMaterialData *materialData)
+void CVulkanPipeline::PushMaterialData(SCommandBuffer const &buffer, const UInt32 &offset,
+                                       const SMaterialData *materialData)
 {
 	vkCmdPushConstants(CCast<VkCommandBuffer>(buffer), m_Info.PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, offset, sizeof(SMaterialData), materialData);
 }
