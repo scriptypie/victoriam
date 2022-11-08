@@ -5,12 +5,14 @@
 
 #include <Victoriam/Application/AAppStateController.hpp>
 
-void Vi::CAppStateController::AddState(Vi::CAppState* state) {
+VISRCBEG
+
+void CAppStateController::AddState(CAppState* state) {
     m_states.emplace(m_states.begin() + m_insertIndex, state);
     m_insertIndex += 1;
 }
 
-void Vi::CAppStateController::RemoveState(Vi::CAppState* state) {
+void CAppStateController::RemoveState(CAppState* state) {
     auto pos = std::find(m_states.begin(), m_states.begin() + m_insertIndex, state);
     if (pos != m_states.begin() + m_insertIndex)
     {
@@ -19,22 +21,22 @@ void Vi::CAppStateController::RemoveState(Vi::CAppState* state) {
     }
 }
 
-void Vi::CAppStateController::AddOverlayState(Vi::CAppState* state) {
+void CAppStateController::AddOverlayState(CAppState* state) {
     m_states.emplace_back(state);
 }
 
-void Vi::CAppStateController::RemoveOverlayState(Vi::CAppState* state) {
+void CAppStateController::RemoveOverlayState(CAppState* state) {
     auto pos = std::find(m_states.begin(), m_states.end(), state);
     if (pos != m_states.end())
-    {
         m_states.erase(pos);
-    }
 }
 
-Vi::CAppStateController::~CAppStateController() {
+CAppStateController::~CAppStateController() {
     for (auto& state : m_states)
     {
         state->OnDestroy();
         delete state;
     }
 }
+
+VISRCEND

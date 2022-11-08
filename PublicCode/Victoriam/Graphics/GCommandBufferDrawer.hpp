@@ -7,26 +7,27 @@
 
 #include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/Graphics/GSwapchain.hpp>
-#include <Victoriam/Graphics/GDevice.hpp>
+#include <Victoriam/Graphics/GGraphicsContext.hpp>
 #include <Victoriam/Graphics/GPipeline.hpp>
 #include <Victoriam/Graphics/GBuffer.hpp>
 #include <Victoriam/World/WWorld.hpp>
+#include <Victoriam/Graphics/Structs/GFrameInfo.hpp>
 
 VISRCBEG
 
-class CCommandBufferDrawer
+class VIDECL CCommandBufferDrawer
 {
 public:
-	virtual ~CCommandBufferDrawer() = default;
+	VIDECL virtual ~CCommandBufferDrawer() = default;
 
-	virtual SCommandBuffer Begin(const PWorld& world, UInt32 imageIndex) = 0;
-	virtual void End(UInt32 imageIndex) = 0;
-	virtual void SubmitDraw(const PWorld& world, UInt32 imageIndex) = 0;
+	VIDECL VIREQOUT virtual SCommandBuffer Begin(const PWorld& world, const UInt32& imageIndex) = 0;
+	VIDECL virtual void SubmitDraw(const PWorld& world, const SFrameInfo& frameInfo) const = 0;
+	VIDECL virtual void End(const SCommandBuffer& commandBuffer) const = 0;
 
-	VIDECL VIREQOUT static SPtr<CCommandBufferDrawer> Create(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline);
+	VIDECL VIREQOUT static SPtr<CCommandBufferDrawer> Create(PSwapchain& swapchain, PGraphicsContext& context, PPipeline& pipeline);
 };
 
-VIDECL typedef SPtr<CCommandBufferDrawer> PDrawCommandBuffer;
+VIDECL typedef SPtr<CCommandBufferDrawer> PCommandBufferDrawer;
 
 VISRCEND
 

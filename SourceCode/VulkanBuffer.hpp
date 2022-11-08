@@ -11,22 +11,31 @@
 
 VISRCBEG
 
+namespace Accessors { class Buffer; }
+
 class VIDECL CVulkanBuffer : public CBuffer
 {
+	friend class Accessors::Buffer;
 	enum class ECType : UInt32 { None = 0U, VertexBuffer, IndexBuffer, UniformBuffer };
 	ECType m_Type = ECType::None;
-	PDevice& m_Device;
+	PGraphicsContext& m_Context;
 	PVulkanMemoryBuffer m_MemoryBuffer = nullptr;
 	UInt64 m_Count = {};
 public:
-	VIDECL CVulkanBuffer(PDevice &device, const List<SVertex> &vertices);
-	VIDECL CVulkanBuffer(PDevice &device, const List<UInt32> &indices);
-	VIDECL CVulkanBuffer(PDevice &device, const UInt32& maxFramesInFlight);
-	VIDECL ~CVulkanBuffer() = default;
+	VIDECL CVulkanBuffer(PGraphicsContext &context, const List<SVertex> &vertices);
+	VIDECL CVulkanBuffer(PGraphicsContext &context, const List<UInt32> &indices);
+	VIDECL CVulkanBuffer(PGraphicsContext &context, const UInt32& maxFramesInFlight);
+	VIDECL ~CVulkanBuffer() override = default;
 
-	void Bind(const SCommandBuffer& buffer) override;
-	void SubmitUniformBuffer(const SRendererConstants* constants, const UInt32& imageIndex) override;
-	void Draw(const SCommandBuffer& buffer) const override;
+	VIDECL void Bind(const SCommandBuffer& buffer) override;
+	VIDECL void SubmitUniformBuffer(const SRendererConstants& constants) override;
+	VIDECL void Draw(const SCommandBuffer& buffer) const override;
+
+private:
+	VIDECL VIREQOUT inline VkDescriptorBufferInfo GetDescriptorBufferInfo(const VkDeviceSize& size = VK_WHOLE_SIZE, const VkDeviceSize& offset = {})
+	{
+		return m_MemoryBuffer->GetDescriptorInfo(size, offset);
+	}
 
 private:
 	VIDECL void CreateVertexBuffer(const List<SVertex>& vertices);

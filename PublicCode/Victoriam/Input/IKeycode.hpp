@@ -147,7 +147,7 @@ enum VIDECL EKeyboardCode : UInt32
 	KeyboardMax
 };
 
-using EKeyCode = EKeyboardCode;
+VIDECL typedef EKeyboardCode EKeyCode;
 
 VISRCEND
 

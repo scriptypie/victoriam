@@ -11,7 +11,7 @@
 
 VISRCBEG
 
-VIDECL VIREQOUT inline static List<VkVertexInputBindingDescription> FGetVertexBindingDesctiptions()
+VIDECL VIREQOUT inline static List<VkVertexInputBindingDescription> FGetVertexBindingDescriptions()
 {
 	return {{0, sizeof(SVertex), VK_VERTEX_INPUT_RATE_VERTEX}};
 }

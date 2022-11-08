@@ -13,11 +13,13 @@
 
 VISRCBEG
 
-class CRuntimeApp
+class VIDECL CRuntimeApp
 {
 	friend Int32 Main(Int32, Int8**);
 	friend class CRenderer;
+
 	inline static CRuntimeApp* s_instance = nullptr;
+
 	SRuntimeAppCreateInfo m_info = {};
 	Bool m_running = {};
 	CAppStateController m_stateController = {};
@@ -26,7 +28,7 @@ class CRuntimeApp
 	PWorld m_World = {};
 public:
 	VIDECL explicit CRuntimeApp(SRuntimeAppCreateInfo  createInfo);
-	virtual ~CRuntimeApp();
+	VIDECL virtual ~CRuntimeApp();
 
 	VIDECL void AddState(CAppState* state);
 	VIDECL void AddOverlayState(CAppState* overlay);
@@ -34,21 +36,21 @@ public:
 	VIDECL void Close();
 	VIDECL void Reload();
 
-	VIDECL inline PWorld World() { return m_World;}
+	VIDECL VIREQOUT inline PWorld World() { return m_World;}
 	VIDECL inline static CRuntimeApp& Get() { return *s_instance; }
-	VIDECL inline PRenderer& Renderer() { return m_Renderer; }
+	VIDECL VIREQOUT inline PRenderer& Renderer() { return m_Renderer; }
 	VIDECL VIREQOUT inline String CWD() const { return m_info.CWD; }
 	VIDECL VIREQOUT inline const SRuntimeAppCreateInfo& GetInfo() const { return m_info; }
 private:
-	void Startup();
-	void OnEvent(CEvent& e);
+	VIDECL void Startup();
+	VIDECL void OnEvent(CEvent& e);
 
-	bool OnWindowResize(const CWindowResizeEvent& e);
-	bool OnWindowClose(const CWindowCloseEvent& e);
+	VIDECL bool OnWindowResize(const CWindowResizeEvent& e);
+	VIDECL bool OnWindowClose(const CWindowCloseEvent& e);
 };
 
 // Needs to be defined on the client side
-CRuntimeApp* CreateRuntimeApp(const CArgumentLineTool& args);
+VIDECL VIREQOUT CRuntimeApp* CreateRuntimeApp(const CArgumentLineTool& args);
 
 VISRCEND
 

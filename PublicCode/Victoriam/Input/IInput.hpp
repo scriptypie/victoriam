@@ -18,15 +18,15 @@ class VIDECL CInput
 {
 	inline static struct SInputState* m_InputStatePtr = nullptr;
 public:
-	VIDECL static void Init(const SPtr<CWindow>& window);
-	VIDECL static Bool IsKeyDown(const EKeyCode& code);
-	VIDECL static Bool IsKeyUp(const EKeyCode& code);
-	VIDECL static Bool IsMouseDown(const EMouseCode& code);
-	VIDECL static Bool IsMouseUp(const EMouseCode& code);
-	VIDECL static String GetInput();
-	VIDECL static SVector2 GetMousePosition();
-	VIDECL static Float32 GetMousePositionX();
-	VIDECL static Float32 GetMousePositionY();
+	VIDECL          static void Init(const SPtr<CWindow>& window);
+	VIDECL VIREQOUT static Bool IsKeyDown(const EKeyCode& code);
+	VIDECL VIREQOUT static Bool IsKeyUp(const EKeyCode& code);
+	VIDECL VIREQOUT static Bool IsMouseDown(const EMouseCode& code);
+	VIDECL VIREQOUT static Bool IsMouseUp(const EMouseCode& code);
+	VIDECL VIREQOUT static String GetInput();
+	VIDECL VIREQOUT static SVector2 GetMousePosition();
+	VIDECL VIREQOUT static Float32 GetMousePositionX();
+	VIDECL VIREQOUT static Float32 GetMousePositionY();
 };
 
 VISRCEND

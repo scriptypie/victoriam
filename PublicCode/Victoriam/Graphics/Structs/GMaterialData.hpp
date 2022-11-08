@@ -11,8 +11,7 @@ VISRCBEG
 
 struct VIDECL SMaterialData
 {
-	SMatrix4 Transform;
-	SMatrix4 ModelMatrix;
+	VIDECL SMatrix4 ModelMatrix;
 };
 
 VISRCEND

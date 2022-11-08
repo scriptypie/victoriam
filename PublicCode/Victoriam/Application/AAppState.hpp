@@ -9,18 +9,18 @@
 
 VISRCBEG
 
-class CAppState
+class VIDECL CAppState
 {
 public:
-    virtual ~CAppState() = default;
+    VIDECL virtual ~CAppState() = default;
 
-    virtual void OnCreate() = 0;
-    virtual void OnUpdate(const Float32& dt) = 0;
-	virtual void OnUpdateGUI() = 0;
-	virtual void OnDestroy() = 0;
+    VIDECL virtual void OnCreate() = 0;
+    VIDECL virtual void OnUpdate(const Float32& dt) = 0;
+	VIDECL virtual void OnUpdateGUI() = 0;
+	VIDECL virtual void OnDestroy() = 0;
 };
 
-using AppState = UPtr<CAppState>;
+VIDECL typedef UPtr<CAppState> PAppState;
 
 VISRCEND
 

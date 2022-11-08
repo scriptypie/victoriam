@@ -11,24 +11,24 @@
 
 VISRCBEG
 
-class CWindow
+class VIDECL CWindow
 {
 public:
 	using EventCallbackFn = Function<void(CEvent&)>;
 
-	virtual ~CWindow() = default;
+	VIDECL virtual ~CWindow() = default;
 
-	virtual void Update() = 0;
+	VIDECL          virtual void Update() = 0;
 	VIDECL VIREQOUT virtual UInt32 GetWidth() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetHeight() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetOffsetX() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetOffsetY() const = 0;
 	VIDECL VIREQOUT virtual SWindowExtent GetExtent() const = 0;
-	VIDECL virtual void SetExtent(const SWindowExtent& extent) = 0;
-	virtual void SetEventCallbackFunction(const EventCallbackFn& fn) = 0;
-	virtual void WaitForEvents() = 0;
+	VIDECL          virtual void SetExtent(const SWindowExtent& extent) = 0;
+	VIDECL          virtual void SetEventCallbackFunction(const EventCallbackFn& fn) = 0;
+	VIDECL          virtual void WaitForEvents() = 0;
 
-	static SPtr<CWindow> Create(const SWindowCreateInfo& info);
+	VIDECL VIREQOUT static SPtr<CWindow> Create(const SWindowCreateInfo& info);
 };
 
 VIDECL typedef SPtr<CWindow> PWindow;

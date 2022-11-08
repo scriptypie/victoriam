@@ -34,13 +34,13 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Input/IInput.hpp
         PublicCode/Victoriam/Utils/UShaderCooker.hpp
         PublicCode/Victoriam/Graphics/Basics.hpp
-        PublicCode/Victoriam/Graphics/GDevice.hpp
+        PublicCode/Victoriam/Graphics/GGraphicsContext.hpp
         PublicCode/Victoriam/Graphics/GPipeline.hpp
         PublicCode/Victoriam/Graphics/Structs/GPipelineCreateInfo.hpp
-        SourceCode/VulkanDevice.hpp
+        SourceCode/VulkanGraphicsContext.hpp
         SourceCode/Accessors/AWindow.hpp
         SourceCode/VulkanPipeline.hpp
-        SourceCode/Accessors/ADevice.hpp
+        SourceCode/Accessors/AGraphicsContext.hpp
         SourceCode/GLFWWindow.hpp
         PublicCode/Victoriam/Graphics/GCommandBufferDrawer.hpp
         SourceCode/VulkanCommandBufferDrawer.hpp
@@ -84,8 +84,8 @@ set(SOURCE_FILES
         SourceCode/GLFWWindow.cpp
         SourceCode/IInput.cpp
         SourceCode/UShaderCooker.cpp
-        SourceCode/GDevice.cpp
-        SourceCode/VulkanDevice.cpp
+        SourceCode/GGraphicsContext.cpp
+        SourceCode/VulkanGraphicsContext.cpp
         SourceCode/GPipeline.cpp
         SourceCode/VulkanPipeline.cpp
         SourceCode/GSwapchain.cpp
@@ -111,7 +111,7 @@ set(SOURCE_FILES
         ThirdParty/imgui/src/ImGui/imgui_draw.cpp
         ThirdParty/imgui/src/ImGui/imgui_demo.cpp
         SourceCode/GVertex.cpp
-        PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp SourceCode/VulkanMemoryBuffer.hpp SourceCode/VulkanMemoryBuffer.cpp PublicCode/Victoriam/Graphics/GBuffer.hpp SourceCode/GBuffer.cpp SourceCode/VulkanBuffer.hpp SourceCode/VulkanBuffer.cpp PublicCode/Victoriam/Graphics/Structs/GRendererConstants.hpp PublicCode/Victoriam/Graphics/Structs/GFrameInfo.hpp)
+        PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp SourceCode/VulkanMemoryBuffer.hpp SourceCode/VulkanMemoryBuffer.cpp PublicCode/Victoriam/Graphics/GBuffer.hpp SourceCode/GBuffer.cpp SourceCode/VulkanBuffer.hpp SourceCode/VulkanBuffer.cpp PublicCode/Victoriam/Graphics/Structs/GRendererConstants.hpp PublicCode/Victoriam/Graphics/Structs/GFrameInfo.hpp PublicCode/Victoriam/Core/Containers/CArray.hpp PublicCode/Victoriam/Graphics/Structs/GDescriptorSetLayoutCreateInfo.hpp PublicCode/Victoriam/Graphics/GDescriptorSetLayout.hpp SourceCode/GDescriptorSetLayoutCreateInfo.cpp SourceCode/GDescriptorSetLayout.cpp SourceCode/VulkanDescriptorSetLayout.cpp SourceCode/VulkanDescriptorSetLayout.hpp SourceCode/Accessors/ADescriptorSetLayout.hpp PublicCode/Victoriam/Graphics/Structs/GDescriptorPoolCreateInfo.hpp SourceCode/GDescriptorPoolCreateInfo.cpp PublicCode/Victoriam/Graphics/GDescriptorPool.hpp SourceCode/GDescriptorPool.cpp SourceCode/VulkanDescriptorPool.cpp SourceCode/VulkanDescriptorPool.hpp PublicCode/Victoriam/Graphics/GDescriptorWriter.hpp SourceCode/GDescriptorWriter.cpp SourceCode/VulkanDescriptorWriter.cpp SourceCode/VulkanDescriptorWriter.hpp SourceCode/Accessors/ADescriptorPool.hpp SourceCode/Accessors/ABuffer.hpp SourceCode/Accessors/ADescriptorWriter.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

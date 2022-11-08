@@ -6,15 +6,16 @@
 #define VICTORIAM_EWINDOWEVENTS_HPP
 
 #include <Victoriam/EventSystem/EEvent.hpp>
+#include <Victoriam/Graphics/Structs/GWindowExtent.hpp>
 
 VISRCBEG
 
-class CWindowCloseEvent : public CEvent
+class VIDECL CWindowCloseEvent : public CEvent
 {
 public:
 	inline CWindowCloseEvent() = default;
 
-	VIREQOUT String ToString() const override
+	VIDECL VIREQOUT String ToString() const override
 	{
 		StringStream ss;
 		ss << "CWindowCloseEvent()";
@@ -25,17 +26,17 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
-class CWindowResizeEvent : public CEvent
+class VIDECL CWindowResizeEvent : public CEvent
 {
 	UInt32 m_Width, m_Height;
 public:
 	CWindowResizeEvent(UInt32 width, UInt32 height) : m_Width(width), m_Height(height) {}
 
-	VIREQOUT inline UInt32 GetWidth() const { return m_Width; }
-	VIREQOUT inline UInt32 GetHeight() const { return m_Height; }
-	VIREQOUT inline SWindowExtent GetExtent() const { return {m_Width, m_Height }; }
+	VIDECL VIREQOUT inline UInt32 GetWidth() const { return m_Width; }
+	VIDECL VIREQOUT inline UInt32 GetHeight() const { return m_Height; }
+	VIDECL VIREQOUT inline SWindowExtent GetExtent() const { return {m_Width, m_Height }; }
 
-	VIREQOUT String ToString() const override
+	VIDECL VIREQOUT String ToString() const override
 	{
 		StringStream ss;
 		ss << "CWindowResizeEvent(" << m_Width << ", " << m_Height << ")";
@@ -46,12 +47,12 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
-class CWindowLostFocusEvent : public CEvent
+class VIDECL CWindowLostFocusEvent : public CEvent
 {
 public:
 	inline CWindowLostFocusEvent() = default;
 
-	VIREQOUT String ToString() const override
+	VIDECL VIREQOUT String ToString() const override
 	{
 		StringStream ss;
 		ss << "CWindowLostFocusEvent()";
@@ -62,12 +63,12 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
-class CWindowGetFocusEvent : public CEvent
+class VIDECL CWindowGetFocusEvent : public CEvent
 {
 public:
 	inline CWindowGetFocusEvent() = default;
 
-	VIREQOUT String ToString() const override
+	VIDECL VIREQOUT String ToString() const override
 	{
 		StringStream ss;
 		ss << "CWindowGetFocusEvent()";

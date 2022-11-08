@@ -12,17 +12,20 @@
 
 VISRCBEG
 
-class CWorld
+class CRenderer;
+typedef UPtr<CRenderer> PRenderer;
+
+class VIDECL CWorld
 {
 	friend class CGameObject;
 
 	List<CGameObject*> m_Registry = {};
 	SWorldRendererSettings m_RendererSettings = {};
-	PBuffer m_RendererConstantsBuffer = nullptr;
+	List<PUniformBuffer> m_RendererConstantsBuffers = {};
 public:
 	VIDECL VIREQOUT CGameObject* CreateGameObject();
 	VIDECL VIREQOUT CGameObject* CreateGameObject(const String& name);
-	VIDECL void DestroyGameObject(CGameObject* object);
+	VIDECL          void DestroyGameObject(CGameObject* object);
 	VIDECL VIREQOUT CGameObject* FindGameObjectByUID(const UID& id);
 	VIDECL VIREQOUT CGameObject* FindGameObjectByName(const String& name);
 
@@ -39,7 +42,7 @@ public:
 	}
 
 	template<class...T>
-	VIDECL VIREQOUT CGameObject* OneWith()
+	VIDECL CGameObject* OneWith()
 	{
 		for (auto obj : m_Registry)
 			if ((obj->HasComponent<T>() && ...))
@@ -47,16 +50,15 @@ public:
 		return nullptr;
 	}
 
-	explicit CWorld(const PBuffer& constantsUniformBuffer, const SWorldRendererSettings& rendererSettings);
-	static SPtr<CWorld> Create(const PBuffer& constantsUniformBuffer, const SWorldRendererSettings& rendererSettings = SWorldRendererSettings());
-	VIDECL VIREQOUT inline SWorldRendererSettings GetRendererSettings() const { return m_RendererSettings; }
-	VIDECL VIREQOUT inline PBuffer& GetConstantBuffer() { return m_RendererConstantsBuffer; }
-	void Update(const Float32& dt);
-	VIDECL void Clear();
+	VIDECL          explicit CWorld(PRenderer& renderer, const SWorldRendererSettings& rendererSettings);
+	VIDECL VIREQOUT inline SWorldRendererSettings& GetRendererSettings() { return m_RendererSettings; }
+	VIDECL VIREQOUT inline PUniformBuffer& GetConstantsBuffer(const UInt32& frameIndex) { return m_RendererConstantsBuffers.at(frameIndex); }
+	VIDECL          void Update(const Float32& dt);
+	VIDECL          void Clear();
+	VIDECL VIREQOUT static SPtr<CWorld> Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings = SWorldRendererSettings());
 private:
-
-	void OnGameObjectCreated(CGameObject* object);
-	void OnGameObjectDestroyed(CGameObject* object);
+	VIDECL          void OnGameObjectCreated(CGameObject* object);
+	VIDECL          void OnGameObjectDestroyed(CGameObject* object);
 };
 
 VIDECL typedef SPtr<CWorld> PWorld;

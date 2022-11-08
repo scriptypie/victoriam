@@ -43,7 +43,10 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	m_Renderer = CRenderer::Create(rendererCreateInfo);
 	m_Renderer->Setup();
 
-	m_World = CWorld::Create(m_Renderer->CreateUniformBuffer());
+	m_World = CWorld::Create(m_Renderer);
+	m_Renderer->CreateDescriptors(m_World);
+
+
 
 	SGeometryDataCreateInfo sphereCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testsphere.obj");
 	SGeometryDataCreateInfo cubeCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testcube.obj");
@@ -81,6 +84,7 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 		auto camera = m_World->CreateGameObject("MainCamera");
 		auto camcomp = camera->AddComponent<SComponentCamera>();
 		camcomp->Camera.SetViewBounds(0.01F, 1000.0F);
+		camcomp->Camera.SetFovY(glm::radians(65.0F));
 		auto ctc = camera->AddComponent<SComponentTransform>();
 		ctc->Translation = { 0.3F, 0.7F, 9.5F };
 	}

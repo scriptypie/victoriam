@@ -12,16 +12,13 @@ VISRCBEG
 
 class CWorld;
 
-class CGameObject
+class VIDECL CGameObject
 {
 	friend class CWorld;
 
 	UID m_ID;
 	CWorld* m_Owner;
 	List<SComponentBase*> m_Components;
-
-	VIDECL explicit CGameObject(CWorld* owner);
-	VIDECL void Destroy();
 public:
 	VIDECL ~CGameObject() {}
 	VIDECL VIREQOUT UID GetUID() const;
@@ -35,7 +32,7 @@ public:
 		return component;
 	}
 	template<class...T>
-	VIDECL Tuple<T*...> Group()
+	VIDECL VIREQOUT Tuple<T*...> Group()
 	{
 		return CreateTuple<T*...>(GetComponent<T>()...);
 	}
@@ -56,7 +53,9 @@ public:
 				return CCast<T*>(component);
 		return nullptr;
 	}
-
+private:
+	VIDECL explicit CGameObject(CWorld* owner);
+	VIDECL void Destroy();
 };
 
 VISRCEND

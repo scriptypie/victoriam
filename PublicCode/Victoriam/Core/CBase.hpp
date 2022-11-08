@@ -26,7 +26,7 @@
 #include <Victoriam/Core/Memory/MSmartPointers.hpp>
 #include <Victoriam/Core/Memory/MStandardAllocator.hpp>
 
-#define ViAssert(e, ...) if (!(e)) ViAbort(__VA_ARGS__)
+#include <Victoriam/Core/Containers/CArray.hpp>
 
 VISRCBEG
 
@@ -40,6 +40,7 @@ VIDECL typedef uint16_t UInt16;
 VIDECL typedef uint32_t UInt32;
 VIDECL typedef uint64_t UInt64;
 
+VIDECL typedef UInt32 Signal;
 VIDECL typedef UInt64 UID;
 
 VIDECL typedef float_t  Float32;
@@ -65,9 +66,6 @@ constexpr Tuple<T...> CreateTuple(Args&&...args)
 
 template<class K, class V>
 using UnorderedMap = std::unordered_map<K, V>;
-
-template<class T, UInt32 N>
-using Array = std::array<T, N>;
 
 template<class T>
 using Function = std::function<T>;

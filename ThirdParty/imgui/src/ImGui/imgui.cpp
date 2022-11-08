@@ -1012,7 +1012,7 @@ static void             UpdateViewportsNewFrame();
 //         struct ImGuiContext;
 //         extern thread_local ImGuiContext* MyImGuiTLS;
 //         #define GImGui MyImGuiTLS
-//     And then define MyImGuiTLS in one of your cpp files. Note that thread_local is a C++11 keyword, earlier C++ uses compiler-specific keyword.
+//     And then define MyImGuiTLS in one of your cpp files. Note that thread_local is a C++11 g_Keywords, earlier C++ uses compiler-specific g_Keywords.
 //   - Future development aims to make this context pointer explicit to all calls. Also read https://github.com/ocornut/imgui/issues/586
 //   - If you need a finite number of contexts, you may compile and use multiple instances of the ImGui code from a different namespace.
 // - DLL users: read comments above.

@@ -20,5 +20,4 @@ Bool operator!=(const SVertex& a, const SVertex& b)
 	return !(a == b);
 }
 
-
 VISRCEND

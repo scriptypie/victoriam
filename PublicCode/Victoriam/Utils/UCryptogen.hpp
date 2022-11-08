@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-enum class ECHashingAlgorithm : UInt32
+enum class VIDECL ECHashingAlgorithm : UInt32
 {
 	None VIDECL = 0x00000000,
 	MD5  VIDECL = 0x0000000f,
@@ -32,8 +32,8 @@ class VIDECL CCryptogen
 	} md5_ctx = {};
 
 public:
-	inline CCryptogen() = default;
-	inline ~CCryptogen() = default;
+	VIDECL inline CCryptogen() = default;
+	VIDECL inline ~CCryptogen() = default;
 
 	VIDECL CCryptogen(const String& str, const ECHashingAlgorithm& algorithm);
 	VIDECL CCryptogen(CString dat, const UInt64& len, const ECHashingAlgorithm& algorithm);

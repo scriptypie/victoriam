@@ -7,7 +7,7 @@ VISRCBEG
 
 void FGetEngineInfo(SEngineInfo& info)
 {
-    info.version = "0.0.2";
+    info.version = "0.0.3";
 }
 
 VISRCEND

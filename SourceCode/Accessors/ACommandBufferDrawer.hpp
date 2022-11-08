@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_ACOMMANDBUFFERDRAWER_HPP
 #define VICTORIAM_ACOMMANDBUFFERDRAWER_HPP
 
-#include"../VulkanCommandBufferDrawer.hpp"
+#include "../VulkanCommandBufferDrawer.hpp"
 
 VISRCBEG
 
@@ -14,7 +14,7 @@ namespace Accessors
 	class VIDECL CommandBufferDrawer
 	{
 	public:
-		VIDECL VIREQOUT inline static auto GetCommandBufferList(const PDrawCommandBuffer& drawCommandBuffer)
+		VIDECL VIREQOUT inline static auto GetCommandBufferList(const PCommandBufferDrawer& drawCommandBuffer)
 		{
 			return CCast<CVulkanCommandBufferDrawer*>(drawCommandBuffer.get())->GetCommandBufferList();
 		}

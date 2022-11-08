@@ -8,30 +8,30 @@
 #include<Victoriam/Graphics/GCommandBufferDrawer.hpp>
 
 #include"Accessors/ASwapchain.hpp"
-#include"Accessors/ADevice.hpp"
+#include"Accessors/AGraphicsContext.hpp"
 #include"Accessors/APipeline.hpp"
 
 VISRCBEG
 
 namespace Accessors { class CommandBufferDrawer; }
 
-class CVulkanCommandBufferDrawer : public CCommandBufferDrawer {
+class VIDECL CVulkanCommandBufferDrawer : public CCommandBufferDrawer {
 	friend class Accessors::CommandBufferDrawer;
 
 	List<VkCommandBuffer> m_CommandBuffers = {};
 	PSwapchain& m_Swapchain;
-	PDevice& m_Device;
+	PGraphicsContext& m_Context;
 	PPipeline& m_Pipeline;
 public:
-	CVulkanCommandBufferDrawer(PSwapchain& swapchain, PDevice& device, PPipeline& pipeline);
-	~CVulkanCommandBufferDrawer() override;
+	VIDECL CVulkanCommandBufferDrawer(PSwapchain& swapchain, PGraphicsContext& device, PPipeline& pipeline);
+	VIDECL ~CVulkanCommandBufferDrawer() override;
 
-	SCommandBuffer Begin(const PWorld& world, UInt32 imageIndex) override;
-	void End(UInt32 imageIndex) override;
-	void SubmitDraw(const PWorld& world, UInt32 imageIndex) override;
+	VIDECL VIREQOUT SCommandBuffer Begin(const PWorld& world, const UInt32& imageIndex) override;
+	VIDECL          void SubmitDraw(const PWorld& world, const SFrameInfo& frameInfo) const override;
+	VIDECL          void End(const SCommandBuffer& commandBuffer) const override;
 
 private:
-	void CreateCommandBuffers();
+	VIDECL void CreateCommandBuffers();
 private:
 	VIDECL VIREQOUT inline List<VkCommandBuffer> GetCommandBufferList() const { return m_CommandBuffers; }
 };

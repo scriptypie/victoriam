@@ -15,13 +15,13 @@ VISRCBEG
 
 namespace Accessors {
 
-	class Window {
+	class VIDECL Window {
 	public:
-		VIDECL static GLFWwindow *GetGLFWWindow(const PWindow &window) {
+		VIDECL VIREQOUT static GLFWwindow *GetGLFWWindow(const PWindow &window) {
 			return CCast<CGLFWWindow*>(window.get())->m_Window;
 		}
 		VIDECL static void CreateWindowSurface(const PWindow &window, VkInstance instance, VkSurfaceKHR *surface) {
-			return CCast<CGLFWWindow*>(window.get())->CreateWindowSurface(instance, surface);
+			CCast<CGLFWWindow*>(window.get())->CreateWindowSurface(instance, surface);
 		}
 	};
 

@@ -19,10 +19,10 @@ class VIDECL CGeometryBuilder
 public:
 	static CGeometryBuilder& Get();
 
-	VIDECL SGeometryDataCreateInfo LoadDefaultFromFile(const String& filename);
+	VIDECL VIREQOUT SGeometryDataCreateInfo LoadDefaultFromFile(const String& filename);
 
 private:
-	void InternalLoadModelFromFile(const String& filename, SGeometryDataCreateInfo& outinfo);
+	VIDECL void InternalLoadModelFromFile(const String& filename, SGeometryDataCreateInfo& outinfo);
 };
 
 VISRCEND

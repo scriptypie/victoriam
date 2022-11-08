@@ -9,14 +9,14 @@
 
 VISRCBEG
 
-class CEventDispatcher
+class VIDECL CEventDispatcher
 {
 	CEvent& m_Event;
 public:
-	inline explicit CEventDispatcher(CEvent& event) : m_Event(event) {}
+	VIDECL inline explicit CEventDispatcher(CEvent& event) : m_Event(event) {}
 
 	template<class T, class FN>
-	inline Bool Dispatch(const FN& func)
+	VIDECL inline Bool Dispatch(const FN& func)
 	{
 		if (m_Event.GetEventType() == T::GetStaticType())
 		{
@@ -27,7 +27,7 @@ public:
 	}
 };
 
-inline std::ostream& operator<<(std::ostream& os, const CEvent& event)
+VIDECL inline std::ostream& operator<<(std::ostream& os, const CEvent& event)
 {
 	return os << event.ToString();
 }

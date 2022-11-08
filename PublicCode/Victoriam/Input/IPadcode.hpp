@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-enum EGamepadCode : UInt32
+enum VIDECL EGamepadCode : UInt32
 {
 	ButtonA             = 0,
 	ButtonB             = 1,

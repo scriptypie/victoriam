@@ -30,14 +30,14 @@ void CGeometryData::SubmitDraw(SCommandBuffer const &buffer)
 }
 
 CGeometryData
-CGeometryData::Create(PDevice& device, const List<SVertex> &vertices) {
+CGeometryData::Create(PGraphicsContext& context, const List<SVertex> &vertices) {
 	CGeometryData data = {};
-	data.m_VertexBuffer = CBuffer::CreateVertexBuffer(device, vertices);
+	data.m_VertexBuffer = CBuffer::CreateVertexBuffer(context, vertices);
 	return data;
 }
 
 CGeometryData
-CGeometryData::Create(PDevice& device, const PBuffer& vertexBuffer, const PBuffer& indexBuffer)
+CGeometryData::Create(const PBuffer& vertexBuffer, const PBuffer& indexBuffer)
 {
 	CGeometryData data = {};
 	data.m_VertexBuffer = vertexBuffer;
@@ -46,15 +46,15 @@ CGeometryData::Create(PDevice& device, const PBuffer& vertexBuffer, const PBuffe
 }
 
 CGeometryData
-CGeometryData::Create(PDevice& device, const List<SVertex> &vertices, const List<UInt32> &indices) {
+CGeometryData::Create(PGraphicsContext& context, const List<SVertex> &vertices, const List<UInt32> &indices) {
 	CGeometryData data = {};
-	data.m_VertexBuffer = CBuffer::CreateVertexBuffer(device, vertices);
-	data.m_IndexBuffer = CBuffer::CreateIndexBuffer(device, indices);
+	data.m_VertexBuffer = CBuffer::CreateVertexBuffer(context, vertices);
+	data.m_IndexBuffer = CBuffer::CreateIndexBuffer(context, indices);
 	return data;
 }
 
 CGeometryData
-CGeometryData::Create(PDevice &device, const PBuffer &vertexBuffer) {
+CGeometryData::Create(const PBuffer &vertexBuffer) {
 	CGeometryData data = {};
 	data.m_VertexBuffer = vertexBuffer;
 	return data;

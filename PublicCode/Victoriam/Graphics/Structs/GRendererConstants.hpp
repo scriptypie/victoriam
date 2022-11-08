@@ -12,9 +12,9 @@ VISRCBEG
 struct VIDECL SRendererConstants
 {
 	VIDECL SMatrix4 ProjectionView;
-	VIDECL SVector3 SunDirection;
+	VIDECL SVector4 SunDirection;
 	VIDECL Float32 Ambient;
-	VIDECL Float32 Brightness;
+	VIDECL Float32 Brightness; // RANGE: [0.0...1.0]
 };
 
 VISRCEND

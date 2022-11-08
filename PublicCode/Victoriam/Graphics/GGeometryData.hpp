@@ -26,10 +26,10 @@ public:
 	VIDECL VIREQOUT Bool Empty() const;
 	VIDECL void Release();
 
-	static CGeometryData Create(PDevice& device, const List<SVertex>& vertices);
-	static CGeometryData Create(PDevice& device, const List<SVertex>& vertices, const List<UInt32>& indices);
-	static CGeometryData Create(PDevice& device, const PBuffer& vertexBuffer);
-	static CGeometryData Create(PDevice& device, const PBuffer& vertexBuffer, const PBuffer& indexBuffer);
+	static CGeometryData Create(PGraphicsContext& context, const List<SVertex>& vertices);
+	static CGeometryData Create(PGraphicsContext& context, const List<SVertex>& vertices, const List<UInt32>& indices);
+	static CGeometryData Create(const PBuffer& vertexBuffer);
+	static CGeometryData Create(const PBuffer& vertexBuffer, const PBuffer& indexBuffer);
 };
 
 VISRCEND

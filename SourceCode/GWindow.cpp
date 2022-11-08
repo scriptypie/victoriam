@@ -6,7 +6,11 @@
 
 #include "GLFWWindow.hpp"
 
-Vi::PWindow Vi::CWindow::Create(const Vi::SWindowCreateInfo &info)
+VISRCBEG
+
+PWindow CWindow::Create(const SWindowCreateInfo &info)
 {
-	return Vi::CreateSPtr<Vi::CGLFWWindow>(info);
+	return CreateSPtr<CGLFWWindow>(info);
 }
+
+VISRCEND

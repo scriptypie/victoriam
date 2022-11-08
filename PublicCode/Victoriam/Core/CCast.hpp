@@ -10,7 +10,7 @@
 VISRCBEG
 
 /**
- * Evil-hack style cast
+ * Evil-hack cast
  */
 template<class To, class From>
 VIDECL inline constexpr To& Cast(const From& from)

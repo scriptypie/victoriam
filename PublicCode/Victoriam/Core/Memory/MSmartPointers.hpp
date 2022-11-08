@@ -17,7 +17,7 @@ using UPtr = std::unique_ptr<T>;
 template<class T, class ...Args>
 VIDECL inline constexpr UPtr<T> CreateUPtr(Args&&...args)
 {
-    return std::make_unique<T>(std::forward<Args>(args)...);
+    return UPtr<T>(new T(std::forward<Args>(args)...));
 }
 
 template<class T>

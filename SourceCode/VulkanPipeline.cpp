@@ -10,22 +10,22 @@
 
 VISRCBEG
 
-CVulkanPipeline::CVulkanPipeline(const String& name, PDevice &device, PSwapchain& swapchain)
-		: m_Device(device), m_Info(Accessors::Swapchain::GetRenderPass(swapchain))
+CVulkanPipeline::CVulkanPipeline(const String& name, PGraphicsContext& context, PSwapchain& swapchain, PDescriptorSetLayout& setLayout)
+		: m_Context(context), m_Info(Accessors::Swapchain::GetRenderPass(swapchain))
 {
 	// I know, it's wrong, but in this case it's okay 'cause our virtual function will be existed
 	CreateShaderModule(m_ShaderCooker.LoadVertexShader(name), &m_VertexShaderModule);
 	CreateShaderModule(m_ShaderCooker.LoadFragmentShader(name), &m_FragmentShaderModule);
-	CreatePipelineLayout();
+	CreatePipelineLayout(setLayout);
 	CreateGraphicsPipeline();
 }
 
 CVulkanPipeline::~CVulkanPipeline()
 {
-	vkDestroyShaderModule(Accessors::Device::GetDevice(m_Device), m_VertexShaderModule, nullptr);
-	vkDestroyShaderModule(Accessors::Device::GetDevice(m_Device), m_FragmentShaderModule, nullptr);
-	vkDestroyPipelineLayout(Accessors::Device::GetDevice(m_Device), m_Info.PipelineLayout, nullptr);
-	vkDestroyPipeline(Accessors::Device::GetDevice(m_Device), m_GraphicsPipeline, nullptr);
+	vkDestroyShaderModule(Accessors::GraphicsContext::GetDevice(m_Context), m_VertexShaderModule, nullptr);
+	vkDestroyShaderModule(Accessors::GraphicsContext::GetDevice(m_Context), m_FragmentShaderModule, nullptr);
+	vkDestroyPipelineLayout(Accessors::GraphicsContext::GetDevice(m_Context), m_Info.PipelineLayout, nullptr);
+	vkDestroyPipeline(Accessors::GraphicsContext::GetDevice(m_Context), m_GraphicsPipeline, nullptr);
 }
 
 void CVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderModule *shaderModule)
@@ -34,14 +34,14 @@ void CVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderM
 	createInfo.codeSize = sourceData.size();
 	createInfo.pCode = CCast<const UInt32*>(sourceData.data());
 
-	if (vkCreateShaderModule(Accessors::Device::GetDevice(m_Device), &createInfo, nullptr, shaderModule) != VK_SUCCESS)
+	if (vkCreateShaderModule(Accessors::GraphicsContext::GetDevice(m_Context), &createInfo, nullptr, shaderModule) != VK_SUCCESS)
 		 throw std::runtime_error("Failed to create shader module!");
 }
 
 void CVulkanPipeline::CreateGraphicsPipeline()
 {
-	assert(m_Info.RenderPass && "Cannot create graphics pipeline, cause RenderPass object is nullptr!");
-	assert(m_Info.PipelineLayout && "Cannot create graphics pipeline, cause PipelineLayout object is nullptr!");
+	ViAssert(m_Info.RenderPass, "Cannot create graphics pipeline, cause RenderPass object is nullptr!");
+	ViAssert(m_Info.PipelineLayout, "Cannot create graphics pipeline, cause PipelineLayout object is nullptr!");
 
 	VkPipelineShaderStageCreateInfo shaderStagesCreateInfo[2] = {{VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO }, {VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO } };
 	shaderStagesCreateInfo[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
@@ -51,7 +51,7 @@ void CVulkanPipeline::CreateGraphicsPipeline()
 	shaderStagesCreateInfo[1].module = m_FragmentShaderModule;
 	shaderStagesCreateInfo[1].pName = "main";
 
-	auto bindingDescriptions = FGetVertexBindingDesctiptions();
+	auto bindingDescriptions = FGetVertexBindingDescriptions();
 	auto attributeDescriptions = FGetVertexAttributeDescriptions();
 
 	VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO };
@@ -76,11 +76,11 @@ void CVulkanPipeline::CreateGraphicsPipeline()
 	pipelineCreateInfo.subpass = m_Info.Subpass;
 	pipelineCreateInfo.basePipelineIndex = -1;
 
-	if (vkCreateGraphicsPipelines(Accessors::Device::GetDevice(m_Device), nullptr, 1, &pipelineCreateInfo, nullptr, &m_GraphicsPipeline) != VK_SUCCESS)
-		throw std::runtime_error("Failed to create graphics pipeline!");
+	if (vkCreateGraphicsPipelines(Accessors::GraphicsContext::GetDevice(m_Context), nullptr, 1, &pipelineCreateInfo, nullptr, &m_GraphicsPipeline) != VK_SUCCESS)
+		ViAbort("Failed to create graphics pipeline!");
 }
 
-void CVulkanPipeline::CreatePipelineLayout()
+void CVulkanPipeline::CreatePipelineLayout(PDescriptorSetLayout& setLayout)
 {
 	VkPushConstantRange pushConstantRange = {};
 	pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
@@ -90,21 +90,30 @@ void CVulkanPipeline::CreatePipelineLayout()
 	createInfo.pushConstantRangeCount = 1;
 	createInfo.pPushConstantRanges = &pushConstantRange;
 
-	if (vkCreatePipelineLayout(Accessors::Device::GetDevice(m_Device), &createInfo, nullptr, &m_Info.PipelineLayout) != VK_SUCCESS)
-		throw std::runtime_error("Failed to create pipeline layout!");
+	VkDescriptorSetLayout vkSetLayoutObject = Accessors::DescriptorSetLayout::GetDescriptorSetLayout(setLayout);
+	List<VkDescriptorSetLayout> setLayouts = {vkSetLayoutObject};
+
+	createInfo.pSetLayouts = setLayouts.data();
+	createInfo.setLayoutCount = CCast<UInt32>(setLayouts.size());
+
+	if (vkCreatePipelineLayout(Accessors::GraphicsContext::GetDevice(m_Context), &createInfo, nullptr, &m_Info.PipelineLayout) != VK_SUCCESS)
+		ViAbort("Failed to create pipeline layout!");
 }
 
-void CVulkanPipeline::BindDrawCommandBuffer(const SCommandBuffer &commandBuffer) {
+void CVulkanPipeline::BindCommandBuffer(const SCommandBuffer &commandBuffer) const {
 	if (m_GraphicsPipeline != VK_NULL_HANDLE)
 		vkCmdBindPipeline(CCast<VkCommandBuffer>(commandBuffer), VK_PIPELINE_BIND_POINT_GRAPHICS, m_GraphicsPipeline);
 	else
-		throw std::runtime_error("Failed to bind command buffer because graphics pipeline is null!");
+		ViAbort("Failed to bind command buffer because graphics pipeline is null!");
 }
 
-void CVulkanPipeline::PushMaterialData(SCommandBuffer const &buffer, const UInt32 &offset,
-                                       const SMaterialData *materialData)
+void CVulkanPipeline::PushMaterialData(SCommandBuffer const &buffer, const UInt32 &offset, const SMaterialData *materialData) const
 {
 	vkCmdPushConstants(CCast<VkCommandBuffer>(buffer), m_Info.PipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, offset, sizeof(SMaterialData), materialData);
+}
+
+void CVulkanPipeline::BindConstantsDescriptorSet(const Signal& bindPoint, const SFrameInfo& frameInfo) const {
+	vkCmdBindDescriptorSets(CCast<VkCommandBuffer>(frameInfo.CommandBuffer), CCast<VkPipelineBindPoint>(bindPoint), m_Info.PipelineLayout, 0, 1, CCast<VkDescriptorSet*>(&frameInfo.ConstantsDescriptorSet), 0, nullptr);
 }
 
 VISRCEND

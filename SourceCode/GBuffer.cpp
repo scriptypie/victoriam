@@ -8,16 +8,16 @@
 
 VISRCBEG
 
-PBuffer CBuffer::CreateVertexBuffer(PDevice &device, const List<SVertex> &vertices) {
-	return CreateSPtr<CVulkanBuffer>(device, vertices);
+PBuffer CBuffer::CreateVertexBuffer(PGraphicsContext &context, const List<SVertex> &vertices) {
+	return CreateSPtr<CVulkanBuffer>(context, vertices);
 }
 
-PBuffer CBuffer::CreateIndexBuffer(PDevice &device, const List<UInt32> &indices) {
-	return CreateSPtr<CVulkanBuffer>(device, indices);
+PBuffer CBuffer::CreateIndexBuffer(PGraphicsContext &context, const List<UInt32> &indices) {
+	return CreateSPtr<CVulkanBuffer>(context, indices);
 }
 
-PBuffer CBuffer::CreateUniformBuffer(PDevice& device, const PSwapchain& swaphain) {
-	return CreateSPtr<CVulkanBuffer>(device, swaphain->GetMaxFramesInFlight());
+PUniformBuffer CBuffer::CreateUniformBuffer(PGraphicsContext& context, const UInt32& count) {
+	return CreateUPtr<CVulkanBuffer>(context, count);
 }
 
 VISRCEND

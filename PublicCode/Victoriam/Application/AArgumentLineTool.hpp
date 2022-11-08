@@ -9,19 +9,19 @@
 
 VISRCBEG
 
-class CArgumentLineTool
+class VIDECL CArgumentLineTool
 {
-	UInt32 Count = {};
-	Int8** Args = nullptr;
+	UInt32 m_Count = {};
+	Int8** m_Args = nullptr;
 public:
 	VIDECL inline CArgumentLineTool() = default;
 	VIDECL inline ~CArgumentLineTool() = default;
-	VIDECL inline CArgumentLineTool(Int32 argc, Int8** argv) : Count(argc), Args(argv) {}
+	VIDECL inline CArgumentLineTool(Int32 argc, Int8** argv) : m_Count(argc), m_Args(argv) {}
 
-	VIDECL inline String operator[](UInt32 n) const
+	VIDECL VIREQOUT inline String operator[](UInt32 n) const
 	{
-		assert(n < Count);
-		return Args[n];
+		assert(n < m_Count);
+		return m_Args[n];
 	}
 };
 

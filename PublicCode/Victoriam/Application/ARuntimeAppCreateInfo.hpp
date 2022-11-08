@@ -10,7 +10,7 @@
 
 VISRCBEG
 
-struct SRuntimeAppCreateInfo
+struct VIDECL SRuntimeAppCreateInfo
 {
 	CArgumentLineTool Arguments = {};
 	String AppName = {};

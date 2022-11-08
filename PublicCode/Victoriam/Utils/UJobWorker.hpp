@@ -13,8 +13,8 @@ class VIDECL CJobWorker
 {
 	std::thread m_WorkingThread = {};
 public:
-	inline CJobWorker() = default;
-	inline ~CJobWorker() { Join(); }
+	VIDECL inline CJobWorker() = default;
+	VIDECL inline ~CJobWorker() { Join(); }
 
 	template<class T, class Fn = std::function<void(T&, const String&)>>
 	VIDECL inline CJobWorker(T& data, const String filename, Fn fn)

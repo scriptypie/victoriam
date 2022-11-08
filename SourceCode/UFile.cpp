@@ -8,8 +8,48 @@
 
 VISRCBEG
 
+namespace {
+
+	inline SFileTimestamp GetFileBirthday(const String &filename) {
+		struct stat st = {};
+		struct tm *tm;
+		stat(filename.c_str(), &st);
+		tm = localtime(&st.st_birthtimespec.tv_sec);
+		SFileTimestamp Date = {};
+		Date.Second = tm->tm_sec;
+		Date.Minute = tm->tm_min;
+		Date.Hour = tm->tm_hour;
+		Date.Day = tm->tm_mday;
+		Date.Month = tm->tm_mon + 1;
+		Date.Year = tm->tm_year + 1900;
+		return Date;
+	}
+
+	inline UInt64 GetFileSize(const String &filename) {
+		struct stat st = {};
+		stat(filename.c_str(), &st);
+		return st.st_size;
+	}
+
+	inline SFileTimestamp GetFileLastModify(const String &filename) {
+		struct stat st = {};
+		struct tm *tm;
+		stat(filename.c_str(), &st);
+		tm = localtime(&st.st_mtimespec.tv_sec);
+		SFileTimestamp Date = {};
+		Date.Second = tm->tm_sec;
+		Date.Minute = tm->tm_min;
+		Date.Hour = tm->tm_hour;
+		Date.Day = tm->tm_mday;
+		Date.Month = tm->tm_mon + 1;
+		Date.Year = tm->tm_year + 1900;
+		return Date;
+	}
+
+}
+
 CFile::CFile(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat)
-		: m_Filename(filename)
+	: m_Filename(filename)
 {
 	Open(filename, omode, fformat);
 }
@@ -22,7 +62,7 @@ CFile::CFile(const char* filename, const ECOpenMode& omode, const ECFileFormat& 
 
 CFile::~CFile()
 {
-	if (!m_Signal)
+	if (!m_Empty)
 		Release();
 }
 
@@ -40,7 +80,7 @@ void CFile::Release()
 {
 	m_Handle.close();
 	m_Filename.clear();
-	m_Signal = true;
+	m_Empty = true;
 }
 
 bool CFile::Valid() const
@@ -63,24 +103,9 @@ SFileView CFile::View()
 	SFileView view = {};
 	if (Valid())
 	{
-		struct stat st = {};
-		struct tm* tm;
-		stat(m_Filename.c_str(), &st);
-		tm = localtime(&st.st_birthtimespec.tv_sec);
-		view.CreateDate.Second = tm->tm_sec;
-		view.CreateDate.Minute = tm->tm_min;
-		view.CreateDate.Hour   = tm->tm_hour;
-		view.CreateDate.Day    = tm->tm_mday;
-		view.CreateDate.Month  = tm->tm_mon + 1;
-		view.CreateDate.Year   = tm->tm_year + 1900;
-		tm = localtime(&st.st_mtimespec.tv_sec);
-		view.LastEditDate.Second = tm->tm_sec;
-		view.LastEditDate.Minute = tm->tm_min;
-		view.LastEditDate.Hour   = tm->tm_hour;
-		view.LastEditDate.Day    = tm->tm_mday;
-		view.LastEditDate.Month  = tm->tm_mon + 1;
-		view.LastEditDate.Year   = tm->tm_year + 1900;
-		view.Size = st.st_size;
+		view.CreateDate = GetFileBirthday(m_Filename);
+		view.LastEditDate = GetFileLastModify(m_Filename);
+		view.Size = GetFileSize(m_Filename);
 		m_Handle.read(view.FirstFourBytes, 4);
 		m_Handle.seekg(0, std::ios::beg);
 	}

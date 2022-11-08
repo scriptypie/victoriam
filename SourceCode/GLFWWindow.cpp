@@ -63,7 +63,7 @@ void CGLFWWindow::CreateWindow(const SWindowCreateInfo &info) {
 
 	glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 	{
-		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SWindowData>(glfwGetWindowUserPointer(window));
 		CWindowCloseEvent close_event;
 		if (data.Callback)
 			data.Callback(close_event);
@@ -71,7 +71,7 @@ void CGLFWWindow::CreateWindow(const SWindowCreateInfo &info) {
 
 	glfwSetWindowRefreshCallback(m_Window, [](GLFWwindow* window)
 	{
-		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SWindowData>(glfwGetWindowUserPointer(window));
 		CWindowResizeEvent resize_event(CCast<UInt32>(data.Resolution.Width), CCast<UInt32>(data.Resolution.Height));
 		if (data.Callback)
 			data.Callback(resize_event);
@@ -79,7 +79,7 @@ void CGLFWWindow::CreateWindow(const SWindowCreateInfo &info) {
 
 	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, Int32 width, Int32 height)
 	{
-		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SWindowData>(glfwGetWindowUserPointer(window));
 		data.Resolution = { CCast<UInt32>(width), CCast<UInt32>(height) };
 		CWindowResizeEvent resize_event(CCast<UInt32>(width), CCast<UInt32>(height));
 		if (data.Callback)
@@ -88,7 +88,7 @@ void CGLFWWindow::CreateWindow(const SWindowCreateInfo &info) {
 
 	glfwSetKeyCallback(m_Window, [](GLFWwindow* window, Int32 key, Int32 scancode, Int32 action, Int32 mode)
 	{
-		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SWindowData>(glfwGetWindowUserPointer(window));
 
 		if (data.Callback)
 			switch (action)
@@ -111,13 +111,36 @@ void CGLFWWindow::CreateWindow(const SWindowCreateInfo &info) {
 
 	glfwSetCharCallback(m_Window, [](GLFWwindow* window, UInt32 keycode)
 	{
-		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SWindowData>(glfwGetWindowUserPointer(window));
 		data.InputState.keyboard.input = { CCast<char>(keycode) };
+	});
+
+	glfwSetWindowFocusCallback(m_Window, [](GLFWwindow* window, Int32 focused)
+	{
+		auto& data = Cast<SWindowData>(glfwGetWindowUserPointer(window));
+		switch (focused)
+		{
+			case GLFW_TRUE:
+			{
+				CWindowGetFocusEvent focus_event;
+				if (data.Callback)
+					data.Callback(focus_event);
+				break;
+			}
+			case GLFW_FALSE:
+			{
+				CWindowLostFocusEvent unfocus_event;
+				if (data.Callback)
+					data.Callback(unfocus_event);
+				break;
+			}
+			default: break;
+		}
 	});
 
 	glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, Int32 button, Int32 action, Int32 mods)
 	{
-		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SWindowData>(glfwGetWindowUserPointer(window));
 
 		switch (action)
 		{
@@ -139,13 +162,13 @@ void CGLFWWindow::CreateWindow(const SWindowCreateInfo &info) {
 
 	glfwSetScrollCallback(m_Window, [](GLFWwindow* window, Float64 x, Float64 y)
 	{
-		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SWindowData>(glfwGetWindowUserPointer(window));
 		data.InputState.mouse.scroll = { CCast<Float32>(x), CCast<Float32>(y) };
 	});
 
 	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, Float64 x, Float64 y)
 	{
-		auto& data = Cast<SGLFWWindowData>(glfwGetWindowUserPointer(window));
+		auto& data = Cast<SWindowData>(glfwGetWindowUserPointer(window));
 		data.InputState.mouse.position = { CCast<Float32>(x), CCast<Float32>(y) };
 	});
 

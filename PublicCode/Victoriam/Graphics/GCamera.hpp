@@ -13,7 +13,6 @@ class VIDECL CCamera
 {
 	Float32 m_Width = 1280.0F;
 	Float32 m_Height = 720.0F;
-
 	Float32 m_Sensitivity = 0.3F;
 	Bool firstMouse = true;
 	Float32 yaw   = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
@@ -25,11 +24,12 @@ class VIDECL CCamera
 	SMatrix4 m_Projection{ 1.0F };
 	SMatrix4 m_View{1.0F};
 public:
-	inline CCamera() = default;
-	inline ~CCamera() = default;
+	VIDECL CCamera() = default;
+	VIDECL ~CCamera() = default;
 
 	VIDECL void SetViewBounds(const Float32& near, const Float32& far);
 	VIDECL void SetPerspective(const Float32& fovy, const Float32& aspect);
+	VIDECL void SetFovY(const Float32& fovy);
 	VIDECL void SetPerspective(const Float32& aspect);
 	VIDECL void SetViewMatrix(const SMatrix4& view);
 	VIDECL void SetViewportSize(const SVector2 & extent);

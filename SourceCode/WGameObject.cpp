@@ -7,7 +7,6 @@
 
 VISRCBEG
 
-
 CGameObject::CGameObject(CWorld *owner)
 {
 	m_Owner = owner;
@@ -25,6 +24,5 @@ void CGameObject::Destroy()
 {
 	m_Owner->OnGameObjectDestroyed(this);
 }
-
 
 VISRCEND

@@ -21,6 +21,7 @@ void CCamera::SetPerspective(const Float32 &fovy, const Float32 &aspect) {
 
 void CCamera::SetPerspective(const Float32 &aspect) {
 	m_Aspect = aspect;
+	Update();
 }
 
 SVector3 CCamera::Front() const {
@@ -56,7 +57,7 @@ void CCamera::Update()
 
 	if (CInput::IsMouseDown(EMouseCode::ButtonLeft)) {
 
-		float yawSign = Up().y < 0 ? -1.0f : 1.0f;
+		Float32 yawSign = Up().y < 0 ? -1.0f : 1.0f;
 		yaw += (yawSign * offset.x * m_Sensitivity);
 		pitch += (offset.y * m_Sensitivity);
 
@@ -85,6 +86,10 @@ void CCamera::SetViewportSize(const SVector2 &extent) {
 Float32 &CCamera::Sensetivity()
 {
 	return m_Sensitivity;
+}
+
+void CCamera::SetFovY(const Float32 &fovy) {
+	m_Fov = fovy;
 }
 
 VISRCEND

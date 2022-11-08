@@ -2,9 +2,9 @@
 // Created by Вячеслав Кривенко on 14.10.2022.
 //
 
-#include <fstream>
 #include <filesystem>
 #include <vector>
+#include <iostream>
 
 #include <Victoriam/Utils/UShaderCooker.hpp>
 #include <Victoriam/Utils/UCryptogen.hpp>
@@ -14,10 +14,17 @@ VISRCBEG
 
 namespace {
 
-	bool CheckKeyword(
-			std::basic_string<char, std::char_traits<char>, StdAllocator<char>>::iterator &it, const char *keyword) {
-		char len = (char) (strlen)(keyword);
-		for (char i = 0; i < len; i++)
+	const char g_Keywords[4][9] =
+	{
+			"group",
+			"vertex",
+			"fragment",
+			"endgroup"
+	};
+
+	Bool CheckKeyword(String::iterator &it, CString keyword) {
+		Int8 len = (Int8) (strlen)(keyword);
+		for (Int8 i = 0; i < len; i++)
 			if ((*(it + 1)) == keyword[i]) {
 				it++;
 				continue;
@@ -31,46 +38,29 @@ namespace {
 	{
 		List<SSPIRVShader> result;
 		String tmp, source = shader.Source;
-		const char keyword[4][9] =
-				{
-						"group",
-						"vertex",
-						"fragment",
-						"endgroup"
-				};
 		auto it = source.begin();
 		while (it != source.end())
 		{
 			if ((*it) == 64)
-				if (CheckKeyword(it, keyword[0]))
+				if (CheckKeyword(it, g_Keywords[0]))
 				{
-					if (CheckKeyword(it, keyword[1]))
+					if (CheckKeyword(it, g_Keywords[1]))
 					{
-						while ((*++it) != 64) tmp.push_back(*it);
-						if (CheckKeyword(it, keyword[3]))
+						while ((*(++it)) != 64) tmp.push_back(*it);
+						if (CheckKeyword(it, g_Keywords[3]))
 						{
-							SSPIRVShader s(
-									SSPIRVShader::Vertex,
-									tmp,
-									shader.Name
-							);
+							result.push_back({ SSPIRVShader::Vertex, tmp, shader.Name });
 							tmp = {};
-							result.push_back(s);
 							continue;
 						}
 					}
-					if (CheckKeyword(it, keyword[2]))
+					if (CheckKeyword(it, g_Keywords[2]))
 					{
-						while ((*++it) != 64) tmp.push_back(*it);
-						if (CheckKeyword(it, keyword[3]))
+						while ((*(++it)) != 64) tmp.push_back(*it);
+						if (CheckKeyword(it, g_Keywords[3]))
 						{
-							SSPIRVShader s(
-									SSPIRVShader::Fragment,
-									tmp,
-									shader.Name
-							);
+							result.push_back({ SSPIRVShader::Fragment, tmp, shader.Name });
 							tmp = {};
-							result.push_back(s);
 							continue;
 						}
 					}
@@ -84,7 +74,7 @@ namespace {
 
 bool CShaderCooker::IsCookedExists(const String &name)
 {
-	return std::all_of(EXT.begin(), EXT.end(),[=](const char* ext) -> Bool
+	return std::all_of(EXT.begin(), EXT.end(),[=](CString ext) -> Bool
 	{
 		if (!std::filesystem::exists(COOKEDDIR + name + ext))
 			return false;
@@ -96,7 +86,7 @@ bool CShaderCooker::IsShaderChanged(const SEngineShader& shader, const String& n
 {
 	CFile file(SHADERDIR + name + ".sum", ECOpenMode::Read);
 	String sum; sum.resize(32);
-	if (file.Valid()) // if (file.is_open())
+	if (file.Valid())
 	{
 		VIGNORE file.Read(sum);
 		file.Close();
@@ -135,12 +125,7 @@ SEngineShader CShaderCooker::ReadShader(const String &name)
 		else
 		{
 			String exerror = "Cant open shader '" + name + "'! Maybe it's doesn't exists!";
-			String addictionalinfo = "\nINFO:\n\t";
-			addictionalinfo += "CWD - ";
-			addictionalinfo += std::filesystem::current_path().string();
-
-			exerror += addictionalinfo;
-			throw std::runtime_error(exerror.c_str());
+			ViAbort("%s", exerror.c_str());
 		}
 	}
 	INFO = "Shader checksum: " + checksum;
@@ -177,10 +162,8 @@ String CShaderCooker::CookShader(const List<SSPIRVShader> &sshader)
 			f.Close();
 		}
 		// cook shader using glslc tool
-		String command = COMPILER;
-		command += tempfile;
-		command += " -o ";
-		command += cookedfile;
+		String command;
+		((((command += COMPILER) += tempfile) +=" -o ") += cookedfile); // evil thing..
 		system(command.c_str());
 	}
 	std::filesystem::remove_all(TEMPDIR);
@@ -188,8 +171,7 @@ String CShaderCooker::CookShader(const List<SSPIRVShader> &sshader)
 	return info;
 }
 
-BinaryData CShaderCooker::LoadCookedShaderFromName(const String &name,
-                                                   const SSPIRVShader::EShaderType &type)
+BinaryData CShaderCooker::LoadCookedShaderFromName(const String &name, const SSPIRVShader::EShaderType &type)
 {
 	BinaryData data = {};
 	CFile f(COOKEDDIR + name + EXT[(uint32_t)(type)], ECOpenMode::Read);
@@ -208,7 +190,7 @@ BinaryData CShaderCooker::LoadVertexShader(const String &name)
 	{
 		List<SSPIRVShader> shaders = SplitShader(shader);
 		INFO += CookShader(shaders);
-        printf("%s\n", INFO.c_str());
+        std::cout << INFO << std::endl;
 	}
 	return LoadCookedShaderFromName(name, SSPIRVShader::Vertex);
 }
@@ -220,7 +202,7 @@ BinaryData CShaderCooker::LoadFragmentShader(const String &name)
 	{
 		List<SSPIRVShader> shaders = SplitShader(shader);
 		INFO += CookShader(shaders);
-		printf("%s\n", INFO.c_str());
+		std::cout << INFO << std::endl;
 	}
 	return LoadCookedShaderFromName(name, SSPIRVShader::Fragment);
 }

@@ -556,17 +556,17 @@ struct aiUVTransform {
  *  properties.
  */
 enum aiPropertyTypeInfo {
-    /** Array of single-precision (32 Bit) floats
+    /** CArray of single-precision (32 Bit) floats
      *
-     *  It is possible to use aiGetMaterialInteger[Array]() (or the C++-API
+     *  It is possible to use aiGetMaterialInteger[CArray]() (or the C++-API
      *  aiMaterial::Get()) to query properties stored in floating-point format.
      *  The material system performs the type conversion automatically.
     */
     aiPTI_Float = 0x1,
 
-    /** Array of double-precision (64 Bit) floats
+    /** CArray of double-precision (64 Bit) floats
      *
-     *  It is possible to use aiGetMaterialInteger[Array]() (or the C++-API
+     *  It is possible to use aiGetMaterialInteger[CArray]() (or the C++-API
      *  aiMaterial::Get()) to query properties stored in floating-point format.
      *  The material system performs the type conversion automatically.
     */
@@ -579,9 +579,9 @@ enum aiPropertyTypeInfo {
     */
     aiPTI_String = 0x3,
 
-    /** Array of (32 Bit) integers
+    /** CArray of (32 Bit) integers
      *
-     *  It is possible to use aiGetMaterialFloat[Array]() (or the C++-API
+     *  It is possible to use aiGetMaterialFloat[CArray]() (or the C++-API
      *  aiMaterial::Get()) to query properties stored in integer format.
      *  The material system performs the type conversion automatically.
     */

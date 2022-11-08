@@ -8,7 +8,7 @@
 #include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/Graphics/Structs/GVertex.hpp>
 #include <Victoriam/Graphics/Structs/GRendererConstants.hpp>
-#include <Victoriam/Graphics/GDevice.hpp>
+#include <Victoriam/Graphics/GGraphicsContext.hpp>
 #include <Victoriam/Graphics/GSwapchain.hpp>
 
 VISRCBEG
@@ -16,16 +16,19 @@ VISRCBEG
 class VIDECL CBuffer
 {
 public:
-	virtual void Bind(const SCommandBuffer& buffer) = 0;
-	virtual void Draw(const SCommandBuffer& buffer) const = 0;
-	virtual void SubmitUniformBuffer(const SRendererConstants* constants, const UInt32& imageIndex) = 0;
+	VIDECL virtual ~CBuffer() = default;
 
-	VIDECL VIREQOUT static SPtr<CBuffer> CreateVertexBuffer(PDevice& device, const List<SVertex>& vertices);
-	VIDECL VIREQOUT static SPtr<CBuffer> CreateIndexBuffer(PDevice& device, const List<UInt32>& indices);
-	VIDECL VIREQOUT static SPtr<CBuffer> CreateUniformBuffer(PDevice& device, const PSwapchain& swaphain);
+	VIDECL virtual void Bind(const SCommandBuffer& buffer) = 0;
+	VIDECL virtual void Draw(const SCommandBuffer& buffer) const = 0;
+	VIDECL virtual void SubmitUniformBuffer(const SRendererConstants& constants) = 0;
+
+	VIDECL VIREQOUT static SPtr<CBuffer> CreateVertexBuffer(PGraphicsContext& context, const List<SVertex>& vertices);
+	VIDECL VIREQOUT static SPtr<CBuffer> CreateIndexBuffer(PGraphicsContext& context, const List<UInt32>& indices);
+	VIDECL VIREQOUT static UPtr<CBuffer> CreateUniformBuffer(PGraphicsContext& context, const UInt32& count);
 };
 
 VIDECL typedef SPtr<CBuffer> PBuffer;
+VIDECL typedef UPtr<CBuffer> PUniformBuffer;
 
 VIDECL static PBuffer DefaultVertexBuffer;
 VIDECL static PBuffer DefaultIndexBuffer;

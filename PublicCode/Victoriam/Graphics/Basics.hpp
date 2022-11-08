@@ -11,6 +11,7 @@
 VISRCBEG
 
 VIDECL typedef struct TSCommandBuffer* SCommandBuffer;
+VIDECL typedef struct TSDescriptorSet* SDescriptorSet;
 
 VISRCEND
 

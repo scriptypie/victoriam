@@ -5,9 +5,7 @@
 #ifndef VICTORIAM_ASTARTPOINT_HPP
 #define VICTORIAM_ASTARTPOINT_HPP
 
-#include <Victoriam/Core/CBase.hpp>
 #include <Victoriam/Application/ARuntimeApp.hpp>
-
 
 VISRCBEG
 

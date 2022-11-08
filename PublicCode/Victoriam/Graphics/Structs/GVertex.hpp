@@ -15,14 +15,14 @@ VISRCBEG
 
 struct VIDECL SVertex
 {
-	SVector3 Position;
-	SVector4 Color;
-	SVector3 Normal;
-	SVector2 UV;
+	VIDECL SVector3 Position;
+	VIDECL SVector4 Color;
+	VIDECL SVector3 Normal;
+	VIDECL SVector2 UV;
 };
 
-Bool operator==(const SVertex& a, const SVertex& b);
-Bool operator!=(const SVertex& a, const SVertex& b);
+VIDECL Bool operator==(const SVertex& a, const SVertex& b);
+VIDECL Bool operator!=(const SVertex& a, const SVertex& b);
 
 VIDECL inline static const List<SVertex> DefaultVertices = {
 		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F } },

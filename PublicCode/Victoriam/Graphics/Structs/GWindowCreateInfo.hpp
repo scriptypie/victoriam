@@ -10,19 +10,19 @@
 
 VISRCBEG
 
-enum EWindowCreateWindowFlags : FlagDef
+enum VIDECL EWindowCreateWindowFlags : FlagDef
 {
 	WindowCreateWindowFlag_DefaultWindow = 0x0000000000000000,
 	WindowCreateWindowFlag_Fullscreen = 0x0000000000000001,
 	WindowCreateWindowFlags_NoResize = 0x0000000000000010,
 };
 
-struct SWindowCreateInfo
+struct VIDECL SWindowCreateInfo
 {
-	String Name;
-	SWindowExtent Offset;
-	SWindowExtent Resolution;
-	SFlags Flags;
+	VIDECL String Name;
+	VIDECL SWindowExtent Offset;
+	VIDECL SWindowExtent Resolution;
+	VIDECL SFlags Flags;
 };
 
 VISRCEND

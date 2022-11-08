@@ -11,7 +11,7 @@ VISRCBEG
 
 class CGameObject;
 
-enum class EComponentType
+enum class VIDECL EComponentType
 {
 	SComponentBase VIDECL = 0,
 	SComponentRenderable VIDECL ,
@@ -22,15 +22,15 @@ enum class EComponentType
 
 };
 
-#define COMPONENT_DECL(name) friend class CGameObject; inline static UInt32 GetStaticComponentID() { return CCast<UInt32>(EComponentType::S##name); } UInt32 GetComponentID() override { return GetStaticComponentID(); } VIDECL inline S##name() = default; VIDECL inline virtual ~S##name() = default;
+#define COMPONENT_DECL(name) friend class CGameObject; VIDECL VIREQOUT inline static UInt32 GetStaticComponentID() { return CCast<UInt32>(EComponentType::S##name); } VIDECL VIREQOUT UInt32 GetComponentID() override { return GetStaticComponentID(); } VIDECL inline S##name() = default; VIDECL inline virtual ~S##name() = default;
 
 struct VIDECL SComponentBase
 {
 	friend class CGameObject;
-	inline static UInt32 GetStaticComponentID() { return CCast<UInt32>(EComponentType::SComponentBase); } // Root component
-	virtual UInt32 GetComponentID() = 0;
+	VIDECL VIREQOUT inline static UInt32 GetStaticComponentID() { return CCast<UInt32>(EComponentType::SComponentBase); } // Root component
+	VIDECL VIREQOUT virtual UInt32 GetComponentID() = 0;
 public:
-	virtual ~SComponentBase() = default;
+	VIDECL virtual ~SComponentBase() = default;
 };
 
 VISRCEND

@@ -13,9 +13,9 @@ struct VIDECL SComponentTransform : SComponentBase
 {
 	COMPONENT_DECL(ComponentTransform)
 
-	SVector3 Translation;
+	SVector3 Translation = {};
 	Float32  Scale = 1.0F;
-	SVector3 Rotation;
+	SVector3 Rotation = {};
 
 	VIDECL VIREQOUT SMatrix4 Transform() const {
 		SMatrix4 rotation = glm::toMat4(glm::quat(glm::radians(Rotation)));

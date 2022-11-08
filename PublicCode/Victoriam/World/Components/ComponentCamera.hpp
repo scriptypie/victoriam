@@ -10,7 +10,7 @@
 
 VISRCBEG
 
-struct SComponentCamera : SComponentBase
+struct VIDECL SComponentCamera : SComponentBase
 {
 	COMPONENT_DECL(ComponentCamera)
 

@@ -5,6 +5,7 @@
 #include <Victoriam/World/WWorld.hpp>
 #include <Victoriam/World/WGameObject.hpp>
 #include <Victoriam/Input/IInput.hpp>
+#include <Victoriam/Graphics/GRenderer.hpp>
 
 VISRCBEG
 
@@ -55,8 +56,8 @@ CGameObject* CWorld::FindGameObjectByUID(const UID &id)
 	}
 }
 
-SPtr<CWorld> CWorld::Create(const PBuffer& constantsUniformBuffer, const SWorldRendererSettings& rendererSettings) {
-	return CreateSPtr<CWorld>(constantsUniformBuffer, rendererSettings);
+SPtr<CWorld> CWorld::Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings) {
+	return CreateSPtr<CWorld>(renderer, rendererSettings);
 }
 
 void CWorld::Clear()
@@ -82,9 +83,13 @@ void CWorld::Update(const Float32 &dt)
 
 }
 
-CWorld::CWorld(const PBuffer& constantsUniformBuffer, const SWorldRendererSettings &rendererSettings) : m_RendererSettings(rendererSettings)
+CWorld::CWorld(PRenderer& renderer, const SWorldRendererSettings &rendererSettings) : m_RendererSettings(rendererSettings), m_RendererConstantsBuffers(renderer->GetSwapchain()->GetMaxFramesInFlight())
 {
-	m_RendererConstantsBuffer = constantsUniformBuffer;
+	for (auto& m_RendererConstantsBuffer : m_RendererConstantsBuffers)
+	{
+		m_RendererConstantsBuffer = renderer->CreateUniformBuffer();
+		m_RendererConstantsBuffer->Bind(nullptr); // command buffers on binding uniform buffers are unnecessary.
+	}
 }
 
 VISRCEND

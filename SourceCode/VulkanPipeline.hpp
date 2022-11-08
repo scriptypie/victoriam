@@ -5,11 +5,13 @@
 #ifndef VICTORIAM_VULKANPIPELINE_HPP
 #define VICTORIAM_VULKANPIPELINE_HPP
 
-#include "Accessors/AWindow.hpp"
-#include "Accessors/ADevice.hpp"
-#include "Accessors/ASwapchain.hpp"
 #include <Victoriam/Utils/UShaderCooker.hpp>
 #include <Victoriam/Graphics/GPipeline.hpp>
+
+#include "Accessors/AWindow.hpp"
+#include "Accessors/AGraphicsContext.hpp"
+#include "Accessors/ASwapchain.hpp"
+#include "Accessors/ADescriptorSetLayout.hpp"
 
 VISRCBEG
 
@@ -25,7 +27,7 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 	VIDECL VkPipelineDepthStencilStateCreateInfo DepthStencilStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO };
 	VIDECL VkPipelineViewportStateCreateInfo ViewportStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO };
 	VIDECL VkPipelineDynamicStateCreateInfo DynamicStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO };
-	VIDECL List<VkDynamicState> DynamicStateEnables = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
+	VIDECL List<VkDynamicState> DynamicStateEnables = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 	VIDECL VkPipelineLayout PipelineLayout = VK_NULL_HANDLE;
 	VIDECL VkRenderPass RenderPass = VK_NULL_HANDLE;
 	VIDECL UInt32 Subpass = {};
@@ -77,27 +79,28 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 	}
 };
 
-class CVulkanPipeline : public CPipeline
+class VIDECL CVulkanPipeline : public CPipeline
 {
 	friend class Accessors::Pipeline;
 	friend class CVulkanRenderer;
 
 	VIDECL CShaderCooker m_ShaderCooker = {};
-	VIDECL PDevice& m_Device;
+	VIDECL PGraphicsContext& m_Context;
 	VIDECL VkPipeline m_GraphicsPipeline = {};
 	VIDECL VkShaderModule m_VertexShaderModule = {};
 	VIDECL VkShaderModule m_FragmentShaderModule = {};
 	VIDECL SVulkanPipelineCreateInfo m_Info = {};
 public:
-	CVulkanPipeline(const String& name, PDevice& device, PSwapchain& swapchain);
-	~CVulkanPipeline() override;
+	VIDECL CVulkanPipeline(const String& name, PGraphicsContext& device, PSwapchain& swapchain, PDescriptorSetLayout& setLayout);
+	VIDECL ~CVulkanPipeline() override;
 
-	void BindDrawCommandBuffer(const SCommandBuffer& buffer) override;
-	void PushMaterialData(const SCommandBuffer& buffer, const UInt32& offset, const SMaterialData* materialData) override;
+	VIDECL void BindCommandBuffer(const SCommandBuffer& buffer) const override;
+	VIDECL void PushMaterialData(const SCommandBuffer& buffer, const UInt32& offset, const SMaterialData* materialData) const override;
+	VIDECL void BindConstantsDescriptorSet(const Signal& bindPoint, const SFrameInfo& frameInfo) const override;
 private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();
-	VIDECL void CreatePipelineLayout();
+	VIDECL void CreatePipelineLayout(PDescriptorSetLayout& setLayout);
 };
 
 VISRCEND

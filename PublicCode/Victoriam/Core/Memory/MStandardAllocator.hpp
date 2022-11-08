@@ -14,7 +14,7 @@
 VISRCBEG
 
 template<class T>
-class StdAllocator
+class VIDECL StdAllocator
 {
 public:
     VIDECL typedef T value_type;
@@ -30,11 +30,11 @@ public:
         VIDECL typedef StdAllocator<U> other;
     };
 public:
-    inline StdAllocator() = default;
-    inline ~StdAllocator() = default;
-    inline StdAllocator(const StdAllocator&) = default;
+    VIDECL inline StdAllocator() = default;
+    VIDECL inline ~StdAllocator() = default;
+    VIDECL inline StdAllocator(const StdAllocator&) = default;
     template<class U>
-    inline explicit StdAllocator(const StdAllocator<U>&) {}
+    VIDECL inline explicit StdAllocator(const StdAllocator<U>&) {}
 
     VIDECL inline pointer address(reference r)
     {

@@ -52,16 +52,16 @@ class VIDECL CFile
 {
 	VIDECL String m_Filename = {};
 	VIDECL std::fstream m_Handle = {};
-	VIDECL Bool m_Signal = {};
+	VIDECL Bool m_Empty = {};
 
 public:
 	VIDECL CFile(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
 	VIDECL CFile(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
-	CFile() = default;
-	~CFile();
+	VIDECL CFile() = default;
+	VIDECL ~CFile();
 
-	VIDECL void Open(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
-	VIDECL void Open(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
+	VIDECL          void Open(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
+	VIDECL          void Open(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
 
 	VIDECL VIREQOUT bool Valid() const;
 	VIDECL VIREQOUT SFileView View();
@@ -76,9 +76,9 @@ public:
 	}
 	VIDECL VIREQOUT ECFileResult Write(const String& data);
 	VIDECL VIREQOUT ECFileResult Write(const char* data, const UInt64& size);
-	VIDECL void Release();
-	VIDECL void Clear();
-	VIDECL void Close();
+	VIDECL          void Release();
+	VIDECL          void Clear();
+	VIDECL          void Close();
 private:
 	VIDECL VIREQOUT static UInt32 ToStandardOpenMode(const ECOpenMode& omode);
 	VIDECL VIREQOUT static UInt32 ToStandardFormat(const ECFileFormat& format);

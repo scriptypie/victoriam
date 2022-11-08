@@ -12,6 +12,16 @@ VISRCBEG
 struct VIDECL SFrameInfo
 {
 	VIDECL SCommandBuffer CommandBuffer = {};
+	VIDECL SDescriptorSet ConstantsDescriptorSet = {};
+	VIDECL UInt32 ImageIndex = {};
+
+	VIDECL inline SFrameInfo() = default;
+	VIDECL inline SFrameInfo(const SCommandBuffer& commandBuffer, const UInt32& imageIndex)
+		: CommandBuffer(commandBuffer), ImageIndex(imageIndex)
+	{}
+	VIDECL inline SFrameInfo(const SCommandBuffer& commandBuffer, const SDescriptorSet& descriptorSet, const UInt32& imageIndex)
+		: CommandBuffer(commandBuffer), ConstantsDescriptorSet(descriptorSet), ImageIndex(imageIndex)
+	{}
 
 	VIDECL inline explicit operator Bool() const { return CCast<Bool>(CommandBuffer); }
 };
