@@ -16,7 +16,11 @@ namespace Accessors
 	public:
 		VIDECL VIREQOUT static PGraphicsContext& GetContext(const PDescriptorPool& pool)
 		{
-			return CCast<CVulkanDescriptorPool *>(pool.get())->GetContext();
+			return CCast<CVulkanDescriptorPool*>(pool.get())->GetContext();
+		}
+		VIDECL VIREQOUT static VkDescriptorPool GetPool(const PDescriptorPool& pool)
+		{
+			return CCast<CVulkanDescriptorPool*>(pool.get())->GetPool();
 		}
 	};
 }

@@ -131,15 +131,15 @@ void Vi::CRuntimeApp::Startup() {
 		{
 			state->OnUpdate(frameTime);
 		}
-		m_Renderer->BeginUIFrame();
+		// m_Renderer->BeginUIFrame();
 		for (auto& state : m_stateController)
 		{
-			state->OnUpdateGUI();
+			//state->OnUpdateGUI();
 		}
-		m_Renderer->EndUIFrame();
 		if (auto frameInfo = m_Renderer->BeginFrame(m_World))
 		{
 			m_Renderer->DrawFrame(frameInfo, m_World);
+			//m_Renderer->EndUIFrame(frameInfo.CommandBuffer);
 			m_Renderer->EndFrame(frameInfo);
 		}
 	}
@@ -150,6 +150,9 @@ void CRuntimeApp::OnEvent(CEvent &e) {
 	CEventDispatcher dispatcher(e);
 	dispatcher.Dispatch<CWindowResizeEvent>(BIND_EVENT_FN(CRuntimeApp::OnWindowResize));
 	dispatcher.Dispatch<CWindowCloseEvent>(BIND_EVENT_FN(CRuntimeApp::OnWindowClose));
+
+
+
 }
 
 bool CRuntimeApp::OnWindowResize(const CWindowResizeEvent &e) {

@@ -29,6 +29,7 @@ class VIDECL CVulkanRenderer : public CRenderer {
 	VIDECL PDescriptorSetLayout m_GlobalDescriptorSetLayout = {};
 	VIDECL List<SDescriptorSet> m_GlobalDescriptorSets = {};
 	VIDECL UInt32 m_ImageIndex = {};
+	VIDECL VkDescriptorPool m_GUIPool = {};
 public:
 	VIDECL explicit CVulkanRenderer(const SRendererCreateInfo& createInfo);
 	VIDECL ~CVulkanRenderer() override = default;
@@ -50,7 +51,7 @@ public:
 	VIDECL          void DrawFrame(const SFrameInfo& frameInfo, const PWorld& world) override;
 	VIDECL          void EndFrame(const SFrameInfo& frameInfo) override;
 	VIDECL          void BeginUIFrame() override;
-	VIDECL          void EndUIFrame() override;
+	VIDECL          void EndUIFrame(SCommandBuffer commandBuffer) override;
 	VIDECL          void Shutdown(const PWorld& world) override;
 private:
 	VIDECL void CreatePipeline(const String& name);

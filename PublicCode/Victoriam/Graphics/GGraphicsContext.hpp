@@ -10,12 +10,15 @@
 
 VISRCBEG
 
+using ImmediateGraphicsActionFN = std::function<void(SCommandBuffer)>;
+
 class VIDECL CGraphicsContext
 {
 public:
 	VIDECL virtual ~CGraphicsContext() = default;
 
 	VIDECL virtual void WaitReleaseResources() = 0;
+	VIDECL virtual void GraphicsAction(ImmediateGraphicsActionFN fn) = 0;
 
 	VIDECL VIREQOUT static SPtr<CGraphicsContext> Create(const SPtr<CWindow>& window);
 };

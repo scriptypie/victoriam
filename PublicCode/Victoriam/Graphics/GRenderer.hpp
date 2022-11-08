@@ -36,7 +36,7 @@ public:
 	VIDECL          virtual void DrawFrame(const SFrameInfo& frameInfo, const PWorld& world) = 0;
 	VIDECL          virtual void EndFrame(const SFrameInfo& frameInfo) = 0;
 	VIDECL          virtual void BeginUIFrame() = 0;
-	VIDECL          virtual void EndUIFrame() = 0;
+	VIDECL          virtual void EndUIFrame(SCommandBuffer commandBuffer) = 0;
 	VIDECL          virtual void Shutdown(const PWorld& world) = 0;
 };
 

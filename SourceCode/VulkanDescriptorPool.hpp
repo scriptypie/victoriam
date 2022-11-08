@@ -29,6 +29,7 @@ public:
 
 private:
 	VIDECL inline PGraphicsContext& GetContext() { return m_Context; }
+	VIDECL inline VkDescriptorPool GetPool() { return m_Pool; }
 };
 
 VISRCEND

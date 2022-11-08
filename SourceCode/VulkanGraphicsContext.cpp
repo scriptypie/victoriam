@@ -489,4 +489,10 @@ void CVulkanGraphicsContext::WaitReleaseResources()
 	vkDeviceWaitIdle(m_Device);
 }
 
+void CVulkanGraphicsContext::GraphicsAction(ImmediateGraphicsActionFN fn) {
+	auto commandBuffer = CCast<SCommandBuffer>(BeginSingleTimeCommands());
+	fn(commandBuffer);
+	EndSingleTimeCommands(CCast<VkCommandBuffer>(commandBuffer));
+}
+
 VISRCEND

@@ -59,6 +59,7 @@ public:
 	VIDECL ~CVulkanGraphicsContext() override;
 
 	VIDECL void WaitReleaseResources() override;
+	VIDECL void GraphicsAction(ImmediateGraphicsActionFN fn) override;
 private:
 	VIDECL void CreateGraphicsInstance();
 	VIDECL void SetupDebugMessenger();

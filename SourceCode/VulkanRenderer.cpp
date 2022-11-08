@@ -27,32 +27,67 @@ void CVulkanRenderer::Setup()
 	DefaultVertexBuffer = CBuffer::CreateVertexBuffer(m_Context, DefaultVertices);
 	DefaultIndexBuffer  = CBuffer ::CreateIndexBuffer(m_Context, DefaultIndices);
 
-	/*
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	VIGNORE io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
+	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsClassic();
 
+	ImGui::CreateContext();
 	ImGui_ImplGlfw_InitForVulkan(Accessors::Window::GetGLFWWindow(m_Window), true);
 	ImGui_ImplVulkan_InitInfo createInfo = {};
 	createInfo.Instance = Accessors::GraphicsContext::GetInstance(m_Context);
 	createInfo.PhysicalDevice = Accessors::GraphicsContext::GetPhysicalDevice(m_Context);
-	createInfo.GraphicsContext = Accessors::GraphicsContext::GetContext(m_Context);
+	createInfo.Device = Accessors::GraphicsContext::GetDevice(m_Context);
 	createInfo.QueueFamily = Accessors::GraphicsContext::FindQueueFamilies(m_Context).GraphicsFamily;
 	createInfo.Queue = Accessors::GraphicsContext::GetGraphicsQueue(m_Context);
 	createInfo.PipelineCache = VK_NULL_HANDLE;
 	createInfo.MinImageCount = 2;
 	createInfo.ImageCount = m_Swapchain->GetImageCount();
+	createInfo.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
+
+	VkDescriptorPoolSize poolSizes[] =
+	{
+			{ VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
+			{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
+			{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
+			{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
+			{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
+	};
+	VkDescriptorPoolCreateInfo poolCreateInfo = { VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO };
+	poolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
+	poolCreateInfo.maxSets = 1000;
+	poolCreateInfo.poolSizeCount = StaticSize(poolSizes);
+	poolCreateInfo.pPoolSizes = poolSizes;
+
+	vkCreateDescriptorPool(createInfo.Device, &poolCreateInfo, nullptr, &m_GUIPool);
+	createInfo.DescriptorPool = m_GUIPool;
 
 	ImGui_ImplVulkan_Init(&createInfo, Accessors::Swapchain::GetRenderPass(m_Swapchain));
-	*/
+
+	m_Context->GraphicsAction(
+	[&](SCommandBuffer commandBuffer)
+    {
+        ImGui_ImplVulkan_CreateFontsTexture(CCast<VkCommandBuffer>(commandBuffer));
+    });
+	ImGui_ImplVulkan_DestroyFontUploadObjects();
 }
 
 PBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
@@ -91,10 +126,11 @@ void CVulkanRenderer::EndFrame(const SFrameInfo& frameInfo)
 void CVulkanRenderer::Shutdown(const PWorld& world)
 {
 	m_Context->WaitReleaseResources();
-	/*
+	vkDestroyDescriptorPool(Accessors::GraphicsContext::GetDevice(m_Context), m_GUIPool, nullptr);
 	ImGui_ImplVulkan_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
-	*/
+	ImGui::DestroyContext();
+
 	auto renderable_objs = world->AllWith<SComponentRenderable>(); // all renderables MUST have a transform component!!!
 	for (auto renderable_obj : renderable_objs)
 	{
@@ -169,11 +205,29 @@ CVulkanRenderer::CreateGeometryData(const PBuffer &vertexBuffer, const PBuffer &
 
 void CVulkanRenderer::BeginUIFrame()
 {
-
+	ImGui_ImplVulkan_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
 }
 
-void CVulkanRenderer::EndUIFrame()
+void CVulkanRenderer::EndUIFrame(SCommandBuffer commandBuffer)
 {
+	ImGuiIO& io = ImGui::GetIO();
+
+	auto extent = m_Window->GetExtent();
+	io.DisplaySize = {CCast<Float32>(extent.Width), CCast<Float32>(extent.Height)};
+	io.DisplayFramebufferScale = { 1.0F, 1.0F };
+
+	ImGui::Render();
+	ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), CCast<VkCommandBuffer>(commandBuffer));
+
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		GLFWwindow* backup_current_context = glfwGetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		glfwMakeContextCurrent(backup_current_context);
+	}
 
 }
 
