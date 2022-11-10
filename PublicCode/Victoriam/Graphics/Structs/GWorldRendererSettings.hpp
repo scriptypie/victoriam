@@ -9,9 +9,12 @@
 
 VISRCBEG
 
+/**
+ * Contains renderer settings per-world.
+ */
 struct VIDECL SWorldRendererSettings {
-	VIDECL Float32 Ambient = 0.1F;
-	VIDECL Float32 Brightness = 1.0F;
+	SVector4 Ambient = {1.0F, 1.0F, 1.0F, 0.01F};
+	Float32 Brightness = 1.0F;
 };
 
 VISRCEND

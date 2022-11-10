@@ -19,6 +19,7 @@ enum class VIDECL EComponentType
 	SComponentName VIDECL ,
 	SComponentCamera VIDECL ,
 	SComponentSun VIDECL ,
+	SComponentPointLight VIDECL ,
 
 };
 

@@ -3,7 +3,7 @@
 //
 
 #include <Ved/VEditorState.hpp>
-#include <Victoriam/Application/ARuntimeApp.hpp>
+#include <Victoriam/Application/ARuntimeInstance.hpp>
 #include <Victoriam/Input/IInput.hpp>
 
 #include <imgui/imgui.h>
@@ -16,9 +16,9 @@ void VEditorState::OnCreate() {
 
 void VEditorState::OnUpdate(const Float32& dt) {
 	if (CInput::IsKeyDown(EKeyCode::Q) && CInput::IsKeyDown(EKeyCode::LeftCommand)) // Shortcut for fast (safe) exit
-		CRuntimeApp::Get().Close();
+		CRuntimeInstance::Get().Shutdown();
 
-	auto camera = CRuntimeApp::Get().World()->FindGameObjectByName("MainCamera");
+	auto camera = CRuntimeInstance::Get().World()->FindGameObjectByName("MainCamera");
 	auto [componentTransform, componentCamera] = camera->Group<SComponentTransform, SComponentCamera>();
 	auto transform = componentTransform;
 	auto cam = componentCamera->Camera;
@@ -107,7 +107,7 @@ void VEditorState::OnUpdateGUI() {
 			// which we can't undo at the moment without finer window depth/z control.
 			//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);1
 
-			if (ImGui::MenuItem("Exit")) CRuntimeApp::Get().Close();
+			if (ImGui::MenuItem("Exit")) CRuntimeInstance::Get().Shutdown();
 			ImGui::EndMenu();
 		}
 

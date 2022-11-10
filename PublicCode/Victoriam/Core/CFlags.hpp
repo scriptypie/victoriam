@@ -9,8 +9,14 @@
 
 VISRCBEG
 
+/**
+ * Flag definition object type
+ */
 VIDECL typedef unsigned long long FlagDef;
 
+/**
+ * Flags container, that handles and manages several flags.
+ */
 struct VIDECL SFlags
 {
 	FlagDef _base_;
@@ -26,6 +32,11 @@ struct VIDECL SFlags
 	{
 		return (_base_ & f) == f;
 	}
+	/**
+	 * Checks if container contains flag
+	 * @param f Inserted flag definition
+	 * @return True if contains, otherwise false.
+	 */
 	VIDECL VIREQOUT bool Contains(const FlagDef& f) const
 	{
 		return *this == f;

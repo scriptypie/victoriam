@@ -5,14 +5,18 @@
 #ifndef VICTORIAM_GGEOMETRYDATA_HPP
 #define VICTORIAM_GGEOMETRYDATA_HPP
 
-#include <Victoriam/Graphics/GBuffer.hpp>
+#include <Victoriam/Graphics/GVertexBuffer.hpp>
+#include <Victoriam/Graphics/GIndexBuffer.hpp>
 
 VISRCBEG
 
+/**
+ * Generalization of vertex and index buffers.
+ */
 class VIDECL CGeometryData
 {
-	PBuffer m_VertexBuffer = nullptr;
-	PBuffer m_IndexBuffer = nullptr;
+	PVertexBuffer m_VertexBuffer = {};
+	PIndexBuffer m_IndexBuffer = {};
 public:
 	CGeometryData() = default;
 	~CGeometryData();
@@ -24,12 +28,15 @@ public:
 	VIDECL VIREQOUT Bool HasVertexBuffer() const;
 	VIDECL VIREQOUT Bool HasIndexBuffer() const;
 	VIDECL VIREQOUT Bool Empty() const;
-	VIDECL void Release();
+	/**
+	 * Release all resources of buffers.
+	 */
+	VIDECL          void Release();
 
-	static CGeometryData Create(PGraphicsContext& context, const List<SVertex>& vertices);
-	static CGeometryData Create(PGraphicsContext& context, const List<SVertex>& vertices, const List<UInt32>& indices);
-	static CGeometryData Create(const PBuffer& vertexBuffer);
-	static CGeometryData Create(const PBuffer& vertexBuffer, const PBuffer& indexBuffer);
+	VIDECL VIREQOUT static CGeometryData Create(PGraphicsContext& context, const List<SVertex>& vertices);
+	VIDECL VIREQOUT static CGeometryData Create(PGraphicsContext& context, const List<SVertex>& vertices, const List<UInt32>& indices);
+	VIDECL VIREQOUT static CGeometryData Create(const PVertexBuffer& vertexBuffer);
+	VIDECL VIREQOUT static CGeometryData Create(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer);
 };
 
 VISRCEND

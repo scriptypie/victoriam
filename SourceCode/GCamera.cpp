@@ -92,4 +92,12 @@ void CCamera::SetFovY(const Float32 &fovy) {
 	m_Fov = fovy;
 }
 
+SMatrix4 CCamera::GetView() const {
+	return m_View;
+}
+
+SMatrix4 CCamera::GetProjection() const {
+	return m_Projection;
+}
+
 VISRCEND

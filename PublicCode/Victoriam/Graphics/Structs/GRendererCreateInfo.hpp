@@ -12,9 +12,12 @@
 
 VISRCBEG
 
+/**
+ * Contains all information required to create renderer object.
+ */
 struct VIDECL SRendererCreateInfo
 {
-	VIDECL PWindow WindowPtr = nullptr;
+	PWindow WindowPtr = {};
 };
 
 VISRCEND

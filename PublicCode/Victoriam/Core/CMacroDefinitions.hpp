@@ -6,14 +6,14 @@
 #define VICTORIAM_CMACRODEFINITIONS_HPP
 
 #define VIDECL [[maybe_unused]]
-#define VIREQOUT [[nodiscard]]
+#define VIREQOUT [[nodiscard]] /* THIS REQUIRES TO HANDLE RETURNED VALUE!!! */
 #define VIGNORE (void)
 
 #define VISRCBEG namespace Vi {
 #define VISRCEND }
 
 #define ViAssert(e, ...) if (!(e)) ViAbort(__VA_ARGS__)
-#define SignalDecl VIDECL inline static Vi::Signal
+#define SignalDecl VIDECL constexpr Vi::Signal
 
 #define BIND_EVENT_FN(fn) [this](auto&&...args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
 

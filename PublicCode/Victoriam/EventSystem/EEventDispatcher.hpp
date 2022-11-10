@@ -9,6 +9,9 @@
 
 VISRCBEG
 
+/**
+ * Event dispatcher bind and dispatches events to callbacks.
+ */
 class VIDECL CEventDispatcher
 {
 	CEvent& m_Event;

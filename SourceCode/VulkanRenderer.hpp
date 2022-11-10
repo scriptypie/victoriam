@@ -7,43 +7,46 @@
 
 #include <Victoriam/Graphics/GRenderer.hpp>
 #include <Victoriam/Graphics/GDescriptorWriter.hpp>
+#include <Victoriam/Graphics/GRenderSubPass.hpp>
 
 #include "VulkanGraphicsContext.hpp"
 #include "VulkanSwapchain.hpp"
 #include "VulkanPipeline.hpp"
 #include "VulkanCommandBufferDrawer.hpp"
 
-#include "Accessors/ACommandBufferDrawer.hpp"
+#include "Accessors/ACmdBufferSolver.hpp"
 #include "Accessors/ADescriptorWriter.hpp"
-#include "Accessors/ABuffer.hpp"
+#include "Accessors/AVertexBuffer.hpp"
+#include "Accessors/AUniformBuffer.hpp"
 
 VISRCBEG
 
 class VIDECL CVulkanRenderer : public CRenderer {
 	VIDECL PGraphicsContext m_Context = {};
 	VIDECL PSwapchain m_Swapchain = {};
-	VIDECL PPipeline m_Pipeline = {};
-	VIDECL PCommandBufferDrawer m_CommandBufferDrawer = {};
+	VIDECL PCmdBufferSolver m_CommandBufferDrawer = {};
 	VIDECL PWindow m_Window = {};
 	VIDECL PDescriptorPool m_GlobalPool = {};
 	VIDECL PDescriptorSetLayout m_GlobalDescriptorSetLayout = {};
 	VIDECL List<SDescriptorSet> m_GlobalDescriptorSets = {};
 	VIDECL UInt32 m_ImageIndex = {};
 	VIDECL VkDescriptorPool m_GUIPool = {};
+
+	VIDECL List<PRenderSubPass> m_SubPasses = {};
 public:
 	VIDECL explicit CVulkanRenderer(const SRendererCreateInfo& createInfo);
 	VIDECL ~CVulkanRenderer() override = default;
 
 	VIDECL          void Setup() override;
 	VIDECL VIREQOUT inline PSwapchain& GetSwapchain() override { return m_Swapchain; }
-	VIDECL VIREQOUT PBuffer CreateVertexBuffer(const List<SVertex>& vertices) override;
-	VIDECL VIREQOUT PBuffer CreateIndexBuffer(const List<UInt32>& indices) override;
+	VIDECL VIREQOUT PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) override;
+	VIDECL VIREQOUT PIndexBuffer CreateIndexBuffer(const List<UInt32>& indices) override;
 	VIDECL VIREQOUT PUniformBuffer CreateUniformBuffer() override;
 	VIDECL          void CreateDescriptors(const PWorld& world) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices, const List<UInt32>& indices) override;
-	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PBuffer& vertexBuffer) override;
-	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PBuffer& vertexBuffer, const PBuffer& indexBuffer) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const SGeometryDataCreateInfo& createInfo) override;
 
 	VIDECL          void OnWindowResize(const SWindowExtent& extent) override;
@@ -54,7 +57,6 @@ public:
 	VIDECL          void EndUIFrame(SCommandBuffer commandBuffer) override;
 	VIDECL          void Shutdown(const PWorld& world) override;
 private:
-	VIDECL void CreatePipeline(const String& name);
 	VIDECL void RecreateSwapchain(const SWindowExtent& newExtent);
 	VIDECL void CreateDescriptors();
 	VIDECL void CreateDescriptorSetLayout();

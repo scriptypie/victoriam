@@ -10,19 +10,34 @@
 
 VISRCBEG
 
+/**
+ * Additional flags for window creation.
+ */
 enum VIDECL EWindowCreateWindowFlags : FlagDef
 {
+	/**
+	 * Create default window with default settings.
+	 */
 	WindowCreateWindowFlag_DefaultWindow = 0x0000000000000000,
+	/**
+	 * Create fullscreen window without any borders.
+	 */
 	WindowCreateWindowFlag_Fullscreen = 0x0000000000000001,
+	/**
+	 * Creates default but non-resizable window.
+	 */
 	WindowCreateWindowFlags_NoResize = 0x0000000000000010,
 };
 
+/**
+ * Contains all information required to create window object.
+ */
 struct VIDECL SWindowCreateInfo
 {
-	VIDECL String Name;
-	VIDECL SWindowExtent Offset;
-	VIDECL SWindowExtent Resolution;
-	VIDECL SFlags Flags;
+	String Name;
+	SWindowExtent Offset;
+	SWindowExtent Resolution;
+	SFlags Flags;
 };
 
 VISRCEND

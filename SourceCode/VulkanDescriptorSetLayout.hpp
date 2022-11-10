@@ -16,7 +16,6 @@ namespace Accessors { class DescriptorSetLayout; }
 class VIDECL CVulkanDescriptorSetLayout : public CDescriptorSetLayout
 {
 	friend class Accessors::DescriptorSetLayout;
-
 	PGraphicsContext& m_Context;
 	VkDescriptorSetLayout m_Layout = {};
 	DescriptorSetBindingList m_Bindings = {};

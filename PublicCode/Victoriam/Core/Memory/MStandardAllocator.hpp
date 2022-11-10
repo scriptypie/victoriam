@@ -13,6 +13,9 @@
 
 VISRCBEG
 
+/**
+ * Custom standard allocator (stl-compatible)
+ */
 template<class T>
 class VIDECL StdAllocator
 {

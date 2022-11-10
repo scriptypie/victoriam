@@ -9,6 +9,9 @@
 
 VISRCBEG
 
+/**
+ * Generalization ot vertex and index data.
+ */
 struct VIDECL SGeometryDataCreateInfo
 {
 	VIDECL List<SVertex> Vertices;

@@ -9,6 +9,9 @@
 
 VISRCBEG
 
+/**
+ * General purpose camera object.
+ */
 class VIDECL CCamera
 {
 	Float32 m_Width = 1280.0F;
@@ -42,6 +45,8 @@ public:
 	VIDECL void Update();
 
 	VIDECL VIREQOUT SMatrix4 GetViewProjection() const;
+	VIDECL VIREQOUT SMatrix4 GetView() const;
+	VIDECL VIREQOUT SMatrix4 GetProjection() const;
 
 };
 

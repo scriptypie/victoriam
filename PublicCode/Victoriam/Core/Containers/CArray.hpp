@@ -11,6 +11,10 @@
 
 VISRCBEG
 
+/**
+ * Iterator class that handles iterator operations within array class.
+ * @tparam TArray
+ */
 template<class TArray>
 class VIDECL CArrayIterator
 {
@@ -78,6 +82,11 @@ private:
 	VIDECL PointerType m_Position;
 };
 
+/**
+ * Array container class that handles standard array structure.
+ * @tparam T Type of handled object.
+ * @tparam N Capacity of array.
+ */
 template<class T, unsigned long N>
 class VIDECL CArray
 {
@@ -109,17 +118,30 @@ public:
 		assert(counter <= N);
 	}
 
+	/**
+	 * Returns static size(capacity) of array.
+	 */
 	VIDECL VIREQOUT constexpr SizeType Size() const
 	{
 		return N;
 	}
 
+	/**
+	 * Access to elements in array, starting with index 0.
+	 * @param pos Position index [0...N]
+	 * @return Reference to object.
+	 */
 	VIDECL VIREQOUT ReferenceType At(SizeType pos)
 	{
 		assert((pos <= N) && "Position out of array bounds!");
 		return m_Data[pos];
 	}
 
+	/**
+	 * Access to elements in array, starting with index 0.
+	 * @param pos Position index [0...N]
+	 * @return Constant reference to object.
+	 */
 	VIDECL VIREQOUT ConstReferenceType At(SizeType pos) const
 	{
 		assert((pos <= N) && "Position out of array bounds!");
@@ -136,11 +158,17 @@ public:
 		return m_Data[pos];
 	}
 
+	/**
+	 * Access to plain pointer of array.
+	 */
 	VIDECL VIREQOUT PointerType Data()
 	{
 		return m_Data;
 	}
 
+	/**
+	 * Access to plain pointer of array.
+	 */
 	VIDECL VIREQOUT ConstPointerType Data() const
 	{
 		return m_Data;

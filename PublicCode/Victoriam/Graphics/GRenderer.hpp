@@ -5,9 +5,10 @@
 #ifndef VICTORIAM_GRENDERER_HPP
 #define VICTORIAM_GRENDERER_HPP
 
-#include "Victoriam/Graphics/Structs/GRendererCreateInfo.hpp"
+#include <Victoriam/Graphics/Structs/GRendererCreateInfo.hpp>
 #include <Victoriam/Graphics/Structs/GGeometryDataCreateInfo.hpp>
 #include <Victoriam/Graphics/Structs/GFrameInfo.hpp>
+#include <Victoriam/Graphics/GUniformBuffer.hpp>
 #include <Victoriam/World/WWorld.hpp>
 
 VISRCBEG
@@ -21,15 +22,15 @@ public:
 
 	VIDECL          virtual void Setup() = 0;
 	VIDECL VIREQOUT virtual PSwapchain& GetSwapchain() = 0;
-	VIDECL VIREQOUT virtual PBuffer CreateVertexBuffer(const List<SVertex>& vertices) = 0;
-	VIDECL VIREQOUT virtual PBuffer CreateIndexBuffer(const List<UInt32>& indices) = 0;
+	VIDECL VIREQOUT virtual PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) = 0;
+	VIDECL VIREQOUT virtual PIndexBuffer CreateIndexBuffer(const List<UInt32>& indices) = 0;
 	VIDECL VIREQOUT virtual PUniformBuffer CreateUniformBuffer() = 0;
 	VIDECL          virtual void CreateDescriptors(const PWorld& world) = 0;
 	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const List<SVertex>& vertices) = 0;
 	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const List<SVertex>& vertices, const List<UInt32>& indices) = 0;
 	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const SGeometryDataCreateInfo& createInfo) = 0;
-	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const PBuffer& vertexBuffer) = 0;
-	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const PBuffer& vertexBuffer, const PBuffer& indexBuffer) = 0;
+	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer) = 0;
+	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer) = 0;
 
 	VIDECL          virtual void OnWindowResize(const SWindowExtent& extent) = 0;
 	VIDECL VIREQOUT virtual SFrameInfo BeginFrame(const PWorld& world) = 0;

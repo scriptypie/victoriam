@@ -10,7 +10,13 @@
 
 VISRCBEG
 
+/**
+ * Opaque object that handles all commands to draw/transfer/etc...
+ */
 VIDECL typedef struct TSCommandBuffer* SCommandBuffer;
+/**
+ * Opaque object that handles created and associated descriptors.
+ */
 VIDECL typedef struct TSDescriptorSet* SDescriptorSet;
 
 VISRCEND

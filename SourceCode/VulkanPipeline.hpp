@@ -91,7 +91,7 @@ class VIDECL CVulkanPipeline : public CPipeline
 	VIDECL VkShaderModule m_FragmentShaderModule = {};
 	VIDECL SVulkanPipelineCreateInfo m_Info = {};
 public:
-	VIDECL CVulkanPipeline(const String& name, PGraphicsContext& device, PSwapchain& swapchain, PDescriptorSetLayout& setLayout);
+	VIDECL CVulkanPipeline(const String& name, PGraphicsContext& device, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
 	VIDECL ~CVulkanPipeline() override;
 
 	VIDECL void BindCommandBuffer(const SCommandBuffer& buffer) const override;
@@ -100,7 +100,7 @@ public:
 private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();
-	VIDECL void CreatePipelineLayout(PDescriptorSetLayout& setLayout);
+	VIDECL void CreatePipelineLayout(const PDescriptorSetLayout& setLayout);
 };
 
 VISRCEND

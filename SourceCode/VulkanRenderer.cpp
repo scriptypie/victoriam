@@ -11,21 +11,22 @@
 VISRCBEG
 
 CVulkanRenderer::CVulkanRenderer(const SRendererCreateInfo &createInfo)
-	: m_Window(createInfo.WindowPtr)
+	: m_Window(createInfo.WindowPtr), m_SubPasses(1)
 {
 	m_Context = CGraphicsContext::Create(m_Window);
 	RecreateSwapchain(m_Window->GetExtent());
 	CreateDescriptorSetLayout();
 	CreateDescriptors();
-	CreatePipeline("Default");
 }
 
 void CVulkanRenderer::Setup()
 {
-	m_CommandBufferDrawer = CCommandBufferDrawer::Create(m_Swapchain, m_Context, m_Pipeline);
+	m_CommandBufferDrawer = CCmdBufferSolver::Create(m_Swapchain, m_Context);
 
-	DefaultVertexBuffer = CBuffer::CreateVertexBuffer(m_Context, DefaultVertices);
-	DefaultIndexBuffer  = CBuffer ::CreateIndexBuffer(m_Context, DefaultIndices);
+	m_SubPasses[0] = CRenderSubPass::CreateDefaultSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
+
+	DefaultVertexBuffer = CVertexBuffer::Create(m_Context, DefaultVertices);
+	DefaultIndexBuffer  = CIndexBuffer ::Create(m_Context, DefaultIndices);
 
 
 	// Setup Dear ImGui context
@@ -90,9 +91,9 @@ void CVulkanRenderer::Setup()
 	ImGui_ImplVulkan_DestroyFontUploadObjects();
 }
 
-PBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
+PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
 {
-	return CBuffer::CreateVertexBuffer(m_Context, vertices);
+	return CVertexBuffer::Create(m_Context, vertices);
 }
 
 SFrameInfo CVulkanRenderer::BeginFrame(const PWorld& world)
@@ -113,7 +114,8 @@ SFrameInfo CVulkanRenderer::BeginFrame(const PWorld& world)
 
 void CVulkanRenderer::DrawFrame(const SFrameInfo& frameInfo, const PWorld& world)
 {
-	m_CommandBufferDrawer->SubmitDraw(world, frameInfo);
+	for (auto& subpass : m_SubPasses)
+		subpass->Pass(frameInfo, world);
 }
 
 void CVulkanRenderer::EndFrame(const SFrameInfo& frameInfo)
@@ -166,16 +168,17 @@ void CVulkanRenderer::RecreateSwapchain(const SWindowExtent &newExtent) {
 			ViAbort("Swapchain image or depth format is changed!!!");
 	}
 	if (m_GlobalDescriptorSetLayout)
-		CreatePipeline("Default"); // only if descriptor set layout is exists!!!
+	{
+		for (auto& subpass : m_SubPasses) {
+			subpass.reset();
+			subpass = CRenderSubPass::CreateDefaultSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
+		}
+	}
 }
 
-void CVulkanRenderer::CreatePipeline(const String& name)
-{
-	m_Pipeline = CPipeline::Create(name, m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
-}
 
-PBuffer CVulkanRenderer::CreateIndexBuffer(const List<UInt32> &indices) {
-	return CBuffer::CreateIndexBuffer(m_Context, indices);
+PIndexBuffer CVulkanRenderer::CreateIndexBuffer(const List<UInt32> &indices) {
+	return CIndexBuffer::Create(m_Context, indices);
 }
 
 CGeometryData CVulkanRenderer::CreateGeometryData(const List<SVertex> &vertices) {
@@ -194,12 +197,12 @@ CGeometryData CVulkanRenderer::CreateGeometryData(const SGeometryDataCreateInfo 
 		return CGeometryData::Create(m_Context, createInfo.Vertices);
 }
 
-CGeometryData CVulkanRenderer::CreateGeometryData(const PBuffer &vertexBuffer) {
+CGeometryData CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuffer) {
 	return CGeometryData::Create(vertexBuffer);
 }
 
 CGeometryData
-CVulkanRenderer::CreateGeometryData(const PBuffer &vertexBuffer, const PBuffer &indexBuffer) {
+CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuffer, const PIndexBuffer &indexBuffer) {
 	return CGeometryData::Create(vertexBuffer, indexBuffer);
 }
 
@@ -232,7 +235,7 @@ void CVulkanRenderer::EndUIFrame(SCommandBuffer commandBuffer)
 }
 
 PUniformBuffer CVulkanRenderer::CreateUniformBuffer() {
-	 return CBuffer::CreateUniformBuffer(m_Context, 1);
+	 return CUniformBuffer::Create(m_Context, 1);
 }
 
 void CVulkanRenderer::CreateDescriptors() {
@@ -247,7 +250,7 @@ void CVulkanRenderer::CreateDescriptors() {
 void CVulkanRenderer::CreateDescriptorSetLayout() {
 	auto layoutCreateInfo =
 			 SDescriptorSetLayoutCreateInfo()
-			.AddBinding(0, DescriptorTypeUniformBuffer, ShaderStageVertex);
+			.AddBinding(0, DescriptorTypeUniformBuffer, ShaderStageAllStages);
 
 	m_GlobalDescriptorSetLayout = CDescriptorSetLayout::Create(m_Context, layoutCreateInfo);
 }
@@ -257,7 +260,7 @@ void CVulkanRenderer::CreateDescriptors(const PWorld &world) {
 	for (UInt32 i = 0; i < m_GlobalDescriptorSets.size(); i++)
 	{
 		auto& rcb = world->GetConstantsBuffer(i);
-		auto bufferInfo = Accessors::Buffer::GetDescriptorBufferInfo(rcb);
+		auto bufferInfo = Accessors::UniformBuffer::GetDescriptorBufferInfo(rcb);
 		PDescriptorWriter writer = CDescriptorWriter::Create(m_GlobalPool, m_GlobalDescriptorSetLayout);
 		Accessors::DescriptorWriter::WriteBuffer(writer, 0, &bufferInfo);
 		writer->Build(m_GlobalDescriptorSets[i]);

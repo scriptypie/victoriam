@@ -3,16 +3,16 @@
 //
 
 
-#include <Victoriam/Application/AAppStateController.hpp>
+#include <Victoriam/Application/AAppStateChain.hpp>
 
 VISRCBEG
 
-void CAppStateController::AddState(CAppState* state) {
+void CAppStateChain::AddState(CAppState* state) {
     m_states.emplace(m_states.begin() + m_insertIndex, state);
     m_insertIndex += 1;
 }
 
-void CAppStateController::RemoveState(CAppState* state) {
+void CAppStateChain::RemoveState(CAppState* state) {
     auto pos = std::find(m_states.begin(), m_states.begin() + m_insertIndex, state);
     if (pos != m_states.begin() + m_insertIndex)
     {
@@ -21,17 +21,17 @@ void CAppStateController::RemoveState(CAppState* state) {
     }
 }
 
-void CAppStateController::AddOverlayState(CAppState* state) {
+void CAppStateChain::AddOverlayState(CAppState* state) {
     m_states.emplace_back(state);
 }
 
-void CAppStateController::RemoveOverlayState(CAppState* state) {
+void CAppStateChain::RemoveOverlayState(CAppState* state) {
     auto pos = std::find(m_states.begin(), m_states.end(), state);
     if (pos != m_states.end())
         m_states.erase(pos);
 }
 
-CAppStateController::~CAppStateController() {
+CAppStateChain::~CAppStateChain() {
     for (auto& state : m_states)
     {
         state->OnDestroy();

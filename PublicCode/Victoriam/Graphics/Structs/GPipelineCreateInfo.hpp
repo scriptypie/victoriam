@@ -9,10 +9,13 @@
 
 VISRCBEG
 
-struct SPipelineCreateInfo
+/**
+ * Struct that contain all information required to create new pipeline object.
+ */
+struct VIDECL SPipelineCreateInfo
 {
-	VIDECL UInt32 Width = {};
-	VIDECL UInt32 Height = {};
+	UInt32 Width = {};
+	UInt32 Height = {};
 };
 
 VISRCEND

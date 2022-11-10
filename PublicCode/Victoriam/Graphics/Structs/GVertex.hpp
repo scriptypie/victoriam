@@ -13,6 +13,9 @@
 
 VISRCBEG
 
+/**
+ * General vertex structure.
+ */
 struct VIDECL SVertex
 {
 	VIDECL SVector3 Position;

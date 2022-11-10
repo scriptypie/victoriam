@@ -9,6 +9,9 @@
 
 VISRCBEG
 
+/**
+ * Per-mesh struct that handles information required for every mesh to render.
+ */
 struct VIDECL SMaterialData
 {
 	VIDECL SMatrix4 ModelMatrix;

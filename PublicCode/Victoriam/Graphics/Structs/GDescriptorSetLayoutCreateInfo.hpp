@@ -20,6 +20,9 @@ SignalDecl ShaderStageGeometry = 8;
 SignalDecl ShaderStageFragment = 16;
 SignalDecl ShaderStageAllStages = 0x7FFFFFFF;
 
+/**
+ * Binding is what we want to bind to descriptor set.
+ */
 struct VIDECL SDescriptorSetBinding
 {
 	UInt32 Binding = {};
@@ -30,6 +33,9 @@ struct VIDECL SDescriptorSetBinding
 
 VIDECL typedef UnorderedMap<UInt32, SDescriptorSetBinding> DescriptorSetBindingList;
 
+/**
+ * Structure that handles all information required to create descriptor set object.
+ */
 struct VIDECL SDescriptorSetLayoutCreateInfo
 {
 	DescriptorSetBindingList Bindings = {};

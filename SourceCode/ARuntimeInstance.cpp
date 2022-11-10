@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <utility>
 
-#include <Victoriam/Application/ARuntimeApp.hpp>
+#include <Victoriam/Application/ARuntimeInstance.hpp>
 #include <Victoriam/EventSystem/EEventDispatcher.hpp>
 #include <Victoriam/Utils/UGeometryBuilder.hpp>
 #include "Victoriam/Input/IInput.hpp"
@@ -14,7 +14,7 @@ VISRCBEG
 
 extern Bool g_Reload;
 
-CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
+CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	: m_info(std::move(createInfo))
 {
 	s_instance = this;
@@ -37,7 +37,7 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = CWindow::Create(info);
 	}
-	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(CRuntimeApp::OnEvent));
+	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(CRuntimeInstance::OnEvent));
 	CInput::Init(m_Window);
 	rendererCreateInfo.WindowPtr = m_Window;
 	m_Renderer = CRenderer::Create(rendererCreateInfo);
@@ -51,34 +51,50 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	SGeometryDataCreateInfo sphereCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testsphere.obj");
 	SGeometryDataCreateInfo cubeCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("testcube.obj");
 	SGeometryDataCreateInfo monkeyCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("monkey.obj");
+	SGeometryDataCreateInfo quadCreateInfo = CGeometryBuilder::Get().LoadDefaultFromFile("quad.obj");
 
 	CGeometryData sphereGeometryData = m_Renderer->CreateGeometryData(sphereCreateInfo);
 	CGeometryData cubeGeometryData = m_Renderer->CreateGeometryData(cubeCreateInfo);
 	CGeometryData monkeyGeometryData = m_Renderer->CreateGeometryData(monkeyCreateInfo);
+	CGeometryData quadGeometryData = m_Renderer->CreateGeometryData(quadCreateInfo);
 
 	{
 		auto cube = m_World->CreateGameObject("TestSphere");
 		cube->AddComponent<SComponentRenderable>(sphereGeometryData);
 		auto transform = cube->AddComponent<SComponentTransform>();
-		transform->Translation = { -2, 0, 2 };
+		transform->Translation = { 2, 0, -2 };
 	}
 	{
 		auto monkey = m_World->CreateGameObject("TestMonkey");
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		auto transform = monkey->AddComponent<SComponentTransform>();
-		transform->Translation = { 0, 2, 3 };
+		transform->Translation = { 0, -2, -3 };
 		transform->Rotation = { 0, -30, 180 };
 	}
 	{
+		auto plane = m_World->CreateGameObject("Plane");
+		plane->AddComponent<SComponentRenderable>(quadGeometryData);
+		auto transform = plane->AddComponent<SComponentTransform>();
+		transform->Translation = { 0, -3, 0 };
+		transform->Scale = 10.0F;
+	}
+	/*{
 		auto cube = m_World->CreateGameObject("TestCube");
 		cube->AddComponent<SComponentRenderable>(cubeGeometryData);
 		auto transform = cube->AddComponent<SComponentTransform>();
 		transform->Translation = { 2, 0, 3 };
 		transform->Scale = 2.0F;
-	}
+	}*/
 	{
 		auto sun = m_World->CreateGameObject("Sun");
 		sun->AddComponent<SComponentSun>(SVector3(1.0F, 3.0F, -3.0F));
+	}
+	{
+		auto light = m_World->CreateGameObject("Light");
+		auto componentTransform = light->AddComponent<SComponentTransform>();
+		componentTransform->Translation = { 2, -2.5F, 3 };
+		auto componentPointLight = light->AddComponent<SComponentPointLight>();
+		componentPointLight->LightColor = { 0.5F, 0.3F, 0.5F, 10.0F };
 	}
 	{
 		auto camera = m_World->CreateGameObject("MainCamera");
@@ -92,32 +108,32 @@ CRuntimeApp::CRuntimeApp(SRuntimeAppCreateInfo createInfo)
 	m_running = true;
 }
 
-CRuntimeApp::~CRuntimeApp() {
+CRuntimeInstance::~CRuntimeInstance() {
 	if (m_running)
 		Reload();
 }
 
-void CRuntimeApp::AddState(CAppState* state) {
+void CRuntimeInstance::AddState(CAppState* state) {
 	m_stateController.AddState(state);
 	state->OnCreate();
 }
 
-void CRuntimeApp::AddOverlayState(CAppState* overlay) {
+void CRuntimeInstance::AddOverlayState(CAppState* overlay) {
 	m_stateController.AddOverlayState(overlay);
 	overlay->OnCreate();
 }
 
-void CRuntimeApp::Reload() {
+void CRuntimeInstance::Reload() {
 	m_running = false;
 }
 
-void CRuntimeApp::Close()
+void CRuntimeInstance::Shutdown()
 {
 	g_Reload = false;
 	m_running = false;
 }
 
-void Vi::CRuntimeApp::Startup() {
+void Vi::CRuntimeInstance::Startup() {
 	CTimestep currentTime = {};
 
 	while (m_running) {
@@ -146,23 +162,23 @@ void Vi::CRuntimeApp::Startup() {
 	m_Renderer->Shutdown(m_World);
 }
 
-void CRuntimeApp::OnEvent(CEvent &e) {
+void CRuntimeInstance::OnEvent(CEvent &e) {
 	CEventDispatcher dispatcher(e);
-	dispatcher.Dispatch<CWindowResizeEvent>(BIND_EVENT_FN(CRuntimeApp::OnWindowResize));
-	dispatcher.Dispatch<CWindowCloseEvent>(BIND_EVENT_FN(CRuntimeApp::OnWindowClose));
+	dispatcher.Dispatch<CWindowResizeEvent>(BIND_EVENT_FN(CRuntimeInstance::OnWindowResize));
+	dispatcher.Dispatch<CWindowCloseEvent>(BIND_EVENT_FN(CRuntimeInstance::OnWindowClose));
 
 
 
 }
 
-bool CRuntimeApp::OnWindowResize(const CWindowResizeEvent &e) {
+bool CRuntimeInstance::OnWindowResize(const CWindowResizeEvent &e) {
 	ViLog("%s\n", e.ToString().c_str());
 	m_Renderer->OnWindowResize(e.GetExtent());
 	return true;
 }
 
-bool CRuntimeApp::OnWindowClose(const CWindowCloseEvent &e) {
-	Close();
+bool CRuntimeInstance::OnWindowClose(const CWindowCloseEvent &e) {
+	Shutdown();
 	return true;
 }
 

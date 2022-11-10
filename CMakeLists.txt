@@ -11,15 +11,15 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Core/CBase.hpp
         PublicCode/Victoriam/EngineInfo.hpp
         PublicCode/Victoriam/Application/AAppState.hpp
-        PublicCode/Victoriam/Application/AAppStateController.hpp
+        PublicCode/Victoriam/Application/AAppStateChain.hpp
         PublicCode/Victoriam/Core/Memory/MStandardAllocator.hpp
         PublicCode/Victoriam/Core/CMacroDefinitions.hpp
         PublicCode/Victoriam/Core/Memory/MSmartPointers.hpp
         PublicCode/Victoriam/Application/AStartPoint.hpp
         PublicCode/Victoriam/Application/AStartPoint.hpp
-        PublicCode/Victoriam/Application/ARuntimeApp.hpp
+        PublicCode/Victoriam/Application/ARuntimeInstance.hpp
         PublicCode/Victoriam/Application/AArgumentLineTool.hpp
-        PublicCode/Victoriam/Application/ARuntimeAppCreateInfo.hpp
+        PublicCode/Victoriam/Application/ARuntimeInstaceCreateInfo.hpp
         PublicCode/Victoriam/Graphics/GWindow.hpp
         PublicCode/Victoriam/Graphics/Structs/GWindowCreateInfo.hpp
         PublicCode/Victoriam/Core/CFlags.hpp
@@ -42,11 +42,10 @@ set(SOURCE_FILES
         SourceCode/VulkanPipeline.hpp
         SourceCode/Accessors/AGraphicsContext.hpp
         SourceCode/GLFWWindow.hpp
-        PublicCode/Victoriam/Graphics/GCommandBufferDrawer.hpp
+        PublicCode/Victoriam/Graphics/GCmdBufferSolver.hpp
         SourceCode/VulkanCommandBufferDrawer.hpp
-        SourceCode/Accessors/APipeline.hpp
         SourceCode/VulkanRenderer.hpp
-        SourceCode/Accessors/ACommandBufferDrawer.hpp
+        SourceCode/Accessors/ACmdBufferSolver.hpp
         PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp
         PublicCode/Victoriam/Utils/UCryptogen.hpp
         PublicCode/Victoriam/Utils/UFile.hpp
@@ -78,8 +77,8 @@ set(SOURCE_FILES
         PublicCode/Victoriam/World/Components/ComponentSun.hpp
 
         SourceCode/EngineInfo.cpp
-        SourceCode/AAppStateController.cpp
-        SourceCode/ARuntimeApp.cpp
+        SourceCode/AAppStateChain.cpp
+        SourceCode/ARuntimeInstance.cpp
         SourceCode/GWindow.cpp
         SourceCode/GLFWWindow.cpp
         SourceCode/IInput.cpp
@@ -91,7 +90,7 @@ set(SOURCE_FILES
         SourceCode/GSwapchain.cpp
         SourceCode/VulkanSwapchain.cpp
         SourceCode/GRenderer.cpp
-        SourceCode/GCommandBufferDrawer.cpp
+        SourceCode/GCmdBufferSolver.cpp
         SourceCode/VulkanCommandBufferDrawer.cpp
         SourceCode/VulkanRenderer.cpp
         SourceCode/UCryptogen.cpp
@@ -111,7 +110,7 @@ set(SOURCE_FILES
         ThirdParty/imgui/src/ImGui/imgui_draw.cpp
         ThirdParty/imgui/src/ImGui/imgui_demo.cpp
         SourceCode/GVertex.cpp
-        PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp SourceCode/VulkanMemoryBuffer.hpp SourceCode/VulkanMemoryBuffer.cpp PublicCode/Victoriam/Graphics/GBuffer.hpp SourceCode/GBuffer.cpp SourceCode/VulkanBuffer.hpp SourceCode/VulkanBuffer.cpp PublicCode/Victoriam/Graphics/Structs/GRendererConstants.hpp PublicCode/Victoriam/Graphics/Structs/GFrameInfo.hpp PublicCode/Victoriam/Core/Containers/CArray.hpp PublicCode/Victoriam/Graphics/Structs/GDescriptorSetLayoutCreateInfo.hpp PublicCode/Victoriam/Graphics/GDescriptorSetLayout.hpp SourceCode/GDescriptorSetLayoutCreateInfo.cpp SourceCode/GDescriptorSetLayout.cpp SourceCode/VulkanDescriptorSetLayout.cpp SourceCode/VulkanDescriptorSetLayout.hpp SourceCode/Accessors/ADescriptorSetLayout.hpp PublicCode/Victoriam/Graphics/Structs/GDescriptorPoolCreateInfo.hpp SourceCode/GDescriptorPoolCreateInfo.cpp PublicCode/Victoriam/Graphics/GDescriptorPool.hpp SourceCode/GDescriptorPool.cpp SourceCode/VulkanDescriptorPool.cpp SourceCode/VulkanDescriptorPool.hpp PublicCode/Victoriam/Graphics/GDescriptorWriter.hpp SourceCode/GDescriptorWriter.cpp SourceCode/VulkanDescriptorWriter.cpp SourceCode/VulkanDescriptorWriter.hpp SourceCode/Accessors/ADescriptorPool.hpp SourceCode/Accessors/ABuffer.hpp SourceCode/Accessors/ADescriptorWriter.hpp)
+        PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp SourceCode/VulkanMemoryBuffer.hpp SourceCode/VulkanMemoryBuffer.cpp PublicCode/Victoriam/Graphics/GBuffer.hpp SourceCode/GVertexBuffer.cpp SourceCode/VulkanVertexBuffer.hpp SourceCode/VulkanVertexBuffer.cpp PublicCode/Victoriam/Graphics/Structs/GRendererConstants.hpp PublicCode/Victoriam/Graphics/Structs/GFrameInfo.hpp PublicCode/Victoriam/Core/Containers/CArray.hpp PublicCode/Victoriam/Graphics/Structs/GDescriptorSetLayoutCreateInfo.hpp PublicCode/Victoriam/Graphics/GDescriptorSetLayout.hpp SourceCode/GDescriptorSetLayoutCreateInfo.cpp SourceCode/GDescriptorSetLayout.cpp SourceCode/VulkanDescriptorSetLayout.cpp SourceCode/VulkanDescriptorSetLayout.hpp SourceCode/Accessors/ADescriptorSetLayout.hpp PublicCode/Victoriam/Graphics/Structs/GDescriptorPoolCreateInfo.hpp SourceCode/GDescriptorPoolCreateInfo.cpp PublicCode/Victoriam/Graphics/GDescriptorPool.hpp SourceCode/GDescriptorPool.cpp SourceCode/VulkanDescriptorPool.cpp SourceCode/VulkanDescriptorPool.hpp PublicCode/Victoriam/Graphics/GDescriptorWriter.hpp SourceCode/GDescriptorWriter.cpp SourceCode/VulkanDescriptorWriter.cpp SourceCode/VulkanDescriptorWriter.hpp SourceCode/Accessors/ADescriptorPool.hpp SourceCode/Accessors/AVertexBuffer.hpp SourceCode/Accessors/ADescriptorWriter.hpp PublicCode/Victoriam/World/Components/ComponentPointLight.hpp PublicCode/Victoriam/Graphics/GRenderSubPass.hpp SourceCode/GRenderSubPass.cpp SourceCode/RendererSubPasses/DefaultRenderSubPass.cpp SourceCode/RendererSubPasses/DefaultRenderSubPass.hpp PublicCode/Victoriam/Graphics/GVertexBuffer.hpp PublicCode/Victoriam/Graphics/GIndexBuffer.hpp PublicCode/Victoriam/Graphics/GUniformBuffer.hpp SourceCode/GIndexBuffer.cpp SourceCode/VulkanIndexBuffer.cpp SourceCode/VulkanIndexBuffer.hpp SourceCode/GUniformBuffer.cpp SourceCode/VulkanUniformBuffer.cpp SourceCode/VulkanUniformBuffer.hpp SourceCode/Accessors/AIndexBuffer.hpp SourceCode/Accessors/AUniformBuffer.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

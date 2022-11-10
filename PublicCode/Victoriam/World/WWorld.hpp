@@ -8,7 +8,7 @@
 #include <Victoriam/Core/CBase.hpp>
 #include <Victoriam/World/WGameObject.hpp>
 #include <Victoriam/Graphics/Structs/GWorldRendererSettings.hpp>
-#include <Victoriam/Graphics/GBuffer.hpp>
+#include <Victoriam/Graphics/GUniformBuffer.hpp>
 
 VISRCBEG
 

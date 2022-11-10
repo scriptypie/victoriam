@@ -10,7 +10,7 @@
 
 VISRCBEG
 
-CVulkanPipeline::CVulkanPipeline(const String& name, PGraphicsContext& context, PSwapchain& swapchain, PDescriptorSetLayout& setLayout)
+CVulkanPipeline::CVulkanPipeline(const String& name, PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout)
 		: m_Context(context), m_Info(Accessors::Swapchain::GetRenderPass(swapchain))
 {
 	// I know, it's wrong, but in this case it's okay 'cause our virtual function will be existed
@@ -80,7 +80,7 @@ void CVulkanPipeline::CreateGraphicsPipeline()
 		ViAbort("Failed to create graphics pipeline!");
 }
 
-void CVulkanPipeline::CreatePipelineLayout(PDescriptorSetLayout& setLayout)
+void CVulkanPipeline::CreatePipelineLayout(const PDescriptorSetLayout& setLayout)
 {
 	VkPushConstantRange pushConstantRange = {};
 	pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;

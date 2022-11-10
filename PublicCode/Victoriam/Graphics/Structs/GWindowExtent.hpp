@@ -9,10 +9,13 @@
 
 VISRCBEG
 
+/**
+ * Generalized width and height information.
+ */
 struct VIDECL SWindowExtent
 {
-	VIDECL UInt32 Width;
-	VIDECL UInt32 Height;
+	UInt32 Width = {};
+	UInt32 Height = {};
 };
 
 VISRCEND

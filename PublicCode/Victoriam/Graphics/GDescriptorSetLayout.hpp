@@ -9,12 +9,17 @@
 
 VISRCBEG
 
+/**
+ * Layout object of coming descriptor set.
+ */
 class VIDECL CDescriptorSetLayout
 {
 public:
 	VIDECL virtual ~CDescriptorSetLayout() = default;
 	VIDECL virtual DescriptorSetBindingList& GetBindings() = 0;
-
+	/**
+	 * Creates new descriptor set layout
+	 */
 	VIDECL VIREQOUT static UPtr<CDescriptorSetLayout> Create(PGraphicsContext& context, const SDescriptorSetLayoutCreateInfo& createInfo);
 };
 

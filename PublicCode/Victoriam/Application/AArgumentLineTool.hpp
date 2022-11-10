@@ -9,6 +9,9 @@
 
 VISRCBEG
 
+/**
+ * Simple CLTool for getting command line arguments.
+ */
 class VIDECL CArgumentLineTool
 {
 	UInt32 m_Count = {};

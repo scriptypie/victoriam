@@ -2,15 +2,15 @@
 // Created by Вячеслав Кривенко on 07.10.2022.
 //
 
-#ifndef VICTORIAM_ARUNTIMEAPPCREATEINFO_HPP
-#define VICTORIAM_ARUNTIMEAPPCREATEINFO_HPP
+#ifndef VICTORIAM_ARUNTIMEINSTACECREATEINFO_HPP
+#define VICTORIAM_ARUNTIMEINSTACECREATEINFO_HPP
 
 #include <Victoriam/Core/CBase.hpp>
 #include <Victoriam/Application/AArgumentLineTool.hpp>
 
 VISRCBEG
 
-struct VIDECL SRuntimeAppCreateInfo
+struct VIDECL SRuntimeInstanceCreateInfo
 {
 	CArgumentLineTool Arguments = {};
 	String AppName = {};
@@ -19,4 +19,4 @@ struct VIDECL SRuntimeAppCreateInfo
 
 VISRCEND
 
-#endif //VICTORIAM_ARUNTIMEAPPCREATEINFO_HPP
+#endif //VICTORIAM_ARUNTIMEINSTACECREATEINFO_HPP

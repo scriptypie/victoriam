@@ -4,98 +4,90 @@
 
 #include "VulkanCommandBufferDrawer.hpp"
 
-#include <Victoriam/Graphics/Structs/GMaterialData.hpp>
+#include <Victoriam/Graphics/Structs/GRendererConstants.hpp>
 #include <Victoriam/Graphics/GCamera.hpp>
 
 VISRCBEG
 
-CVulkanCommandBufferDrawer::CVulkanCommandBufferDrawer(PSwapchain &swapchain, PGraphicsContext& context, PPipeline& pipeline)
-	: m_Swapchain(swapchain), m_Context(context), m_Pipeline(pipeline)
+CVulkanCmdBufferSolver::CVulkanCmdBufferSolver(PSwapchain &swapchain, PGraphicsContext& context)
+	: m_Swapchain(swapchain), m_Context(context)
 {
-	CreateCommandBuffers();
+	CreateCmdBuffers();
 }
 
-CVulkanCommandBufferDrawer::~CVulkanCommandBufferDrawer()
+CVulkanCmdBufferSolver::~CVulkanCmdBufferSolver()
 {
 	vkFreeCommandBuffers(
 			Accessors::GraphicsContext::GetDevice(m_Context),
 			Accessors::GraphicsContext::GetCommandPool(m_Context),
-			CCast<UInt32>(m_CommandBuffers.size()),
-	        m_CommandBuffers.data());
+			CCast<UInt32>(m_CmdBuffers.size()),
+			m_CmdBuffers.data());
 
-	m_CommandBuffers.clear();
+	m_CmdBuffers.clear();
 }
 
-void CVulkanCommandBufferDrawer::CreateCommandBuffers()
+void CVulkanCmdBufferSolver::CreateCmdBuffers()
 {
-	m_CommandBuffers.resize(m_Swapchain->GetImageCount());
+	m_CmdBuffers.resize(m_Swapchain->GetImageCount());
 
 	VkCommandBufferAllocateInfo allocateInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO };
 	allocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 	allocateInfo.commandPool = Accessors::GraphicsContext::GetCommandPool(m_Context);
-	allocateInfo.commandBufferCount = CCast<UInt32>(m_CommandBuffers.size());
+	allocateInfo.commandBufferCount = CCast<UInt32>(m_CmdBuffers.size());
 
-	if (vkAllocateCommandBuffers(Accessors::GraphicsContext::GetDevice(m_Context), &allocateInfo, m_CommandBuffers.data()) != VK_SUCCESS)
+	if (vkAllocateCommandBuffers(Accessors::GraphicsContext::GetDevice(m_Context), &allocateInfo, m_CmdBuffers.data()) != VK_SUCCESS)
 		ViAbort("Failed to allocate command buffers!");
 }
 
-SCommandBuffer CVulkanCommandBufferDrawer::Begin(const PWorld& world, const UInt32& imageIndex)
+SCommandBuffer CVulkanCmdBufferSolver::Begin(const PWorld& world, const UInt32& imageIndex)
 {
 	VkCommandBufferBeginInfo beginInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO };
-	if (vkBeginCommandBuffer(m_CommandBuffers.at(imageIndex), &beginInfo) != VK_SUCCESS)
+	if (vkBeginCommandBuffer(m_CmdBuffers.at(imageIndex), &beginInfo) != VK_SUCCESS)
 		ViAbort("Failed to call vkBeginCommandBuffer()");
 
 	auto sunobj = world->OneWith<SComponentSun>(); // There CAN be single one on a scene
 	auto rendererSettings = world->GetRendererSettings(); // as well as renderer settings
 
 	CCamera* mainCamera = nullptr;
-	auto cam_obj = world->OneWith<SComponentCamera, SComponentTransform>();
-	auto [componentCamera, componentTransform] = cam_obj->Group<SComponentCamera, SComponentTransform>();
-	if (componentCamera->Primary) {
-		componentCamera->Camera.SetPerspective(m_Swapchain->GetExtentAspectRatio());
-		componentCamera->Camera.SetViewMatrix(glm::lookAt(componentTransform->Translation,
-		                                                  componentTransform->Translation + componentCamera->Camera.Front(),
-		                                                  componentCamera->Camera.Up()));
-		mainCamera = &componentCamera->Camera;
+	{
+		auto cam_obj = world->OneWith<SComponentCamera, SComponentTransform>();
+		auto [componentCamera, componentTransform] = cam_obj->Group<SComponentCamera, SComponentTransform>();
+		if (componentCamera->Primary) {
+			componentCamera->Camera.SetPerspective(m_Swapchain->GetExtentAspectRatio());
+			componentCamera->Camera.SetViewMatrix(glm::lookAt(componentTransform->Translation,
+			                                                  componentTransform->Translation +
+			                                                  componentCamera->Camera.Front(),
+			                                                  componentCamera->Camera.Up()));
+			mainCamera = &componentCamera->Camera;
+		}
 	}
+
+	auto lightObj = world->OneWith<SComponentPointLight>();
+	auto componentPointLight = lightObj->GetComponent<SComponentPointLight>();
+	auto componentTransform = lightObj->GetComponent<SComponentTransform>();
 
 	// submit constants buffer
 	SRendererConstants constants = {};
 	constants.SunDirection = sunobj ? SVector4(-sunobj->GetComponent<SComponentSun>()->Direction, 1.0F) : SVector4();
 	constants.Ambient = rendererSettings.Ambient;
 	constants.Brightness = rendererSettings.Brightness;
-	constants.ProjectionView = mainCamera->GetViewProjection();
+	constants.Projection = mainCamera->GetProjection();
+	constants.View = mainCamera->GetView();
+	constants.LightColor = componentPointLight->LightColor;
+	constants.LightPosition = SVector4(componentTransform->Translation, 1.0F);
 
 	auto& constantBuffer = world->GetConstantsBuffer(m_Swapchain->GetFrameIndex());
-	constantBuffer->SubmitUniformBuffer(constants);
+	constantBuffer->SubmitToGPU(constants);
 
-	m_Swapchain->BeginRenderPass(CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex)), imageIndex);
+	m_Swapchain->BeginRenderPass(CCast<SCommandBuffer>(m_CmdBuffers.at(imageIndex)), imageIndex);
 
-	return CCast<SCommandBuffer>(m_CommandBuffers.at(imageIndex));
+	return CCast<SCommandBuffer>(m_CmdBuffers.at(imageIndex));
 }
 
-void CVulkanCommandBufferDrawer::End(const SCommandBuffer& commandBuffer) const
+void CVulkanCmdBufferSolver::End(const SCommandBuffer& commandBuffer) const
 {
 	if (vkEndCommandBuffer(CCast<VkCommandBuffer>(commandBuffer)) != VK_SUCCESS)
 		ViAbort("Failed to record command buffer!");
-}
-
-void CVulkanCommandBufferDrawer::SubmitDraw(const PWorld& world, const SFrameInfo& frameInfo) const
-{
-	m_Pipeline->BindCommandBuffer(frameInfo.CommandBuffer);
-	m_Pipeline->BindConstantsDescriptorSet(BindPointGraphics, frameInfo);
-
-	auto renderable_objs = world->AllWith<SComponentRenderable, SComponentTransform>(); // all renderables MUST have a transform component!!!
-	for (auto renderable_obj: renderable_objs) {
-		auto [rrc, rtc] = renderable_obj->Group<SComponentRenderable, SComponentTransform>();
-
-		if (!rrc->Geometry.Empty()) {
-			SMaterialData materialData = {};
-			materialData.ModelMatrix = rtc->Transform();
-			m_Pipeline->PushMaterialData(CCast<SCommandBuffer>(frameInfo.CommandBuffer), 0, &materialData);
-			rrc->Geometry.SubmitDraw(CCast<SCommandBuffer>(frameInfo.CommandBuffer));
-		}
-	}
 }
 
 VISRCEND

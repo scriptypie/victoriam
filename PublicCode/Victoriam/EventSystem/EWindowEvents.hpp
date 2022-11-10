@@ -10,6 +10,9 @@
 
 VISRCBEG
 
+/**
+ * Event that signaled about main window close
+ */
 class VIDECL CWindowCloseEvent : public CEvent
 {
 public:
@@ -26,15 +29,26 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
+/**
+ * Event that signaled about window resizing, and contains additional information.
+ */
 class VIDECL CWindowResizeEvent : public CEvent
 {
 	UInt32 m_Width, m_Height;
 public:
 	CWindowResizeEvent(UInt32 width, UInt32 height) : m_Width(width), m_Height(height) {}
-
+	/**
+	 * Access to new window's width.
+	 */
 	VIDECL VIREQOUT inline UInt32 GetWidth() const { return m_Width; }
+	/**
+	 * Access to new window's height.
+	 */
 	VIDECL VIREQOUT inline UInt32 GetHeight() const { return m_Height; }
-	VIDECL VIREQOUT inline SWindowExtent GetExtent() const { return {m_Width, m_Height }; }
+	/**
+	 * Access to new window's width and height as extent.
+	 */
+	VIDECL VIREQOUT inline SWindowExtent GetExtent() const { return { m_Width, m_Height }; }
 
 	VIDECL VIREQOUT String ToString() const override
 	{
@@ -47,6 +61,9 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
+/**
+ * Called every time when main window lost focus.
+ */
 class VIDECL CWindowLostFocusEvent : public CEvent
 {
 public:
@@ -63,6 +80,9 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
+/**
+ * Called every time when main window gets in focus by cursor.
+ */
 class VIDECL CWindowGetFocusEvent : public CEvent
 {
 public:

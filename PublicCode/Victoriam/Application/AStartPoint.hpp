@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_ASTARTPOINT_HPP
 #define VICTORIAM_ASTARTPOINT_HPP
 
-#include <Victoriam/Application/ARuntimeApp.hpp>
+#include <Victoriam/Application/ARuntimeInstance.hpp>
 
 VISRCBEG
 
@@ -15,9 +15,9 @@ Int32 Main(Int32 Argc, Int8** Args)
 {
 	while (g_Reload)
 	{
-		auto application = CreateRuntimeApp({Argc, Args});
-		application->Startup();
-		delete application;
+		auto engineInstance = FCreateRuntimeInstance({Argc, Args});
+		engineInstance->Startup();
+		delete engineInstance;
 	}
 	return 0;
 }
