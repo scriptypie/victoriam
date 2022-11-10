@@ -20,7 +20,7 @@ class VIDECL CGameObject
 	CWorld* m_Owner;
 	List<SComponentBase*> m_Components;
 public:
-	VIDECL ~CGameObject() {}
+	VIDECL ~CGameObject() { m_Components.clear(); }
 	VIDECL VIREQOUT UID GetUID() const;
 
 	template<class T, class...Args>
@@ -41,7 +41,7 @@ public:
 	{
 		if (m_Components.empty()) return false;
 		for (auto component : m_Components)
-			if (((component->GetComponentID() == T::GetStaticComponentID()), ...))
+			if (((component->GetComponentID() == T::GetStaticComponentID()) && ...))
 				return true;
 		return false;
 	}
