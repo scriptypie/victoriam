@@ -4,19 +4,24 @@
 
 #include "VulkanPipeline.hpp"
 
-#include "VulkanVertex.hpp"
-
 #include <Victoriam/Graphics/Structs/GMaterialData.hpp>
 
 VISRCBEG
 
-CVulkanPipeline::CVulkanPipeline(const String& name, PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout)
+CVulkanPipeline::CVulkanPipeline(const String& name, PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, Bool createConstantRanges)
 		: m_Context(context), m_Info(Accessors::Swapchain::GetRenderPass(swapchain))
 {
 	// I know, it's wrong, but in this case it's okay 'cause our virtual function will be existed
 	CreateShaderModule(m_ShaderCooker.LoadVertexShader(name), &m_VertexShaderModule);
 	CreateShaderModule(m_ShaderCooker.LoadFragmentShader(name), &m_FragmentShaderModule);
-	CreatePipelineLayout(setLayout);
+	CreatePipelineLayout(setLayout, createConstantRanges);
+
+	if (!createConstantRanges) // that means - we created non-trivial render sub pass and want not to provide usual vertex bindings and attributes
+	{
+		m_Info.BindingDescriptions.clear();
+		m_Info.AttributeDescriptions.clear();
+	}
+
 	CreateGraphicsPipeline();
 }
 
@@ -43,7 +48,7 @@ void CVulkanPipeline::CreateGraphicsPipeline()
 	ViAssert(m_Info.RenderPass, "Cannot create graphics pipeline, cause RenderPass object is nullptr!");
 	ViAssert(m_Info.PipelineLayout, "Cannot create graphics pipeline, cause PipelineLayout object is nullptr!");
 
-	VkPipelineShaderStageCreateInfo shaderStagesCreateInfo[2] = {{VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO }, {VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO } };
+	VkPipelineShaderStageCreateInfo shaderStagesCreateInfo[2] = {{ VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO }, { VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO } };
 	shaderStagesCreateInfo[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
 	shaderStagesCreateInfo[0].module = m_VertexShaderModule;
 	shaderStagesCreateInfo[0].pName = "main";
@@ -51,8 +56,8 @@ void CVulkanPipeline::CreateGraphicsPipeline()
 	shaderStagesCreateInfo[1].module = m_FragmentShaderModule;
 	shaderStagesCreateInfo[1].pName = "main";
 
-	auto bindingDescriptions = FGetVertexBindingDescriptions();
-	auto attributeDescriptions = FGetVertexAttributeDescriptions();
+	auto& bindingDescriptions = m_Info.BindingDescriptions;
+	auto& attributeDescriptions = m_Info.AttributeDescriptions;
 
 	VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO };
 	vertexInputStateCreateInfo.vertexAttributeDescriptionCount = CCast<UInt32>(attributeDescriptions.size());
@@ -80,15 +85,17 @@ void CVulkanPipeline::CreateGraphicsPipeline()
 		ViAbort("Failed to create graphics pipeline!");
 }
 
-void CVulkanPipeline::CreatePipelineLayout(const PDescriptorSetLayout& setLayout)
+void CVulkanPipeline::CreatePipelineLayout(const PDescriptorSetLayout& setLayout, Bool createConstantRanges)
 {
-	VkPushConstantRange pushConstantRange = {};
-	pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
-	pushConstantRange.size = sizeof(SMaterialData);
-
 	VkPipelineLayoutCreateInfo createInfo = { VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO };
-	createInfo.pushConstantRangeCount = 1;
-	createInfo.pPushConstantRanges = &pushConstantRange;
+
+	if (createConstantRanges) {
+		VkPushConstantRange pushConstantRange = {};
+		pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
+		pushConstantRange.size = sizeof(SMaterialData);
+		createInfo.pushConstantRangeCount = 1;
+		createInfo.pPushConstantRanges = &pushConstantRange;
+	}
 
 	VkDescriptorSetLayout vkSetLayoutObject = Accessors::DescriptorSetLayout::GetDescriptorSetLayout(setLayout);
 	List<VkDescriptorSetLayout> setLayouts = {vkSetLayoutObject};

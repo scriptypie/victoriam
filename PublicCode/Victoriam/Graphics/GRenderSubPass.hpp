@@ -16,10 +16,11 @@ VISRCBEG
 class VIDECL CRenderSubPass
 {
 public:
-	virtual ~CRenderSubPass() = default;
-	virtual void Pass(const SFrameInfo& frameInfo, const PWorld& world) = 0;
+	VIDECL virtual ~CRenderSubPass() = default;
+	VIDECL virtual void Pass(const SFrameInfo& frameInfo, const PWorld& world) = 0;
 
-	static UPtr<CRenderSubPass> CreateDefaultSubPass(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
+	VIDECL VIREQOUT static UPtr<CRenderSubPass> CreateDefaultSubPass(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
+	VIDECL VIREQOUT static UPtr<CRenderSubPass> CreatePointLightBillboardSubPass(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
 };
 
 VIDECL typedef UPtr<CRenderSubPass> PRenderSubPass;

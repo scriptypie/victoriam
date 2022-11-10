@@ -30,7 +30,7 @@ public:
 	VIDECL virtual void PushMaterialData(const SCommandBuffer& buffer, const UInt32& offset, const SMaterialData* materialData) const = 0;
 	VIDECL virtual void BindConstantsDescriptorSet(const Signal& bindPoint, const SFrameInfo& frameInfo) const = 0;
 
-	VIDECL VIREQOUT static UPtr<CPipeline> Create(const String& name, PGraphicsContext& device, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
+	VIDECL VIREQOUT static UPtr<CPipeline> Create(const String& name, PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, Bool createConstantRanges = true);
 };
 
 VIDECL typedef UPtr<CPipeline> PPipeline;

@@ -75,6 +75,35 @@ set(SOURCE_FILES
         ThirdParty/tinyobjloader/TinyObjLoader.hpp
         PublicCode/Victoriam/Utils/UHash.hpp
         PublicCode/Victoriam/World/Components/ComponentSun.hpp
+        PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp
+        SourceCode/VulkanMemoryBuffer.hpp
+        PublicCode/Victoriam/Graphics/GBuffer.hpp
+        SourceCode/VulkanVertexBuffer.hpp
+        PublicCode/Victoriam/Graphics/Structs/GRendererConstants.hpp
+        PublicCode/Victoriam/Graphics/Structs/GFrameInfo.hpp
+        PublicCode/Victoriam/Core/Containers/CArray.hpp
+        PublicCode/Victoriam/Graphics/Structs/GDescriptorSetLayoutCreateInfo.hpp
+        PublicCode/Victoriam/Graphics/GDescriptorSetLayout.hpp
+        SourceCode/VulkanDescriptorSetLayout.hpp
+        SourceCode/Accessors/ADescriptorSetLayout.hpp
+        PublicCode/Victoriam/Graphics/Structs/GDescriptorPoolCreateInfo.hpp
+        PublicCode/Victoriam/Graphics/GDescriptorPool.hpp
+        SourceCode/VulkanDescriptorPool.hpp
+        PublicCode/Victoriam/Graphics/GDescriptorWriter.hpp
+        SourceCode/VulkanDescriptorWriter.hpp
+        SourceCode/Accessors/ADescriptorPool.hpp
+        SourceCode/Accessors/AVertexBuffer.hpp
+        SourceCode/Accessors/ADescriptorWriter.hpp
+        PublicCode/Victoriam/World/Components/ComponentPointLight.hpp
+        PublicCode/Victoriam/Graphics/GRenderSubPass.hpp
+        SourceCode/RendererSubPasses/DefaultRenderSubPass.hpp
+        PublicCode/Victoriam/Graphics/GVertexBuffer.hpp
+        PublicCode/Victoriam/Graphics/GIndexBuffer.hpp
+        PublicCode/Victoriam/Graphics/GUniformBuffer.hpp
+        SourceCode/VulkanUniformBuffer.hpp
+        SourceCode/Accessors/AIndexBuffer.hpp
+        SourceCode/Accessors/AUniformBuffer.hpp
+        SourceCode/RendererSubPasses/PointLightBillboardSubPass.hpp
 
         SourceCode/EngineInfo.cpp
         SourceCode/AAppStateChain.cpp
@@ -101,6 +130,27 @@ set(SOURCE_FILES
         SourceCode/GGeometryData.cpp
         SourceCode/UJobWorker.cpp
         SourceCode/UGeometryBuilder.cpp
+        SourceCode/GVertex.cpp
+        SourceCode/VulkanMemoryBuffer.cpp
+        SourceCode/GVertexBuffer.cpp
+        SourceCode/VulkanVertexBuffer.cpp
+        SourceCode/GDescriptorSetLayoutCreateInfo.cpp
+        SourceCode/GDescriptorSetLayout.cpp
+        SourceCode/VulkanDescriptorSetLayout.cpp
+        SourceCode/GDescriptorPoolCreateInfo.cpp
+        SourceCode/GDescriptorPool.cpp
+        SourceCode/VulkanDescriptorPool.cpp
+        SourceCode/GDescriptorWriter.cpp
+        SourceCode/VulkanDescriptorWriter.cpp
+        SourceCode/GRenderSubPass.cpp
+        SourceCode/RendererSubPasses/DefaultRenderSubPass.cpp
+        SourceCode/GIndexBuffer.cpp
+        SourceCode/VulkanIndexBuffer.cpp
+        SourceCode/VulkanIndexBuffer.hpp
+        SourceCode/GUniformBuffer.cpp
+        SourceCode/VulkanUniformBuffer.cpp
+        SourceCode/RendererSubPasses/PointLightBillboardSubPass.cpp
+
         ThirdParty/tinyobjloader/TinyObjLoader.cpp
         ThirdParty/imgui/src/ImGui/imgui.cpp
         ThirdParty/imgui/src/ImGui/imgui_impl_glfw.cpp
@@ -109,8 +159,7 @@ set(SOURCE_FILES
         ThirdParty/imgui/src/ImGui/imgui_widgets.cpp
         ThirdParty/imgui/src/ImGui/imgui_draw.cpp
         ThirdParty/imgui/src/ImGui/imgui_demo.cpp
-        SourceCode/GVertex.cpp
-        PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp SourceCode/VulkanMemoryBuffer.hpp SourceCode/VulkanMemoryBuffer.cpp PublicCode/Victoriam/Graphics/GBuffer.hpp SourceCode/GVertexBuffer.cpp SourceCode/VulkanVertexBuffer.hpp SourceCode/VulkanVertexBuffer.cpp PublicCode/Victoriam/Graphics/Structs/GRendererConstants.hpp PublicCode/Victoriam/Graphics/Structs/GFrameInfo.hpp PublicCode/Victoriam/Core/Containers/CArray.hpp PublicCode/Victoriam/Graphics/Structs/GDescriptorSetLayoutCreateInfo.hpp PublicCode/Victoriam/Graphics/GDescriptorSetLayout.hpp SourceCode/GDescriptorSetLayoutCreateInfo.cpp SourceCode/GDescriptorSetLayout.cpp SourceCode/VulkanDescriptorSetLayout.cpp SourceCode/VulkanDescriptorSetLayout.hpp SourceCode/Accessors/ADescriptorSetLayout.hpp PublicCode/Victoriam/Graphics/Structs/GDescriptorPoolCreateInfo.hpp SourceCode/GDescriptorPoolCreateInfo.cpp PublicCode/Victoriam/Graphics/GDescriptorPool.hpp SourceCode/GDescriptorPool.cpp SourceCode/VulkanDescriptorPool.cpp SourceCode/VulkanDescriptorPool.hpp PublicCode/Victoriam/Graphics/GDescriptorWriter.hpp SourceCode/GDescriptorWriter.cpp SourceCode/VulkanDescriptorWriter.cpp SourceCode/VulkanDescriptorWriter.hpp SourceCode/Accessors/ADescriptorPool.hpp SourceCode/Accessors/AVertexBuffer.hpp SourceCode/Accessors/ADescriptorWriter.hpp PublicCode/Victoriam/World/Components/ComponentPointLight.hpp PublicCode/Victoriam/Graphics/GRenderSubPass.hpp SourceCode/GRenderSubPass.cpp SourceCode/RendererSubPasses/DefaultRenderSubPass.cpp SourceCode/RendererSubPasses/DefaultRenderSubPass.hpp PublicCode/Victoriam/Graphics/GVertexBuffer.hpp PublicCode/Victoriam/Graphics/GIndexBuffer.hpp PublicCode/Victoriam/Graphics/GUniformBuffer.hpp SourceCode/GIndexBuffer.cpp SourceCode/VulkanIndexBuffer.cpp SourceCode/VulkanIndexBuffer.hpp SourceCode/GUniformBuffer.cpp SourceCode/VulkanUniformBuffer.cpp SourceCode/VulkanUniformBuffer.hpp SourceCode/Accessors/AIndexBuffer.hpp SourceCode/Accessors/AUniformBuffer.hpp)
+        )
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

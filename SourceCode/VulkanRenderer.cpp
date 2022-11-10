@@ -11,7 +11,7 @@
 VISRCBEG
 
 CVulkanRenderer::CVulkanRenderer(const SRendererCreateInfo &createInfo)
-	: m_Window(createInfo.WindowPtr), m_SubPasses(1)
+	: m_Window(createInfo.WindowPtr), m_SubPasses(2)
 {
 	m_Context = CGraphicsContext::Create(m_Window);
 	RecreateSwapchain(m_Window->GetExtent());
@@ -24,6 +24,7 @@ void CVulkanRenderer::Setup()
 	m_CommandBufferDrawer = CCmdBufferSolver::Create(m_Swapchain, m_Context);
 
 	m_SubPasses[0] = CRenderSubPass::CreateDefaultSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
+	m_SubPasses[1] = CRenderSubPass::CreatePointLightBillboardSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
 
 	DefaultVertexBuffer = CVertexBuffer::Create(m_Context, DefaultVertices);
 	DefaultIndexBuffer  = CIndexBuffer ::Create(m_Context, DefaultIndices);

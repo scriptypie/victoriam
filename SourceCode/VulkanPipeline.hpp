@@ -12,6 +12,7 @@
 #include "Accessors/AGraphicsContext.hpp"
 #include "Accessors/ASwapchain.hpp"
 #include "Accessors/ADescriptorSetLayout.hpp"
+#include "VulkanVertex.hpp"
 
 VISRCBEG
 
@@ -19,6 +20,8 @@ namespace Accessors { class Pipeline; }
 
 struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 {
+	VIDECL List<VkVertexInputBindingDescription> BindingDescriptions = {};
+	VIDECL List<VkVertexInputAttributeDescription> AttributeDescriptions = {};
 	VIDECL VkPipelineInputAssemblyStateCreateInfo InputAssemblyStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO };
 	VIDECL VkPipelineRasterizationStateCreateInfo RasterizationStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO };
 	VIDECL VkPipelineMultisampleStateCreateInfo MultisampleStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO };
@@ -41,6 +44,10 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 
 	VIDECL inline SVulkanPipelineCreateInfo()
 	{
+		// BindingDescriptions
+		BindingDescriptions = FGetVertexBindingDescriptions();
+		// AttributeDescriptions
+		AttributeDescriptions = FGetVertexAttributeDescriptions();
 		// InputAssembly
 		InputAssemblyStateCreateInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		// ViewportStateCreateInfo
@@ -91,7 +98,7 @@ class VIDECL CVulkanPipeline : public CPipeline
 	VIDECL VkShaderModule m_FragmentShaderModule = {};
 	VIDECL SVulkanPipelineCreateInfo m_Info = {};
 public:
-	VIDECL CVulkanPipeline(const String& name, PGraphicsContext& device, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
+	VIDECL CVulkanPipeline(const String& name, PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, Bool createConstantRanges);
 	VIDECL ~CVulkanPipeline() override;
 
 	VIDECL void BindCommandBuffer(const SCommandBuffer& buffer) const override;
@@ -100,7 +107,7 @@ public:
 private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();
-	VIDECL void CreatePipelineLayout(const PDescriptorSetLayout& setLayout);
+	VIDECL void CreatePipelineLayout(const PDescriptorSetLayout& setLayout, Bool createConstantRanges);
 };
 
 VISRCEND
