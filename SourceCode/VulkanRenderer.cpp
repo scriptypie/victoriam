@@ -21,7 +21,7 @@ CVulkanRenderer::CVulkanRenderer(const SRendererCreateInfo &createInfo)
 
 void CVulkanRenderer::Setup()
 {
-	m_CommandBufferDrawer = CCmdBufferSolver::Create(m_Swapchain, m_Context);
+	m_CmdBufferSolver = CCmdBufferSolver::Create(m_Swapchain, m_Context);
 
 	m_SubPasses[0] = CRenderSubPass::CreateDefaultSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
 	m_SubPasses[1] = CRenderSubPass::CreatePointLightBillboardSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
@@ -29,67 +29,6 @@ void CVulkanRenderer::Setup()
 	DefaultVertexBuffer = CVertexBuffer::Create(m_Context, DefaultVertices);
 	DefaultIndexBuffer  = CIndexBuffer ::Create(m_Context, DefaultIndices);
 
-
-	// Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	VIGNORE io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
-	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
-
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
-
-	ImGui::CreateContext();
-	ImGui_ImplGlfw_InitForVulkan(Accessors::Window::GetGLFWWindow(m_Window), true);
-	ImGui_ImplVulkan_InitInfo createInfo = {};
-	createInfo.Instance = Accessors::GraphicsContext::GetInstance(m_Context);
-	createInfo.PhysicalDevice = Accessors::GraphicsContext::GetPhysicalDevice(m_Context);
-	createInfo.Device = Accessors::GraphicsContext::GetDevice(m_Context);
-	createInfo.QueueFamily = Accessors::GraphicsContext::FindQueueFamilies(m_Context).GraphicsFamily;
-	createInfo.Queue = Accessors::GraphicsContext::GetGraphicsQueue(m_Context);
-	createInfo.PipelineCache = VK_NULL_HANDLE;
-	createInfo.MinImageCount = 2;
-	createInfo.ImageCount = m_Swapchain->GetImageCount();
-	createInfo.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
-
-	VkDescriptorPoolSize poolSizes[] =
-	{
-			{ VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
-			{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
-			{ VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
-			{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
-			{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
-			{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
-			{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
-			{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
-			{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
-			{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
-			{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
-	};
-	VkDescriptorPoolCreateInfo poolCreateInfo = { VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO };
-	poolCreateInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-	poolCreateInfo.maxSets = 1000;
-	poolCreateInfo.poolSizeCount = StaticSize(poolSizes);
-	poolCreateInfo.pPoolSizes = poolSizes;
-
-	vkCreateDescriptorPool(createInfo.Device, &poolCreateInfo, nullptr, &m_GUIPool);
-	createInfo.DescriptorPool = m_GUIPool;
-
-	ImGui_ImplVulkan_Init(&createInfo, Accessors::Swapchain::GetRenderPass(m_Swapchain));
-
-	m_Context->GraphicsAction(
-	[&](SCommandBuffer commandBuffer)
-    {
-        ImGui_ImplVulkan_CreateFontsTexture(CCast<VkCommandBuffer>(commandBuffer));
-    });
-	ImGui_ImplVulkan_DestroyFontUploadObjects();
 }
 
 PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
@@ -108,31 +47,43 @@ SFrameInfo CVulkanRenderer::BeginFrame(const PWorld& world)
 	if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 		ViAbort("Failed to acquire next image!");
 
-	SCommandBuffer commandBuffer = m_CommandBufferDrawer->Begin(world, m_ImageIndex);
+	SCommandBuffer commandBuffer = m_CmdBufferSolver->Begin(world, m_ImageIndex);
 
-	return { commandBuffer, m_GlobalDescriptorSets[m_Swapchain->GetFrameIndex()], m_ImageIndex };
+	return { commandBuffer,
+			 m_GlobalDescriptorSets[m_Swapchain->GetFrameIndex()],
+			 m_ImageIndex,
+			 m_Swapchain->GetFrameIndex(),
+			 m_Swapchain->GetExtentAspectRatio() };
 }
 
-void CVulkanRenderer::DrawFrame(const SFrameInfo& frameInfo, const PWorld& world)
+void CVulkanRenderer::DrawFrame(SFrameInfo& frameInfo, const PWorld& world)
 {
-	for (auto& subpass : m_SubPasses)
+	for (auto& subpass : m_SubPasses) {
+		subpass->Compute(frameInfo, world);
+	}
+
+	// end computations
+	auto& constantBuffer = world->GetConstantsBuffer(frameInfo.FrameIndex);
+	constantBuffer->SubmitToGPU(frameInfo.Constants);
+
+	m_Swapchain->BeginRenderPass(frameInfo.CommandBuffer, frameInfo.ImageIndex);
+
+	for (auto& subpass : m_SubPasses) {
 		subpass->Pass(frameInfo, world);
+	}
+
+	m_Swapchain->EndRenderPass(frameInfo.CommandBuffer);
 }
 
 void CVulkanRenderer::EndFrame(const SFrameInfo& frameInfo)
 {
-	m_Swapchain->EndRenderPass(frameInfo.CommandBuffer);
-	m_CommandBufferDrawer->End(frameInfo.CommandBuffer);
+	m_CmdBufferSolver->End(frameInfo.CommandBuffer);
 	Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, CCast<VkCommandBuffer*>(&frameInfo.CommandBuffer), &m_ImageIndex);
 }
 
 void CVulkanRenderer::Shutdown(const PWorld& world)
 {
 	m_Context->WaitReleaseResources();
-	vkDestroyDescriptorPool(Accessors::GraphicsContext::GetDevice(m_Context), m_GUIPool, nullptr);
-	ImGui_ImplVulkan_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
 
 	auto renderable_objs = world->AllWith<SComponentRenderable>(); // all renderables MUST have a transform component!!!
 	for (auto renderable_obj : renderable_objs)
@@ -169,12 +120,10 @@ void CVulkanRenderer::RecreateSwapchain(const SWindowExtent &newExtent) {
 			ViAbort("Swapchain image or depth format is changed!!!");
 	}
 	if (m_GlobalDescriptorSetLayout)
-	{
-		for (auto& subpass : m_SubPasses) {
-			subpass.reset();
-			subpass = CRenderSubPass::CreateDefaultSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
+		{
+			m_SubPasses[0] = CRenderSubPass::CreateDefaultSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
+			m_SubPasses[1] = CRenderSubPass::CreatePointLightBillboardSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
 		}
-	}
 }
 
 

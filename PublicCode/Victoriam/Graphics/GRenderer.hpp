@@ -34,7 +34,7 @@ public:
 
 	VIDECL          virtual void OnWindowResize(const SWindowExtent& extent) = 0;
 	VIDECL VIREQOUT virtual SFrameInfo BeginFrame(const PWorld& world) = 0;
-	VIDECL          virtual void DrawFrame(const SFrameInfo& frameInfo, const PWorld& world) = 0;
+	VIDECL          virtual void DrawFrame(SFrameInfo& frameInfo, const PWorld& world) = 0;
 	VIDECL          virtual void EndFrame(const SFrameInfo& frameInfo) = 0;
 	VIDECL          virtual void BeginUIFrame() = 0;
 	VIDECL          virtual void EndUIFrame(SCommandBuffer commandBuffer) = 0;

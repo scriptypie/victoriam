@@ -43,7 +43,7 @@ set(SOURCE_FILES
         SourceCode/Accessors/AGraphicsContext.hpp
         SourceCode/GLFWWindow.hpp
         PublicCode/Victoriam/Graphics/GCmdBufferSolver.hpp
-        SourceCode/VulkanCommandBufferDrawer.hpp
+        SourceCode/VulkanCmdBufferSolver.hpp
         SourceCode/VulkanRenderer.hpp
         SourceCode/Accessors/ACmdBufferSolver.hpp
         PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp
@@ -120,7 +120,7 @@ set(SOURCE_FILES
         SourceCode/VulkanSwapchain.cpp
         SourceCode/GRenderer.cpp
         SourceCode/GCmdBufferSolver.cpp
-        SourceCode/VulkanCommandBufferDrawer.cpp
+        SourceCode/VulkanCmdBufferSolver.cpp
         SourceCode/VulkanRenderer.cpp
         SourceCode/UCryptogen.cpp
         SourceCode/UFile.cpp
@@ -159,7 +159,7 @@ set(SOURCE_FILES
         ThirdParty/imgui/src/ImGui/imgui_widgets.cpp
         ThirdParty/imgui/src/ImGui/imgui_draw.cpp
         ThirdParty/imgui/src/ImGui/imgui_demo.cpp
-        )
+        PublicCode/Victoriam/Graphics/Structs/GPointLightsData.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

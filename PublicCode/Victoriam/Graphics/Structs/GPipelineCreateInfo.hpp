@@ -5,7 +5,9 @@
 #ifndef VICTORIAM_GPIPELINECREATEINFO_HPP
 #define VICTORIAM_GPIPELINECREATEINFO_HPP
 
-#include "Victoriam/Graphics/Basics.hpp"
+#include <Victoriam/Graphics/Basics.hpp>
+#include <Victoriam/Graphics/GSwapchain.hpp>
+#include <Victoriam/Graphics/GDescriptorSetLayout.hpp>
 
 VISRCBEG
 
@@ -16,6 +18,10 @@ struct VIDECL SPipelineCreateInfo
 {
 	UInt32 Width = {};
 	UInt32 Height = {};
+	String Name = {};
+	Bool bProvideBindings = true;
+	Bool bProvideAttributes = true;
+	Bool bCreateConstantRanges = true;
 };
 
 VISRCEND

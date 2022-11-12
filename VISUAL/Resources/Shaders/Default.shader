@@ -11,22 +11,31 @@ layout (location = 0) out vec4 o_Color;
 layout (location = 1) out vec3 o_PosWorld;
 layout (location = 2) out vec3 o_NormalWorld;
 
+struct PointLight
+{
+    vec4 Position; // w is radius
+    vec4 Color; // w is intensity
+};
+
+#define MAX_POINT_LIGHTS 32
+
 layout (set = 0, binding = 0) uniform WorldConstants {
     mat4 View;
     mat4 Projection;
     vec4 SunDirection;
-    vec4 LightPosition;
-    vec4 LightColor;
     vec4 Ambient; // w is intensity
+    PointLight PointLights[MAX_POINT_LIGHTS];
     float Brightness;
+    int ActivePLCount;
 } Constants;
 
-layout (push_constant) uniform MaterialData {
+layout (push_constant) uniform PushData {
     mat4 ModelMatrix;
 } m_Data;
 
 void main()
 {
+
     vec4 positionWorld = m_Data.ModelMatrix * vec4(m_Position, 1);;
     gl_Position = Constants.Projection * Constants.View * positionWorld;
 
@@ -47,30 +56,47 @@ layout (location = 2) in vec3 m_NormalWorld;
 
 layout (location = 0) out vec4 o_Color;
 
+struct PointLight
+{
+    vec4 Position; // w is radius
+    vec4 Color; // w is intensity
+};
+
+#define MAX_POINT_LIGHTS 32
+
 layout (set = 0, binding = 0) uniform WorldConstants {
     mat4 View;
     mat4 Projection;
     vec4 SunDirection;
-    vec4 LightPosition;
-    vec4 LightColor;
     vec4 Ambient; // w is intensity
+    PointLight PointLights[MAX_POINT_LIGHTS];
     float Brightness;
+    int ActivePLCount;
 } Constants;
 
-layout (push_constant) uniform MaterialData
+layout (push_constant) uniform PushData
 {
     mat4 ModelMatrix;
 } m_Data;
 
 void main() {
-    vec3 dirToLight = Constants.LightPosition.xyz - m_PosWorld;
-    float atten = 1.0 / dot(dirToLight, dirToLight);
 
-    vec3 lightColor = Constants.LightColor.xyz * Constants.LightColor.w * atten;
-    vec3 ambientLight = Constants.Ambient.xyz * Constants.Ambient.w;
-    vec3 diffuseLight = lightColor * max(dot(normalize(m_NormalWorld), normalize(dirToLight)), 0.0);
+    vec3 diffuseLight = Constants.Ambient.xyz * Constants.Ambient.w;
+    vec3 surfaceNormal = normalize(m_NormalWorld);
 
-    o_Color = m_Color * vec4(diffuseLight + ambientLight, 1.0);
+    for (int i = 0; i < Constants.ActivePLCount; i++)
+    {
+        PointLight plData = Constants.PointLights[i];
+
+        vec3 dirToLight = plData.Position.xyz - m_PosWorld;
+        float atten = 1.0 / dot(dirToLight, dirToLight);
+        float cosAngleIncidence = max(dot(surfaceNormal, normalize(dirToLight)), 0.0);
+        vec3 intensity = plData.Color.xyz * plData.Color.w * atten;
+
+        diffuseLight += (intensity * cosAngleIncidence) / 1.0;
+    }
+
+    o_Color = m_Color * vec4(diffuseLight, 1.0);
 }
 
 @endgroup

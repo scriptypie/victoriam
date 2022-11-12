@@ -17,6 +17,8 @@ class VIDECL CRenderSubPass
 {
 public:
 	VIDECL virtual ~CRenderSubPass() = default;
+
+	VIDECL virtual void Compute(SFrameInfo& frameInfo, const PWorld& world) {}
 	VIDECL virtual void Pass(const SFrameInfo& frameInfo, const PWorld& world) = 0;
 
 	VIDECL VIREQOUT static UPtr<CRenderSubPass> CreateDefaultSubPass(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);

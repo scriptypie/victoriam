@@ -12,7 +12,7 @@
 #include "VulkanGraphicsContext.hpp"
 #include "VulkanSwapchain.hpp"
 #include "VulkanPipeline.hpp"
-#include "VulkanCommandBufferDrawer.hpp"
+#include "VulkanCmdBufferSolver.hpp"
 
 #include "Accessors/ACmdBufferSolver.hpp"
 #include "Accessors/ADescriptorWriter.hpp"
@@ -24,7 +24,7 @@ VISRCBEG
 class VIDECL CVulkanRenderer : public CRenderer {
 	VIDECL PGraphicsContext m_Context = {};
 	VIDECL PSwapchain m_Swapchain = {};
-	VIDECL PCmdBufferSolver m_CommandBufferDrawer = {};
+	VIDECL PCmdBufferSolver m_CmdBufferSolver = {};
 	VIDECL PWindow m_Window = {};
 	VIDECL PDescriptorPool m_GlobalPool = {};
 	VIDECL PDescriptorSetLayout m_GlobalDescriptorSetLayout = {};
@@ -51,7 +51,7 @@ public:
 
 	VIDECL          void OnWindowResize(const SWindowExtent& extent) override;
 	VIDECL VIREQOUT SFrameInfo BeginFrame(const PWorld& world) override;
-	VIDECL          void DrawFrame(const SFrameInfo& frameInfo, const PWorld& world) override;
+	VIDECL          void DrawFrame(SFrameInfo& frameInfo, const PWorld& world) override;
 	VIDECL          void EndFrame(const SFrameInfo& frameInfo) override;
 	VIDECL          void BeginUIFrame() override;
 	VIDECL          void EndUIFrame(SCommandBuffer commandBuffer) override;

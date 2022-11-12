@@ -17,6 +17,7 @@ public:
 	VIDECL CPointLightBillboardSubPass(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
 	VIDECL ~CPointLightBillboardSubPass() override = default;
 
+	VIDECL void Compute(SFrameInfo& frameInfo, const PWorld& world) override;
 	VIDECL void Pass(const SFrameInfo& frameInfo, const PWorld& world) override;
 
 private:

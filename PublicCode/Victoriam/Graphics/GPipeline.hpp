@@ -27,10 +27,23 @@ public:
 	VIDECL virtual ~CPipeline() = default;
 
 	VIDECL virtual void BindCommandBuffer(const SCommandBuffer& buffer) const = 0;
-	VIDECL virtual void PushMaterialData(const SCommandBuffer& buffer, const UInt32& offset, const SMaterialData* materialData) const = 0;
+
+	template<class T>
+	VIDECL inline void PushSimpleData(const SCommandBuffer& buffer, const UInt32& offset, const T* data)
+	{
+		PushSimpleData(buffer, offset, data, sizeof(T));
+	}
+
+	VIDECL virtual void PushSimpleData(const SCommandBuffer& buffer, const UInt32& offset, const void* data, const UInt32& dataSize) const = 0;
 	VIDECL virtual void BindConstantsDescriptorSet(const Signal& bindPoint, const SFrameInfo& frameInfo) const = 0;
 
-	VIDECL VIREQOUT static UPtr<CPipeline> Create(const String& name, PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, Bool createConstantRanges = true);
+	template<class T>
+	VIDECL VIREQOUT inline static UPtr<CPipeline> CreateFor(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo)
+	{
+		return Create(context, swapchain, setLayout, createInfo, sizeof(T));
+	}
+
+	VIDECL VIREQOUT static UPtr<CPipeline> Create(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
 };
 
 VIDECL typedef UPtr<CPipeline> PPipeline;

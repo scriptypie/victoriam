@@ -12,6 +12,38 @@ CDefaultRenderSubPass::CDefaultRenderSubPass(PGraphicsContext &context, PSwapcha
 	CreateSubPass(swapchain, setLayout);
 }
 
+
+
+void CDefaultRenderSubPass::Compute(SFrameInfo &frameInfo, const PWorld &world) {
+
+	auto sunobj = world->OneWith<SComponentSun>(); // There CAN be single one on a scene
+	auto rendererSettings = world->GetRendererSettings(); // as well as renderer settings
+
+	CCamera* mainCamera = nullptr;
+	{
+		auto cam_obj = world->OneWith<SComponentCamera, SComponentTransform>();
+		auto [componentCamera, componentTransform] = cam_obj->Group<SComponentCamera, SComponentTransform>();
+		if (componentCamera->Primary) {
+			componentCamera->Camera.SetPerspective(frameInfo.AspectRatio);
+			componentCamera->Camera.SetViewMatrix(glm::lookAt(componentTransform->Translation,
+			                                                  componentTransform->Translation +
+			                                                  componentCamera->Camera.Front(),
+			                                                  componentCamera->Camera.Up()));
+			mainCamera = &componentCamera->Camera;
+		}
+	}
+
+	// submit constants buffer
+	auto& constants = frameInfo.Constants;
+	constants.SunDirection = sunobj ? SVector4(-sunobj->GetComponent<SComponentSun>()->Direction, 1.0F) : SVector4();
+	constants.Ambient = rendererSettings.Ambient;
+	constants.Brightness = rendererSettings.Brightness;
+	constants.Projection = mainCamera->GetProjection();
+	constants.View = mainCamera->GetView();
+
+}
+
+
 void CDefaultRenderSubPass::Pass(const SFrameInfo &frameInfo, const PWorld &world)
 {
 	m_Pipeline->BindCommandBuffer(frameInfo.CommandBuffer);
@@ -24,14 +56,16 @@ void CDefaultRenderSubPass::Pass(const SFrameInfo &frameInfo, const PWorld &worl
 		if (!rrc->Geometry.Empty()) {
 			SMaterialData materialData = {};
 			materialData.ModelMatrix = rtc->Transform();
-			m_Pipeline->PushMaterialData(CCast<SCommandBuffer>(frameInfo.CommandBuffer), 0, &materialData);
-			rrc->Geometry.SubmitDraw(CCast<SCommandBuffer>(frameInfo.CommandBuffer));
+			m_Pipeline->PushSimpleData(frameInfo.CommandBuffer, 0, &materialData);
+			rrc->Geometry.SubmitDraw(frameInfo.CommandBuffer);
 		}
 	}
 }
 
 void CDefaultRenderSubPass::CreateSubPass(PSwapchain &swapchain, const PDescriptorSetLayout &setLayout) {
-	m_Pipeline = CPipeline::Create("Default", m_Context, swapchain, setLayout);
+	SPipelineCreateInfo createInfo = {};
+	createInfo.Name = "Default";
+	m_Pipeline = CPipeline::CreateFor<SMaterialData>(m_Context, swapchain, setLayout, createInfo);
 }
 
 VISRCEND

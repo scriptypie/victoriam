@@ -4,7 +4,7 @@
 
 #include <Victoriam/Graphics/GCmdBufferSolver.hpp>
 
-#include "VulkanCommandBufferDrawer.hpp"
+#include "VulkanCmdBufferSolver.hpp"
 
 VISRCBEG
 

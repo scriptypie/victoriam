@@ -22,10 +22,10 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		m_info.CWD = std::filesystem::current_path().string();
 	else {
 #ifndef NDEBUG
-		if      (m_info.CWD != "/Volumes/cdev/victoriam/cmake-build-debug/")
+		if (m_info.CWD != "/Volumes/cdev/victoriam/build/debug/")
 			std::filesystem::current_path(m_info.CWD);
 #else
-		if (m_info.CWD != "/Volumes/cdev/victoriam/cmake-build-release/")
+		if (m_info.CWD != "/Volumes/cdev/victoriam/build/release/")
 			std::filesystem::current_path(m_info.CWD);
 #endif
 	}
@@ -89,12 +89,13 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto sun = m_World->CreateGameObject("Sun");
 		sun->AddComponent<SComponentSun>(SVector3(1.0F, 3.0F, -3.0F));
 	}
+	for (auto i = 0; i < 10; i++)
 	{
 		auto light = m_World->CreateGameObject("Light");
 		auto componentTransform = light->AddComponent<SComponentTransform>();
-		componentTransform->Translation = { 2, -2.5F, 3 };
+		componentTransform->Translation = { i * 3 - 15, -2.5F, -3 + (i / 2) };
 		auto componentPointLight = light->AddComponent<SComponentPointLight>();
-		componentPointLight->LightColor = { 0.5F, 0.3F, 0.5F, 10.0F };
+		componentPointLight->LightColor.w = 5.0F;
 	}
 	{
 		auto camera = m_World->CreateGameObject("MainCamera");

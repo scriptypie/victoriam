@@ -14,6 +14,7 @@ struct VIDECL SComponentPointLight : SComponentBase
 	COMPONENT_DECL(ComponentPointLight)
 
 	SVector4 LightColor{1.0F}; // W component is intensity
+	Float32  Radius = 0.1F;
 
 };
 

@@ -8,8 +8,8 @@
 
 VISRCBEG
 
-PPipeline CPipeline::Create(const String& name, PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, Bool createConstantRanges) {
-	return CreateUPtr<CVulkanPipeline>(name, context, swapchain, setLayout, createConstantRanges);
+PPipeline CPipeline::Create(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize) {
+	return CreateUPtr<CVulkanPipeline>(context, swapchain, setLayout, createInfo, pushDataSize);
 }
 
 VISRCEND

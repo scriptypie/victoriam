@@ -36,18 +36,32 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 	VIDECL UInt32 Subpass = {};
 
 	VIDECL inline explicit SVulkanPipelineCreateInfo(const VkRenderPass& renderPass)
-		: SVulkanPipelineCreateInfo()
 	{
 		// RenderPass
 		RenderPass = renderPass;
 	}
 
+	VIDECL inline explicit SVulkanPipelineCreateInfo(const SPipelineCreateInfo& createInfo, const VkRenderPass& renderPass)
+	{
+		RenderPass = renderPass;
+		Name = createInfo.Name;
+		Width = createInfo.Width;
+		Height = createInfo.Height;
+		bProvideBindings = createInfo.bProvideBindings;
+		bProvideAttributes = createInfo.bProvideAttributes;
+
+		if (!bProvideBindings)
+		{
+			BindingDescriptions.clear();
+		}
+		if (!bProvideAttributes)
+		{
+			AttributeDescriptions.clear();
+		}
+	}
+
 	VIDECL inline SVulkanPipelineCreateInfo()
 	{
-		// BindingDescriptions
-		BindingDescriptions = FGetVertexBindingDescriptions();
-		// AttributeDescriptions
-		AttributeDescriptions = FGetVertexAttributeDescriptions();
 		// InputAssembly
 		InputAssemblyStateCreateInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		// ViewportStateCreateInfo
@@ -83,6 +97,10 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 		// DynamicStateCreateInfo
 		DynamicStateCreateInfo.dynamicStateCount = CCast<UInt32>(DynamicStateEnables.size());
 		DynamicStateCreateInfo.pDynamicStates = DynamicStateEnables.data();
+
+		BindingDescriptions = FGetVertexBindingDescriptions();
+		AttributeDescriptions = FGetVertexAttributeDescriptions();
+
 	}
 };
 
@@ -98,16 +116,16 @@ class VIDECL CVulkanPipeline : public CPipeline
 	VIDECL VkShaderModule m_FragmentShaderModule = {};
 	VIDECL SVulkanPipelineCreateInfo m_Info = {};
 public:
-	VIDECL CVulkanPipeline(const String& name, PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, Bool createConstantRanges);
+	VIDECL CVulkanPipeline(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
 	VIDECL ~CVulkanPipeline() override;
 
 	VIDECL void BindCommandBuffer(const SCommandBuffer& buffer) const override;
-	VIDECL void PushMaterialData(const SCommandBuffer& buffer, const UInt32& offset, const SMaterialData* materialData) const override;
+	VIDECL void PushSimpleData(const SCommandBuffer& buffer, const UInt32& offset, const void* data, const UInt32& dataSize) const override;
 	VIDECL void BindConstantsDescriptorSet(const Signal& bindPoint, const SFrameInfo& frameInfo) const override;
 private:
 	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();
-	VIDECL void CreatePipelineLayout(const PDescriptorSetLayout& setLayout, Bool createConstantRanges);
+	VIDECL void CreatePipelineLayout(const PDescriptorSetLayout& setLayout, const UInt32& pushDataSize);
 };
 
 VISRCEND
