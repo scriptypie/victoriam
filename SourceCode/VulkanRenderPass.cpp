@@ -30,6 +30,7 @@ void CVulkanRenderPass::Begin(SCommandBuffer const &commandBuffer) {
 	renderPassBeginInfo.framebuffer = nullptr; // TODO: framebuffers
 
 	renderPassBeginInfo.renderArea.extent = Cast<VkExtent2D>(&m_Extent);
+	renderPassBeginInfo.renderArea.offset = Cast<VkOffset2D>(&m_Offset);
 
 	CArray<VkClearValue, 2> clearValues = {};
 	clearValues.At(0).color = Cast<VkClearColorValue>(&m_ClearColor);
