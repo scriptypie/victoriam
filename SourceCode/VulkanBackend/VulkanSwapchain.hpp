@@ -5,11 +5,11 @@
 #ifndef VICTORIAM_VULKANSWAPCHAIN_HPP
 #define VICTORIAM_VULKANSWAPCHAIN_HPP
 
-#include <Victoriam/Graphics/GSwapchain.hpp>
-#include <Victoriam/Graphics/GFramebuffer.hpp>
-#include <Victoriam/Graphics/GRenderPass.hpp>
+#include "Victoriam/Graphics/GSwapchain.hpp"
+#include "Victoriam/Graphics/GFramebuffer.hpp"
+#include "Victoriam/Graphics/GRenderPass.hpp"
 
-#include "Accessors/AGraphicsContext.hpp"
+#include "../Accessors/AGraphicsContext.hpp"
 
 VISRCBEG
 

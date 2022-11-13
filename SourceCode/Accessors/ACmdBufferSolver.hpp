@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_ACMDBUFFERSOLVER_HPP
 #define VICTORIAM_ACMDBUFFERSOLVER_HPP
 
-#include "../VulkanCmdBufferSolver.hpp"
+#include "../VulkanBackend/VulkanCmdBufferSolver.hpp"
 
 VISRCBEG
 

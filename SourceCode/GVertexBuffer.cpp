@@ -4,7 +4,7 @@
 
 #include <Victoriam/Graphics/GVertexBuffer.hpp>
 
-#include "VulkanVertexBuffer.hpp"
+#include "VulkanBackend/VulkanVertexBuffer.hpp"
 
 VISRCBEG
 

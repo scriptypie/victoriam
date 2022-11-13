@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_AUNIFORMBUFFER_HPP
 #define VICTORIAM_AUNIFORMBUFFER_HPP
 
-#include "../VulkanUniformBuffer.hpp"
+#include "../VulkanBackend/VulkanUniformBuffer.hpp"
 
 VISRCBEG
 

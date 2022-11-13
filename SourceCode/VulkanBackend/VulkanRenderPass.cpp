@@ -4,9 +4,9 @@
 
 #include "VulkanRenderPass.hpp"
 
-#include "Accessors/AGraphicsContext.hpp"
-#include "Accessors/ASwapchain.hpp"
-#include "Accessors/AFramebuffer.hpp"
+#include "../Accessors/AGraphicsContext.hpp"
+#include "../Accessors/ASwapchain.hpp"
+#include "../Accessors/AFramebuffer.hpp"
 
 VISRCBEG
 

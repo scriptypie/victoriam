@@ -5,10 +5,10 @@
 #ifndef VICTORIAM_VULKANCMDBUFFERSOLVER_HPP
 #define VICTORIAM_VULKANCMDBUFFERSOLVER_HPP
 
-#include <Victoriam/Graphics/GCmdBufferSolver.hpp>
+#include "Victoriam/Graphics/GCmdBufferSolver.hpp"
 
-#include"Accessors/ASwapchain.hpp"
-#include"Accessors/AGraphicsContext.hpp"
+#include"../Accessors/ASwapchain.hpp"
+#include"../Accessors/AGraphicsContext.hpp"
 
 VISRCBEG
 

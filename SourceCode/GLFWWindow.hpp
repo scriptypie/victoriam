@@ -26,8 +26,8 @@ struct VIDECL SInputState
 	} keyboard;
 	struct VIDECL SMouseInputState
 	{
-		glm::vec2 position;
-		glm::vec2 scroll;
+		SVector2 position;
+		SVector2 scroll;
 		Bool pressed[MouseMax];
 		Bool released[MouseMax];
 	} mouse;

@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_VULKANRENDERPASS_HPP
 #define VICTORIAM_VULKANRENDERPASS_HPP
 
-#include <Victoriam/Graphics/GRenderPass.hpp>
+#include "Victoriam/Graphics/GRenderPass.hpp"
 
 #include <vulkan/vulkan.h>
 

@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_VULKANINDEXBUFFER_HPP
 #define VICTORIAM_VULKANINDEXBUFFER_HPP
 
-#include <Victoriam/Graphics/GIndexBuffer.hpp>
+#include "Victoriam/Graphics/GIndexBuffer.hpp"
 
 #include "VulkanMemoryBuffer.hpp"
 

@@ -4,8 +4,8 @@
 
 #include "VulkanFramebuffer.hpp"
 
-#include "Accessors/AGraphicsContext.hpp"
-#include "Accessors/ARenderPass.hpp"
+#include "../Accessors/AGraphicsContext.hpp"
+#include "../Accessors/ARenderPass.hpp"
 
 VISRCBEG
 

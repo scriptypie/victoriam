@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_VULKANVERTEX_HPP
 #define VICTORIAM_VULKANVERTEX_HPP
 
-#include <Victoriam/Graphics/Structs/GVertex.hpp>
+#include "Victoriam/Graphics/Structs/GVertex.hpp"
 
 #include <vulkan/vulkan.h>
 

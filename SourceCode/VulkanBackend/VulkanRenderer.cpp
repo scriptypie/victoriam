@@ -4,14 +4,14 @@
 
 #include "VulkanRenderer.hpp"
 
-#include "Accessors/ACmdBufferSolver.hpp"
-#include "Accessors/ADescriptorWriter.hpp"
-#include "Accessors/AVertexBuffer.hpp"
-#include "Accessors/AUniformBuffer.hpp"
+#include "../Accessors/ACmdBufferSolver.hpp"
+#include "../Accessors/ADescriptorWriter.hpp"
+#include "../Accessors/AVertexBuffer.hpp"
+#include "../Accessors/AUniformBuffer.hpp"
 
-#include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw.h>
-#include <imgui/imgui_impl_vulkan.h>
+#include "imgui/include/imgui/imgui.h"
+#include "imgui/include/imgui/imgui_impl_glfw.h"
+#include "imgui/include/imgui/imgui_impl_vulkan.h"
 
 VISRCBEG
 

@@ -5,10 +5,10 @@
 #ifndef VICTORIAM_VULKANDESCRIPTORPOOL_HPP
 #define VICTORIAM_VULKANDESCRIPTORPOOL_HPP
 
-#include <Victoriam/Graphics/GDescriptorPool.hpp>
+#include "Victoriam/Graphics/GDescriptorPool.hpp"
 
-#include "Accessors/AGraphicsContext.hpp"
-#include "Accessors/ADescriptorSetLayout.hpp"
+#include "../Accessors/AGraphicsContext.hpp"
+#include "../Accessors/ADescriptorSetLayout.hpp"
 
 VISRCBEG
 

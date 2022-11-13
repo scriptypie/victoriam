@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_AVERTEXBUFFER_HPP
 #define VICTORIAM_AVERTEXBUFFER_HPP
 
-#include "../VulkanVertexBuffer.hpp"
+#include "../VulkanBackend/VulkanVertexBuffer.hpp"
 
 VISRCBEG
 

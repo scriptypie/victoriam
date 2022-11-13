@@ -5,10 +5,10 @@
 #ifndef VICTORIAM_VULKANGRAPHICSCONTEXT_HPP
 #define VICTORIAM_VULKANGRAPHICSCONTEXT_HPP
 
-#include <Victoriam/Graphics/GGraphicsContext.hpp>
+#include "Victoriam/Graphics/GGraphicsContext.hpp"
 
-#include "Accessors/AWindow.hpp"
-#include "GLFWWindow.hpp"
+#include "../Accessors/AWindow.hpp"
+#include "../GLFWWindow.hpp"
 
 VISRCBEG
 

@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_VULKANVERTEXBUFFER_HPP
 #define VICTORIAM_VULKANVERTEXBUFFER_HPP
 
-#include <Victoriam/Graphics/GVertexBuffer.hpp>
+#include "Victoriam/Graphics/GVertexBuffer.hpp"
 
 #include "VulkanMemoryBuffer.hpp"
 

@@ -4,13 +4,13 @@
 
 #include "VulkanPipeline.hpp"
 
-#include <Victoriam/Graphics/Structs/GMaterialData.hpp>
+#include "Victoriam/Graphics/Structs/GMaterialData.hpp"
 
-#include "Accessors/AWindow.hpp"
-#include "Accessors/AGraphicsContext.hpp"
-#include "Accessors/ASwapchain.hpp"
-#include "Accessors/ADescriptorSetLayout.hpp"
-#include "Accessors/ARenderPass.hpp"
+#include "../Accessors/AWindow.hpp"
+#include "../Accessors/AGraphicsContext.hpp"
+#include "../Accessors/ASwapchain.hpp"
+#include "../Accessors/ADescriptorSetLayout.hpp"
+#include "../Accessors/ARenderPass.hpp"
 
 VISRCBEG
 

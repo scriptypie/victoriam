@@ -4,7 +4,7 @@
 
 #include <Victoriam/Graphics/GIndexBuffer.hpp>
 
-#include "VulkanIndexBuffer.hpp"
+#include "VulkanBackend/VulkanIndexBuffer.hpp"
 
 VISRCBEG
 

@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_ADESCRIPTORWRITER_HPP
 #define VICTORIAM_ADESCRIPTORWRITER_HPP
 
-#include "../VulkanDescriptorWriter.hpp"
+#include "../VulkanBackend/VulkanDescriptorWriter.hpp"
 
 VISRCBEG
 

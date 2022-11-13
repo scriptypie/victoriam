@@ -5,9 +5,9 @@
 #ifndef VICTORIAM_VULKANDESCRIPTORSETLAYOUT_HPP
 #define VICTORIAM_VULKANDESCRIPTORSETLAYOUT_HPP
 
-#include <Victoriam/Graphics/GDescriptorSetLayout.hpp>
+#include "Victoriam/Graphics/GDescriptorSetLayout.hpp"
 
-#include "Accessors/AGraphicsContext.hpp"
+#include "../Accessors/AGraphicsContext.hpp"
 
 VISRCBEG
 
