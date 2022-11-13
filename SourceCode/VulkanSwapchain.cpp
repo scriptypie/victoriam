@@ -50,12 +50,12 @@ CVulkanSwapchain::~CVulkanSwapchain() {
 		vkFreeMemory(Accessors::GraphicsContext::GetDevice(m_Context), m_DepthImageMemories[i], nullptr);
 	}
 
-	//for (auto& framebuffer : m_SwapchainFramebuffers) {
-	//	vkDestroyFramebuffer(Accessors::GraphicsContext::GetDevice(m_Context), framebuffer, nullptr);
-	//	framebuffer = nullptr;
-	//}
-	//
-	//vkDestroyRenderPass(Accessors::GraphicsContext::GetDevice(m_Context), m_RenderPass, nullptr);
+	for (auto& framebuffer : m_SwapchainFramebuffers) {
+		vkDestroyFramebuffer(Accessors::GraphicsContext::GetDevice(m_Context), framebuffer, nullptr);
+		framebuffer = nullptr;
+	}
+
+	vkDestroyRenderPass(Accessors::GraphicsContext::GetDevice(m_Context), m_RenderPass, nullptr);
 
 	// cleanup synchronization objects
 	for (UInt32 i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
