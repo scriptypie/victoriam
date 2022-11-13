@@ -128,7 +128,7 @@ void CVulkanGraphicsContext::ChoosePhysicalDevice()
 	UInt32 deviceCount = {};
 	vkEnumeratePhysicalDevices(m_Instance, &deviceCount, nullptr);
 	if (!deviceCount) { ViAbort("There's no supported GPU!"); }
-	List<VkPhysicalDevice> physicalDevices(deviceCount);
+	CList<VkPhysicalDevice> physicalDevices(deviceCount);
 	vkEnumeratePhysicalDevices(m_Instance, &deviceCount, physicalDevices.data());
 
 	VIGNORE std::find_if(physicalDevices.begin(), physicalDevices.end(), [&](const auto& device) -> Bool
@@ -152,7 +152,7 @@ void CVulkanGraphicsContext::ChoosePhysicalDevice()
 void CVulkanGraphicsContext::CreateLogicalDevice()
 {
 	SQueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice);
-	List<VkDeviceQueueCreateInfo> queueCreateInfos;
+	CList<VkDeviceQueueCreateInfo> queueCreateInfos;
 	std::set<UInt32> uniqueQueueFamilies = { indices.GraphicsFamily, indices.PresentFamily };
 	Float32 queuePriority = 1.0F;
 	for (UInt32 queueFamily : uniqueQueueFamilies)
@@ -220,11 +220,11 @@ Bool CVulkanGraphicsContext::IsPhysicalDeviceSuitable(VkPhysicalDevice device)
 	return indices.IsCompleted() && extensionsSupported && swapchainIsOkay && supportedFeatures.samplerAnisotropy;
 }
 
-List<CString> CVulkanGraphicsContext::GetRequiredExtensions() const {
+CList<CString> CVulkanGraphicsContext::GetRequiredExtensions() const {
 	UInt32 glfwExtensionCount = {};
 	CString* glfwExtensions;
 	glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-	List<CString> requiredExtensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+	CList<CString> requiredExtensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
 	if (m_EnableValidation)
 		requiredExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 
@@ -235,7 +235,7 @@ Bool CVulkanGraphicsContext::CheckValidationLayerSupport()
 {
 	UInt32 layerCount = {};
 	vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
-	List<VkLayerProperties> availableLayers(layerCount);
+	CList<VkLayerProperties> availableLayers(layerCount);
 	vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
 	for (CString layerName : VALIDATION_LAYERS)
@@ -261,7 +261,7 @@ SQueueFamilyIndices CVulkanGraphicsContext::FindQueueFamilies(VkPhysicalDevice d
 	UInt32 queueFamilyCount = 0;
 	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
 
-	List<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+	CList<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
 	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
 
 	UInt32 i = {};
@@ -302,7 +302,7 @@ void CVulkanGraphicsContext::HasGLFWRequiredInstanceExtensions()
 {
 	UInt32 extensionCount = {};
 	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-	List<VkExtensionProperties> extensions(extensionCount);
+	CList<VkExtensionProperties> extensions(extensionCount);
 	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
 	std::unordered_set<String> available;
@@ -320,7 +320,7 @@ Bool CVulkanGraphicsContext::CheckDeviceExtensionSupport(VkPhysicalDevice device
 	UInt32 extensionCount;
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
-	List<VkExtensionProperties> availableExtensions(extensionCount);
+	CList<VkExtensionProperties> availableExtensions(extensionCount);
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
 
 	std::set<String> requiredExtensions(DEVICE_EXTENSIONS.begin(), DEVICE_EXTENSIONS.end());
@@ -472,7 +472,7 @@ UInt32 CVulkanGraphicsContext::FindMemoryType(UInt32 typeFilter, VkMemoryPropert
 	ViAbort("Failed to find suitable memory type!");
 }
 
-VkFormat CVulkanGraphicsContext::FindSupportedFormat(const List<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
+VkFormat CVulkanGraphicsContext::FindSupportedFormat(const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
 {
 	for (VkFormat format : candidates) {
 		VkFormatProperties props = {};

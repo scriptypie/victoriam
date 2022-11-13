@@ -30,7 +30,7 @@ void CGeometryData::SubmitDraw(SCommandBuffer const &buffer)
 }
 
 CGeometryData
-CGeometryData::Create(PGraphicsContext& context, const List<SVertex> &vertices) {
+CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices) {
 	CGeometryData data = {};
 	data.m_VertexBuffer = CVertexBuffer::Create(context, vertices);
 	return data;
@@ -46,7 +46,7 @@ CGeometryData::Create(const PVertexBuffer& vertexBuffer, const PIndexBuffer& ind
 }
 
 CGeometryData
-CGeometryData::Create(PGraphicsContext& context, const List<SVertex> &vertices, const List<UInt32> &indices) {
+CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices, const CList<UInt32> &indices) {
 	CGeometryData data = {};
 	data.m_VertexBuffer = CVertexBuffer::Create(context, vertices);
 	data.m_IndexBuffer = CIndexBuffer::Create(context, indices);

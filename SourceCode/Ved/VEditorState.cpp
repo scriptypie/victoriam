@@ -25,9 +25,9 @@ void VEditorState::OnUpdate(const Float32& dt) {
 
 	Float32 speed;
 	if (CInput::IsKeyDown(EKeyCode::LeftShift))
-		speed = 16.0F;
+		speed = 48.0F;
 	else
-		speed = 6.0F;
+		speed = 16.0F;
 
 	if (CInput::IsKeyDown(EKeyCode::E))
 		transform->Translation -= cam.Up() * dt * speed;

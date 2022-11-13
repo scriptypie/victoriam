@@ -23,15 +23,15 @@ void CVulkanRenderer::Setup()
 {
 	m_CmdBufferSolver = CCmdBufferSolver::Create(m_Swapchain, m_Context);
 
-	m_SubPasses[0] = CRenderSubPass::CreateDefaultSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
-	m_SubPasses[1] = CRenderSubPass::CreatePointLightBillboardSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
+	m_SubPasses[0] = CRenderSubrender::CreateDefaultSubrender(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
+	m_SubPasses[1] = CRenderSubrender::CreatePointLightSubrender(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
 
 	DefaultVertexBuffer = CVertexBuffer::Create(m_Context, DefaultVertices);
 	DefaultIndexBuffer  = CIndexBuffer ::Create(m_Context, DefaultIndices);
 
 }
 
-PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const List<SVertex> &vertices)
+PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const CList<SVertex> &vertices)
 {
 	return CVertexBuffer::Create(m_Context, vertices);
 }
@@ -121,21 +121,23 @@ void CVulkanRenderer::RecreateSwapchain(const SWindowExtent &newExtent) {
 	}
 	if (m_GlobalDescriptorSetLayout)
 		{
-			m_SubPasses[0] = CRenderSubPass::CreateDefaultSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
-			m_SubPasses[1] = CRenderSubPass::CreatePointLightBillboardSubPass(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
+			m_SubPasses[0] = CRenderSubrender::CreateDefaultSubrender(m_Context, m_Swapchain,
+			                                                          m_GlobalDescriptorSetLayout);
+			m_SubPasses[1] = CRenderSubrender::CreatePointLightSubrender(m_Context, m_Swapchain,
+			                                                             m_GlobalDescriptorSetLayout);
 		}
 }
 
 
-PIndexBuffer CVulkanRenderer::CreateIndexBuffer(const List<UInt32> &indices) {
+PIndexBuffer CVulkanRenderer::CreateIndexBuffer(const CList<UInt32> &indices) {
 	return CIndexBuffer::Create(m_Context, indices);
 }
 
-CGeometryData CVulkanRenderer::CreateGeometryData(const List<SVertex> &vertices) {
+CGeometryData CVulkanRenderer::CreateGeometryData(const CList<SVertex> &vertices) {
 	return CGeometryData::Create(m_Context, vertices);
 }
 
-CGeometryData CVulkanRenderer::CreateGeometryData(const List<SVertex> &vertices, const List<UInt32> &indices) {
+CGeometryData CVulkanRenderer::CreateGeometryData(const CList<SVertex> &vertices, const CList<UInt32> &indices) {
 	return CGeometryData::Create(m_Context, vertices, indices);
 }
 

@@ -27,13 +27,13 @@ struct VIDECL SVertex
 VIDECL Bool operator==(const SVertex& a, const SVertex& b);
 VIDECL Bool operator!=(const SVertex& a, const SVertex& b);
 
-VIDECL inline static const List<SVertex> DefaultVertices = {
+VIDECL inline static const CList<SVertex> DefaultVertices = {
 		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F } },
 		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F } },
 		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F } },
 };
 
-VIDECL inline static const List<UInt32> DefaultIndices = {
+VIDECL inline static const CList<UInt32> DefaultIndices = {
 		0, 1, 2
 };
 

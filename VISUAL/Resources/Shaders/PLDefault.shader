@@ -19,7 +19,7 @@ struct PointLight
     vec4 Color; // w is intensity
 };
 
-#define MAX_POINT_LIGHTS 32
+#define MAX_POINT_LIGHTS 1024
 
 layout (set = 0, binding = 0) uniform WorldConstants {
     mat4 View;
@@ -60,7 +60,7 @@ struct PointLight
     vec4 Color; // w is intensity
 };
 
-#define MAX_POINT_LIGHTS 32
+#define MAX_POINT_LIGHTS 1024
 
 layout (set = 0, binding = 0) uniform WorldConstants {
     mat4 View;

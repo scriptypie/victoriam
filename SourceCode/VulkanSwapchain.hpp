@@ -21,20 +21,20 @@ VIDECL
 	VIDECL VkFormat m_SwapchainImageFormat = {};
 	VIDECL VkFormat m_SwapchainDepthFormat = {};
 	VIDECL VkExtent2D m_SwapchainExtent = {};
-	VIDECL List<VkFramebuffer> m_SwapchainFramebuffers = {};
+	VIDECL CList<VkFramebuffer> m_SwapchainFramebuffers = {};
 	VIDECL VkRenderPass m_RenderPass = {};
-	VIDECL List<VkImage> m_DepthImages = {};
-	VIDECL List<VkDeviceMemory> m_DepthImageMemories = {};
-	VIDECL List<VkImageView> m_DepthImageViews = {};
-	VIDECL List<VkImage> m_SwapchainImages = {};
-	VIDECL List<VkImageView> m_SwapchainImageViews = {};
+	VIDECL CList<VkImage> m_DepthImages = {};
+	VIDECL CList<VkDeviceMemory> m_DepthImageMemories = {};
+	VIDECL CList<VkImageView> m_DepthImageViews = {};
+	VIDECL CList<VkImage> m_SwapchainImages = {};
+	VIDECL CList<VkImageView> m_SwapchainImageViews = {};
 	VIDECL PGraphicsContext& m_Context;
 	VIDECL SWindowExtent m_WindowExtent = {};
 	VIDECL VkSwapchainKHR m_Swapchain = {};
-	VIDECL List<VkSemaphore> m_ImageAvailableSemaphores = {};
-	VIDECL List<VkSemaphore> m_RenderFinishedSemaphores = {};
-	VIDECL List<VkFence> m_InFlightFences = {};
-	VIDECL List<VkFence> m_ImagesInFlight = {};
+	VIDECL CList<VkSemaphore> m_ImageAvailableSemaphores = {};
+	VIDECL CList<VkSemaphore> m_RenderFinishedSemaphores = {};
+	VIDECL CList<VkFence> m_InFlightFences = {};
+	VIDECL CList<VkFence> m_ImagesInFlight = {};
 	VIDECL UInt32 m_CurrentFrame = {};
 	VIDECL CSwapchain* m_OldSwapchain = {};
 
@@ -66,8 +66,8 @@ private:
 	VIDECL          void CreateFramebuffers();
 	VIDECL          void SetupSynchronization();
 
-	VIDECL VIREQOUT static VkSurfaceFormatKHR ChooseSwapchainSurfaceFormat(const List<VkSurfaceFormatKHR>& available);
-	VIDECL VIREQOUT static VkPresentModeKHR ChooseSwapchainPresentMode(const List<VkPresentModeKHR>& available);
+	VIDECL VIREQOUT static VkSurfaceFormatKHR ChooseSwapchainSurfaceFormat(const CList<VkSurfaceFormatKHR>& available);
+	VIDECL VIREQOUT static VkPresentModeKHR ChooseSwapchainPresentMode(const CList<VkPresentModeKHR>& available);
 	VIDECL VIREQOUT VkExtent2D ChooseSwapchainExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 
 	VIDECL VIREQOUT VkFormat FindDepthFormat();

@@ -18,7 +18,7 @@ class VIDECL CGameObject
 
 	UID m_ID;
 	CWorld* m_Owner;
-	List<SComponentBase*> m_Components;
+	CList<SComponentBase*> m_Components;
 public:
 	VIDECL ~CGameObject() { m_Components.clear(); }
 	VIDECL VIREQOUT UID GetUID() const;
@@ -32,7 +32,7 @@ public:
 		return component;
 	}
 	template<class...T>
-	VIDECL VIREQOUT Tuple<T*...> Group()
+	VIDECL VIREQOUT CTuple<T*...> Group()
 	{
 		return CreateTuple<T*...>(GetComponent<T>()...);
 	}

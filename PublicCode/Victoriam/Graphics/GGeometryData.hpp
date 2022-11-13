@@ -33,8 +33,8 @@ public:
 	 */
 	VIDECL          void Release();
 
-	VIDECL VIREQOUT static CGeometryData Create(PGraphicsContext& context, const List<SVertex>& vertices);
-	VIDECL VIREQOUT static CGeometryData Create(PGraphicsContext& context, const List<SVertex>& vertices, const List<UInt32>& indices);
+	VIDECL VIREQOUT static CGeometryData Create(PGraphicsContext& context, const CList<SVertex>& vertices);
+	VIDECL VIREQOUT static CGeometryData Create(PGraphicsContext& context, const CList<SVertex>& vertices, const CList<UInt32>& indices);
 	VIDECL VIREQOUT static CGeometryData Create(const PVertexBuffer& vertexBuffer);
 	VIDECL VIREQOUT static CGeometryData Create(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer);
 };

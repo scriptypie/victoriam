@@ -15,8 +15,8 @@ VISRCBEG
 struct VIDECL SSwapchainSupportDetails
 {
 	VkSurfaceCapabilitiesKHR capabilities;
-	List<VkSurfaceFormatKHR> formats;
-	List<VkPresentModeKHR> presentModes;
+	CList<VkSurfaceFormatKHR> formats;
+	CList<VkPresentModeKHR> presentModes;
 };
 
 struct VIDECL SQueueFamilyIndices
@@ -52,8 +52,8 @@ class CVulkanGraphicsContext : public CGraphicsContext
 	VkSurfaceKHR m_Surface = {};
 	VkQueue m_GraphicsQueue = {};
 	VkQueue m_PresentQueue = {};
-	const List<CString> VALIDATION_LAYERS = { "VK_LAYER_KHRONOS_validation" };
-	List<CString> DEVICE_EXTENSIONS = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+	const CList<CString> VALIDATION_LAYERS = {"VK_LAYER_KHRONOS_validation" };
+	CList<CString> DEVICE_EXTENSIONS = {VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 public:
 	VIDECL explicit CVulkanGraphicsContext(const SPtr<CWindow> &window);
 	VIDECL ~CVulkanGraphicsContext() override;
@@ -69,10 +69,10 @@ private:
 	VIDECL void CreateCommandPool();
 
 	VIDECL VIREQOUT Bool IsPhysicalDeviceSuitable(VkPhysicalDevice device);
-	VIDECL VIREQOUT List<CString> GetRequiredExtensions() const;
+	VIDECL VIREQOUT CList<CString> GetRequiredExtensions() const;
 	VIDECL VIREQOUT Bool CheckValidationLayerSupport();
 	VIDECL VIREQOUT SQueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
-	VIDECL VIREQOUT VkFormat FindSupportedFormat(const List<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
+	VIDECL VIREQOUT VkFormat FindSupportedFormat(const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 	VIDECL          static void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& info);
 	VIDECL          void HasGLFWRequiredInstanceExtensions();
 	VIDECL VIREQOUT Bool CheckDeviceExtensionSupport(VkPhysicalDevice device);

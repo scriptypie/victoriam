@@ -38,7 +38,7 @@ CVulkanPipeline::~CVulkanPipeline()
 	vkDestroyPipeline(Accessors::GraphicsContext::GetDevice(m_Context), m_GraphicsPipeline, nullptr);
 }
 
-void CVulkanPipeline::CreateShaderModule(const BinaryData &sourceData, VkShaderModule *shaderModule)
+void CVulkanPipeline::CreateShaderModule(const CBinaryData &sourceData, VkShaderModule *shaderModule)
 {
 	VkShaderModuleCreateInfo createInfo = { VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO };
 	createInfo.codeSize = sourceData.size();
@@ -81,7 +81,7 @@ void CVulkanPipeline::CreateGraphicsPipeline()
 	pipelineCreateInfo.pMultisampleState = &m_Info.MultisampleStateCreateInfo;
 	pipelineCreateInfo.pRasterizationState = &m_Info.RasterizationStateCreateInfo;
 	pipelineCreateInfo.pStages = shaderStagesCreateInfo;
-	pipelineCreateInfo.stageCount = StaticSize(shaderStagesCreateInfo);
+	pipelineCreateInfo.stageCount = FSize(shaderStagesCreateInfo);
 	pipelineCreateInfo.pVertexInputState = &vertexInputStateCreateInfo;
 	pipelineCreateInfo.pViewportState = &m_Info.ViewportStateCreateInfo;
 	pipelineCreateInfo.pDynamicState = &m_Info.DynamicStateCreateInfo;
@@ -106,7 +106,7 @@ void CVulkanPipeline::CreatePipelineLayout(const PDescriptorSetLayout& setLayout
 		createInfo.pPushConstantRanges = &pushConstantRange;
 	}
 
-	List<VkDescriptorSetLayout> setLayouts = {Accessors::DescriptorSetLayout::GetDescriptorSetLayout(setLayout)};
+	CList<VkDescriptorSetLayout> setLayouts = {Accessors::DescriptorSetLayout::GetDescriptorSetLayout(setLayout)};
 
 	createInfo.pSetLayouts = setLayouts.data();
 	createInfo.setLayoutCount = CCast<UInt32>(setLayouts.size());

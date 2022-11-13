@@ -20,7 +20,7 @@ class VIDECL CVulkanVertexBuffer : public CVertexBuffer
 	PVulkanMemoryBuffer m_MemoryBuffer = nullptr;
 	UInt64 m_VertexCount = {};
 public:
-	VIDECL CVulkanVertexBuffer(PGraphicsContext &context, const List<SVertex> &vertices);
+	VIDECL CVulkanVertexBuffer(PGraphicsContext &context, const CList<SVertex> &vertices);
 	VIDECL ~CVulkanVertexBuffer() override = default;
 
 	VIDECL void Bind(const SCommandBuffer& buffer) override;
@@ -33,7 +33,7 @@ private:
 	}
 
 private:
-	VIDECL void CreateVertexBuffer(const List<SVertex>& vertices);
+	VIDECL void CreateVertexBuffer(const CList<SVertex>& vertices);
 };
 
 VISRCEND

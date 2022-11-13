@@ -28,7 +28,7 @@ public:
 	/**
 	 * Destroys every single one descriptor set in a list.
 	 */
-	VIDECL virtual void FreeDescriptorSets(List<SDescriptorSet>& descriptors) const = 0;
+	VIDECL virtual void FreeDescriptorSets(CList<SDescriptorSet>& descriptors) const = 0;
 	/**
 	 * Basically free all pool descriptors and their resources.
 	 */

@@ -2,7 +2,6 @@
 // Created by Вячеслав Кривенко on 17.10.2022.
 //
 
-#include <array>
 #include <cstdlib>
 #include <limits>
 #include <set>
@@ -300,7 +299,7 @@ void CVulkanSwapchain::SetupSynchronization()
 	}
 }
 
-VkSurfaceFormatKHR CVulkanSwapchain::ChooseSwapchainSurfaceFormat(const List<VkSurfaceFormatKHR> &available)
+VkSurfaceFormatKHR CVulkanSwapchain::ChooseSwapchainSurfaceFormat(const CList<VkSurfaceFormatKHR> &available)
 {
 	for (const auto &availableFormat : available)
 		if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB &&
@@ -310,17 +309,18 @@ VkSurfaceFormatKHR CVulkanSwapchain::ChooseSwapchainSurfaceFormat(const List<VkS
 	return available[0];
 }
 
-VkPresentModeKHR CVulkanSwapchain::ChooseSwapchainPresentMode(const List<VkPresentModeKHR> &available)
+VkPresentModeKHR CVulkanSwapchain::ChooseSwapchainPresentMode(const CList<VkPresentModeKHR> &available)
 {
 	for (const auto &availablePresentMode : available)
 		if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR)
 			return availablePresentMode;
-
-	// for (const auto &availablePresentMode : available) {
-	//   if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR) {
-	//     return availablePresentMode;
-	//   }
-	// }
+	/*
+	for (const auto &availablePresentMode : available) {
+	  if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR) {
+	    return availablePresentMode;
+	  }
+	}
+	*/
 
 	return VK_PRESENT_MODE_FIFO_KHR;
 }

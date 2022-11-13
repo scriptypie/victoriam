@@ -7,7 +7,7 @@
 
 #include <Victoriam/Graphics/GRenderer.hpp>
 #include <Victoriam/Graphics/GDescriptorWriter.hpp>
-#include <Victoriam/Graphics/GRenderSubPass.hpp>
+#include <Victoriam/Graphics/GRenderSubrender.hpp>
 
 #include "VulkanGraphicsContext.hpp"
 #include "VulkanSwapchain.hpp"
@@ -28,23 +28,23 @@ class VIDECL CVulkanRenderer : public CRenderer {
 	VIDECL PWindow m_Window = {};
 	VIDECL PDescriptorPool m_GlobalPool = {};
 	VIDECL PDescriptorSetLayout m_GlobalDescriptorSetLayout = {};
-	VIDECL List<SDescriptorSet> m_GlobalDescriptorSets = {};
+	VIDECL CList<SDescriptorSet> m_GlobalDescriptorSets = {};
 	VIDECL UInt32 m_ImageIndex = {};
 	VIDECL VkDescriptorPool m_GUIPool = {};
 
-	VIDECL List<PRenderSubPass> m_SubPasses = {};
+	VIDECL CList<PRenderSubrender> m_SubPasses = {};
 public:
 	VIDECL explicit CVulkanRenderer(const SRendererCreateInfo& createInfo);
 	VIDECL ~CVulkanRenderer() override = default;
 
 	VIDECL          void Setup() override;
 	VIDECL VIREQOUT inline PSwapchain& GetSwapchain() override { return m_Swapchain; }
-	VIDECL VIREQOUT PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) override;
-	VIDECL VIREQOUT PIndexBuffer CreateIndexBuffer(const List<UInt32>& indices) override;
+	VIDECL VIREQOUT PVertexBuffer CreateVertexBuffer(const CList<SVertex>& vertices) override;
+	VIDECL VIREQOUT PIndexBuffer CreateIndexBuffer(const CList<UInt32>& indices) override;
 	VIDECL VIREQOUT PUniformBuffer CreateUniformBuffer() override;
 	VIDECL          void CreateDescriptors(const PWorld& world) override;
-	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices) override;
-	VIDECL VIREQOUT CGeometryData CreateGeometryData(const List<SVertex>& vertices, const List<UInt32>& indices) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const CList<SVertex>& vertices) override;
+	VIDECL VIREQOUT CGeometryData CreateGeometryData(const CList<SVertex>& vertices, const CList<UInt32>& indices) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const SGeometryDataCreateInfo& createInfo) override;

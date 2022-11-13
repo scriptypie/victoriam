@@ -2,7 +2,7 @@
 // Created by Вячеслав Кривенко on 11.11.2022.
 //
 
-#include "PointLightBillboardSubPass.hpp"
+#include "PointLightSubrender.hpp"
 
 #include <Victoriam/Graphics/Structs/GPointLightsData.hpp>
 
@@ -10,14 +10,14 @@
 
 VISRCBEG
 
-CPointLightBillboardSubPass::CPointLightBillboardSubPass(PGraphicsContext &context, PSwapchain &swapchain,
-                                                         const PDescriptorSetLayout &setLayout)
+CPointLightSubrender::CPointLightSubrender(PGraphicsContext &context, PSwapchain &swapchain,
+                                           const PDescriptorSetLayout &setLayout)
 	: m_Context(context)
 {
-	CreateSubPass(swapchain, setLayout);
+	CreateUniquePipeline(swapchain, setLayout);
 }
 
-void CPointLightBillboardSubPass::Compute(SFrameInfo &frameInfo, const PWorld &world) {
+void CPointLightSubrender::Compute(SFrameInfo &frameInfo, const PWorld &world) {
 
 	auto plObjects = world->AllWith<SComponentTransform, SComponentPointLight>();
 	auto camObject = world->OneWith<SComponentTransform, SComponentCamera>();
@@ -43,7 +43,7 @@ void CPointLightBillboardSubPass::Compute(SFrameInfo &frameInfo, const PWorld &w
 	constants.ActiveLightsCount = index;
 }
 
-void CPointLightBillboardSubPass::Pass(const SFrameInfo &frameInfo, const PWorld &world) {
+void CPointLightSubrender::Pass(const SFrameInfo &frameInfo, const PWorld &world) {
 	m_Pipeline->BindCommandBuffer(frameInfo.CommandBuffer);
 	m_Pipeline->BindConstantsDescriptorSet(BindPointGraphics, frameInfo);
 
@@ -66,7 +66,7 @@ void CPointLightBillboardSubPass::Pass(const SFrameInfo &frameInfo, const PWorld
 }
 
 void
-CPointLightBillboardSubPass::CreateSubPass(PSwapchain &swapchain, const PDescriptorSetLayout &setLayout) {
+CPointLightSubrender::CreateUniquePipeline(PSwapchain &swapchain, const PDescriptorSetLayout &setLayout) {
 	SPipelineCreateInfo createInfo = {};
 	createInfo.Name = "PLDefault";
 	createInfo.bProvideBindings = createInfo.bProvideAttributes = false;

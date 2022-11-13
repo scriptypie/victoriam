@@ -20,8 +20,8 @@ namespace Accessors { class Pipeline; }
 
 struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 {
-	VIDECL List<VkVertexInputBindingDescription> BindingDescriptions = {};
-	VIDECL List<VkVertexInputAttributeDescription> AttributeDescriptions = {};
+	VIDECL CList<VkVertexInputBindingDescription> BindingDescriptions = {};
+	VIDECL CList<VkVertexInputAttributeDescription> AttributeDescriptions = {};
 	VIDECL VkPipelineInputAssemblyStateCreateInfo InputAssemblyStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO };
 	VIDECL VkPipelineRasterizationStateCreateInfo RasterizationStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO };
 	VIDECL VkPipelineMultisampleStateCreateInfo MultisampleStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO };
@@ -30,7 +30,7 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 	VIDECL VkPipelineDepthStencilStateCreateInfo DepthStencilStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO };
 	VIDECL VkPipelineViewportStateCreateInfo ViewportStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO };
 	VIDECL VkPipelineDynamicStateCreateInfo DynamicStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO };
-	VIDECL List<VkDynamicState> DynamicStateEnables = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
+	VIDECL CList<VkDynamicState> DynamicStateEnables = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 	VIDECL VkPipelineLayout PipelineLayout = VK_NULL_HANDLE;
 	VIDECL VkRenderPass RenderPass = VK_NULL_HANDLE;
 	VIDECL UInt32 Subpass = {};
@@ -123,7 +123,7 @@ public:
 	VIDECL void PushSimpleData(const SCommandBuffer& buffer, const UInt32& offset, const void* data, const UInt32& dataSize) const override;
 	VIDECL void BindConstantsDescriptorSet(const Signal& bindPoint, const SFrameInfo& frameInfo) const override;
 private:
-	VIDECL void CreateShaderModule(const BinaryData& sourceData, VkShaderModule* shaderModule);
+	VIDECL void CreateShaderModule(const CBinaryData& sourceData, VkShaderModule* shaderModule);
 	VIDECL void CreateGraphicsPipeline();
 	VIDECL void CreatePipelineLayout(const PDescriptorSetLayout& setLayout, const UInt32& pushDataSize);
 };

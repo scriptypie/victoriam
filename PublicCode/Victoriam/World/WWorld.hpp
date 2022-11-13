@@ -19,9 +19,9 @@ class VIDECL CWorld
 {
 	friend class CGameObject;
 
-	List<CGameObject*> m_Registry = {};
+	CList<CGameObject*> m_Registry = {};
 	SWorldRendererSettings m_RendererSettings = {};
-	List<PUniformBuffer> m_RendererConstantsBuffers = {};
+	CList<PUniformBuffer> m_RendererConstantsBuffers = {};
 public:
 	VIDECL VIREQOUT CGameObject* CreateGameObject();
 	VIDECL VIREQOUT CGameObject* CreateGameObject(const String& name);
@@ -30,9 +30,9 @@ public:
 	VIDECL VIREQOUT CGameObject* FindGameObjectByName(const String& name);
 
 	template<class...T>
-	VIDECL VIREQOUT List<CGameObject*> AllWith()
+	VIDECL VIREQOUT CList<CGameObject*> AllWith()
 	{
-		List<CGameObject*> result;
+		CList<CGameObject*> result;
 
 		for (auto obj : m_Registry)
 			if ((obj->HasComponent<T>() && ...))

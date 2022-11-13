@@ -95,15 +95,15 @@ set(SOURCE_FILES
         SourceCode/Accessors/AVertexBuffer.hpp
         SourceCode/Accessors/ADescriptorWriter.hpp
         PublicCode/Victoriam/World/Components/ComponentPointLight.hpp
-        PublicCode/Victoriam/Graphics/GRenderSubPass.hpp
-        SourceCode/RendererSubPasses/DefaultRenderSubPass.hpp
+        PublicCode/Victoriam/Graphics/GRenderSubrender.hpp
+        SourceCode/RendererSubrenders/DefaultRenderSubrender.hpp
         PublicCode/Victoriam/Graphics/GVertexBuffer.hpp
         PublicCode/Victoriam/Graphics/GIndexBuffer.hpp
         PublicCode/Victoriam/Graphics/GUniformBuffer.hpp
         SourceCode/VulkanUniformBuffer.hpp
         SourceCode/Accessors/AIndexBuffer.hpp
         SourceCode/Accessors/AUniformBuffer.hpp
-        SourceCode/RendererSubPasses/PointLightBillboardSubPass.hpp
+        SourceCode/RendererSubrenders/PointLightSubrender.hpp
 
         SourceCode/EngineInfo.cpp
         SourceCode/AAppStateChain.cpp
@@ -142,14 +142,14 @@ set(SOURCE_FILES
         SourceCode/VulkanDescriptorPool.cpp
         SourceCode/GDescriptorWriter.cpp
         SourceCode/VulkanDescriptorWriter.cpp
-        SourceCode/GRenderSubPass.cpp
-        SourceCode/RendererSubPasses/DefaultRenderSubPass.cpp
+        SourceCode/GRenderSubrender.cpp
+        SourceCode/RendererSubrenders/DefaultRenderSubrender.cpp
         SourceCode/GIndexBuffer.cpp
         SourceCode/VulkanIndexBuffer.cpp
         SourceCode/VulkanIndexBuffer.hpp
         SourceCode/GUniformBuffer.cpp
         SourceCode/VulkanUniformBuffer.cpp
-        SourceCode/RendererSubPasses/PointLightBillboardSubPass.cpp
+        SourceCode/RendererSubrenders/PointLightSubrender.cpp
 
         ThirdParty/tinyobjloader/TinyObjLoader.cpp
         ThirdParty/imgui/src/ImGui/imgui.cpp
@@ -159,7 +159,7 @@ set(SOURCE_FILES
         ThirdParty/imgui/src/ImGui/imgui_widgets.cpp
         ThirdParty/imgui/src/ImGui/imgui_draw.cpp
         ThirdParty/imgui/src/ImGui/imgui_demo.cpp
-        PublicCode/Victoriam/Graphics/Structs/GPointLightsData.hpp)
+        PublicCode/Victoriam/Graphics/Structs/GPointLightsData.hpp PublicCode/Victoriam/Graphics/Structs/GRenderPassCreateInfo.hpp PublicCode/Victoriam/Graphics/GRenderPass.hpp SourceCode/VulkanRenderPass.cpp SourceCode/VulkanRenderPass.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

@@ -36,23 +36,23 @@ struct VIDECL SSPIRVShader
 
 class VIDECL CShaderCooker
 {
-	const List<CString> EXT = {".vert.spv", ".frag.spv" };
+	const CList<CString> EXT = {".vert.spv", ".frag.spv" };
 	String INFO;
 	const String COMPILER = "/usr/local/bin/glslc ";
 	const String SHADERDIR = "./../Resources/Shaders/";
 	const String COOKEDDIR = SHADERDIR + "Cooked/";
 	const String TEMPDIR = SHADERDIR + ".TMP/";
 public:
-	VIDECL VIREQOUT BinaryData LoadVertexShader(const String& name);
-	VIDECL VIREQOUT BinaryData LoadFragmentShader(const String& name);
+	VIDECL VIREQOUT CBinaryData LoadVertexShader(const String& name);
+	VIDECL VIREQOUT CBinaryData LoadFragmentShader(const String& name);
 	VIDECL VIREQOUT inline String GetCookedInfo() const { return INFO; }
 
 private:
 	VIDECL VIREQOUT bool IsCookedExists(const String& name);
 	VIDECL VIREQOUT bool IsShaderChanged(const SEngineShader& shader, const String& name);
 	VIDECL VIREQOUT SEngineShader ReadShader(const String& name);
-	VIDECL VIREQOUT String CookShader(const List<SSPIRVShader>& sshader);
-	VIDECL VIREQOUT BinaryData LoadCookedShaderFromName(const String& name, const SSPIRVShader::EShaderType& type);
+	VIDECL VIREQOUT String CookShader(const CList<SSPIRVShader>& sshader);
+	VIDECL VIREQOUT CBinaryData LoadCookedShaderFromName(const String& name, const SSPIRVShader::EShaderType& type);
 };
 
 VISRCEND

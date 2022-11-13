@@ -34,9 +34,9 @@ namespace {
 		return true;
 	}
 
-	List<SSPIRVShader> SplitShader(const SEngineShader &shader)
+	CList<SSPIRVShader> SplitShader(const SEngineShader &shader)
 	{
-		List<SSPIRVShader> result;
+		CList<SSPIRVShader> result;
 		String tmp, source = shader.Source;
 		auto it = source.begin();
 		while (it != source.end())
@@ -132,7 +132,7 @@ SEngineShader CShaderCooker::ReadShader(const String &name)
 	return { name, source, checksum };
 }
 
-String CShaderCooker::CookShader(const List<SSPIRVShader> &sshader)
+String CShaderCooker::CookShader(const CList<SSPIRVShader> &sshader)
 {
 	String info = "\nCooked shader: {\n", tempfile, cookedfile;
 
@@ -171,9 +171,9 @@ String CShaderCooker::CookShader(const List<SSPIRVShader> &sshader)
 	return info;
 }
 
-BinaryData CShaderCooker::LoadCookedShaderFromName(const String &name, const SSPIRVShader::EShaderType &type)
+CBinaryData CShaderCooker::LoadCookedShaderFromName(const String &name, const SSPIRVShader::EShaderType &type)
 {
-	BinaryData data = {};
+	CBinaryData data = {};
 	CFile f(COOKEDDIR + name + EXT[(uint32_t)(type)], ECOpenMode::Read);
 	if (f.Valid())
 	{
@@ -183,24 +183,24 @@ BinaryData CShaderCooker::LoadCookedShaderFromName(const String &name, const SSP
 	return data;
 }
 
-BinaryData CShaderCooker::LoadVertexShader(const String &name)
+CBinaryData CShaderCooker::LoadVertexShader(const String &name)
 {
 	SEngineShader shader = ReadShader(name);
 	if (IsShaderChanged(shader, name) || !IsCookedExists(name))
 	{
-		List<SSPIRVShader> shaders = SplitShader(shader);
+		CList<SSPIRVShader> shaders = SplitShader(shader);
 		INFO += CookShader(shaders);
         std::cout << INFO << std::endl;
 	}
 	return LoadCookedShaderFromName(name, SSPIRVShader::Vertex);
 }
 
-BinaryData CShaderCooker::LoadFragmentShader(const String &name)
+CBinaryData CShaderCooker::LoadFragmentShader(const String &name)
 {
 	SEngineShader shader = ReadShader(name);
 	if (IsShaderChanged(shader, name) || !IsCookedExists(name))
 	{
-		List<SSPIRVShader> shaders = SplitShader(shader);
+		CList<SSPIRVShader> shaders = SplitShader(shader);
 		INFO += CookShader(shaders);
 		std::cout << INFO << std::endl;
 	}

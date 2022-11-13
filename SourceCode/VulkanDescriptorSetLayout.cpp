@@ -21,7 +21,7 @@ namespace {
 
 CVulkanDescriptorSetLayout::CVulkanDescriptorSetLayout(PGraphicsContext &context, const SDescriptorSetLayoutCreateInfo &createInfo) : m_Context(context), m_Bindings(createInfo.Bindings)
 {
-	List<VkDescriptorSetLayoutBinding> bindings = {};
+	CList<VkDescriptorSetLayoutBinding> bindings = {};
 
 	for (auto [_, binding] : m_Bindings)
 		bindings.push_back(Convert(binding));

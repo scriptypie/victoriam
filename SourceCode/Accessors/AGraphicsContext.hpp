@@ -70,7 +70,7 @@ namespace Accessors {
 		{
 			CCast<CVulkanGraphicsContext*>(context.get())->CreateImageWithInfo(imageInfo, properties, image, imageMemory);
 		}
-		VIDECL static VkFormat FindSupportedFormat(const PGraphicsContext& context, const List<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
+		VIDECL static VkFormat FindSupportedFormat(const PGraphicsContext& context, const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
 		{
 			return CCast<CVulkanGraphicsContext*>(context.get())->FindSupportedFormat(candidates, tiling, features);
 		}

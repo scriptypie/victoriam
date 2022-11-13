@@ -11,12 +11,12 @@
 
 VISRCBEG
 
-VIDECL VIREQOUT inline static List<VkVertexInputBindingDescription> FGetVertexBindingDescriptions()
+VIDECL VIREQOUT inline static CList<VkVertexInputBindingDescription> FGetVertexBindingDescriptions()
 {
 	return {{0, sizeof(SVertex), VK_VERTEX_INPUT_RATE_VERTEX}};
 }
 
-VIDECL VIREQOUT inline static List<VkVertexInputAttributeDescription> FGetVertexAttributeDescriptions()
+VIDECL VIREQOUT inline static CList<VkVertexInputAttributeDescription> FGetVertexAttributeDescriptions()
 {
 	return
 	{

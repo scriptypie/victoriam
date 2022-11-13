@@ -14,7 +14,7 @@ VISRCBEG
 class VIDECL CWindow
 {
 public:
-	using EventCallbackFn = Function<void(CEvent&)>;
+	using EventCallbackFn = CFunction<void(CEvent&)>;
 
 	VIDECL virtual ~CWindow() = default;
 

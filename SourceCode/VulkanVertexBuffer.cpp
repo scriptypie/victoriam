@@ -6,7 +6,7 @@
 
 VISRCBEG
 
-CVulkanVertexBuffer::CVulkanVertexBuffer(PGraphicsContext &context, const List<SVertex> &vertices) : m_Context(context)
+CVulkanVertexBuffer::CVulkanVertexBuffer(PGraphicsContext &context, const CList<SVertex> &vertices) : m_Context(context)
 {
 	CreateVertexBuffer(vertices);
 }
@@ -21,7 +21,7 @@ void CVulkanVertexBuffer::Draw(SCommandBuffer const &buffer) const {
 	vkCmdDraw(CCast<VkCommandBuffer>(buffer), m_VertexCount, 1, 0, 0);
 }
 
-void CVulkanVertexBuffer::CreateVertexBuffer(const List<SVertex> &vertices) {
+void CVulkanVertexBuffer::CreateVertexBuffer(const CList<SVertex> &vertices) {
 	m_VertexCount = vertices.size();
 	ViAssert(m_VertexCount >= 3, "There MUST be at least 3 vertices!");
 

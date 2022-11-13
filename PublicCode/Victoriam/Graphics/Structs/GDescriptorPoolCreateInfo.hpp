@@ -29,7 +29,7 @@ struct VIDECL SDescriptorPoolSize
  */
 struct VIDECL SDescriptorPoolCreateInfo
 {
-	List<SDescriptorPoolSize> PoolSizeList = {};
+	CList<SDescriptorPoolSize> PoolSizeList = {};
 	Signal DescriptorPoolCreateSignal = 0;
 	UInt32 MaxSets = {};
 

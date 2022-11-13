@@ -17,7 +17,7 @@ namespace Accessors { class CmdBufferSolver; }
 class VIDECL CVulkanCmdBufferSolver : public CCmdBufferSolver {
 	friend class Accessors::CmdBufferSolver;
 
-	List<VkCommandBuffer> m_CmdBuffers = {};
+	CList<VkCommandBuffer> m_CmdBuffers = {};
 	PSwapchain& m_Swapchain;
 	PGraphicsContext& m_Context;
 public:
@@ -30,7 +30,7 @@ public:
 private:
 	VIDECL void CreateCmdBuffers();
 private:
-	VIDECL VIREQOUT inline List<VkCommandBuffer> GetCmdBufferList() const { return m_CmdBuffers; }
+	VIDECL VIREQOUT inline CList<VkCommandBuffer> GetCmdBufferList() const { return m_CmdBuffers; }
 };
 
 VISRCEND

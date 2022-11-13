@@ -17,7 +17,7 @@ namespace {
 CVulkanDescriptorPool::CVulkanDescriptorPool(PGraphicsContext &context, const SDescriptorPoolCreateInfo &createInfo)
 	: m_Context(context)
 {
-	List<VkDescriptorPoolSize> poolSizeList = {};
+	CList<VkDescriptorPoolSize> poolSizeList = {};
 
 	for (auto poolSize : createInfo.PoolSizeList)
 		poolSizeList.push_back(Convert(poolSize));
@@ -49,7 +49,7 @@ Bool CVulkanDescriptorPool::AllocateDescriptorSet(const PDescriptorSetLayout &la
 	return true;
 }
 
-void CVulkanDescriptorPool::FreeDescriptorSets(List<SDescriptorSet> &descriptors) const {
+void CVulkanDescriptorPool::FreeDescriptorSets(CList<SDescriptorSet> &descriptors) const {
 	vkFreeDescriptorSets(Accessors::GraphicsContext::GetDevice(m_Context), m_Pool,
 	                     CCast<UInt32>(descriptors.size()), CCast<VkDescriptorSet*>(descriptors.data()));
 }

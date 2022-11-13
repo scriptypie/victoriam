@@ -19,7 +19,7 @@ class VIDECL CVulkanDescriptorWriter : public CDescriptorWriter
 	friend class Accessors::DescriptorWriter;
 	PDescriptorPool& m_Pool;
 	PDescriptorSetLayout& m_Layout;
-	List<VkWriteDescriptorSet> m_WriteList = {};
+	CList<VkWriteDescriptorSet> m_WriteList = {};
 public:
 	VIDECL CVulkanDescriptorWriter(PDescriptorPool &pool, PDescriptorSetLayout &layout);
 	VIDECL ~CVulkanDescriptorWriter() override = default;

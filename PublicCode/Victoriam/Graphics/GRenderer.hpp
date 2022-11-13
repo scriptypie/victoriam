@@ -22,12 +22,12 @@ public:
 
 	VIDECL          virtual void Setup() = 0;
 	VIDECL VIREQOUT virtual PSwapchain& GetSwapchain() = 0;
-	VIDECL VIREQOUT virtual PVertexBuffer CreateVertexBuffer(const List<SVertex>& vertices) = 0;
-	VIDECL VIREQOUT virtual PIndexBuffer CreateIndexBuffer(const List<UInt32>& indices) = 0;
+	VIDECL VIREQOUT virtual PVertexBuffer CreateVertexBuffer(const CList<SVertex>& vertices) = 0;
+	VIDECL VIREQOUT virtual PIndexBuffer CreateIndexBuffer(const CList<UInt32>& indices) = 0;
 	VIDECL VIREQOUT virtual PUniformBuffer CreateUniformBuffer() = 0;
 	VIDECL          virtual void CreateDescriptors(const PWorld& world) = 0;
-	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const List<SVertex>& vertices) = 0;
-	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const List<SVertex>& vertices, const List<UInt32>& indices) = 0;
+	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const CList<SVertex>& vertices) = 0;
+	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const CList<SVertex>& vertices, const CList<UInt32>& indices) = 0;
 	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const SGeometryDataCreateInfo& createInfo) = 0;
 	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer) = 0;
 	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer) = 0;

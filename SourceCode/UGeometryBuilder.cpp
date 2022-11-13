@@ -43,7 +43,7 @@ void CGeometryBuilder::InternalLoadModelFromFile(const String &filename, SGeomet
 	outinfo.Vertices.clear();
 	outinfo.Indices.clear();
 
-	UnorderedMap<SVertex, UInt32> uniqueVertices = {};
+	CHashTable<SVertex, UInt32> uniqueVertices = {};
 
 	for (const auto& shape : shapes)
 	{

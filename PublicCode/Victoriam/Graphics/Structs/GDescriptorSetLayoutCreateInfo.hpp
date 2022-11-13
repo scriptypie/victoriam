@@ -31,7 +31,7 @@ struct VIDECL SDescriptorSetBinding
 	UInt32 Count = 1;
 };
 
-VIDECL typedef UnorderedMap<UInt32, SDescriptorSetBinding> DescriptorSetBindingList;
+VIDECL typedef CHashTable<UInt32, SDescriptorSetBinding> DescriptorSetBindingList;
 
 /**
  * Structure that handles all information required to create descriptor set object.

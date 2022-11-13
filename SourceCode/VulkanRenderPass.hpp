@@ -1,0 +1,31 @@
+//
+// Created by Вячеслав Кривенко on 13.11.2022.
+//
+
+#ifndef VICTORIAM_VULKANRENDERPASS_HPP
+#define VICTORIAM_VULKANRENDERPASS_HPP
+
+#include <Victoriam/Graphics/GRenderPass.hpp>
+
+#include "Accessors/AGraphicsContext.hpp"
+
+VISRCBEG
+
+class VIDECL CVulkanRenderPass : public CRenderPass {
+	VkRenderPass m_RenderPass = {};
+	PSwapchain& m_Swapchain;
+	PGraphicsContext& m_Context;
+public:
+	VIDECL CVulkanRenderPass(PGraphicsContext& context, PSwapchain& swapchain, const SRenderPassCreateInfo& createInfo);
+	VIDECL ~CVulkanRenderPass() override;
+
+	VIDECL void Begin(const SCommandBuffer& commandBuffer) override;
+	VIDECL void End(const SCommandBuffer& commandBuffer) override;
+
+private:
+	VIDECL void CreateRenderPass();
+};
+
+VISRCEND
+
+#endif //VICTORIAM_VULKANRENDERPASS_HPP

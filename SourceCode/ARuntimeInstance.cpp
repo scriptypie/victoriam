@@ -76,7 +76,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		plane->AddComponent<SComponentRenderable>(quadGeometryData);
 		auto transform = plane->AddComponent<SComponentTransform>();
 		transform->Translation = { 0, -3, 0 };
-		transform->Scale = 10.0F;
+		transform->Scale = 500.0F;
 	}
 	/*{
 		auto cube = m_World->CreateGameObject("TestCube");
@@ -89,13 +89,15 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto sun = m_World->CreateGameObject("Sun");
 		sun->AddComponent<SComponentSun>(SVector3(1.0F, 3.0F, -3.0F));
 	}
-	for (auto i = 0; i < 10; i++)
+	for (auto i = 0; i < 16; i++)
 	{
-		auto light = m_World->CreateGameObject("Light");
-		auto componentTransform = light->AddComponent<SComponentTransform>();
-		componentTransform->Translation = { i * 3 - 15, -2.5F, -3 + (i / 2) };
-		auto componentPointLight = light->AddComponent<SComponentPointLight>();
-		componentPointLight->LightColor.w = 5.0F;
+		for (auto j = 0; j < 16; j++) {
+			auto light = m_World->CreateGameObject("Light");
+			auto componentTransform = light->AddComponent<SComponentTransform>();
+			componentTransform->Translation = {i * 12 - 8 * 12, -2.5F, j * 12 - 8 * 12};
+			auto componentPointLight = light->AddComponent<SComponentPointLight>();
+			componentPointLight->LightColor.w = 5.0F;
+		}
 	}
 	{
 		auto camera = m_World->CreateGameObject("MainCamera");
@@ -143,6 +145,8 @@ void Vi::CRuntimeInstance::Startup() {
 		CTimestep newTime = {};
 		Float32 frameTime = currentTime.Delta() - newTime.Delta();
 		currentTime = newTime;
+
+		ViLog("UpdateTime: %.3fms\r", frameTime * 1000.0F);
 
 		for (auto & state : m_stateController)
 		{

@@ -2,19 +2,19 @@
 // Created by Вячеслав Кривенко on 10.11.2022.
 //
 
-#include "DefaultRenderSubPass.hpp"
+#include "DefaultRenderSubrender.hpp"
 
 VISRCBEG
 
-CDefaultRenderSubPass::CDefaultRenderSubPass(PGraphicsContext &context, PSwapchain &swapchain, const PDescriptorSetLayout &setLayout)
+CDefaultRenderSubrender::CDefaultRenderSubrender(PGraphicsContext &context, PSwapchain &swapchain, const PDescriptorSetLayout &setLayout)
 	: m_Context(context)
 {
-	CreateSubPass(swapchain, setLayout);
+	CreateUniquePipeline(swapchain, setLayout);
 }
 
 
 
-void CDefaultRenderSubPass::Compute(SFrameInfo &frameInfo, const PWorld &world) {
+void CDefaultRenderSubrender::Compute(SFrameInfo &frameInfo, const PWorld &world) {
 
 	auto sunobj = world->OneWith<SComponentSun>(); // There CAN be single one on a scene
 	auto rendererSettings = world->GetRendererSettings(); // as well as renderer settings
@@ -44,7 +44,7 @@ void CDefaultRenderSubPass::Compute(SFrameInfo &frameInfo, const PWorld &world) 
 }
 
 
-void CDefaultRenderSubPass::Pass(const SFrameInfo &frameInfo, const PWorld &world)
+void CDefaultRenderSubrender::Pass(const SFrameInfo &frameInfo, const PWorld &world)
 {
 	m_Pipeline->BindCommandBuffer(frameInfo.CommandBuffer);
 	m_Pipeline->BindConstantsDescriptorSet(BindPointGraphics, frameInfo);
@@ -62,7 +62,7 @@ void CDefaultRenderSubPass::Pass(const SFrameInfo &frameInfo, const PWorld &worl
 	}
 }
 
-void CDefaultRenderSubPass::CreateSubPass(PSwapchain &swapchain, const PDescriptorSetLayout &setLayout) {
+void CDefaultRenderSubrender::CreateUniquePipeline(PSwapchain &swapchain, const PDescriptorSetLayout &setLayout) {
 	SPipelineCreateInfo createInfo = {};
 	createInfo.Name = "Default";
 	m_Pipeline = CPipeline::CreateFor<SMaterialData>(m_Context, swapchain, setLayout, createInfo);

@@ -16,7 +16,7 @@ class VIDECL CVertexBuffer : public CBuffer
 public:
 	VIDECL virtual ~CVertexBuffer() override = default;
 
-	VIDECL VIREQOUT static SPtr<CVertexBuffer> Create(PGraphicsContext& context, const List<SVertex>& vertices);
+	VIDECL VIREQOUT static SPtr<CVertexBuffer> Create(PGraphicsContext& context, const CList<SVertex>& vertices);
 };
 
 VIDECL typedef SPtr<CVertexBuffer> PVertexBuffer;
