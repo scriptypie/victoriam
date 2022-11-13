@@ -8,22 +8,19 @@
 #include <Victoriam/Graphics/GRenderer.hpp>
 #include <Victoriam/Graphics/GDescriptorWriter.hpp>
 #include <Victoriam/Graphics/GRenderSubrender.hpp>
+#include <Victoriam/Graphics/GRenderPass.hpp>
 
 #include "VulkanGraphicsContext.hpp"
 #include "VulkanSwapchain.hpp"
 #include "VulkanPipeline.hpp"
 #include "VulkanCmdBufferSolver.hpp"
 
-#include "Accessors/ACmdBufferSolver.hpp"
-#include "Accessors/ADescriptorWriter.hpp"
-#include "Accessors/AVertexBuffer.hpp"
-#include "Accessors/AUniformBuffer.hpp"
-
 VISRCBEG
 
 class VIDECL CVulkanRenderer : public CRenderer {
 	VIDECL PGraphicsContext m_Context = {};
 	VIDECL PSwapchain m_Swapchain = {};
+	VIDECL PRenderPass m_MainRenderPass = {};
 	VIDECL PCmdBufferSolver m_CmdBufferSolver = {};
 	VIDECL PWindow m_Window = {};
 	VIDECL PDescriptorPool m_GlobalPool = {};
@@ -31,7 +28,6 @@ class VIDECL CVulkanRenderer : public CRenderer {
 	VIDECL CList<SDescriptorSet> m_GlobalDescriptorSets = {};
 	VIDECL UInt32 m_ImageIndex = {};
 	VIDECL VkDescriptorPool m_GUIPool = {};
-
 	VIDECL CList<PRenderSubrender> m_SubPasses = {};
 public:
 	VIDECL explicit CVulkanRenderer(const SRendererCreateInfo& createInfo);
@@ -49,7 +45,7 @@ public:
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer) override;
 	VIDECL VIREQOUT CGeometryData CreateGeometryData(const SGeometryDataCreateInfo& createInfo) override;
 
-	VIDECL          void OnWindowResize(const SWindowExtent& extent) override;
+	VIDECL          void OnWindowResize(const SExtent2D& extent) override;
 	VIDECL VIREQOUT SFrameInfo BeginFrame(const PWorld& world) override;
 	VIDECL          void DrawFrame(SFrameInfo& frameInfo, const PWorld& world) override;
 	VIDECL          void EndFrame(const SFrameInfo& frameInfo) override;
@@ -57,7 +53,7 @@ public:
 	VIDECL          void EndUIFrame(SCommandBuffer commandBuffer) override;
 	VIDECL          void Shutdown(const PWorld& world) override;
 private:
-	VIDECL void RecreateSwapchain(const SWindowExtent& newExtent);
+	VIDECL void RecreateSwapchain(const SExtent2D& newExtent);
 	VIDECL void CreateDescriptors();
 	VIDECL void CreateDescriptorSetLayout();
 };

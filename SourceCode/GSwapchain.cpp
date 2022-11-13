@@ -8,11 +8,11 @@
 
 VISRCBEG
 
-PSwapchain CSwapchain::Create(PGraphicsContext &context, const SWindowExtent &extent) {
+PSwapchain CSwapchain::Create(PGraphicsContext &context, const SExtent2D &extent) {
 	return CreateUPtr<CVulkanSwapchain>(context, extent);
 }
 
-PSwapchain CSwapchain::Create(PGraphicsContext &context, const SWindowExtent &extent, CSwapchain* prev)
+PSwapchain CSwapchain::Create(PGraphicsContext &context, const SExtent2D &extent, CSwapchain* prev)
 {
 	return CreateUPtr<CVulkanSwapchain>(context, extent, prev);
 }

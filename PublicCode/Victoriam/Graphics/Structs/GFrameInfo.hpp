@@ -10,11 +10,15 @@
 
 VISRCBEG
 
+class CFramebuffer;
+VIDECL typedef SPtr<CFramebuffer> PFramebuffer;
+
 /**
  * Struct that handles all frame-related information.
  */
 struct VIDECL SFrameInfo
 {
+	VIDECL PFramebuffer Framebuffer = {};
 	VIDECL SCommandBuffer CommandBuffer = {};
 	VIDECL SDescriptorSet ConstantsDescriptorSet = {};
 	VIDECL SRendererConstants Constants = {};
@@ -26,8 +30,8 @@ struct VIDECL SFrameInfo
 	VIDECL inline SFrameInfo(const SCommandBuffer& commandBuffer, const UInt32& imageIndex, const UInt32& frameIndex)
 		: CommandBuffer(commandBuffer), ImageIndex(imageIndex), FrameIndex(frameIndex)
 	{}
-	VIDECL inline SFrameInfo(const SCommandBuffer& commandBuffer, const SDescriptorSet& descriptorSet, const UInt32& imageIndex, const UInt32& frameIndex, const Float32& aspectRatio)
-		: CommandBuffer(commandBuffer), ConstantsDescriptorSet(descriptorSet), ImageIndex(imageIndex), FrameIndex(frameIndex), AspectRatio(aspectRatio)
+	VIDECL inline SFrameInfo(const SCommandBuffer& commandBuffer, const SDescriptorSet& descriptorSet, const UInt32& imageIndex, const UInt32& frameIndex, const Float32& aspectRatio, const PFramebuffer& framebuffer)
+		: CommandBuffer(commandBuffer), ConstantsDescriptorSet(descriptorSet), ImageIndex(imageIndex), FrameIndex(frameIndex), AspectRatio(aspectRatio), Framebuffer(framebuffer)
 	{}
 
 	VIDECL inline explicit operator Bool() const { return CCast<Bool>(CommandBuffer); }

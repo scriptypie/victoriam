@@ -23,8 +23,8 @@ public:
 	VIDECL VIREQOUT virtual UInt32 GetHeight() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetOffsetX() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetOffsetY() const = 0;
-	VIDECL VIREQOUT virtual SWindowExtent GetExtent() const = 0;
-	VIDECL          virtual void SetExtent(const SWindowExtent& extent) = 0;
+	VIDECL VIREQOUT virtual SExtent2D GetExtent() const = 0;
+	VIDECL          virtual void SetExtent(const SExtent2D& extent) = 0;
 	VIDECL          virtual void SetEventCallbackFunction(const EventCallbackFn& fn) = 0;
 	VIDECL          virtual void WaitForEvents() = 0;
 

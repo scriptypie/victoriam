@@ -11,10 +11,11 @@
 VISRCBEG
 
 struct VIDECL SRenderPassCreateInfo {
-	SVector2 Offset = {};
-	SWindowExtent Extent = {};
-	Float32 Depth = {};
-	UInt32 Stencil = {};
+	SVector2 Offset;
+	SExtent2D Extent;
+	SVector4 ClearColor;
+	Float32 Depth;
+	UInt32 Stencil;
 };
 
 VISRCEND

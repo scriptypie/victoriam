@@ -6,13 +6,19 @@
 
 #include <Victoriam/Graphics/Structs/GMaterialData.hpp>
 
+#include "Accessors/AWindow.hpp"
+#include "Accessors/AGraphicsContext.hpp"
+#include "Accessors/ASwapchain.hpp"
+#include "Accessors/ADescriptorSetLayout.hpp"
+#include "Accessors/ARenderPass.hpp"
+
 VISRCBEG
 
-CVulkanPipeline::CVulkanPipeline(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize)
+CVulkanPipeline::CVulkanPipeline(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize)
 		: m_Context(context)
 {
 
-	m_Info.RenderPass = Accessors::Swapchain::GetRenderPass(swapchain);
+	m_Info.RenderPass = Accessors::RenderPass::GetRenderPass(renderPass);
 	m_Info.bProvideAttributes = createInfo.bProvideAttributes;
 	m_Info.bProvideBindings = createInfo.bProvideBindings;
 	m_Info.bCreateConstantRanges = createInfo.bCreateConstantRanges;

@@ -14,14 +14,14 @@ class VIDECL CPointLightSubrender : public CRenderSubrender
 	PGraphicsContext& m_Context;
 	PPipeline m_Pipeline = {};
 public:
-	VIDECL CPointLightSubrender(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
+	VIDECL CPointLightSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
 	VIDECL ~CPointLightSubrender() override = default;
 
 	VIDECL void Compute(SFrameInfo& frameInfo, const PWorld& world) override;
 	VIDECL void Pass(const SFrameInfo& frameInfo, const PWorld& world) override;
 
 private:
-	VIDECL void CreateUniquePipeline(PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
+	VIDECL void CreateUniquePipeline(PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
 };
 
 VISRCEND

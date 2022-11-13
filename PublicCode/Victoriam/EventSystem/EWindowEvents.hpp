@@ -48,7 +48,7 @@ public:
 	/**
 	 * Access to new window's width and height as extent.
 	 */
-	VIDECL VIREQOUT inline SWindowExtent GetExtent() const { return { m_Width, m_Height }; }
+	VIDECL VIREQOUT inline SExtent2D GetExtent() const { return {m_Width, m_Height }; }
 
 	VIDECL VIREQOUT String ToString() const override
 	{

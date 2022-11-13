@@ -4,6 +4,11 @@
 
 #include "VulkanRenderer.hpp"
 
+#include "Accessors/ACmdBufferSolver.hpp"
+#include "Accessors/ADescriptorWriter.hpp"
+#include "Accessors/AVertexBuffer.hpp"
+#include "Accessors/AUniformBuffer.hpp"
+
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_vulkan.h>
@@ -23,8 +28,8 @@ void CVulkanRenderer::Setup()
 {
 	m_CmdBufferSolver = CCmdBufferSolver::Create(m_Swapchain, m_Context);
 
-	m_SubPasses[0] = CRenderSubrender::CreateDefaultSubrender(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
-	m_SubPasses[1] = CRenderSubrender::CreatePointLightSubrender(m_Context, m_Swapchain, m_GlobalDescriptorSetLayout);
+	m_SubPasses[0] = CRenderSubrender::CreateDefaultSubrender(m_Context, m_MainRenderPass, m_GlobalDescriptorSetLayout);
+	m_SubPasses[1] = CRenderSubrender::CreatePointLightSubrender(m_Context, m_MainRenderPass, m_GlobalDescriptorSetLayout);
 
 	DefaultVertexBuffer = CVertexBuffer::Create(m_Context, DefaultVertices);
 	DefaultIndexBuffer  = CIndexBuffer ::Create(m_Context, DefaultIndices);
@@ -53,7 +58,8 @@ SFrameInfo CVulkanRenderer::BeginFrame(const PWorld& world)
 			 m_GlobalDescriptorSets[m_Swapchain->GetFrameIndex()],
 			 m_ImageIndex,
 			 m_Swapchain->GetFrameIndex(),
-			 m_Swapchain->GetExtentAspectRatio() };
+			 m_Swapchain->GetExtentAspectRatio(),
+			 m_Swapchain->GetFramebuffers()[m_ImageIndex] };
 }
 
 void CVulkanRenderer::DrawFrame(SFrameInfo& frameInfo, const PWorld& world)
@@ -66,13 +72,13 @@ void CVulkanRenderer::DrawFrame(SFrameInfo& frameInfo, const PWorld& world)
 	auto& constantBuffer = world->GetConstantsBuffer(frameInfo.FrameIndex);
 	constantBuffer->SubmitToGPU(frameInfo.Constants);
 
-	m_Swapchain->BeginRenderPass(frameInfo.CommandBuffer, frameInfo.ImageIndex);
+	m_MainRenderPass->Begin(frameInfo);
 
 	for (auto& subpass : m_SubPasses) {
 		subpass->Pass(frameInfo, world);
 	}
 
-	m_Swapchain->EndRenderPass(frameInfo.CommandBuffer);
+	m_MainRenderPass->End(frameInfo);
 }
 
 void CVulkanRenderer::EndFrame(const SFrameInfo& frameInfo)
@@ -98,11 +104,11 @@ void CVulkanRenderer::Shutdown(const PWorld& world)
 	world->Clear();
 }
 
-void CVulkanRenderer::OnWindowResize(const SWindowExtent &extent) {
+void CVulkanRenderer::OnWindowResize(const SExtent2D &extent) {
 	RecreateSwapchain(extent);
 }
 
-void CVulkanRenderer::RecreateSwapchain(const SWindowExtent &newExtent) {
+void CVulkanRenderer::RecreateSwapchain(const SExtent2D &newExtent) {
 	if (!newExtent.Width || !newExtent.Height) {
 		m_Window->WaitForEvents();
 		return;
@@ -119,13 +125,27 @@ void CVulkanRenderer::RecreateSwapchain(const SWindowExtent &newExtent) {
 		if (!oldSwapchain->CompareFormats(m_Swapchain))
 			ViAbort("Swapchain image or depth format is changed!!!");
 	}
+
+	// main renderpass is dependes of swapchain, in this case recreate this too.
+	SRenderPassCreateInfo renderPassCreateInfo = {};
+	renderPassCreateInfo.Extent = newExtent;
+	renderPassCreateInfo.ClearColor = {0.01F, 0.01F, 0.01F, 1.0F};
+	renderPassCreateInfo.Depth = 1.0F;
+	renderPassCreateInfo.Stencil = 0;
+
+	m_MainRenderPass = CRenderPass::Create(m_Context, m_Swapchain, renderPassCreateInfo);
+
+	// then recreate framebuffers
+
+	m_Swapchain->CreateFramebuffers(m_MainRenderPass);
+
 	if (m_GlobalDescriptorSetLayout)
-		{
-			m_SubPasses[0] = CRenderSubrender::CreateDefaultSubrender(m_Context, m_Swapchain,
-			                                                          m_GlobalDescriptorSetLayout);
-			m_SubPasses[1] = CRenderSubrender::CreatePointLightSubrender(m_Context, m_Swapchain,
-			                                                             m_GlobalDescriptorSetLayout);
-		}
+	{
+		m_SubPasses[0] = CRenderSubrender::CreateDefaultSubrender(m_Context, m_MainRenderPass,
+		                                                          m_GlobalDescriptorSetLayout);
+		m_SubPasses[1] = CRenderSubrender::CreatePointLightSubrender(m_Context, m_MainRenderPass,
+		                                                             m_GlobalDescriptorSetLayout);
+	}
 }
 
 

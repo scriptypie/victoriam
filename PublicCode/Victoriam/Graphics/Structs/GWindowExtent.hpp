@@ -12,7 +12,7 @@ VISRCBEG
 /**
  * Generalized width and height information.
  */
-struct VIDECL SWindowExtent
+struct VIDECL SExtent2D
 {
 	UInt32 Width = {};
 	UInt32 Height = {};

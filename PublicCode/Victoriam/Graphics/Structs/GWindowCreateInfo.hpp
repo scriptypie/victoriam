@@ -35,8 +35,8 @@ enum VIDECL EWindowCreateWindowFlags : FlagDef
 struct VIDECL SWindowCreateInfo
 {
 	String Name;
-	SWindowExtent Offset;
-	SWindowExtent Resolution;
+	SExtent2D Offset;
+	SExtent2D Resolution;
 	SFlags Flags;
 };
 
