@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_GRENDERSUBRENDER_HPP
 #define VICTORIAM_GRENDERSUBRENDER_HPP
 
-#include <Victoriam/Graphics/GSwapchain.hpp>
+#include <Victoriam/Graphics/GRenderPass.hpp>
 #include <Victoriam/Graphics/GPipeline.hpp>
 #include <Victoriam/Graphics/GGraphicsContext.hpp>
 #include <Victoriam/Graphics/GDescriptorSetLayout.hpp>
@@ -21,8 +21,8 @@ public:
 	VIDECL virtual void Compute(SFrameInfo& frameInfo, const PWorld& world) {}
 	VIDECL virtual void Pass(const SFrameInfo& frameInfo, const PWorld& world) = 0;
 
-	VIDECL VIREQOUT static UPtr<CRenderSubrender> CreateDefaultSubrender(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
-	VIDECL VIREQOUT static UPtr<CRenderSubrender> CreatePointLightSubrender(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout);
+	VIDECL VIREQOUT static UPtr<CRenderSubrender> CreateDefaultSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
+	VIDECL VIREQOUT static UPtr<CRenderSubrender> CreatePointLightSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
 };
 
 VIDECL typedef UPtr<CRenderSubrender> PRenderSubrender;

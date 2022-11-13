@@ -19,6 +19,8 @@ VIDECL typedef struct TSCommandBuffer* SCommandBuffer;
  */
 VIDECL typedef struct TSDescriptorSet* SDescriptorSet;
 
+VIDECL typedef struct TSImageView* SImageView;
+
 VISRCEND
 
 #endif //VICTORIAM_BASICS_HPP

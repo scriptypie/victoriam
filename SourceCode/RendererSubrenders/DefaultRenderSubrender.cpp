@@ -6,10 +6,10 @@
 
 VISRCBEG
 
-CDefaultRenderSubrender::CDefaultRenderSubrender(PGraphicsContext &context, PSwapchain &swapchain, const PDescriptorSetLayout &setLayout)
+CDefaultRenderSubrender::CDefaultRenderSubrender(PGraphicsContext &context, PRenderPass& renderPass, const PDescriptorSetLayout &setLayout)
 	: m_Context(context)
 {
-	CreateUniquePipeline(swapchain, setLayout);
+	CreateUniquePipeline(renderPass, setLayout);
 }
 
 
@@ -62,10 +62,10 @@ void CDefaultRenderSubrender::Pass(const SFrameInfo &frameInfo, const PWorld &wo
 	}
 }
 
-void CDefaultRenderSubrender::CreateUniquePipeline(PSwapchain &swapchain, const PDescriptorSetLayout &setLayout) {
+void CDefaultRenderSubrender::CreateUniquePipeline(PRenderPass& renderPass, const PDescriptorSetLayout &setLayout) {
 	SPipelineCreateInfo createInfo = {};
 	createInfo.Name = "Default";
-	m_Pipeline = CPipeline::CreateFor<SMaterialData>(m_Context, swapchain, setLayout, createInfo);
+	m_Pipeline = CPipeline::CreateFor<SMaterialData>(m_Context, renderPass, setLayout, createInfo);
 }
 
 VISRCEND

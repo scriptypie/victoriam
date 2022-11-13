@@ -10,11 +10,11 @@
 
 VISRCBEG
 
-CPointLightSubrender::CPointLightSubrender(PGraphicsContext &context, PSwapchain &swapchain,
+CPointLightSubrender::CPointLightSubrender(PGraphicsContext &context, PRenderPass& renderPass,
                                            const PDescriptorSetLayout &setLayout)
 	: m_Context(context)
 {
-	CreateUniquePipeline(swapchain, setLayout);
+	CreateUniquePipeline(renderPass, setLayout);
 }
 
 void CPointLightSubrender::Compute(SFrameInfo &frameInfo, const PWorld &world) {
@@ -66,11 +66,11 @@ void CPointLightSubrender::Pass(const SFrameInfo &frameInfo, const PWorld &world
 }
 
 void
-CPointLightSubrender::CreateUniquePipeline(PSwapchain &swapchain, const PDescriptorSetLayout &setLayout) {
+CPointLightSubrender::CreateUniquePipeline(PRenderPass& renderPass, const PDescriptorSetLayout &setLayout) {
 	SPipelineCreateInfo createInfo = {};
 	createInfo.Name = "PLDefault";
 	createInfo.bProvideBindings = createInfo.bProvideAttributes = false;
-	m_Pipeline = CPipeline::CreateFor<SPointLightData>(m_Context, swapchain, setLayout, createInfo);
+	m_Pipeline = CPipeline::CreateFor<SPointLightData>(m_Context, renderPass, setLayout, createInfo);
 }
 
 VISRCEND

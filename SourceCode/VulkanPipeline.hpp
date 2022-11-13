@@ -8,10 +8,6 @@
 #include <Victoriam/Utils/UShaderCooker.hpp>
 #include <Victoriam/Graphics/GPipeline.hpp>
 
-#include "Accessors/AWindow.hpp"
-#include "Accessors/AGraphicsContext.hpp"
-#include "Accessors/ASwapchain.hpp"
-#include "Accessors/ADescriptorSetLayout.hpp"
 #include "VulkanVertex.hpp"
 
 VISRCBEG
@@ -116,7 +112,7 @@ class VIDECL CVulkanPipeline : public CPipeline
 	VIDECL VkShaderModule m_FragmentShaderModule = {};
 	VIDECL SVulkanPipelineCreateInfo m_Info = {};
 public:
-	VIDECL CVulkanPipeline(PGraphicsContext& context, PSwapchain& swapchain, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
+	VIDECL CVulkanPipeline(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
 	VIDECL ~CVulkanPipeline() override;
 
 	VIDECL void BindCommandBuffer(const SCommandBuffer& buffer) const override;

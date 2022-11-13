@@ -7,6 +7,7 @@
 
 #include <Victoriam/Graphics/Structs/GRenderPassCreateInfo.hpp>
 #include <Victoriam/Graphics/GSwapchain.hpp>
+#include <Victoriam/Graphics/Structs/GFrameInfo.hpp>
 
 VISRCBEG
 
@@ -14,8 +15,8 @@ class VIDECL CRenderPass {
 public:
 	VIDECL virtual ~CRenderPass() = default;
 
-	VIDECL virtual void Begin(const SCommandBuffer& commandBuffer) = 0;
-	VIDECL virtual void End(const SCommandBuffer& commandBuffer) = 0;
+	VIDECL virtual void Begin(const SFrameInfo& frameInfo) = 0;
+	VIDECL virtual void End(const SFrameInfo& frameInfo) = 0;
 
 	VIDECL VIREQOUT static UPtr<CRenderPass> Create(PGraphicsContext& context, PSwapchain& swapchain, const SRenderPassCreateInfo& createInfo);
 };

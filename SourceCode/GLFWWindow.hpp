@@ -36,8 +36,8 @@ struct VIDECL SInputState
 struct VIDECL SWindowData
 {
 	String Name;
-	SWindowExtent Offset;
-	SWindowExtent Resolution;
+	SExtent2D Offset;
+	SExtent2D Resolution;
 	SFlags Flags;
 
 	SInputState InputState;
@@ -62,8 +62,8 @@ public:
 	VIDECL VIREQOUT inline UInt32 GetHeight() const override { return m_Data.Resolution.Height; }
 	VIDECL VIREQOUT inline UInt32 GetOffsetX() const override { return m_Data.Offset.Width; }
 	VIDECL VIREQOUT inline UInt32 GetOffsetY() const override { return m_Data.Offset.Height; }
-	VIDECL VIREQOUT inline SWindowExtent GetExtent() const override { return {GetWidth(), GetHeight() }; }
-	VIDECL          inline void SetExtent(const SWindowExtent& extent) override { m_Data.Resolution = extent; }
+	VIDECL VIREQOUT inline SExtent2D GetExtent() const override { return {GetWidth(), GetHeight() }; }
+	VIDECL          inline void SetExtent(const SExtent2D& extent) override { m_Data.Resolution = extent; }
 	VIDECL          inline void SetEventCallbackFunction(const EventCallbackFn& fn) override { m_Data.Callback = fn; }
 	VIDECL          void WaitForEvents() override;
 private:

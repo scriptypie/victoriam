@@ -32,7 +32,7 @@ public:
 	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer) = 0;
 	VIDECL VIREQOUT virtual CGeometryData CreateGeometryData(const PVertexBuffer& vertexBuffer, const PIndexBuffer& indexBuffer) = 0;
 
-	VIDECL          virtual void OnWindowResize(const SWindowExtent& extent) = 0;
+	VIDECL          virtual void OnWindowResize(const SExtent2D& extent) = 0;
 	VIDECL VIREQOUT virtual SFrameInfo BeginFrame(const PWorld& world) = 0;
 	VIDECL          virtual void DrawFrame(SFrameInfo& frameInfo, const PWorld& world) = 0;
 	VIDECL          virtual void EndFrame(const SFrameInfo& frameInfo) = 0;

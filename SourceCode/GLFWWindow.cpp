@@ -10,7 +10,7 @@ static bool g_FirstWindow = true;
 
 namespace
 {
-	inline void glfwErrorCallback(Int32 error, const char* desc)
+	VIDECL inline void glfwErrorCallback(Int32 error, const char* desc)
 	{
 		printf("GLFW Error(%d): %s\n", error, desc);
 	}

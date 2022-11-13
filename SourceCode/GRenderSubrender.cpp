@@ -10,15 +10,15 @@
 VISRCBEG
 
 PRenderSubrender
-CRenderSubrender::CreateDefaultSubrender(PGraphicsContext &context, PSwapchain &swapchain, const PDescriptorSetLayout &setLayout)
+CRenderSubrender::CreateDefaultSubrender(PGraphicsContext &context, PRenderPass& renderPass, const PDescriptorSetLayout &setLayout)
 {
-	return CreateUPtr<CDefaultRenderSubrender>(context, swapchain, setLayout);
+	return CreateUPtr<CDefaultRenderSubrender>(context, renderPass, setLayout);
 }
 
 PRenderSubrender
-CRenderSubrender::CreatePointLightSubrender(PGraphicsContext &context, PSwapchain &swapchain,
+CRenderSubrender::CreatePointLightSubrender(PGraphicsContext &context, PRenderPass& renderPass,
                                             const PDescriptorSetLayout &setLayout) {
-	return CreateUPtr<CPointLightSubrender>(context, swapchain, setLayout);
+	return CreateUPtr<CPointLightSubrender>(context, renderPass, setLayout);
 }
 
 VISRCEND

@@ -6,6 +6,9 @@
 #define VICTORIAM_VULKANSWAPCHAIN_HPP
 
 #include <Victoriam/Graphics/GSwapchain.hpp>
+#include <Victoriam/Graphics/GFramebuffer.hpp>
+#include <Victoriam/Graphics/GRenderPass.hpp>
+
 #include "Accessors/AGraphicsContext.hpp"
 
 VISRCBEG
@@ -24,10 +27,11 @@ VIDECL
 	VIDECL CList<VkImage> m_DepthImages = {};
 	VIDECL CList<VkDeviceMemory> m_DepthImageMemories = {};
 	VIDECL CList<VkImageView> m_DepthImageViews = {};
-	VIDECL CList<VkImage> m_SwapchainImages = {};
 	VIDECL CList<VkImageView> m_SwapchainImageViews = {};
+	VIDECL CList<VkImage> m_SwapchainImages = {};
 	VIDECL PGraphicsContext& m_Context;
-	VIDECL SWindowExtent m_WindowExtent = {};
+	VIDECL CList<PFramebuffer> m_Framebuffers = {};
+	VIDECL SExtent2D m_WindowExtent = {};
 	VIDECL VkSwapchainKHR m_Swapchain = {};
 	VIDECL CList<VkSemaphore> m_ImageAvailableSemaphores = {};
 	VIDECL CList<VkSemaphore> m_RenderFinishedSemaphores = {};
@@ -37,8 +41,8 @@ VIDECL
 	VIDECL CSwapchain* m_OldSwapchain = {};
 
 public:
-	VIDECL explicit CVulkanSwapchain(PGraphicsContext& device, const SWindowExtent& extent);
-	VIDECL explicit CVulkanSwapchain(PGraphicsContext& device, const SWindowExtent& extent, CSwapchain* prev);
+	VIDECL explicit CVulkanSwapchain(PGraphicsContext& device, const SExtent2D& extent);
+	VIDECL explicit CVulkanSwapchain(PGraphicsContext& device, const SExtent2D& extent, CSwapchain* prev);
 	VIDECL ~CVulkanSwapchain() override;
 
 	VIDECL VIREQOUT UInt32 AcquireNextImage(UInt32* imageIndex) override;
@@ -67,6 +71,8 @@ private:
 	VIDECL VIREQOUT VkFormat FindDepthFormat();
 	VIDECL          VkResult SubmitCommandBuffers(const VkCommandBuffer* buffers, const UInt32* imageIndex);
 private:
+	VIDECL VIREQOUT inline CList<PFramebuffer>& GetFramebuffers() override { return m_Framebuffers; }
+	VIDECL void CreateFramebuffers(PRenderPass& renderPass) override;
 	VIDECL VIREQOUT inline VkImageView GetImageView(const UInt32& index) const { return m_SwapchainImageViews[index]; }
 	VIDECL VIREQOUT inline VkFormat GetSwapchainImageFormat() const { return m_SwapchainImageFormat; }
 	VIDECL VIREQOUT inline VkExtent2D GetSwapchainExtent() const { return m_SwapchainExtent; }

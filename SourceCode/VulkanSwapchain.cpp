@@ -11,13 +11,13 @@
 
 VISRCBEG
 
-CVulkanSwapchain::CVulkanSwapchain(PGraphicsContext &context, const SWindowExtent &extent)
+CVulkanSwapchain::CVulkanSwapchain(PGraphicsContext &context, const SExtent2D &extent)
 	: m_Context(context), m_WindowExtent(extent)
 {
 	Init();
 }
 
-CVulkanSwapchain::CVulkanSwapchain(PGraphicsContext &context, const SWindowExtent &extent, CSwapchain* prev)
+CVulkanSwapchain::CVulkanSwapchain(PGraphicsContext &context, const SExtent2D &extent, CSwapchain* prev)
 	: m_Context(context), m_WindowExtent(extent)
 {
 	m_OldSwapchain = prev;
@@ -30,7 +30,6 @@ void CVulkanSwapchain::Init()
 	CreateSwapchain();
 	CreateImageViews();
 	CreateDepthResources();
-	CreateFramebuffers();
 	SetupSynchronization();
 }
 
@@ -49,10 +48,6 @@ CVulkanSwapchain::~CVulkanSwapchain() {
 		vkDestroyImageView(Accessors::GraphicsContext::GetDevice(m_Context), m_DepthImageViews[i], nullptr);
 		vkDestroyImage(Accessors::GraphicsContext::GetDevice(m_Context), m_DepthImages[i], nullptr);
 		vkFreeMemory(Accessors::GraphicsContext::GetDevice(m_Context), m_DepthImageMemories[i], nullptr);
-	}
-
-	for (auto framebuffer : m_SwapchainFramebuffers) {
-		vkDestroyFramebuffer(Accessors::GraphicsContext::GetDevice(m_Context), framebuffer, nullptr);
 	}
 
 	// cleanup synchronization objects
@@ -171,9 +166,10 @@ void CVulkanSwapchain::CreateDepthResources()
 	}
 }
 
+/*
 void CVulkanSwapchain::CreateFramebuffers()
 {
-	m_SwapchainFramebuffers.resize(GetImageCount());
+	m_Framebuffers.resize(GetImageCount());
 	for (size_t i = 0; i < GetImageCount(); i++) {
 		CArray<VkImageView, 2> attachments;
 		attachments.At(0) = m_SwapchainImageViews[i];
@@ -191,7 +187,7 @@ void CVulkanSwapchain::CreateFramebuffers()
 		if (vkCreateFramebuffer(Accessors::GraphicsContext::GetDevice(m_Context), &framebufferInfo, nullptr, &m_SwapchainFramebuffers[i]) != VK_SUCCESS)
 			ViAbort("Failed to create framebuffer!");
 	}
-}
+}*/
 
 void CVulkanSwapchain::SetupSynchronization()
 {
@@ -302,6 +298,18 @@ Bool CVulkanSwapchain::CompareFormats(const PSwapchain& swapchain) const
 	if (!swapchain) return false;
 	return  m_SwapchainImageFormat == CCast<CVulkanSwapchain*>(swapchain.get())->m_SwapchainImageFormat &&
 			m_SwapchainDepthFormat == CCast<CVulkanSwapchain*>(swapchain.get())->m_SwapchainDepthFormat;
+}
+
+void CVulkanSwapchain::CreateFramebuffers(PRenderPass &renderPass) {
+	m_Framebuffers.resize(GetImageCount());
+	for (UInt32 i = 0; i < GetImageCount(); i++)
+	{
+		SFramebufferCreateInfo createInfo = {};
+		createInfo.Attachments = {
+				CCast<SImageView>(m_SwapchainImageViews[i]),
+				CCast<SImageView>(m_DepthImageViews[i]) };
+		m_Framebuffers[i] = CFramebuffer::Create(m_Context, renderPass, createInfo);
+	}
 }
 
 VISRCEND
