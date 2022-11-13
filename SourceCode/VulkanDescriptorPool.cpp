@@ -35,6 +35,7 @@ CVulkanDescriptorPool::CVulkanDescriptorPool(PGraphicsContext &context, const SD
 CVulkanDescriptorPool::~CVulkanDescriptorPool()
 {
 	vkDestroyDescriptorPool(Accessors::GraphicsContext::GetDevice(m_Context), m_Pool, nullptr);
+	m_Pool = nullptr;
 }
 
 Bool CVulkanDescriptorPool::AllocateDescriptorSet(const PDescriptorSetLayout &layout, SDescriptorSet &descriptorSet) const {

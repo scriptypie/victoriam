@@ -56,13 +56,19 @@ CVulkanGraphicsContext::CVulkanGraphicsContext(const SPtr<CWindow> &window)
 CVulkanGraphicsContext::~CVulkanGraphicsContext()
 {
 	vkDestroyCommandPool(m_Device, m_CmdPool, nullptr);
+	m_CmdPool = nullptr;
+
 	vkDestroyDevice(m_Device, nullptr);
+	m_Device = nullptr;
 
 	if (m_EnableValidation)
 		DestroyDebugMessengerEXT(m_Instance, m_DebugMessenger);
+	m_DebugMessenger = nullptr;
 
 	vkDestroySurfaceKHR(m_Instance, m_Surface, nullptr);
+	m_Surface = nullptr;
 	vkDestroyInstance(m_Instance, nullptr);
+	m_Instance = nullptr;
 }
 
 void CVulkanGraphicsContext::CreateGraphicsInstance()

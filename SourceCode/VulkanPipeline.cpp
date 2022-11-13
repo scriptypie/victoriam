@@ -33,9 +33,13 @@ CVulkanPipeline::CVulkanPipeline(PGraphicsContext& context, PSwapchain& swapchai
 CVulkanPipeline::~CVulkanPipeline()
 {
 	vkDestroyShaderModule(Accessors::GraphicsContext::GetDevice(m_Context), m_VertexShaderModule, nullptr);
+	m_VertexShaderModule = nullptr;
 	vkDestroyShaderModule(Accessors::GraphicsContext::GetDevice(m_Context), m_FragmentShaderModule, nullptr);
+	m_FragmentShaderModule = nullptr;
 	vkDestroyPipelineLayout(Accessors::GraphicsContext::GetDevice(m_Context), m_Info.PipelineLayout, nullptr);
+	m_Info.PipelineLayout = nullptr;
 	vkDestroyPipeline(Accessors::GraphicsContext::GetDevice(m_Context), m_GraphicsPipeline, nullptr);
+	m_GraphicsPipeline = nullptr;
 }
 
 void CVulkanPipeline::CreateShaderModule(const CBinaryData &sourceData, VkShaderModule *shaderModule)

@@ -37,6 +37,7 @@ CVulkanDescriptorSetLayout::CVulkanDescriptorSetLayout(PGraphicsContext &context
 CVulkanDescriptorSetLayout::~CVulkanDescriptorSetLayout()
 {
 	vkDestroyDescriptorSetLayout(Accessors::GraphicsContext::GetDevice(m_Context), m_Layout, nullptr);
+	m_Layout = nullptr;
 }
 
 VISRCEND

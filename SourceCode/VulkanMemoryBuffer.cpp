@@ -23,7 +23,9 @@ CVulkanMemoryBuffer::CVulkanMemoryBuffer(PGraphicsContext&              context,
 CVulkanMemoryBuffer::~CVulkanMemoryBuffer() {
 	Unmap();
 	vkDestroyBuffer(Accessors::GraphicsContext::GetDevice(m_Context), m_Buffer, nullptr);
+	m_Buffer = nullptr;
 	vkFreeMemory(Accessors::GraphicsContext::GetDevice(m_Context), m_Memory, nullptr);
+	m_Memory = nullptr;
 }
 
 VkResult CVulkanMemoryBuffer::Map(const VkDeviceSize &size, const VkDeviceSize &offset) {

@@ -36,8 +36,9 @@ void CVulkanSwapchain::Init()
 }
 
 CVulkanSwapchain::~CVulkanSwapchain() {
-	for (auto imageView : m_SwapchainImageViews) {
+	for (auto& imageView : m_SwapchainImageViews) {
 		vkDestroyImageView(Accessors::GraphicsContext::GetDevice(m_Context), imageView, nullptr);
+		imageView = nullptr;
 	}
 	m_SwapchainImageViews.clear();
 
@@ -52,8 +53,9 @@ CVulkanSwapchain::~CVulkanSwapchain() {
 		vkFreeMemory(Accessors::GraphicsContext::GetDevice(m_Context), m_DepthImageMemories[i], nullptr);
 	}
 
-	for (auto framebuffer : m_SwapchainFramebuffers) {
+	for (auto& framebuffer : m_SwapchainFramebuffers) {
 		vkDestroyFramebuffer(Accessors::GraphicsContext::GetDevice(m_Context), framebuffer, nullptr);
+		framebuffer = nullptr;
 	}
 
 	vkDestroyRenderPass(Accessors::GraphicsContext::GetDevice(m_Context), m_RenderPass, nullptr);
