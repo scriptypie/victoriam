@@ -12,7 +12,10 @@
 
 VISRCBEG
 
+namespace Accessors { class RenderPass; }
+
 class VIDECL CVulkanRenderPass : public CRenderPass {
+	friend class Accessors::RenderPass;
 	VkRenderPass m_RenderPass = {};
 	PSwapchain& m_Swapchain;
 	PGraphicsContext& m_Context;
@@ -30,6 +33,8 @@ public:
 
 private:
 	VIDECL void CreateRenderPass();
+private:
+	VIDECL VIREQOUT inline VkRenderPass GetRenderPass() { return m_RenderPass; }
 };
 
 VISRCEND

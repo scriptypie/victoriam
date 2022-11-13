@@ -55,6 +55,20 @@ void CVulkanRenderPass::End(SCommandBuffer const &commandBuffer) {
 }
 
 void CVulkanRenderPass::CreateRenderPass() {
+	VkAttachmentDescription colorAttachment = {};
+	colorAttachment.format = Accessors::Swapchain::GetSwapchainImageFormat(m_Swapchain);
+	colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+	colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+	colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+	colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+	colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+	colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+
+	VkAttachmentReference colorAttachmentRef = {};
+	colorAttachmentRef.attachment = 0;
+	colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+
 	VkAttachmentDescription depthAttachment = {};
 	depthAttachment.format = Accessors::Swapchain::FindDepthFormat(m_Swapchain);
 	depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -68,17 +82,7 @@ void CVulkanRenderPass::CreateRenderPass() {
 	depthAttachmentRef.attachment = 1;
 	depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-	VkAttachmentDescription colorAttachment = {};
-	colorAttachment.format = Accessors::Swapchain::GetSwapchainImageFormat(m_Swapchain);
-	colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-	colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-	colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-	colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-	colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-	colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-
-	VkAttachmentReference colorAttachmentRef = {};
-	colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+	// TODO: other attachments...(input, resolve, preserve)
 
 	VkSubpassDescription subpass = {};
 	subpass.colorAttachmentCount = 1;
@@ -91,10 +95,10 @@ void CVulkanRenderPass::CreateRenderPass() {
 	dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
 	dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
 
-	CArray<VkAttachmentDescription, 2> attachments = {colorAttachment, depthAttachment};
+	VkAttachmentDescription attachments[] = {colorAttachment, depthAttachment};
 	VkRenderPassCreateInfo renderPassInfo = { VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO };
-	renderPassInfo.attachmentCount = CCast<UInt32>(attachments.Size());
-	renderPassInfo.pAttachments = attachments.Data();
+	renderPassInfo.attachmentCount = FSize(attachments);
+	renderPassInfo.pAttachments = attachments;
 	renderPassInfo.subpassCount = 1;
 	renderPassInfo.pSubpasses = &subpass;
 	renderPassInfo.dependencyCount = 1;
