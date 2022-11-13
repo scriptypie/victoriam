@@ -166,29 +166,6 @@ void CVulkanSwapchain::CreateDepthResources()
 	}
 }
 
-/*
-void CVulkanSwapchain::CreateFramebuffers()
-{
-	m_Framebuffers.resize(GetImageCount());
-	for (size_t i = 0; i < GetImageCount(); i++) {
-		CArray<VkImageView, 2> attachments;
-		attachments.At(0) = m_SwapchainImageViews[i];
-		attachments.At(1) = m_DepthImageViews[i];
-
-		VkExtent2D swapChainExtent = GetSwapchainExtent();
-		VkFramebufferCreateInfo framebufferInfo = { VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO };
-		framebufferInfo.renderPass = m_RenderPass;
-		framebufferInfo.attachmentCount = CCast<UInt32>(attachments.Size());
-		framebufferInfo.pAttachments = attachments.Data();
-		framebufferInfo.width = swapChainExtent.width;
-		framebufferInfo.height = swapChainExtent.height;
-		framebufferInfo.layers = 1;
-
-		if (vkCreateFramebuffer(Accessors::GraphicsContext::GetDevice(m_Context), &framebufferInfo, nullptr, &m_SwapchainFramebuffers[i]) != VK_SUCCESS)
-			ViAbort("Failed to create framebuffer!");
-	}
-}*/
-
 void CVulkanSwapchain::SetupSynchronization()
 {
 	m_ImageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
