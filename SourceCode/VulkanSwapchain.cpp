@@ -30,7 +30,6 @@ void CVulkanSwapchain::Init()
 	CreateSwapchain();
 	CreateImageViews();
 	CreateDepthResources();
-	CreateRenderPass();
 	CreateFramebuffers();
 	SetupSynchronization();
 }
@@ -55,8 +54,6 @@ CVulkanSwapchain::~CVulkanSwapchain() {
 	for (auto framebuffer : m_SwapchainFramebuffers) {
 		vkDestroyFramebuffer(Accessors::GraphicsContext::GetDevice(m_Context), framebuffer, nullptr);
 	}
-
-	vkDestroyRenderPass(Accessors::GraphicsContext::GetDevice(m_Context), m_RenderPass, nullptr);
 
 	// cleanup synchronization objects
 	for (UInt32 i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
@@ -172,90 +169,6 @@ void CVulkanSwapchain::CreateDepthResources()
 		if (vkCreateImageView(Accessors::GraphicsContext::GetDevice(m_Context), &viewInfo, nullptr, &m_DepthImageViews[i]) != VK_SUCCESS)
 			ViAbort("Failed to create texture image view!");
 	}
-}
-
-void CVulkanSwapchain::CreateRenderPass()
-{
-	VkAttachmentDescription depthAttachment = {};
-	depthAttachment.format = FindDepthFormat();
-	depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-	depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-	depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-	depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-	depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-	depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
-	VkAttachmentReference depthAttachmentRef = {};
-	depthAttachmentRef.attachment = 1;
-	depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
-	VkAttachmentDescription colorAttachment = {};
-	colorAttachment.format = GetSwapchainImageFormat();
-	colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-	colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-	colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-	colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-	colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-	colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-
-	VkAttachmentReference colorAttachmentRef = {};
-	colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-	VkSubpassDescription subpass = {};
-	subpass.colorAttachmentCount = 1;
-	subpass.pColorAttachments = &colorAttachmentRef;
-	subpass.pDepthStencilAttachment = &depthAttachmentRef;
-
-	VkSubpassDependency dependency = {};
-	dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-	dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
-	dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
-	dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
-
-	CArray<VkAttachmentDescription, 2> attachments = {colorAttachment, depthAttachment};
-	VkRenderPassCreateInfo renderPassInfo = { VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO };
-	renderPassInfo.attachmentCount = CCast<UInt32>(attachments.Size());
-	renderPassInfo.pAttachments = attachments.Data();
-	renderPassInfo.subpassCount = 1;
-	renderPassInfo.pSubpasses = &subpass;
-	renderPassInfo.dependencyCount = 1;
-	renderPassInfo.pDependencies = &dependency;
-
-	if (vkCreateRenderPass(Accessors::GraphicsContext::GetDevice(m_Context), &renderPassInfo, nullptr, &m_RenderPass) != VK_SUCCESS)
-		ViAbort("Failed to create render pass!");
-}
-
-void CVulkanSwapchain::BeginRenderPass(const SCommandBuffer& commandBuffer, UInt32 imageIndex)
-{
-	VkRenderPassBeginInfo renderPassBeginInfo = { VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO };
-	renderPassBeginInfo.renderPass = GetRenderPass();
-	renderPassBeginInfo.framebuffer = GetFramebuffer(imageIndex);
-
-	renderPassBeginInfo.renderArea.extent = GetSwapchainExtent();
-
-	CArray<VkClearValue, 2> clearValues = {};
-	clearValues.At(0).color = { 0.01F, 0.01F, 0.01F, 1.0F };
-	clearValues.At(1).depthStencil = { 1.0F, 0 };
-
-	renderPassBeginInfo.clearValueCount = CCast<UInt32>(clearValues.Size());
-	renderPassBeginInfo.pClearValues = clearValues.Data();
-
-	vkCmdBeginRenderPass(CCast<VkCommandBuffer>(commandBuffer), &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-	auto extent = GetSwapchainExtent();
-	VkViewport viewport = {};
-	viewport.width = CCast<Float32>(extent.width);
-	viewport.height = CCast<Float32>(extent.height);
-	viewport.maxDepth = 1.0F;
-	VkRect2D scissor = {};
-	scissor.extent = extent;
-	vkCmdSetViewport(CCast<VkCommandBuffer>(commandBuffer), 0, 1, &viewport);
-	vkCmdSetScissor(CCast<VkCommandBuffer>(commandBuffer), 0, 1, &scissor);
-}
-
-void CVulkanSwapchain::EndRenderPass(const SCommandBuffer& commandBuffer)
-{
-	vkCmdEndRenderPass(CCast<VkCommandBuffer>(commandBuffer));
 }
 
 void CVulkanSwapchain::CreateFramebuffers()

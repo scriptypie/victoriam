@@ -21,8 +21,6 @@ VIDECL
 	VIDECL VkFormat m_SwapchainImageFormat = {};
 	VIDECL VkFormat m_SwapchainDepthFormat = {};
 	VIDECL VkExtent2D m_SwapchainExtent = {};
-	VIDECL CList<VkFramebuffer> m_SwapchainFramebuffers = {};
-	VIDECL VkRenderPass m_RenderPass = {};
 	VIDECL CList<VkImage> m_DepthImages = {};
 	VIDECL CList<VkDeviceMemory> m_DepthImageMemories = {};
 	VIDECL CList<VkImageView> m_DepthImageViews = {};
@@ -55,15 +53,11 @@ public:
 				/ CCast<Float32>(m_SwapchainExtent.height);
 	}
 	VIDECL VIREQOUT Bool CompareFormats(const PSwapchain& swapchain) const override;
-	VIDECL          void BeginRenderPass(const SCommandBuffer& commandBuffer, UInt32 imageIndex) override;
-	VIDECL          void EndRenderPass(const SCommandBuffer& commandBuffer) override;
 private:
 	VIDECL          void Init();
 	VIDECL          void CreateSwapchain();
 	VIDECL          void CreateImageViews();
 	VIDECL          void CreateDepthResources();
-	VIDECL          void CreateRenderPass();
-	VIDECL          void CreateFramebuffers();
 	VIDECL          void SetupSynchronization();
 
 	VIDECL VIREQOUT static VkSurfaceFormatKHR ChooseSwapchainSurfaceFormat(const CList<VkSurfaceFormatKHR>& available);
@@ -73,8 +67,6 @@ private:
 	VIDECL VIREQOUT VkFormat FindDepthFormat();
 	VIDECL          VkResult SubmitCommandBuffers(const VkCommandBuffer* buffers, const UInt32* imageIndex);
 private:
-	VIDECL VIREQOUT inline VkFramebuffer GetFramebuffer(const UInt32& index) const { return m_SwapchainFramebuffers[index]; }
-	VIDECL VIREQOUT inline VkRenderPass GetRenderPass() const { return m_RenderPass; }
 	VIDECL VIREQOUT inline VkImageView GetImageView(const UInt32& index) const { return m_SwapchainImageViews[index]; }
 	VIDECL VIREQOUT inline VkFormat GetSwapchainImageFormat() const { return m_SwapchainImageFormat; }
 	VIDECL VIREQOUT inline VkExtent2D GetSwapchainExtent() const { return m_SwapchainExtent; }

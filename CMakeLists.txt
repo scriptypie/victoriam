@@ -159,7 +159,7 @@ set(SOURCE_FILES
         ThirdParty/imgui/src/ImGui/imgui_widgets.cpp
         ThirdParty/imgui/src/ImGui/imgui_draw.cpp
         ThirdParty/imgui/src/ImGui/imgui_demo.cpp
-        PublicCode/Victoriam/Graphics/Structs/GPointLightsData.hpp PublicCode/Victoriam/Graphics/Structs/GRenderPassCreateInfo.hpp PublicCode/Victoriam/Graphics/GRenderPass.hpp SourceCode/VulkanRenderPass.cpp SourceCode/VulkanRenderPass.hpp)
+        PublicCode/Victoriam/Graphics/Structs/GPointLightsData.hpp PublicCode/Victoriam/Graphics/Structs/GRenderPassCreateInfo.hpp PublicCode/Victoriam/Graphics/GRenderPass.hpp SourceCode/VulkanRenderPass.cpp SourceCode/VulkanRenderPass.hpp SourceCode/GRenderPass.cpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

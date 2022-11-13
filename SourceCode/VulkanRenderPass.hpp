@@ -8,6 +8,7 @@
 #include <Victoriam/Graphics/GRenderPass.hpp>
 
 #include "Accessors/AGraphicsContext.hpp"
+#include "Accessors/ASwapchain.hpp"
 
 VISRCBEG
 
@@ -15,6 +16,11 @@ class VIDECL CVulkanRenderPass : public CRenderPass {
 	VkRenderPass m_RenderPass = {};
 	PSwapchain& m_Swapchain;
 	PGraphicsContext& m_Context;
+	SVector2 m_Offset = {};
+	SWindowExtent m_Extent = {};
+	SVector4 m_ClearColor = {0.01F, 0.01F, 0.01F, 1.0F};
+	Float32 m_Depth = {};
+	UInt32 m_Stencil = {};
 public:
 	VIDECL CVulkanRenderPass(PGraphicsContext& context, PSwapchain& swapchain, const SRenderPassCreateInfo& createInfo);
 	VIDECL ~CVulkanRenderPass() override;
