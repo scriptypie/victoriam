@@ -25,7 +25,7 @@ void CDefaultRenderSubrender::Compute(SFrameInfo &frameInfo, const PWorld &world
 		auto [componentCamera, componentTransform] = cam_obj->Group<SComponentCamera, SComponentTransform>();
 		if (componentCamera->Primary) {
 			componentCamera->Camera.SetPerspective(frameInfo.AspectRatio);
-			componentCamera->Camera.SetViewMatrix(glm::lookAt(componentTransform->Translation,
+			componentCamera->Camera.SetViewMatrix(FLookAt(componentTransform->Translation,
 			                                                  componentTransform->Translation +
 			                                                  componentCamera->Camera.Front(),
 			                                                  componentCamera->Camera.Up()));

@@ -8,9 +8,6 @@
 #include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/Utils/UHash.hpp>
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/hash.hpp>
-
 VISRCBEG
 
 /**

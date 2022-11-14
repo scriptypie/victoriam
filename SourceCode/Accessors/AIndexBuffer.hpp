@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_AINDEXBUFFER_HPP
 #define VICTORIAM_AINDEXBUFFER_HPP
 
-#include "../VulkanIndexBuffer.hpp"
+#include "../VulkanBackend/VulkanIndexBuffer.hpp"
 
 VISRCBEG
 

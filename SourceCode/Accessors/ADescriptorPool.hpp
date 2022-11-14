@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_ADESCRIPTORPOOL_HPP
 #define VICTORIAM_ADESCRIPTORPOOL_HPP
 
-#include "../VulkanDescriptorPool.hpp"
+#include "../VulkanBackend/VulkanDescriptorPool.hpp"
 
 VISRCBEG
 

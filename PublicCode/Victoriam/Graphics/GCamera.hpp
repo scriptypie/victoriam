@@ -18,9 +18,9 @@ class VIDECL CCamera
 	Float32 m_Height = 720.0F;
 	Float32 m_Sensitivity = 0.3F;
 	Bool firstMouse = true;
-	Float32 yaw   = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
-	Float32 pitch =  0.0f;
-	SVector2 m_LastPos{m_Width / 2.0, m_Height / 2.0};
+	Float32 yaw   = -90.0F;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
+	Float32 pitch =  0.0F;
+	SVector2 m_LastPos{m_Width / 2.0F, m_Height / 2.0F};
 	Float32 m_Near, m_Far, m_Fov, m_Aspect;
 	SVector3 m_Front{ 0.0F, 0.0F, -1.0F };
 	SVector3 m_Up{ 0.0F, 1.0F, 0.0F };
