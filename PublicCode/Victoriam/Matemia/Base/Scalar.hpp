@@ -14,12 +14,16 @@ VIDECL typedef Float32 ScalarType;
 
 template<UInt32 N>
 struct VIDECL ScalarArray {
-	ScalarType data[N];
+	ScalarType data[N] = {};
 
-	VIDECL inline                          ~ScalarArray() = default;
-	VIDECL inline			                ScalarArray() : data{} {}
-	VIDECL explicit inline                  ScalarArray(ScalarType* arr) { for (UInt32 e = 0; e < N; e += 1) data[e] = FMove(arr[e]); }
-	template<class...Args> VIDECL inline    ScalarArray(Args&&...args) : data{std::forward<Args>(args)...} {}
+	VIDECL inline                              ~ScalarArray() = default;
+	VIDECL inline			                    ScalarArray() : data{} {}
+	VIDECL inline                               ScalarArray(const ScalarArray& other) { for (UInt32 e = 0; e < N; e += 1) data[e] = other[e]; }
+	template<UInt32 M> VIDECL inline explicit   ScalarArray(const ScalarArray<M>& other) { for (UInt32 e = 0; e < M; e += 1) data[e] = other[e]; }
+	VIDECL inline                               ScalarArray(ScalarArray&& other)  noexcept { for (UInt32 e = 0; e < N; e += 1) data[e] = FMove(other[e]); }
+	template<UInt32 M> VIDECL inline explicit   ScalarArray(ScalarArray<M>&& other)  noexcept { for (UInt32 e = 0; e < M; e += 1) data[e] = FMove(other[e]); }
+	VIDECL explicit inline                      ScalarArray(ScalarType* arr) { for (UInt32 e = 0; e < N; e += 1) data[e] = FMove(arr[e]); }
+	template<class...Args> VIDECL inline        ScalarArray(Args&&...args) : data{std::forward<Args>(args)...} {}
 
 	VIDECL inline ScalarType&               operator[](int pos) { return data[pos]; }
 	VIDECL inline ScalarType                operator[](int pos) const { return data[pos]; }
@@ -55,6 +59,21 @@ VIDECL VIREQOUT ScalarType FArcTan(const ScalarType& x);/*  */
 VIDECL VIREQOUT ScalarType FSqrt(const ScalarType& x);  /*  */
 VIDECL VIREQOUT ScalarType FRSqrt(const ScalarType& x); /*  */
 VIDECL VIREQOUT ScalarType FAbs(const ScalarType& x);   /*  */
+
+VIDECL VIREQOUT inline Bool CompareScalar(const ScalarType& a, const ScalarType& b) {
+	if (FAbs(a - b) > Constant::EPSILON) return false;
+	return true;
+}
+
+template<class T>
+VIDECL VIREQOUT inline T FRadians(const T& radians) {
+	return CCast<T>(CCast<ScalarType>(radians) * CCast<ScalarType>(0.01745329251994329576923690768489F));
+}
+
+template<class T>
+VIDECL VIREQOUT inline T FDegrees(const T& radians) {
+	return CCast<T>(CCast<ScalarType>(radians) * CCast<ScalarType>(57.295779513082320876798154814105F));
+}
 
 template<class T>
 VIDECL VIREQOUT inline Bool IsPowOfTwo(const T& value) {

@@ -22,7 +22,6 @@
 #include <Victoriam/Core/CUtils.hpp>
 #include <Victoriam/Core/CNumerics.hpp>
 #include <Victoriam/Core/CLog.hpp>
-#include <Victoriam/Core/CCast.hpp>
 #include <Victoriam/Core/CFlags.hpp>
 #include <Victoriam/Core/CMacroDefinitions.hpp>
 #include <Victoriam/Core/Memory/MSmartPointers.hpp>

@@ -6,6 +6,7 @@
 #define VICTORIAM_CUTILS_HPP
 
 #include <Victoriam/Core/CMacroDefinitions.hpp>
+#include <Victoriam/Core/CCast.hpp>
 
 VISRCBEG
 

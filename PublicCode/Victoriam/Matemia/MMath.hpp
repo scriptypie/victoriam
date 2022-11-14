@@ -7,5 +7,7 @@
 
 #include <Victoriam/Matemia/Base/Random.hpp>
 #include <Victoriam/Matemia/MVector2.hpp>
+#include <Victoriam/Matemia/MVector3.hpp>
+#include <Victoriam/Matemia/MVector4.hpp>
 
 #endif //VICTORIAM_MMATH_HPP

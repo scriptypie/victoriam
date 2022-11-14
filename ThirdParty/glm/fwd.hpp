@@ -1233,9 +1233,6 @@ namespace glm
 namespace Vi
 {
 
-	[[maybe_unused]] typedef glm::vec2 SVector2; // Forward declaration for engine-related code
-	[[maybe_unused]] typedef glm::vec3 SVector3; // Forward declaration for engine-related code
-	[[maybe_unused]] typedef glm::vec4 SVector4; // Forward declaration for engine-related code
 	[[maybe_unused]] typedef glm::mat2 SMatrix2; // Forward declaration for engine-related code
 	[[maybe_unused]] typedef glm::mat3 SMatrix3; // Forward declaration for engine-related code
 	[[maybe_unused]] typedef glm::mat4 SMatrix4; // Forward declaration for engine-related code
