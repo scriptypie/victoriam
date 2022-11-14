@@ -87,7 +87,7 @@ enum aiLightSourceType {
     aiLightSource_AMBIENT       = 0x4,
 
     //! An area light is a rectangle with predefined size that uniformly
-    //! emits light from one of its sides. The position is center of the
+    //! emits light from one of its sides. The position is m_Center of the
     //! rectangle and direction is its normal vector.
     aiLightSource_AREA          = 0x5,
 

@@ -418,7 +418,7 @@ enum aiPostProcessSteps
      * probably want to specify this step in every case. Note that Assimp is not
      * always able to match the original mapping implementation of the
      * 3D app which produced a model perfectly. It's always better to let the
-     * modelling app compute the UV channels - 3ds max, Maya, Blender,
+     * modelling app compute the UV channels - 3ds m_Max, Maya, Blender,
      * LightWave, and Modo do this for example.
      *
      * @note If this step is not requested, you'll need to process the

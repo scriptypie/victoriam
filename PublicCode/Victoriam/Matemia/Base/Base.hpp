@@ -6,10 +6,20 @@
 #define VICTORIAM_BASE_HPP
 
 #include <Victoriam/Matemia/Base/Scalar.hpp>
-#include <Victoriam/Matemia/Common/Functions.hpp>
 
 VISRCBEG
 
+struct  SVector2;
+struct  SVector3;
+struct  SVector4;
+struct  SMatrix4;
+struct  SQuaternion;
+
+typedef SVector4 SRect;
+typedef SVector3 SPoint3D;
+typedef SVector2 SPoint2D;
+
+class CAABB;
 
 VISRCEND
 

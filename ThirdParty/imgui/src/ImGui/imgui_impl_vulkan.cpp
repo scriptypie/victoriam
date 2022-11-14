@@ -1357,7 +1357,7 @@ void ImGui_ImplVulkanH_CreateWindowSwapChain(VkPhysicalDevice physical_device, V
     if (wd->Pipeline)
         vkDestroyPipeline(device, wd->Pipeline, allocator);
 
-    // If min image count was not specified, request different count of images dependent on selected present mode
+    // If m_Min image count was not specified, request different count of images dependent on selected present mode
     if (min_image_count == 0)
         min_image_count = ImGui_ImplVulkanH_GetMinImageCountFromPresentMode(wd->PresentMode);
 

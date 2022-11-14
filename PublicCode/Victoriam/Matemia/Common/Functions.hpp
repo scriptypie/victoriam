@@ -5,16 +5,9 @@
 #ifndef VICTORIAM_FUNCTIONS_HPP
 #define VICTORIAM_FUNCTIONS_HPP
 
-#include <Victoriam/Matemia/Base/Scalar.hpp>
+#include <Victoriam/Matemia/Base/Base.hpp>
 
 VISRCBEG
-
-struct  SVector2;
-struct  SVector3;
-struct  SVector4;
-typedef SVector4 SRect;
-struct  SMatrix4;
-struct  SQuaternion;
 
 VIDECL VIREQOUT SMatrix4 FInverse(const SMatrix4& m);
 VIDECL VIREQOUT SMatrix4 FTranslate(const SMatrix4& m, const SVector3& v);

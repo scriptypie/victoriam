@@ -533,7 +533,7 @@ struct aiUVTransform {
     /** Rotation - in counter-clockwise direction.
      *
      *  The rotation angle is specified in radians. The
-     *  rotation center is 0.5f|0.5f. The default value
+     *  rotation m_Center is 0.5f|0.5f. The default value
      *  0.f.
      */
     ai_real mRotation;
@@ -1489,9 +1489,9 @@ ASSIMP_API C_ENUM aiReturn aiGetMaterialProperty(
  * example reads the #AI_MATKEY_UVTRANSFORM property of the first diffuse texture)
  * @code
  * aiUVTransform trafo;
- * unsigned int max = sizeof(aiUVTransform);
+ * unsigned int m_Max = sizeof(aiUVTransform);
  * if (AI_SUCCESS != aiGetMaterialFloatArray(mat, AI_MATKEY_UVTRANSFORM(aiTextureType_DIFFUSE,0),
- *    (float*)&trafo, &max) || sizeof(aiUVTransform) != max)
+ *    (float*)&trafo, &m_Max) || sizeof(aiUVTransform) != m_Max)
  * {
  *   // error handling
  * }

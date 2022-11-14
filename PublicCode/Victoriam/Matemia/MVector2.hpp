@@ -6,6 +6,7 @@
 #define VICTORIAM_MVECTOR2_HPP
 
 #include <Victoriam/Matemia/Base/Base.hpp>
+#include <Victoriam/Matemia/Common/Functions.hpp>
 
 VISRCBEG
 
