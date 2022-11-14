@@ -28,14 +28,4 @@ struct VIDECL SQuaternion {
 
 VISRCEND
 
-///*
-#include <glm/glm.hpp>
-
-void test() {
-	glm::normalize(glm::mat4(0.0F))
-}
-
-//*/
-
-
 #endif //VICTORIAM_MQUATERNION_HPP

@@ -9,11 +9,12 @@
 
 VISRCBEG
 
-struct SVector2;
-struct SVector3;
-struct SVector4;
+struct  SVector2;
+struct  SVector3;
+struct  SVector4;
 typedef SVector4 SRect;
-struct SMatrix4;
+struct  SMatrix4;
+struct  SQuaternion;
 
 VIDECL VIREQOUT SMatrix4 FInverse(const SMatrix4& m);
 VIDECL VIREQOUT SMatrix4 FTranslate(const SMatrix4& m, const SVector3& v);
@@ -27,6 +28,12 @@ VIDECL VIREQOUT SMatrix4 FPerspective(const ScalarType& fovy, const ScalarType& 
 VIDECL VIREQOUT SMatrix4 FPerspective(const ScalarType& fovy, const ScalarType& aspect, const ScalarType& zNear);
 VIDECL VIREQOUT SMatrix4 FOrthographic(const ScalarType& left, const ScalarType& right, const ScalarType& bottom, const ScalarType& top, const ScalarType& zNear, const ScalarType& zFar);
 VIDECL VIREQOUT SMatrix4 FOrthographic(const SRect& bounds, const ScalarType& zNear, const ScalarType& zFar);
+
+VIDECL VIREQOUT SMatrix4 FMatrix4(const SQuaternion& quat);
+VIDECL VIREQOUT ScalarType FDot(const SQuaternion& a, const SQuaternion& b);
+VIDECL VIREQOUT SQuaternion FCross(const SQuaternion& a, const SQuaternion& b);
+VIDECL VIREQOUT ScalarType FLength(const SQuaternion& quat);
+VIDECL VIREQOUT SQuaternion FNormalize(const SQuaternion& quat);
 
 VISRCEND
 

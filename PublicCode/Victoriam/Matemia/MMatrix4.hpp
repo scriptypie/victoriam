@@ -6,7 +6,6 @@
 #define VICTORIAM_MMATRIX4_HPP
 
 #include <Victoriam/Matemia/MVector4.hpp>
-#include <Victoriam/Matemia/Common/Functions.hpp>
 
 VISRCBEG
 
@@ -77,17 +76,5 @@ struct VIDECL SMatrix4 {
 };
 
 VISRCEND
-
- /*
-
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-void test() {
-	glm::mat4 m =
-	glm::rotate()
-}
- */
 
 #endif //VICTORIAM_FUNCTIONS_HPP

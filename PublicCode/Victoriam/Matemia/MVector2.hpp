@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_MVECTOR2_HPP
 #define VICTORIAM_MVECTOR2_HPP
 
-#include <Victoriam/Matemia/Base/Scalar.hpp>
+#include <Victoriam/Matemia/Base/Base.hpp>
 
 VISRCBEG
 
