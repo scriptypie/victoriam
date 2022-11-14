@@ -33,7 +33,7 @@ SVector3 CCamera::Up() const {
 }
 
 SVector3 CCamera::Right() const {
-	return glm::cross(Front(), Up());
+	return FCross(Front(), Up());
 }
 
 SMatrix4 CCamera::GetViewProjection() const {
@@ -43,7 +43,7 @@ SMatrix4 CCamera::GetViewProjection() const {
 void CCamera::Update()
 {
 	if (m_Aspect != Float32(m_Width / m_Height))
-		m_Projection = glm::perspective(m_Fov, m_Aspect, m_Near, m_Far);
+		m_Projection = FPerspective(m_Fov, m_Aspect, m_Near);
 
 	SVector2 pos = CInput::GetMousePosition();
 
@@ -67,9 +67,9 @@ void CCamera::Update()
 		if (pitch < -89.0f)
 			pitch = -89.0f;
 
-		m_Front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-		m_Front.y = sin(glm::radians(pitch));
-		m_Front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+		m_Front.x = FCos(FRadians(yaw)) * FCos(FRadians(pitch));
+		m_Front.y = FSin(FRadians(pitch));
+		m_Front.z = FSin(FRadians(yaw)) * FCos(FRadians(pitch));
 	}
 }
 

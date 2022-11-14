@@ -10,6 +10,7 @@
 #include <Victoriam/Matemia/MVector3.hpp>
 #include <Victoriam/Matemia/MVector4.hpp>
 #include <Victoriam/Matemia/MMatrix4.hpp>
+#include <Victoriam/Matemia/MQuaternion.hpp>
 
 #include <Victoriam/Matemia/Common/Hash.hpp>
 

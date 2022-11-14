@@ -30,7 +30,7 @@ void CPointLightSubrender::Compute(SFrameInfo &frameInfo, const PWorld &world) {
 	{
 		auto [componentTransform, componentPointLight] = plObj->Group<SComponentTransform, SComponentPointLight>();
 		auto& pointLight = constants.PointLights[index];
-		Float32 distance = glm::distance(camTransform->Translation, componentTransform->Translation);
+		Float32 distance = FDistance(camTransform->Translation, componentTransform->Translation);
 		if (distance > world->GetRendererSettings().IlluminationDistance) continue;
 
 		pointLight.Position = SVector4(

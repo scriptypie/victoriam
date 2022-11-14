@@ -85,10 +85,10 @@ struct VIDECL SVector4 {
 	template<class T>   VIDECL VIREQOUT inline SVector4    operator- (const T&        other) const { return { x - other,   y - other,   z - other,   w - other    };               }
 	template<class T>   VIDECL VIREQOUT inline SVector4    operator* (const T&        other) const { return { x * other,   y * other,   z * other,   w * other    };               }
 	template<class T>   VIDECL VIREQOUT inline SVector4    operator/ (const T&        other) const { return { x / other,   y / other,   z / other,   w / other    };               }
-	template<class T>   VIDECL VIREQOUT inline SVector4&   operator+=(const T&        other)       { *this ={ x + other,   y + other,   z + other,   w + other    }; return *this; }
-	template<class T>   VIDECL VIREQOUT inline SVector4&   operator-=(const T&        other)       { *this ={ x - other,   y - other,   z - other,   w - other    }; return *this; }
-	template<class T>   VIDECL VIREQOUT inline SVector4&   operator*=(const T&        other)       { *this ={ x * other,   y * other,   z * other,   w * other    }; return *this; }
-	template<class T>   VIDECL VIREQOUT inline SVector4&   operator/=(const T&        other)       { *this ={ x / other,   y / other,   z / other,   w / other    }; return *this; }
+	template<class T>   VIDECL          inline SVector4&   operator+=(const T&        other)       { *this ={ x + other,   y + other,   z + other,   w + other    }; return *this; }
+	template<class T>   VIDECL          inline SVector4&   operator-=(const T&        other)       { *this ={ x - other,   y - other,   z - other,   w - other    }; return *this; }
+	template<class T>   VIDECL          inline SVector4&   operator*=(const T&        other)       { *this ={ x * other,   y * other,   z * other,   w * other    }; return *this; }
+	template<class T>   VIDECL          inline SVector4&   operator/=(const T&        other)       { *this ={ x / other,   y / other,   z / other,   w / other    }; return *this; }
 	template<>          VIDECL VIREQOUT inline SVector4    operator+ (const SVector4& other) const { return { x + other.x, y + other.y, z + other.z, w + other.w  };               }
 	template<>          VIDECL VIREQOUT inline SVector4    operator- (const SVector4& other) const { return { x - other.x, y - other.y, z - other.z, w - other.w  };               }
 	template<>          VIDECL VIREQOUT inline SVector4    operator* (const SVector4& other) const { return { x * other.x, y * other.y, z * other.z, w * other.w  };               }
@@ -101,18 +101,18 @@ struct VIDECL SVector4 {
 	template<>          VIDECL VIREQOUT inline SVector4    operator- (const SVector2& other) const { return { x - other.x, y - other.y, z,                     w  };               }
 	template<>          VIDECL VIREQOUT inline SVector4    operator* (const SVector2& other) const { return { x * other.x, y * other.y, z,                     w  };               }
 	template<>          VIDECL VIREQOUT inline SVector4    operator/ (const SVector2& other) const { return { x / other.x, y / other.y, z,                     w  };               }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator+=(const SVector4& other)       { *this ={ x + other.x, y + other.y, z + other.z, w + other.w  }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator-=(const SVector4& other)       { *this ={ x - other.x, y - other.y, z - other.z, w - other.w  }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator*=(const SVector4& other)       { *this ={ x * other.x, y * other.y, z * other.z, w * other.w  }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator/=(const SVector4& other)       { *this ={ x / other.x, y / other.y, z / other.z, w / other.w  }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator+=(const SVector3& other)       { *this ={ x + other.x, y + other.y, z + other.z, w            }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator-=(const SVector3& other)       { *this ={ x - other.x, y - other.y, z - other.z, w            }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator*=(const SVector3& other)       { *this ={ x * other.x, y * other.y, z * other.z, w            }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator/=(const SVector3& other)       { *this ={ x / other.x, y / other.y, z / other.z, w            }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator+=(const SVector2& other)       { *this ={ x + other.x, y + other.y, z,           w            }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator-=(const SVector2& other)       { *this ={ x - other.x, y - other.y, z,           w            }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator*=(const SVector2& other)       { *this ={ x * other.x, y * other.y, z,           w            }; return *this; }
-	template<>          VIDECL VIREQOUT inline SVector4&   operator/=(const SVector2& other)       { *this ={ x / other.x, y / other.y, z,           w            }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator+=(const SVector4& other)       { *this ={ x + other.x, y + other.y, z + other.z, w + other.w  }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator-=(const SVector4& other)       { *this ={ x - other.x, y - other.y, z - other.z, w - other.w  }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator*=(const SVector4& other)       { *this ={ x * other.x, y * other.y, z * other.z, w * other.w  }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator/=(const SVector4& other)       { *this ={ x / other.x, y / other.y, z / other.z, w / other.w  }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator+=(const SVector3& other)       { *this ={ x + other.x, y + other.y, z + other.z, w            }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator-=(const SVector3& other)       { *this ={ x - other.x, y - other.y, z - other.z, w            }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator*=(const SVector3& other)       { *this ={ x * other.x, y * other.y, z * other.z, w            }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator/=(const SVector3& other)       { *this ={ x / other.x, y / other.y, z / other.z, w            }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator+=(const SVector2& other)       { *this ={ x + other.x, y + other.y, z,           w            }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator-=(const SVector2& other)       { *this ={ x - other.x, y - other.y, z,           w            }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator*=(const SVector2& other)       { *this ={ x * other.x, y * other.y, z,           w            }; return *this; }
+	template<>          VIDECL          inline SVector4&   operator/=(const SVector2& other)       { *this ={ x / other.x, y / other.y, z,           w            }; return *this; }
 
 	template<class T>   VIDECL VIREQOUT inline Bool        operator==(const T&        other) const { return false;                                                                                                              }
 	template<class T>   VIDECL VIREQOUT inline Bool        operator!=(const T&        other) const { return true;                                                                                                               }
