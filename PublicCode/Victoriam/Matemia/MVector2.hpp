@@ -48,27 +48,30 @@ struct VIDECL SVector2 {
 						VIDECL VIREQOUT inline  ScalarType& operator[](int pos) { return data[pos]; }
 						VIDECL VIREQOUT inline  ScalarType  operator[](int pos) const { return data[pos]; }
 
-						VIDECL VIREQOUT inline  SVector2 operator+(const SVector2& b) const { return { x + b.x, y + b.y }; }
-						VIDECL VIREQOUT inline  SVector2 operator-(const SVector2& b) const { return { x - b.x, y - b.y }; }
-						VIDECL VIREQOUT inline  SVector2 operator*(const SVector2& b) const { return { x * b.x, y * b.y }; }
-						VIDECL VIREQOUT inline  SVector2 operator/(const SVector2& b) const { return { x / b.x, y / b.y }; }
-						VIDECL VIREQOUT inline  SVector2& operator+=(const SVector2& b) { *this = { x + b.x, y + b.y }; return *this; }
-						VIDECL VIREQOUT inline  SVector2& operator-=(const SVector2& b) { *this = { x - b.x, y - b.y }; return *this; }
-						VIDECL VIREQOUT inline  SVector2& operator*=(const SVector2& b) { *this = { x * b.x, y * b.y }; return *this; }
-						VIDECL VIREQOUT inline  SVector2& operator/=(const SVector2& b) { *this = { x / b.x, y / b.y }; return *this; }
-	template<class T>   VIDECL VIREQOUT inline  SVector2 operator+(const T& b) const { return { x + CCast<ScalarType>(b), y + CCast<ScalarType>(b) }; }
-	template<class T>   VIDECL VIREQOUT inline  SVector2 operator-(const T& b) const { return { x - CCast<ScalarType>(b), y - CCast<ScalarType>(b) }; }
-	template<class T>   VIDECL VIREQOUT inline  SVector2 operator*(const T& b) const { return { x * CCast<ScalarType>(b), y * CCast<ScalarType>(b) }; }
-	template<class T>   VIDECL VIREQOUT inline  SVector2 operator/(const T& b) const { return { x / CCast<ScalarType>(b), y / CCast<ScalarType>(b) }; }
-	template<class T>   VIDECL VIREQOUT inline  SVector2& operator+=(const T& b) { *this = { x + CCast<ScalarType>(b), y + CCast<ScalarType>(b) }; return *this; }
-	template<class T>   VIDECL VIREQOUT inline  SVector2& operator-=(const T& b) { *this = { x - CCast<ScalarType>(b), y - CCast<ScalarType>(b) }; return *this; }
-	template<class T>   VIDECL VIREQOUT inline  SVector2& operator*=(const T& b) { *this = { x * CCast<ScalarType>(b), y * CCast<ScalarType>(b) }; return *this; }
-	template<class T>   VIDECL VIREQOUT inline  SVector2& operator/=(const T& b) { *this = { x / CCast<ScalarType>(b), y / CCast<ScalarType>(b) }; return *this; }
+						VIDECL VIREQOUT inline  SVector2  operator+ (                 ) const { return { x, y }; }
+						VIDECL VIREQOUT inline  SVector2  operator- (                 ) const { return { -x, -y }; }
 
-	template<class T>   VIDECL VIREQOUT inline Bool      operator==(const T&) const { return false; }
-	template<class T>   VIDECL VIREQOUT inline Bool      operator!=(const T&) const { return true; }
-	template<>          VIDECL VIREQOUT inline Bool      operator==(const SVector2& other) const { return CompareScalar(x, other.x) && CompareScalar(y, other.y); }
-	template<>          VIDECL VIREQOUT inline Bool      operator!=(const SVector2& other) const { return !(*this == other); }
+	template<class T>   VIDECL VIREQOUT inline  SVector2  operator+ (const T       & b) const { return  { x + CCast<ScalarType>(b), y + CCast<ScalarType>(b) };               }
+	template<class T>   VIDECL VIREQOUT inline  SVector2  operator- (const T       & b) const { return  { x - CCast<ScalarType>(b), y - CCast<ScalarType>(b) };               }
+	template<class T>   VIDECL VIREQOUT inline  SVector2  operator* (const T       & b) const { return  { x * CCast<ScalarType>(b), y * CCast<ScalarType>(b) };               }
+	template<class T>   VIDECL VIREQOUT inline  SVector2  operator/ (const T       & b) const { return  { x / CCast<ScalarType>(b), y / CCast<ScalarType>(b) };               }
+	template<class T>   VIDECL VIREQOUT inline  SVector2& operator+=(const T       & b)       { *this = { x + CCast<ScalarType>(b), y + CCast<ScalarType>(b) }; return *this; }
+	template<class T>   VIDECL VIREQOUT inline  SVector2& operator-=(const T       & b)       { *this = { x - CCast<ScalarType>(b), y - CCast<ScalarType>(b) }; return *this; }
+	template<class T>   VIDECL VIREQOUT inline  SVector2& operator*=(const T       & b)       { *this = { x * CCast<ScalarType>(b), y * CCast<ScalarType>(b) }; return *this; }
+	template<class T>   VIDECL VIREQOUT inline  SVector2& operator/=(const T       & b)       { *this = { x / CCast<ScalarType>(b), y / CCast<ScalarType>(b) }; return *this; }
+	template<>          VIDECL VIREQOUT inline  SVector2  operator+ (const SVector2& b) const { return  { x + b.x,                  y + b.y                  };               }
+	template<>          VIDECL VIREQOUT inline  SVector2  operator- (const SVector2& b) const { return  { x - b.x,                  y - b.y                  };               }
+	template<>          VIDECL VIREQOUT inline  SVector2  operator* (const SVector2& b) const { return  { x * b.x,                  y * b.y                  };               }
+	template<>          VIDECL VIREQOUT inline  SVector2  operator/ (const SVector2& b) const { return  { x / b.x,                  y / b.y                  };               }
+	template<>          VIDECL VIREQOUT inline  SVector2& operator+=(const SVector2& b)       { *this = { x + b.x,                  y + b.y                  }; return *this; }
+	template<>          VIDECL VIREQOUT inline  SVector2& operator-=(const SVector2& b)       { *this = { x - b.x,                  y - b.y                  }; return *this; }
+	template<>          VIDECL VIREQOUT inline  SVector2& operator*=(const SVector2& b)       { *this = { x * b.x,                  y * b.y                  }; return *this; }
+	template<>          VIDECL VIREQOUT inline  SVector2& operator/=(const SVector2& b)       { *this = { x / b.x,                  y / b.y                  }; return *this; }
+
+	template<class T>   VIDECL VIREQOUT inline Bool       operator==(const T       &  ) const { return false;                                                                 }
+	template<class T>   VIDECL VIREQOUT inline Bool       operator!=(const T       &  ) const { return true;                                                                  }
+	template<>          VIDECL VIREQOUT inline Bool       operator==(const SVector2& b) const { return CompareScalar(x, b.x) && CompareScalar(y, b.y);                        }
+	template<>          VIDECL VIREQOUT inline Bool       operator!=(const SVector2& b) const { return !(*this == b);                                                         }
 };
 
 VIDECL VIREQOUT inline SVector2     FSqrt       (const SVector2& v                                          ) { return v * v; }

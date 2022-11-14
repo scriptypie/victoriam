@@ -22,8 +22,8 @@ VIDECL typedef unsigned long long   UInt64;     /* Unsigned integer type of 64 b
 VIDECL typedef UInt32 Signal;       /* Unsigned type that handles enum-like signals. */
 VIDECL typedef UInt64 UID;          /* Unique identifier type. Long enough. */
 
-VIDECL typedef float_t  Float32;    /* IEEE-754 type of 32 bits. */
-VIDECL typedef double_t Float64;    /* IEEE-754 type of 64 bits. */
+VIDECL typedef float  Float32;    /* IEEE-754 type of 32 bits. */
+VIDECL typedef double Float64;    /* IEEE-754 type of 64 bits. */
 
 VIDECL typedef bool     Bool;       /* Unsigned integer type of 1 bit. */
 

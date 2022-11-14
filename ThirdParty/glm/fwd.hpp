@@ -1229,12 +1229,3 @@ namespace glm
 	typedef qua<f64, highp>				highp_f64quat;
 	typedef qua<f64, defaultp>			f64quat;
 }//namespace glm
-
-namespace Vi
-{
-
-	[[maybe_unused]] typedef glm::mat2 SMatrix2; // Forward declaration for engine-related code
-	[[maybe_unused]] typedef glm::mat3 SMatrix3; // Forward declaration for engine-related code
-	[[maybe_unused]] typedef glm::mat4 SMatrix4; // Forward declaration for engine-related code
-
-}

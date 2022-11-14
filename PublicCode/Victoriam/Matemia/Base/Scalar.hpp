@@ -7,6 +7,7 @@
 
 #include <Victoriam/Core/CNumerics.hpp>
 #include <Victoriam/Core/CUtils.hpp>
+#include <utility>
 
 VISRCBEG
 
