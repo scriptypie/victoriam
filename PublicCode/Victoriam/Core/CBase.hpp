@@ -14,10 +14,6 @@
 #include <thread>
 #include <functional>
 #include <unordered_map>
-// #include <glm/glm.hpp>
-// #include <glm/gtc/constants.hpp>
-// #include <glm/gtc/matrix_transform.hpp>
-// #include <glm/gtx/quaternion.hpp>
 
 #include <Victoriam/Core/CUtils.hpp>
 #include <Victoriam/Core/CNumerics.hpp>
@@ -26,7 +22,7 @@
 #include <Victoriam/Core/CMacroDefinitions.hpp>
 #include <Victoriam/Core/Memory/MSmartPointers.hpp>
 #include <Victoriam/Core/Memory/MStandardAllocator.hpp>
-#include <Victoriam/Matemia/MMath.hpp>
+#include <Victoriam/Matemia/MMath.hpp> // Matemia math library (property of github.com/scriptypie)
 
 #include <Victoriam/Core/Containers/CArray.hpp>
 

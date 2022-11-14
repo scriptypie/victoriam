@@ -7,6 +7,8 @@
 
 #include <Victoriam/World/Components/ComponentBase.hpp>
 
+
+
 VISRCBEG
 
 struct VIDECL SComponentTransform : SComponentBase
@@ -17,11 +19,11 @@ struct VIDECL SComponentTransform : SComponentBase
 	Float32  Scale = 1.0F;
 	SVector3 Rotation = {};
 
-	VIDECL VIREQOUT SMatrix4 Transform() const {
-		SMatrix4 rotation = glm::toMat4(glm::quat(glm::radians(Rotation)));
-		return glm::translate(SMatrix4(1.0f), -Translation)
+	VIDECL VIREQOUT inline SMatrix4 Transform() const {
+		SMatrix4 rotation = glm::toMat4(glm::quat(FRadians(Rotation)));
+		return FTranslate(SMatrix4(1.0f), -Translation)
 		       * rotation
-		       * glm::scale(SMatrix4(1.0f), SVector3(Scale));
+		       * FScale(SMatrix4(1.0f), SVector3(Scale));
 	}
 
 };

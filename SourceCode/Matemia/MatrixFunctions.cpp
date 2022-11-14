@@ -50,6 +50,100 @@ SMatrix4 FInverse(const SMatrix4& m) {
 	return Inverse * OneOverDeterminant;
 }
 
+SMatrix4 FScale(const SMatrix4& m, const SVector3& v) {
+	SMatrix4 Result;
+	Result[0] = m[0] * v[0];
+	Result[1] = m[1] * v[1];
+	Result[2] = m[2] * v[2];
+	Result[3] = m[3];
+	return Result;
+}
+
+SMatrix4 FTranslate(const SMatrix4& m, const SVector3& v) {
+	SMatrix4 Result(m);
+	Result[3] = m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3];
+	return Result;
+}
+
+SMatrix4 FRotate(const SMatrix4& m, const SVector3& v, const ScalarType& angle) {
+	const ScalarType a = angle;
+	const ScalarType c = FCos(a);
+	const ScalarType s = FSin(a);
+
+	SVector3 axis(FNormalize(v));
+	SVector3 temp((axis * (1.0F - c)));
+
+	SMatrix4 Rotate;
+	Rotate[0][0] = c + temp[0] * axis[0];
+	Rotate[0][1] = temp[0] * axis[1] + s * axis[2];
+	Rotate[0][2] = temp[0] * axis[2] - s * axis[1];
+
+	Rotate[1][0] = temp[1] * axis[0] - s * axis[2];
+	Rotate[1][1] = c + temp[1] * axis[1];
+	Rotate[1][2] = temp[1] * axis[2] + s * axis[0];
+
+	Rotate[2][0] = temp[2] * axis[0] + s * axis[1];
+	Rotate[2][1] = temp[2] * axis[1] - s * axis[0];
+	Rotate[2][2] = c + temp[2] * axis[2];
+
+	SMatrix4 Result;
+	Result[0] = m[0] * Rotate[0][0] + m[1] * Rotate[0][1] + m[2] * Rotate[0][2];
+	Result[1] = m[0] * Rotate[1][0] + m[1] * Rotate[1][1] + m[2] * Rotate[1][2];
+	Result[2] = m[0] * Rotate[2][0] + m[1] * Rotate[2][1] + m[2] * Rotate[2][2];
+	Result[3] = m[3];
+	return Result;
+}
+
+SMatrix4 FRotateX(const SMatrix4& m, const ScalarType& angle) {
+	return FRotate(m, { 1.0F, 0.0F, 0.0F }, angle);
+}
+
+SMatrix4 FRotateY(const SMatrix4& m, const ScalarType& angle) {
+	return FRotate(m, { 0.0F, 1.0F, 0.0F }, angle);
+}
+
+SMatrix4 FRotateZ(const SMatrix4& m, const ScalarType& angle) {
+	return FRotate(m, { 0.0F, 0.0F, 1.0F }, angle);
+}
+
+SMatrix4 FLookAt(const SVector3& position, const SVector3& direction, const SVector3& up) {
+	const SVector3 f(FNormalize(direction - position));
+	const SVector3 s(FNormalize(FCross(f, up)));
+	const SVector3 u(FCross(s, f));
+
+	SMatrix4 Result(1);
+	Result[0][0] = s.x;
+	Result[1][0] = s.y;
+	Result[2][0] = s.z;
+	Result[0][1] = u.x;
+	Result[1][1] = u.y;
+	Result[2][1] = u.z;
+	Result[0][2] =-f.x;
+	Result[1][2] =-f.y;
+	Result[2][2] =-f.z;
+	Result[3][0] =-FDot(s, position);
+	Result[3][1] =-FDot(u, position);
+	Result[3][2] = FDot(f, position);
+	return Result;
+}
+
+SMatrix4 FPerspective(const ScalarType& fovy, const ScalarType& aspect, const ScalarType& zNear) {
+	const ScalarType range = FTan(fovy / 2.0F) * zNear;
+	const ScalarType left = -range * aspect;
+	const ScalarType right = range * aspect;
+	const ScalarType bottom = -range;
+	const ScalarType top = range;
+	const ScalarType ep = Constant::EPSILON;
+
+	SMatrix4 Result(0.0F);
+	Result[0][0] = (2.0F * zNear) / (right - left);
+	Result[1][1] = (2.0F * zNear) / (top - bottom);
+	Result[2][2] = ep - 1.0F;
+	Result[2][3] = -1.0F;
+	Result[3][2] = (ep - 2.0F) * zNear;
+	return Result;
+}
+
 SMatrix4 FPerspective(const ScalarType& fovy, const ScalarType& aspect, const ScalarType& zNear, const ScalarType& zFar) {
 	const ScalarType tanHalfFovy = FTan(fovy / 2.0F);
 

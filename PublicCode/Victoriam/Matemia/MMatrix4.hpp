@@ -6,7 +6,7 @@
 #define VICTORIAM_MMATRIX4_HPP
 
 #include <Victoriam/Matemia/MVector4.hpp>
-#include <Victoriam/Matemia/Common/MatrixFunctions.hpp>
+#include <Victoriam/Matemia/Common/Functions.hpp>
 
 VISRCBEG
 
@@ -78,7 +78,7 @@ struct VIDECL SMatrix4 {
 
 VISRCEND
 
- ///*
+ /*
 
 
 #include <glm/glm.hpp>
@@ -86,8 +86,8 @@ VISRCEND
 
 void test() {
 	glm::mat4 m =
-	glm::perspective(glm::radians(65.0F), 1.6F, 0.1F, 1000.0F);
+	glm::rotate()
 }
- //*/
+ */
 
 #endif //VICTORIAM_FUNCTIONS_HPP

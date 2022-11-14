@@ -71,6 +71,11 @@ VIDECL VIREQOUT inline T FRadians(const T& radians) {
 	return CCast<T>(CCast<ScalarType>(radians) * CCast<ScalarType>(0.01745329251994329576923690768489F));
 }
 
+VIDECL void FHashCombine(size_t& seed, size_t hash) {
+	hash += 0x9e3779b9 + (seed << 6) + (seed >> 2);
+	seed ^= hash;
+}
+
 template<class T>
 VIDECL VIREQOUT inline T FDegrees(const T& radians) {
 	return CCast<T>(CCast<ScalarType>(radians) * CCast<ScalarType>(57.295779513082320876798154814105F));

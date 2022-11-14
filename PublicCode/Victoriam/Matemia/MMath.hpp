@@ -9,5 +9,8 @@
 #include <Victoriam/Matemia/MVector2.hpp>
 #include <Victoriam/Matemia/MVector3.hpp>
 #include <Victoriam/Matemia/MVector4.hpp>
+#include <Victoriam/Matemia/MMatrix4.hpp>
+
+#include <Victoriam/Matemia/Common/Hash.hpp>
 
 #endif //VICTORIAM_MMATH_HPP
