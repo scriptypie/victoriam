@@ -73,6 +73,8 @@ void CVulkanRenderer::DrawFrame(SFrameInfo& frameInfo, const PWorld& world)
 		subpass->Pass(frameInfo, world);
 	}
 
+	ViLog("Polycount: %llu\r", frameInfo.Polycount);
+
 	m_MainRenderPass->End(frameInfo);
 }
 

@@ -44,16 +44,20 @@ void CDefaultRenderSubrender::Compute(SFrameInfo &frameInfo, const PWorld &world
 }
 
 
-void CDefaultRenderSubrender::Pass(const SFrameInfo &frameInfo, const PWorld &world)
+void CDefaultRenderSubrender::Pass(SFrameInfo &frameInfo, const PWorld &world)
 {
 	m_Pipeline->BindCommandBuffer(frameInfo.CommandBuffer);
 	m_Pipeline->BindConstantsDescriptorSet(BindPointGraphics, frameInfo);
+
+	auto cam_obj = world->OneWith<SComponentCamera, SComponentTransform>();
+	auto [camtransform, _] = cam_obj->Group<SComponentTransform, SComponentCamera>();
 
 	auto renderable_objs = world->AllWith<SComponentRenderable, SComponentTransform>(); // all renderables MUST have a transform component!!!
 	for (auto renderable_obj: renderable_objs) {
 		auto [rrc, rtc] = renderable_obj->Group<SComponentRenderable, SComponentTransform>();
 
 		if (!rrc->Geometry.Empty()) {
+			frameInfo.Polycount += rrc->Geometry.GetPolycount();
 			SMaterialData materialData = {};
 			materialData.ModelMatrix = rtc->Transform();
 			m_Pipeline->PushSimpleData(frameInfo.CommandBuffer, 0, &materialData);

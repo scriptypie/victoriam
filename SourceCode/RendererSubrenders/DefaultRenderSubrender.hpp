@@ -18,7 +18,7 @@ public:
 	VIDECL ~CDefaultRenderSubrender() override = default;
 
 	VIDECL void Compute(SFrameInfo& frameInfo, const PWorld& world) override;
-	VIDECL void Pass(const SFrameInfo& frameInfo, const PWorld& world) override;
+	VIDECL void Pass(SFrameInfo& frameInfo, const PWorld& world) override;
 
 private:
 	VIDECL void CreateUniquePipeline(PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);

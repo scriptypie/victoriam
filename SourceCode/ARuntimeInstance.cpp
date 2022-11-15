@@ -33,7 +33,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	{
 		SWindowCreateInfo info;
 		info.Name = m_info.AppName + " - NewWindow";
-		info.Resolution = {1280, 800};
+		info.Resolution = {800, 600};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = CWindow::Create(info);
 	}
@@ -56,17 +56,12 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	CGeometryData monkeyGeometryData = m_Renderer->CreateGeometryData(monkeyCreateInfo);
 	CGeometryData quadGeometryData = m_Renderer->CreateGeometryData(quadCreateInfo);
 
-	{
-		auto cube = m_World->CreateGameObject("TestSphere");
-		cube->AddComponent<SComponentRenderable>(sphereGeometryData);
-		auto transform = cube->AddComponent<SComponentTransform>();
-		transform->Translation = { 2, 0, -2 };
-	}
+	for (auto x = 0; x < 32; x++) for (auto y = 0; y < 32; y++)
 	{
 		auto monkey = m_World->CreateGameObject("TestMonkey");
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		auto transform = monkey->AddComponent<SComponentTransform>();
-		transform->Translation = { 0, -2, -3 };
+		transform->Translation = { x * 10 - 160, 0, y * 10 - 160 };
 		transform->Rotation = { 0, -30, 180 };
 	}
 	{
@@ -74,7 +69,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		plane->AddComponent<SComponentRenderable>(quadGeometryData);
 		auto transform = plane->AddComponent<SComponentTransform>();
 		transform->Translation = { 0, -3, 0 };
-		transform->Scale = 500.0F;
+		transform->Scale = 1000.0F;
 	}
 	/*{
 		auto cube = m_World->CreateGameObject("TestCube");
@@ -87,12 +82,12 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto sun = m_World->CreateGameObject("Sun");
 		sun->AddComponent<SComponentSun>(SVector3(1.0F, 3.0F, -3.0F));
 	}
-	for (auto i = 0; i < 16; i++)
+	for (auto i = 0; i < 32; i++)
 	{
-		for (auto j = 0; j < 16; j++) {
+		for (auto j = 0; j < 32; j++) {
 			auto light = m_World->CreateGameObject("Light");
 			auto componentTransform = light->AddComponent<SComponentTransform>();
-			componentTransform->Translation = {i * 12 - 8 * 12, -2.5F, j * 12 - 8 * 12};
+			componentTransform->Translation = {i * 10 - 160, -2.5F, j * 10 - 160};
 			auto componentPointLight = light->AddComponent<SComponentPointLight>();
 			componentPointLight->LightColor.w = 5.0F;
 		}
@@ -144,7 +139,7 @@ void Vi::CRuntimeInstance::Startup() {
 		Float32 frameTime = currentTime.Delta() - newTime.Delta();
 		currentTime = newTime;
 
-		ViLog("UpdateTime: %.3fms\r", frameTime * 1000.0F);
+		ViLog("UpdateTime: %.3fms\t", frameTime * 1000.0F);
 
 		for (auto & state : m_stateController)
 		{
