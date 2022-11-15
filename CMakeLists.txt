@@ -189,6 +189,7 @@ set(SOURCE_FILES
         SourceCode/Matemia/Sphere.cpp
 
         ThirdParty/tinyobjloader/TinyObjLoader.cpp
+
         )
 
 add_library(victoriam STATIC ${SOURCE_FILES})
