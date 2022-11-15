@@ -137,7 +137,7 @@ struct aiCamera {
 
     /** Horizontal field of view angle, in radians.
      *
-     *  The field of view angle is the angle between the center
+     *  The field of view angle is the angle between the m_Center
      *  line of the screen and the left or right border.
      *  The default value is 1/4PI.
      */

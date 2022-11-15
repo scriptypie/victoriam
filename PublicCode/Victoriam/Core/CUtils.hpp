@@ -17,6 +17,12 @@ VIDECL constexpr auto FSize(T(&)[N]) { return N; }
 template<class T>
 VIDECL VIREQOUT constexpr T&& FMove(T&& v) noexcept { return static_cast<T&&>(v); }
 
+template<class T>
+VIDECL VIREQOUT inline T FMin(const T& a, const T& b) { return (a < b) ? a : b; }
+
+template<class T>
+VIDECL VIREQOUT inline T FMax(const T& a, const T& b) { return (b < a) ? a : b; }
+
 VISRCEND
 
 #endif //VICTORIAM_CUTILS_HPP

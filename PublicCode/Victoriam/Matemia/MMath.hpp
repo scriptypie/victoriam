@@ -12,6 +12,10 @@
 #include <Victoriam/Matemia/MMatrix4.hpp>
 #include <Victoriam/Matemia/MQuaternion.hpp>
 
+#include <Victoriam/Matemia/Bounding/Shape.hpp>
+#include <Victoriam/Matemia/Bounding/Sphere.hpp>
+#include <Victoriam/Matemia/Bounding/AABB.hpp>
+
 #include <Victoriam/Matemia/Common/Hash.hpp>
 
 #endif //VICTORIAM_MMATH_HPP

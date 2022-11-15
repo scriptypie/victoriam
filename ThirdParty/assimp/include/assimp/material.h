@@ -533,7 +533,7 @@ struct aiUVTransform {
     /** Rotation - in counter-clockwise direction.
      *
      *  The rotation angle is specified in radians. The
-     *  rotation center is 0.5f|0.5f. The default value
+     *  rotation m_Center is 0.5f|0.5f. The default value
      *  0.f.
      */
     ai_real mRotation;
