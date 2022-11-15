@@ -6,8 +6,6 @@
 #include <Victoriam/Application/ARuntimeInstance.hpp>
 #include <Victoriam/Input/IInput.hpp>
 
-#include <imgui/imgui.h>
-
 VISRCBEG
 
 void VEditorState::OnCreate() {

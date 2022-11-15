@@ -5,28 +5,25 @@
 #ifndef VICTORIAM_AABB_HPP
 #define VICTORIAM_AABB_HPP
 
-#include <Victoriam/Matemia/MPoint.hpp>
+#include <Victoriam/Matemia/Bounding/Shape.hpp>
 
 VISRCBEG
 
-class VIDECL CAABB {
-	SPoint3D m_Min;
-	SPoint3D m_Max;
-	SPoint3D m_Center;
-public:
-	VIDECL inline ~CAABB() = default;
-	VIDECL inline  CAABB() = default;
-	VIDECL inline  CAABB(const SPoint3D& min, const SPoint3D& max) : m_Min(min), m_Max(max), m_Center((m_Min.x + m_Max.x) / 2.0F, (m_Min.y + m_Max.y) / 2.0F, (m_Min.z + m_Max.z) / 2.0F) {}
-	VIDECL inline  CAABB(const SPoint3D& min, const SPoint3D& max, const SPoint3D& center) : m_Min(min), m_Max(max), m_Center(center) {}
-	VIDECL inline  CAABB(const CAABB&) = default;
-	VIDECL inline  CAABB(CAABB&) noexcept = default;
+struct VIDECL SAABB : public SShape{
+	SPoint3D min;
+	SPoint3D max;
 
-	VIDECL VIREQOUT Bool IsIntersects(const SPoint3D& other) const;
-	VIDECL VIREQOUT Bool IsIntersects(const CAABB   & other) const;
+	VIDECL inline ~SAABB() = default;
+	VIDECL inline  SAABB() = default;
+	VIDECL inline  SAABB(const SPoint3D& min, const SPoint3D& max) : min(min), max(max) {}
+	VIDECL inline  SAABB(const SAABB&) = default;
+	VIDECL inline  SAABB(SAABB&) noexcept = default;
 
-	VIDECL VIREQOUT SPoint3D GetMin() const;
+	VIDECL VIREQOUT Bool IsIntersects(const SPoint3D& other) const override;
+	VIDECL VIREQOUT Bool IsIntersects(const SAABB   & other) const override;
+	VIDECL VIREQOUT Bool IsIntersects(const SSphere & other) const override;
+
 	VIDECL VIREQOUT SPoint3D GetCenter() const;
-	VIDECL VIREQOUT SPoint3D GetMax() const;
 
 };
 

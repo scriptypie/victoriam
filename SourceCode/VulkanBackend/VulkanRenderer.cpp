@@ -4,14 +4,9 @@
 
 #include "VulkanRenderer.hpp"
 
-#include "../Accessors/ACmdBufferSolver.hpp"
 #include "../Accessors/ADescriptorWriter.hpp"
 #include "../Accessors/AVertexBuffer.hpp"
 #include "../Accessors/AUniformBuffer.hpp"
-
-#include "imgui/include/imgui/imgui.h"
-#include "imgui/include/imgui/imgui_impl_glfw.h"
-#include "imgui/include/imgui/imgui_impl_vulkan.h"
 
 VISRCBEG
 
@@ -178,33 +173,9 @@ CVulkanRenderer::CreateGeometryData(const PVertexBuffer &vertexBuffer, const PIn
 	return CGeometryData::Create(vertexBuffer, indexBuffer);
 }
 
-void CVulkanRenderer::BeginUIFrame()
-{
-	ImGui_ImplVulkan_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
-}
+void CVulkanRenderer::BeginUIFrame() {}
 
-void CVulkanRenderer::EndUIFrame(SCommandBuffer commandBuffer)
-{
-	ImGuiIO& io = ImGui::GetIO();
-
-	auto extent = m_Window->GetExtent();
-	io.DisplaySize = {CCast<Float32>(extent.Width), CCast<Float32>(extent.Height)};
-	io.DisplayFramebufferScale = { 1.0F, 1.0F };
-
-	ImGui::Render();
-	ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), CCast<VkCommandBuffer>(commandBuffer));
-
-	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-	{
-		GLFWwindow* backup_current_context = glfwGetCurrentContext();
-		ImGui::UpdatePlatformWindows();
-		ImGui::RenderPlatformWindowsDefault();
-		glfwMakeContextCurrent(backup_current_context);
-	}
-
-}
+void CVulkanRenderer::EndUIFrame(SCommandBuffer commandBuffer) {}
 
 PUniformBuffer CVulkanRenderer::CreateUniformBuffer() {
 	 return CUniformBuffer::Create(m_Context, 1);

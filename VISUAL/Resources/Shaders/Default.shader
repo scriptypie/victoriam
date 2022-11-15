@@ -90,7 +90,7 @@ void main() {
 
         vec3 dirToLight = plData.Position.xyz - m_PosWorld;
         float atten = 1.0 / dot(dirToLight, dirToLight);
-        float cosAngleIncidence = m_Max(dot(surfaceNormal, normalize(dirToLight)), 0.0);
+        float cosAngleIncidence = max(dot(surfaceNormal, normalize(dirToLight)), 0.0);
         vec3 intensity = plData.Color.xyz * plData.Color.w * atten;
 
         diffuseLight += (intensity * cosAngleIncidence) / 1.0;

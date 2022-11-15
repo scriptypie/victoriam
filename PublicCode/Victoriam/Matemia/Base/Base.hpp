@@ -19,7 +19,9 @@ typedef SVector4 SRect;
 typedef SVector3 SPoint3D;
 typedef SVector2 SPoint2D;
 
-class CAABB;
+class SShape;
+class SAABB;
+class SSphere;
 
 VISRCEND
 

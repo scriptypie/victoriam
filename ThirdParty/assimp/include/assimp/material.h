@@ -1489,9 +1489,9 @@ ASSIMP_API C_ENUM aiReturn aiGetMaterialProperty(
  * example reads the #AI_MATKEY_UVTRANSFORM property of the first diffuse texture)
  * @code
  * aiUVTransform trafo;
- * unsigned int m_Max = sizeof(aiUVTransform);
+ * unsigned int max = sizeof(aiUVTransform);
  * if (AI_SUCCESS != aiGetMaterialFloatArray(mat, AI_MATKEY_UVTRANSFORM(aiTextureType_DIFFUSE,0),
- *    (float*)&trafo, &m_Max) || sizeof(aiUVTransform) != m_Max)
+ *    (float*)&trafo, &max) || sizeof(aiUVTransform) != max)
  * {
  *   // error handling
  * }

@@ -970,9 +970,9 @@ static bool tryParseDouble(const char *s, const char *s_end, double *result) {
     read = 0;
     end_not_reached = (curr != s_end);
     while (end_not_reached && IS_DIGIT(*curr)) {
-      // To avoid annoying MSVC's m_Min/m_Max macro definiton,
-      // Use hardcoded int m_Max value
-      if (exponent > (2147483647/10)) { // 2147483647 = std::numeric_limits<int>::m_Max()
+      // To avoid annoying MSVC's min/max macro definiton,
+      // Use hardcoded int max value
+      if (exponent > (2147483647/10)) { // 2147483647 = std::numeric_limits<int>::max()
         // Integer overflow
         goto fail;
       }
@@ -2197,7 +2197,7 @@ void LoadMtl(std::map<std::string, int> *material_map,
       } else {
         // We invert value of Tr(assume Tr is in range [0, 1])
         // NOTE: Interpretation of Tr is application(exporter) dependent. For
-        // some application(e.g. 3ds m_Max obj exporter), Tr = d(Issue 43)
+        // some application(e.g. 3ds max obj exporter), Tr = d(Issue 43)
         material.dissolve = static_cast<real_t>(1.0) - parseReal(&token);
       }
       has_tr = true;
