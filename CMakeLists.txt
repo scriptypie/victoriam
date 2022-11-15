@@ -104,6 +104,33 @@ set(SOURCE_FILES
         SourceCode/Accessors/AIndexBuffer.hpp
         SourceCode/Accessors/AUniformBuffer.hpp
         SourceCode/RendererSubrenders/PointLightSubrender.hpp
+        PublicCode/Victoriam/Graphics/Structs/GPointLightsData.hpp
+        PublicCode/Victoriam/Graphics/Structs/GRenderPassCreateInfo.hpp
+        PublicCode/Victoriam/Graphics/GRenderPass.hpp
+        SourceCode/VulkanBackend/VulkanRenderPass.hpp
+        SourceCode/Accessors/ARenderPass.hpp
+        PublicCode/Victoriam/Graphics/GFramebuffer.hpp
+        SourceCode/VulkanBackend/VulkanFramebuffer.hpp
+        PublicCode/Victoriam/Graphics/Structs/GFramebufferCreateInfo.hpp
+        SourceCode/Accessors/AFramebuffer.hpp
+        PublicCode/Victoriam/Matemia/MMath.hpp
+        PublicCode/Victoriam/Matemia/Base/Scalar.hpp
+        PublicCode/Victoriam/Core/CNumerics.hpp
+        PublicCode/Victoriam/Matemia/Base/Random.hpp
+        PublicCode/Victoriam/Matemia/MVector2.hpp
+        PublicCode/Victoriam/Core/CUtils.hpp
+        PublicCode/Victoriam/Matemia/MVector3.hpp
+        PublicCode/Victoriam/Matemia/MVector4.hpp
+        PublicCode/Victoriam/Matemia/MMatrix4.hpp
+        PublicCode/Victoriam/Core/Memory/MUtils.hpp
+        PublicCode/Victoriam/Matemia/Common/Functions.hpp
+        PublicCode/Victoriam/Matemia/Common/Hash.hpp
+        PublicCode/Victoriam/Matemia/MQuaternion.hpp
+        PublicCode/Victoriam/Matemia/Base/Base.hpp
+        PublicCode/Victoriam/Matemia/MPoint.hpp
+        PublicCode/Victoriam/Matemia/Bounding/AABB.hpp
+        PublicCode/Victoriam/Matemia/Bounding/Sphere.hpp
+        PublicCode/Victoriam/Matemia/Bounding/Shape.hpp
 
         SourceCode/EngineInfo.cpp
         SourceCode/AAppStateChain.cpp
@@ -150,9 +177,19 @@ set(SOURCE_FILES
         SourceCode/GUniformBuffer.cpp
         SourceCode/VulkanBackend/VulkanUniformBuffer.cpp
         SourceCode/RendererSubrenders/PointLightSubrender.cpp
+        SourceCode/VulkanBackend/VulkanRenderPass.cpp
+        SourceCode/GRenderPass.cpp
+        SourceCode/GFramebuffer.cpp
+        SourceCode/VulkanBackend/VulkanFramebuffer.cpp
+        SourceCode/Matemia/Random.cpp
+        SourceCode/Matemia/MatrixFunctions.cpp
+        SourceCode/Matemia/QuaternionFunctions.cpp
+        SourceCode/Matemia/Scalar.cpp
+        SourceCode/Matemia/AABB.cpp
+        SourceCode/Matemia/Sphere.cpp
 
         ThirdParty/tinyobjloader/TinyObjLoader.cpp
-        PublicCode/Victoriam/Graphics/Structs/GPointLightsData.hpp PublicCode/Victoriam/Graphics/Structs/GRenderPassCreateInfo.hpp PublicCode/Victoriam/Graphics/GRenderPass.hpp SourceCode/VulkanBackend/VulkanRenderPass.cpp SourceCode/VulkanBackend/VulkanRenderPass.hpp SourceCode/GRenderPass.cpp SourceCode/Accessors/ARenderPass.hpp PublicCode/Victoriam/Graphics/GFramebuffer.hpp SourceCode/GFramebuffer.cpp SourceCode/VulkanBackend/VulkanFramebuffer.cpp SourceCode/VulkanBackend/VulkanFramebuffer.hpp PublicCode/Victoriam/Graphics/Structs/GFramebufferCreateInfo.hpp SourceCode/Accessors/AFramebuffer.hpp PublicCode/Victoriam/Matemia/MMath.hpp PublicCode/Victoriam/Matemia/Base/Scalar.hpp PublicCode/Victoriam/Core/CNumerics.hpp PublicCode/Victoriam/Matemia/Base/Random.hpp SourceCode/Matemia/Random.cpp PublicCode/Victoriam/Matemia/MVector2.hpp PublicCode/Victoriam/Core/CUtils.hpp PublicCode/Victoriam/Matemia/MVector3.hpp PublicCode/Victoriam/Matemia/MVector4.hpp PublicCode/Victoriam/Matemia/MMatrix4.hpp PublicCode/Victoriam/Core/Memory/MUtils.hpp SourceCode/Matemia/MatrixFunctions.cpp PublicCode/Victoriam/Matemia/Common/Functions.hpp PublicCode/Victoriam/Matemia/Common/Hash.hpp PublicCode/Victoriam/Matemia/MQuaternion.hpp SourceCode/Matemia/QuaternionFunctions.cpp PublicCode/Victoriam/Matemia/Base/Base.hpp SourceCode/Matemia/Scalar.cpp PublicCode/Victoriam/Matemia/MPoint.hpp PublicCode/Victoriam/Matemia/Bounding/AABB.hpp SourceCode/Matemia/AABB.cpp PublicCode/Victoriam/Matemia/Bounding/Sphere.hpp SourceCode/Matemia/Sphere.cpp PublicCode/Victoriam/Matemia/Bounding/Shape.hpp)
+        )
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 
