@@ -3,9 +3,7 @@ project(victoriam)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(PublicCode /opt/homebrew/Cellar/glfw/3.3.8/include ThirdParty ThirdParty/imgui/include ThirdParty/assimp/include /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
-
-find_library(ASSIMP_LIB assimp ThirdParty/assimp/lib)
+include_directories(PublicCode /opt/homebrew/Cellar/glfw/3.3.8/include ThirdParty /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
 
 set(SOURCE_FILES
         PublicCode/Victoriam/Core/CBase.hpp
@@ -204,7 +202,7 @@ find_package(glfw3 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(Vulkan REQUIRED)
 
-target_link_libraries(victoriam PUBLIC glfw PUBLIC OpenGL::GL PUBLIC Vulkan::Vulkan PUBLIC ${ASSIMP_LIB})
+target_link_libraries(victoriam PUBLIC glfw PUBLIC OpenGL::GL PUBLIC Vulkan::Vulkan)
 
 set(VISUAL_SOURCES
         PublicCode/Ved/VEditorState.hpp

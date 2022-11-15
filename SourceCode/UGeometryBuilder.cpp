@@ -2,14 +2,9 @@
 // Created by Вячеслав Кривенко on 30.10.2022.
 //
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
 #include <tinyobjloader/TinyObjLoader.hpp>
 
 #include <Victoriam/Utils/UGeometryBuilder.hpp>
-#include <filesystem>
 
 VISRCBEG
 
