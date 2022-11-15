@@ -43,7 +43,7 @@ void CPointLightSubrender::Compute(SFrameInfo &frameInfo, const PWorld &world) {
 	constants.ActiveLightsCount = index;
 }
 
-void CPointLightSubrender::Pass(const SFrameInfo &frameInfo, const PWorld &world) {
+void CPointLightSubrender::Pass(SFrameInfo &frameInfo, const PWorld &world) {
 	m_Pipeline->BindCommandBuffer(frameInfo.CommandBuffer);
 	m_Pipeline->BindConstantsDescriptorSet(BindPointGraphics, frameInfo);
 

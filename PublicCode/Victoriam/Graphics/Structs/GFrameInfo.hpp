@@ -25,6 +25,7 @@ struct VIDECL SFrameInfo
 	VIDECL Float32 AspectRatio = {};
 	VIDECL UInt32 ImageIndex = {};
 	VIDECL UInt32 FrameIndex = {};
+	VIDECL UInt64 Polycount = {};
 
 	VIDECL inline SFrameInfo() = default;
 	VIDECL inline SFrameInfo(const SCommandBuffer& commandBuffer, const UInt32& imageIndex, const UInt32& frameIndex)

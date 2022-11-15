@@ -32,6 +32,7 @@ void CGeometryData::SubmitDraw(SCommandBuffer const &buffer)
 CGeometryData
 CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices) {
 	CGeometryData data = {};
+	data.m_Polycount = vertices.size() / 3;
 	data.m_VertexBuffer = CVertexBuffer::Create(context, vertices);
 	return data;
 }
@@ -48,6 +49,7 @@ CGeometryData::Create(const PVertexBuffer& vertexBuffer, const PIndexBuffer& ind
 CGeometryData
 CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices, const CList<UInt32> &indices) {
 	CGeometryData data = {};
+	data.m_Polycount = vertices.size() / 3;
 	data.m_VertexBuffer = CVertexBuffer::Create(context, vertices);
 	data.m_IndexBuffer = CIndexBuffer::Create(context, indices);
 	return data;
@@ -75,6 +77,10 @@ Bool CGeometryData::Empty() const {
 void CGeometryData::Release() {
 	if (m_IndexBuffer) m_IndexBuffer.reset();
 	if (m_VertexBuffer) m_VertexBuffer.reset();
+}
+
+UInt64 CGeometryData::GetPolycount() const {
+	return m_Polycount;
 }
 
 VISRCEND

@@ -19,7 +19,7 @@ public:
 	VIDECL virtual ~CRenderSubrender() = default;
 
 	VIDECL virtual void Compute(SFrameInfo& frameInfo, const PWorld& world) {}
-	VIDECL virtual void Pass(const SFrameInfo& frameInfo, const PWorld& world) = 0;
+	VIDECL virtual void Pass(SFrameInfo& frameInfo, const PWorld& world) = 0;
 
 	VIDECL VIREQOUT static UPtr<CRenderSubrender> CreateDefaultSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
 	VIDECL VIREQOUT static UPtr<CRenderSubrender> CreatePointLightSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
