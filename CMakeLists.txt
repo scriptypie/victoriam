@@ -188,7 +188,7 @@ set(SOURCE_FILES
 
         ThirdParty/tinyobjloader/TinyObjLoader.cpp
 
-        )
+        PublicCode/Victoriam/Utils/UCompression.hpp SourceCode/Compression/UCompression.cpp SourceCode/Compression/LZ4Backend.h SourceCode/Compression/LZ4Backend.cpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

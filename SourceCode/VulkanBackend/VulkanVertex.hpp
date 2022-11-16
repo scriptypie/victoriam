@@ -23,7 +23,9 @@ VIDECL VIREQOUT inline static CList<VkVertexInputAttributeDescription> FGetVerte
 		{ 0, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Position) },
 		{ 1, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(SVertex, Color)    },
 		{ 2, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Normal)   },
-		{ 3, 0, VK_FORMAT_R32G32_SFLOAT,       offsetof(SVertex, UV)       },
+		{ 3, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Tangent)   },
+		{ 4, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Bitangent)   },
+		{ 5, 0, VK_FORMAT_R32G32_SFLOAT,       offsetof(SVertex, UV)       },
 	};
 }
 

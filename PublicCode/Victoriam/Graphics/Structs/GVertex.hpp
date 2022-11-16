@@ -18,6 +18,8 @@ struct VIDECL SVertex
 	VIDECL SVector3 Position;
 	VIDECL SVector4 Color;
 	VIDECL SVector3 Normal;
+	VIDECL SVector3 Tangent;
+	VIDECL SVector3 Bitangent;
 	VIDECL SVector2 UV;
 };
 
@@ -25,9 +27,9 @@ VIDECL Bool operator==(const SVertex& a, const SVertex& b);
 VIDECL Bool operator!=(const SVertex& a, const SVertex& b);
 
 VIDECL inline static const CList<SVertex> DefaultVertices = {
-		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F } },
-		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F } },
-		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F } },
+		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 0.0F, 1.0F, 0.0F }, { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F } },
+		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 0.0F, 1.0F, 0.0F }, { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F } },
+		{ { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F, 1.0F, 1.0F }, { 1.0F, 1.0F, 1.0F }, { 0.0F, 1.0F, 0.0F }, { 0.0F, 0.0F, 0.0F }, { 1.0F, 1.0F } },
 };
 
 VIDECL inline static const CList<UInt32> DefaultIndices = {
@@ -44,7 +46,7 @@ namespace std
 		size_t operator()(const Vi::SVertex& vertex) const
 		{
 			size_t seed = 0;
-			Vi::FHashCombined(seed, vertex.Position, vertex.Color, vertex.Normal, vertex.UV);
+			Vi::FHashCombined(seed, vertex.Position, vertex.Color, vertex.Normal, vertex.Tangent, vertex.Bitangent, vertex.UV);
 			return seed;
 		}
 	};

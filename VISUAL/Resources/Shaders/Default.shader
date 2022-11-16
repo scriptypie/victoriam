@@ -5,7 +5,9 @@
 layout (location = 0) in vec3 m_Position;
 layout (location = 1) in vec4 m_Color;
 layout (location = 2) in vec3 m_Normal;
-layout (location = 3) in vec2 m_UV;
+layout (location = 3) in vec3 m_Tangent;
+layout (location = 4) in vec3 m_Bitangent;
+layout (location = 5) in vec2 m_UV;
 
 layout (location = 0) out vec4 o_Color;
 layout (location = 1) out vec3 o_PosWorld;
