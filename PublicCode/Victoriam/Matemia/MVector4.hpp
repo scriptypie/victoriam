@@ -57,7 +57,7 @@ struct VIDECL SVector4 {
 	VIDECL inline static    ScalarArray<4> Identity = { 0.0F, 0.0F, 0.0F, 1.0F };
 
 	VIDECL inline ~SVector4() = default;
-	VIDECL inline  SVector4() : data() {}
+	VIDECL inline  SVector4() = default;
 	VIDECL inline  SVector4(const ScalarArray<2>& other)            : data(other) {}
 	VIDECL inline  SVector4(const ScalarArray<3>& other)            : data(other) {}
 	VIDECL inline  SVector4(const ScalarArray<4>& other)            : data(other) {}

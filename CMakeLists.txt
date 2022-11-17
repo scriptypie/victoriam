@@ -192,7 +192,7 @@ set(SOURCE_FILES
 
         ThirdParty/tinyobjloader/TinyObjLoader.cpp
 
-        )
+        PublicCode/Victoriam/Matemia/MPlane.hpp SourceCode/Matemia/PlaneFunctions.cpp PublicCode/Victoriam/Matemia/MFrustrum.hpp SourceCode/Matemia/FrustrumFunctions.cpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

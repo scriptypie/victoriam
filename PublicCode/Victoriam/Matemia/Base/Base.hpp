@@ -19,9 +19,13 @@ typedef SVector4 SRect;
 typedef SVector3 SPoint3D;
 typedef SVector2 SPoint2D;
 
-class SShape;
-class SAABB;
-class SSphere;
+struct SShape;
+struct SAABB;
+struct SSphere;
+struct SPlane;
+struct SFrustrum;
+
+enum class ECHalfspace;
 
 VISRCEND
 
