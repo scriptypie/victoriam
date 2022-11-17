@@ -33,6 +33,21 @@ CGeometryData
 CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices) {
 	CGeometryData data = {};
 	data.m_Polycount = vertices.size() / 3;
+
+	SVector3 minAABB = SVector3(std::numeric_limits<ScalarType>::min());
+	SVector3 maxAABB = SVector3(std::numeric_limits<ScalarType>::max());
+
+	for (auto&& vertex : vertices) {
+		minAABB.x = FMin(minAABB.x, vertex.Position.x);
+		minAABB.y = FMin(minAABB.y, vertex.Position.y);
+		minAABB.z = FMin(minAABB.z, vertex.Position.z);
+
+		maxAABB.x = FMax(maxAABB.x, vertex.Position.x);
+		maxAABB.y = FMax(maxAABB.y, vertex.Position.y);
+		maxAABB.z = FMax(maxAABB.z, vertex.Position.z);
+	}
+	data.m_BoundingSphere = { (maxAABB + minAABB) * 0.5F, FLength(minAABB - maxAABB) };
+
 	data.m_VertexBuffer = CVertexBuffer::Create(context, vertices);
 	return data;
 }
@@ -50,6 +65,21 @@ CGeometryData
 CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices, const CList<UInt32> &indices) {
 	CGeometryData data = {};
 	data.m_Polycount = vertices.size() / 3;
+
+	SVector3 minAABB = SVector3(std::numeric_limits<ScalarType>::max());
+	SVector3 maxAABB = SVector3(std::numeric_limits<ScalarType>::min());
+
+	for (auto&& vertex : vertices) {
+		minAABB.x = std::min(minAABB.x, vertex.Position.x);
+		minAABB.y = std::min(minAABB.y, vertex.Position.y);
+		minAABB.z = std::min(minAABB.z, vertex.Position.z);
+
+		maxAABB.x = std::max(maxAABB.x, vertex.Position.x);
+		maxAABB.y = std::max(maxAABB.y, vertex.Position.y);
+		maxAABB.z = std::max(maxAABB.z, vertex.Position.z);
+	}
+	data.m_BoundingSphere = { (maxAABB + minAABB) * 0.5F, FLength(minAABB - maxAABB) };
+
 	data.m_VertexBuffer = CVertexBuffer::Create(context, vertices);
 	data.m_IndexBuffer = CIndexBuffer::Create(context, indices);
 	return data;
@@ -81,6 +111,10 @@ void CGeometryData::Release() {
 
 UInt64 CGeometryData::GetPolycount() const {
 	return m_Polycount;
+}
+
+SSphere CGeometryData::GetBounding() const {
+	return m_BoundingSphere;
 }
 
 VISRCEND

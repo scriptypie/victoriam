@@ -17,6 +17,7 @@ class VIDECL CGeometryData
 {
 	PVertexBuffer m_VertexBuffer = {};
 	PIndexBuffer m_IndexBuffer = {};
+	SSphere m_BoundingSphere = {};
 	UInt64 m_Polycount = {};
 public:
 	CGeometryData() = default;
@@ -30,6 +31,7 @@ public:
 	VIDECL VIREQOUT Bool HasIndexBuffer() const;
 	VIDECL VIREQOUT Bool Empty() const;
 	VIDECL VIREQOUT UInt64 GetPolycount() const;
+	VIDECL VIREQOUT SSphere GetBounding() const;
 	/**
 	 * Release all resources of buffers.
 	 */

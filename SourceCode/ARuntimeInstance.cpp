@@ -56,12 +56,12 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	CGeometryData monkeyGeometryData = m_Renderer->CreateGeometryData(monkeyCreateInfo);
 	CGeometryData quadGeometryData = m_Renderer->CreateGeometryData(quadCreateInfo);
 
-	for (auto x = 0; x < 32; x++) for (auto z = 0; z < 32; z++)
+	for (auto x = 0; x < 48; x++) for (auto z = 0; z < 48; z++)
 	{
 		auto monkey = m_World->CreateGameObject("TestMonkey");
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		auto transform = monkey->AddComponent<SComponentTransform>();
-		transform->Translation = { x * 10 - 160, 0, z * 10 - 160 };
+		transform->Translation = { x * 10 - 240, 0, z * 10 - 240 };
 		transform->Rotation = { 0, 0, 180 };
 	}
 	{
@@ -95,7 +95,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	{
 		auto camera = m_World->CreateGameObject("MainCamera");
 		auto camcomp = camera->AddComponent<SComponentCamera>();
-		camcomp->Camera.SetViewBounds(0.01F, 0);
+		camcomp->Camera.SetViewBounds(0.01F, 1000.0F);
 		camcomp->Camera.SetFovY(FRadians(65.0F));
 		auto ctc = camera->AddComponent<SComponentTransform>();
 		ctc->Translation = { 0.3F, 0.0F, 9.5F };

@@ -11,6 +11,10 @@
 
 VISRCBEG
 
+template<class T> struct VIDECL SRemoveReference      { typedef T type; };
+template<class T> struct VIDECL SRemoveReference<T&>  { typedef T type; };
+template<class T> struct VIDECL SRemoveReference<T&&> { typedef T type; };
+
 template<class T, auto N>
 VIDECL constexpr auto FSize(T(&)[N]) { return N; }
 

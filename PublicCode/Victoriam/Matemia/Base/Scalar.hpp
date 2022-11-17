@@ -18,7 +18,7 @@ struct VIDECL ScalarArray {
 	ScalarType data[N] = {};
 
 	VIDECL inline                              ~ScalarArray() = default;
-	VIDECL inline			                    ScalarArray() : data{} {}
+	VIDECL inline			                    ScalarArray() : data() {}
 	VIDECL inline                               ScalarArray(const ScalarArray& other) { for (UInt32 e = 0; e < N; e += 1) data[e] = other[e]; }
 	template<UInt32 M> VIDECL inline explicit   ScalarArray(const ScalarArray<M>& other) { for (UInt32 e = 0; e < M; e += 1) data[e] = other[e]; }
 	VIDECL inline                               ScalarArray(ScalarArray&& other)  noexcept { for (UInt32 e = 0; e < N; e += 1) data[e] = FMove(other[e]); }

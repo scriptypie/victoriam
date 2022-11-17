@@ -98,6 +98,11 @@ struct VIDECL SVector3 {
 
 };
 
+VIDECL VIREQOUT inline SVector3 operator+(const ScalarType& a, const SVector3& b) { return { a + b.x, a + b.y, a + b.z }; }
+VIDECL VIREQOUT inline SVector3 operator-(const ScalarType& a, const SVector3& b) { return { a - b.x, a - b.y, a - b.z }; }
+VIDECL VIREQOUT inline SVector3 operator*(const ScalarType& a, const SVector3& b) { return { a * b.x, a * b.y, a * b.z }; }
+VIDECL VIREQOUT inline SVector3 operator/(const ScalarType& a, const SVector3& b) { return { a / b.x, a / b.y, a / b.z }; }
+
 VIDECL VIREQOUT inline SVector3     FSqrt       (const SVector3& v                                          ) { return v * v; }
 VIDECL VIREQOUT inline ScalarType   FDot        (const SVector3& a, const SVector3& b                       ) { SVector3 tmp = a * b; return tmp.x + tmp.y + tmp.z; }
 VIDECL VIREQOUT inline ScalarType   FLength     (const SVector3& v                                          ) { return FSqrt(FDot(v, v)); }

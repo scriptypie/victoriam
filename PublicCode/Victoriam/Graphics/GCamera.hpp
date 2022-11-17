@@ -14,6 +14,7 @@ VISRCBEG
  */
 class VIDECL CCamera
 {
+	friend SFrustum FGetFrustum(const CCamera &cam, const SVector3 &position);
 	Float32 m_Width = 1280.0F;
 	Float32 m_Height = 720.0F;
 	Float32 m_Sensitivity = 0.3F;
@@ -49,6 +50,8 @@ public:
 	VIDECL VIREQOUT SMatrix4 GetProjection() const;
 
 };
+
+VIDECL VIREQOUT SFrustum FGetFrustum(const CCamera& cam, const SVector3& position);
 
 VISRCEND
 

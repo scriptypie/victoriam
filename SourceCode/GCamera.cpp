@@ -4,6 +4,7 @@
 
 #include <Victoriam/Graphics/GCamera.hpp>
 #include <Victoriam/Input/IInput.hpp>
+#include <Victoriam/Matemia/MFrustum.hpp>
 
 VISRCBEG
 
@@ -43,7 +44,7 @@ SMatrix4 CCamera::GetViewProjection() const {
 void CCamera::Update()
 {
 	if (m_Aspect != Float32(m_Width / m_Height))
-		m_Projection = FPerspective(m_Fov, m_Aspect, m_Near);
+		m_Projection = FPerspective(m_Fov, m_Aspect, m_Near, m_Far);
 
 	SVector2 pos = CInput::GetMousePosition();
 
@@ -98,6 +99,23 @@ SMatrix4 CCamera::GetView() const {
 
 SMatrix4 CCamera::GetProjection() const {
 	return m_Projection;
+}
+
+SFrustum FGetFrustum(const CCamera& cam, const SVector3& position) {
+	SFrustum frustum;
+
+	const Float32 halfV = cam.m_Far * FTan(cam.m_Fov * 0.5F);
+	const Float32 halfH = halfV * cam.m_Aspect;
+	const SVector3 frontFar = cam.m_Far * cam.m_Front;
+
+	frustum.near = { position + cam.m_Near * cam.m_Front, cam.m_Front };
+	frustum.far = { position + frontFar, -cam.m_Front };
+	frustum.right = { position, FCross(cam.Up(),frontFar + cam.Right() * halfH) };
+	frustum.left = { position, FCross(frontFar - cam.Right() * halfH, cam.Up()) };
+	frustum.top = { position, FCross(cam.Right(), frontFar - cam.Up() * halfV) };
+	frustum.bottom = { position, FCross(frontFar + cam.Up() * halfV, cam.Right()) };
+
+	return frustum;
 }
 
 VISRCEND
