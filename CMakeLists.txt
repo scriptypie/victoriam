@@ -129,6 +129,8 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Matemia/Bounding/AABB.hpp
         PublicCode/Victoriam/Matemia/Bounding/Sphere.hpp
         PublicCode/Victoriam/Matemia/Bounding/Shape.hpp
+        PublicCode/Victoriam/Utils/UCompression.hpp
+        SourceCode/Compression/LZ4Backend.h
 
         SourceCode/EngineInfo.cpp
         SourceCode/AAppStateChain.cpp
@@ -185,10 +187,12 @@ set(SOURCE_FILES
         SourceCode/Matemia/Scalar.cpp
         SourceCode/Matemia/AABB.cpp
         SourceCode/Matemia/Sphere.cpp
+        SourceCode/Compression/LZ4Backend.cpp
+        SourceCode/Compression/UCompression.cpp
 
         ThirdParty/tinyobjloader/TinyObjLoader.cpp
 
-        PublicCode/Victoriam/Utils/UCompression.hpp SourceCode/Compression/UCompression.cpp SourceCode/Compression/LZ4Backend.h SourceCode/Compression/LZ4Backend.cpp)
+        )
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 
