@@ -5,11 +5,11 @@
 #ifndef VICTORIAM_AABB_HPP
 #define VICTORIAM_AABB_HPP
 
-#include <Victoriam/Matemia/Bounding/Shape.hpp>
+#include <Victoriam/Matemia/Bounding/Volume.hpp>
 
 VISRCBEG
 
-struct VIDECL SAABB : public SShape{
+struct VIDECL SAABB : public SVolume{
 	SPoint3D min;
 	SPoint3D max;
 

@@ -5,11 +5,11 @@
 #ifndef VICTORIAM_SPHERE_HPP
 #define VICTORIAM_SPHERE_HPP
 
-#include <Victoriam/Matemia/Bounding/Shape.hpp>
+#include <Victoriam/Matemia/Bounding/Volume.hpp>
 
 VISRCBEG
 
-struct VIDECL SSphere : SShape {
+struct VIDECL SSphere : SVolume {
 	SPoint3D position;
 	Float32 radius;
 
@@ -20,6 +20,8 @@ struct VIDECL SSphere : SShape {
 	VIDECL VIREQOUT Bool IsIntersects(const SPoint3D& point) const override;
 	VIDECL VIREQOUT Bool IsIntersects(const SSphere& sphere) const override;
 	VIDECL VIREQOUT Bool IsIntersects(const SAABB& box) const override;
+	VIDECL VIREQOUT Bool IsOnOrForwardPlan(const SPlan& plan) const override;
+	VIDECL VIREQOUT Bool IsOnFrustum(const SFrustum& frustum, const SMatrix4& transform) const override;
 
 };
 

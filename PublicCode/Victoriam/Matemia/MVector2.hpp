@@ -75,6 +75,11 @@ struct VIDECL SVector2 {
 	template<>          VIDECL VIREQOUT inline Bool       operator!=(const SVector2& b) const { return !(*this == b);                                                         }
 };
 
+VIDECL VIREQOUT inline SVector2 operator+(const ScalarType& a, const SVector2& b) { return { a + b.x, a + b.y }; }
+VIDECL VIREQOUT inline SVector2 operator-(const ScalarType& a, const SVector2& b) { return { a - b.x, a - b.y }; }
+VIDECL VIREQOUT inline SVector2 operator*(const ScalarType& a, const SVector2& b) { return { a * b.x, a * b.y }; }
+VIDECL VIREQOUT inline SVector2 operator/(const ScalarType& a, const SVector2& b) { return { a / b.x, a / b.y }; }
+
 VIDECL VIREQOUT inline SVector2     FSqrt       (const SVector2& v                                          ) { return v * v; }
 VIDECL VIREQOUT inline ScalarType   FDot        (const SVector2& a, const SVector2& b                       ) { SVector2 tmp = a * b; return tmp.x + tmp.y; }
 VIDECL VIREQOUT inline ScalarType   FLength     (const SVector2& v                                          ) { return FSqrt(FDot(v, v)); }

@@ -50,16 +50,25 @@ void CDefaultRenderSubrender::Pass(SFrameInfo &frameInfo, const PWorld &world)
 	m_Pipeline->BindConstantsDescriptorSet(BindPointGraphics, frameInfo);
 
 	auto cam_obj = world->OneWith<SComponentCamera, SComponentTransform>();
-	auto [camtransform, _] = cam_obj->Group<SComponentTransform, SComponentCamera>();
+	auto [camtransform,cam] = cam_obj->Group<SComponentTransform, SComponentCamera>();
 
 	auto renderable_objs = world->AllWith<SComponentRenderable, SComponentTransform>(); // all renderables MUST have a transform component!!!
 	for (auto renderable_obj: renderable_objs) {
 		auto [rrc, rtc] = renderable_obj->Group<SComponentRenderable, SComponentTransform>();
+		auto geom = rrc->Geometry;
+		auto bound = geom.GetBounding();
 
-		if (!rrc->Geometry.Empty()) {
+		if (!geom.Empty()) {
+
+			auto transform = rtc->Transform();
+
+			auto frustum = FGetFrustum(cam->Camera, camtransform->Translation);
+			if (!bound.IsOnFrustum(frustum, transform))
+				continue;
+
 			frameInfo.Polycount += rrc->Geometry.GetPolycount();
 			SMaterialData materialData = {};
-			materialData.ModelMatrix = rtc->Transform();
+			materialData.ModelMatrix = transform;
 			m_Pipeline->PushSimpleData(frameInfo.CommandBuffer, 0, &materialData);
 			rrc->Geometry.SubmitDraw(frameInfo.CommandBuffer);
 		}

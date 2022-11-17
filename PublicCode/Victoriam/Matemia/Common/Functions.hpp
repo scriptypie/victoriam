@@ -28,13 +28,6 @@ VIDECL VIREQOUT SQuaternion FCross(const SQuaternion& a, const SQuaternion& b);
 VIDECL VIREQOUT ScalarType FLength(const SQuaternion& quat);
 VIDECL VIREQOUT SQuaternion FNormalize(const SQuaternion& quat);
 
-VIDECL VIREQOUT SPlane FNormalize(const SPlane& plane);
-VIDECL VIREQOUT ScalarType FDistance(const SPlane& plane, const SPoint3D& pt);
-VIDECL VIREQOUT ECHalfspace FClassifyPoint(const SPlane& plane, const SPoint3D& pt);
-
-VIDECL VIREQOUT SFrustrum FGetFrustrum(const SMatrix4& matrix, const Bool& normalize = false);
-VIDECL VIREQOUT SFrustrum FNormalize(const SFrustrum& frustrum);
-
 VISRCEND
 
 #endif //VICTORIAM_FUNCTIONS_HPP

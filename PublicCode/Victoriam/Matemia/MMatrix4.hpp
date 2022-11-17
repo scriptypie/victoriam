@@ -16,7 +16,7 @@ struct VIDECL SMatrix4 {
 	ColumnType value[4] = {}; // column-major
 
 	VIDECL inline ~SMatrix4() = default;
-	VIDECL inline  SMatrix4() : value() {}
+	VIDECL inline  SMatrix4() = default;
 	VIDECL inline  SMatrix4(const ScalarType& x) : value{ColumnType(x, 0.0F, 0.0F, 0.0F), ColumnType(0.0F, x, 0.0F, 0.0F), ColumnType(0.0F, 0.0F, x, 0.0F), ColumnType(0.0F, 0.0F, 0.0F, x)} {}
 	VIDECL inline  SMatrix4(const ScalarType& x0, const ScalarType& y0, const ScalarType& z0, const ScalarType& w0,
 							const ScalarType& x1, const ScalarType& y1, const ScalarType& z1, const ScalarType& w1,
@@ -75,6 +75,12 @@ struct VIDECL SMatrix4 {
 
 };
 
+VIDECL VIREQOUT inline typename SMatrix4::ColumnType operator*(const SMatrix4& m, const typename SMatrix4::RowType& v) { const auto Mov0(v[0]); const auto Mov1(v[1]); const auto Mul0 = m[0] * Mov0; const auto Mul1 = m[1] * Mov1; const auto Add0 = Mul0 + Mul1; const auto Mov2(v[2]); const auto Mov3(v[3]); const auto Mul2 = m[2] * Mov2; const auto Mul3 = m[3] * Mov3; const auto Add1 = Mul2 + Mul3; const auto Add2 = Add0 + Add1; return FMove(Add2); }
+
 VISRCEND
+
+	/*
+	  const typename SMatrix4::ColumnType Mov0(v[0]); const typename SMatrix4::ColumnType Mov1(v[1]); const typename SMatrix4::ColumnType Mul0 = m[0] * Mov0; const typename SMatrix4::ColumnType Mul1 = m[1] * Mov1; const typename SMatrix4::ColumnType Add0 = Mul0 + Mul1; const typename SMatrix4::ColumnType Mov2(v[2]); const typename SMatrix4::ColumnType Mov3(v[3]); const typename SMatrix4::ColumnType Mul2 = m[2] * Mov2; const typename SMatrix4::ColumnType Mul3 = m[3] * Mov3; const typename SMatrix4::ColumnType Add1 = Mul2 + Mul3; const typename SMatrix4::ColumnType Add2 = Add0 + Add1; return Add2;
+	 */
 
 #endif //VICTORIAM_FUNCTIONS_HPP
