@@ -57,7 +57,6 @@ void CCamera::Update()
 	m_LastPos = pos;
 
 	if (CInput::IsMouseDown(EMouseCode::ButtonLeft)) {
-
 		Float32 yawSign = Up().y < 0 ? -1.0f : 1.0f;
 		yaw += (yawSign * offset.x * m_Sensitivity);
 		pitch += (offset.y * m_Sensitivity);
@@ -100,13 +99,16 @@ SMatrix4 CCamera::GetProjection() const {
 	return m_Projection;
 }
 
-SFrustum FGetFrustum(const CCamera& cam, const SVector3& position) {
+SFrustum FGetFrustum(const CCamera& cam, const SVector3& pos) {
 	SFrustum frustum;
 
-	const Float32 halfV = cam.m_Far * FTan(cam.m_Fov * 0.5F);
+	const Float32 halfV = cam.m_Far * FTan((cam.m_Fov) * 0.5F);
 	const Float32 halfH = halfV * cam.m_Aspect;
 	const SVector3 frontFar = cam.m_Front * cam.m_Far;
 	const SVector3 right = cam.Right();
+
+	SVector3 position = { pos.x, pos.y, pos.z };
+	position -= (cam.m_Front * 5);
 
 	frustum.near = { position + cam.m_Near * cam.m_Front, cam.m_Front };
 	frustum.far = { position + frontFar, -cam.m_Front };

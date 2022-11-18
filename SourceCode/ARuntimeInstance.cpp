@@ -56,17 +56,23 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	CGeometryData monkeyGeometryData = m_Renderer->CreateGeometryData(monkeyCreateInfo);
 	CGeometryData quadGeometryData = m_Renderer->CreateGeometryData(quadCreateInfo);
 
-	for (auto x = 0; x < 48; x++) for (auto z = 0; z < 48; z++)
+	UInt64 totalPoly = 0;
+
+	for (auto x = 0; x < 32; x++) for (auto z = 0; z < 32; z++)
 	{
 		auto monkey = m_World->CreateGameObject("TestMonkey");
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
+		totalPoly += monkeyGeometryData.GetPolycount();
 		auto transform = monkey->AddComponent<SComponentTransform>();
-		transform->Translation = { x * 5 - 120, 0, z * 5 - 120 };
+		auto sc = CRandom<Float32>::Range(1.0F, 10.0F);
+		transform->Translation = { x * 5 * sc - 80, 0, z * 5 * sc - 80 };
 		transform->Rotation = { 0, 0, 180 };
+		transform->Scale = sc;
 	}
 	{
 		auto plane = m_World->CreateGameObject("Plane");
 		plane->AddComponent<SComponentRenderable>(quadGeometryData);
+		totalPoly += quadGeometryData.GetPolycount();
 		auto transform = plane->AddComponent<SComponentTransform>();
 		transform->Translation = { 0, 1, 0 };
 		transform->Rotation = { 180.0F, 0.0F, 0.0F };
@@ -83,14 +89,14 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto sun = m_World->CreateGameObject("Sun");
 		sun->AddComponent<SComponentSun>(SVector3(1.0F, 3.0F, -3.0F));
 	}
-	for (auto i = 0; i < 4; i++)
+	for (auto i = 0; i < 16; i++)
 	{
-		for (auto j = 0; j < 4; j++) {
+		for (auto j = 0; j < 16; j++) {
 			auto light = m_World->CreateGameObject("Light");
 			auto componentTransform = light->AddComponent<SComponentTransform>();
-			componentTransform->Translation = {i * 10 - 20, -5, j * 10 - 20};
+			componentTransform->Translation = {i * 50, -5, j * 50};
 			auto componentPointLight = light->AddComponent<SComponentPointLight>();
-			componentPointLight->LightColor.w = 5.0F;
+			componentPointLight->LightColor.w = 10.0F;
 		}
 	}
 	{
@@ -101,6 +107,8 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto ctc = camera->AddComponent<SComponentTransform>();
 		ctc->Translation = { -6, -11, 24 };
 	}
+
+	ViLog("Total polygons: %llu\n", totalPoly);
 
 	m_running = true;
 }
@@ -169,7 +177,6 @@ void CRuntimeInstance::OnEvent(CEvent &e) {
 }
 
 bool CRuntimeInstance::OnWindowResize(const CWindowResizeEvent &e) {
-	ViLog("%s\n", e.ToString().c_str());
 	m_Renderer->OnWindowResize(e.GetExtent());
 	return true;
 }

@@ -79,7 +79,7 @@ CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices,
 		maxAABB.y = std::max(maxAABB.y, vertex.Position.y);
 		maxAABB.z = std::max(maxAABB.z, vertex.Position.z);
 	}
-	data.m_BoundingSphere = { (maxAABB + minAABB) * 0.5F, FLength(minAABB - maxAABB) };
+	data.m_BoundingSphere = { (maxAABB + minAABB), FDistance(minAABB, maxAABB) };
 	data.m_BoundingBox = { minAABB, maxAABB };
 
 	data.m_VertexBuffer = CVertexBuffer::Create(context, vertices);

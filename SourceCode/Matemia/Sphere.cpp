@@ -33,13 +33,12 @@ Bool SSphere::IsOnFrustum(const SFrustum &frustum, const SMatrix4 &transform) co
 	const SVector3 globalCenter = (transform * SVector4(position, 1.0F)).xyz;
 	const ScalarType maxScale = FMax(FMax(globalScale.x, globalScale.y), globalScale.z);
 	SSphere globalSphere(globalCenter, radius * (maxScale * 0.5F));
-	return
-		globalSphere.IsOnOrForwardPlan(frustum.left) &&
+	return (globalSphere.IsOnOrForwardPlan(frustum.left) &&
 		globalSphere.IsOnOrForwardPlan(frustum.right) &&
 		globalSphere.IsOnOrForwardPlan(frustum.far) &&
 		globalSphere.IsOnOrForwardPlan(frustum.near) &&
 		globalSphere.IsOnOrForwardPlan(frustum.top) &&
-		globalSphere.IsOnOrForwardPlan(frustum.bottom);
+		globalSphere.IsOnOrForwardPlan(frustum.bottom));
 }
 
 VISRCEND

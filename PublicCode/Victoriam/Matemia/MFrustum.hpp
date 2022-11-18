@@ -6,6 +6,7 @@
 #define VICTORIAM_MFRUSTUM_HPP
 
 #include <Victoriam/Matemia/MPlane.hpp>
+#include <Victoriam/Matemia/MVector4.hpp>
 
 VISRCBEG
 

@@ -23,10 +23,6 @@ void CPointLightSubrender::Compute(SFrameInfo &frameInfo, const PWorld &world) {
 	auto camObject = world->OneWith<SComponentTransform, SComponentCamera>();
 	auto [camTransform, camCamera] = camObject->Group<SComponentTransform, SComponentCamera>();
 
-	CStream css;
-	css << camTransform->Translation;
-	ViLog("%s\n", css.Str().c_str());
-
 	Int32 index = 0;
 	auto& constants = frameInfo.Constants;
 
