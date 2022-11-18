@@ -8,7 +8,7 @@
 #include <Victoriam/Application/ARuntimeInstance.hpp>
 #include <Victoriam/EventSystem/EEventDispatcher.hpp>
 #include <Victoriam/Utils/UGeometryBuilder.hpp>
-#include "Victoriam/Input/IInput.hpp"
+#include "Victoriam/IO/IO.hpp"
 
 VISRCBEG
 
@@ -99,7 +99,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		camcomp->Camera.SetViewBounds(0.01F, 1000.0F);
 		camcomp->Camera.SetFovY(FRadians(65.0F));
 		auto ctc = camera->AddComponent<SComponentTransform>();
-		ctc->Translation = { 0.3F, 0.0F, 9.5F };
+		ctc->Translation = { -6, -11, 24 };
 	}
 
 	m_running = true;

@@ -2,8 +2,8 @@
 // Created by Вячеслав Кривенко on 11.10.2022.
 //
 
-#ifndef VICTORIAM_IMOUSECODE_HPP
-#define VICTORIAM_IMOUSECODE_HPP
+#ifndef VICTORIAM_IOMOUSECODE_HPP
+#define VICTORIAM_IOMOUSECODE_HPP
 
 #include <Victoriam/Core/CBase.hpp>
 
@@ -30,4 +30,4 @@ enum VIDECL EMouseCode : UInt32
 
 VISRCEND
 
-#endif //VICTORIAM_IMOUSECODE_HPP
+#endif //VICTORIAM_IOMOUSECODE_HPP

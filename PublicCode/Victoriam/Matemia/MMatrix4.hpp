@@ -30,9 +30,9 @@ struct VIDECL SMatrix4 {
 							{}
 	VIDECL inline  SMatrix4(const ColumnType& v0, const ColumnType& v1, const ColumnType& v2, const ColumnType& v3) : value{v0, v1, v2, v3} {}
 	template<class X0, class Y0, class Z0, class W0,
-			class X1, class Y1, class Z1, class W1,
-			class X2, class Y2, class Z2, class W2,
-			class X3, class Y3, class Z3, class W3>
+			 class X1, class Y1, class Z1, class W1,
+			 class X2, class Y2, class Z2, class W2,
+			 class X3, class Y3, class Z3, class W3>
 	VIDECL inline  SMatrix4(const X0& x0, const Y0& y0, const Z0& z0, const W0& w0,
 							const X1& x1, const Y1& y1, const Z1& z1, const W1& w1,
 							const X2& x2, const Y2& y2, const Z2& z2, const W2& w2,
@@ -74,6 +74,8 @@ struct VIDECL SMatrix4 {
 	VIDECL inline ColumnType  operator[](int pos) const { return value[pos]; }
 
 };
+
+VIDECL inline CStream& operator<<(CStream& stream, const SMatrix4& m) { return stream << "(" << m[0][0] << ", " << m[0][1] << ", " << m[0][2] << ", " << m[0][3] << ")" << Newline << "(" << m[1][0] << ", " << m[1][1] << ", " << m[1][2] << ", " << m[1][3] << ")" << Newline << "(" << m[2][0] << ", " << m[2][1] << ", " << m[2][2] << ", " << m[2][3] << ")" << Newline << "(" << m[3][0] << ", " << m[3][1] << ", " << m[3][2] << ", " << m[3][3] << ")"; }
 
 VIDECL VIREQOUT inline typename SMatrix4::ColumnType operator*(const SMatrix4& m, const typename SMatrix4::RowType& v) { const auto Mov0(v[0]); const auto Mov1(v[1]); const auto Mul0 = m[0] * Mov0; const auto Mul1 = m[1] * Mov1; const auto Add0 = Mul0 + Mul1; const auto Mov2(v[2]); const auto Mov3(v[3]); const auto Mul2 = m[2] * Mov2; const auto Mul3 = m[3] * Mov3; const auto Add1 = Mul2 + Mul3; const auto Add2 = Add0 + Add1; return FMove(Add2); }
 

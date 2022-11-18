@@ -15,6 +15,8 @@
 #include <Victoriam/Matemia/Bounding/Volume.hpp>
 #include <Victoriam/Matemia/Bounding/Sphere.hpp>
 #include <Victoriam/Matemia/Bounding/AABB.hpp>
+#include <Victoriam/Matemia/MFrustum.hpp>
+#include <Victoriam/Matemia/MPlane.hpp>
 
 #include <Victoriam/Matemia/Common/Hash.hpp>
 

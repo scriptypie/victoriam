@@ -30,7 +30,7 @@ public:
 	}
 };
 
-VIDECL inline std::ostream& operator<<(std::ostream& os, const CEvent& event)
+VIDECL inline CStream& operator<<(CStream& os, const CEvent& event)
 {
 	return os << event.ToString();
 }

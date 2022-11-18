@@ -6,6 +6,7 @@
 #define VICTORIAM_BASE_HPP
 
 #include <Victoriam/Matemia/Base/Scalar.hpp>
+#include <Victoriam/IO/IOStream.hpp>
 
 VISRCBEG
 

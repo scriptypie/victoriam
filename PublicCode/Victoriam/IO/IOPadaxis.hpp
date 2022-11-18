@@ -2,8 +2,8 @@
 // Created by Вячеслав Кривенко on 11.10.2022.
 //
 
-#ifndef VICTORIAM_IPADAXIS_HPP
-#define VICTORIAM_IPADAXIS_HPP
+#ifndef VICTORIAM_IOPADAXIS_HPP
+#define VICTORIAM_IOPADAXIS_HPP
 
 #include <Victoriam/Core/CBase.hpp>
 
@@ -22,4 +22,4 @@ enum VIDECL EGamepadAxis : UInt32
 
 VISRCEND
 
-#endif //VICTORIAM_IPADAXIS_HPP
+#endif //VICTORIAM_IOPADAXIS_HPP

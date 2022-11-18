@@ -20,9 +20,9 @@ public:
 
 	VIDECL VIREQOUT String ToString() const override
 	{
-		StringStream ss;
+		CStream ss;
 		ss << "CWindowCloseEvent()";
-		return ss.str();
+		return ss.Str();
 	}
 
 	EVENT_CLASS_TYPE(WindowClosed)
@@ -52,9 +52,9 @@ public:
 
 	VIDECL VIREQOUT String ToString() const override
 	{
-		StringStream ss;
+		CStream ss;
 		ss << "CWindowResizeEvent(" << m_Width << ", " << m_Height << ")";
-		return ss.str();
+		return ss.Str();
 	}
 
 	EVENT_CLASS_TYPE(WindowResized)
@@ -71,9 +71,9 @@ public:
 
 	VIDECL VIREQOUT String ToString() const override
 	{
-		StringStream ss;
+		CStream ss;
 		ss << "CWindowLostFocusEvent()";
-		return ss.str();
+		return ss.Str();
 	}
 
 	EVENT_CLASS_TYPE(WindowLostFocus)
@@ -90,9 +90,9 @@ public:
 
 	VIDECL VIREQOUT String ToString() const override
 	{
-		StringStream ss;
+		CStream ss;
 		ss << "CWindowGetFocusEvent()";
-		return ss.str();
+		return ss.Str();
 	}
 
 	EVENT_CLASS_TYPE(WindowGetFocus)

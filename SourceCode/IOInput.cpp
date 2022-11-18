@@ -4,7 +4,7 @@
 
 #include "GLFWWindow.hpp"
 
-#include "Victoriam/Input/IInput.hpp"
+#include "Victoriam/IO/IOInput.hpp"
 
 VISRCBEG
 

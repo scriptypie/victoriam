@@ -2,8 +2,8 @@
 // Created by Вячеслав Кривенко on 11.10.2022.
 //
 
-#ifndef VICTORIAM_IKEYCODE_HPP
-#define VICTORIAM_IKEYCODE_HPP
+#ifndef VICTORIAM_IOKEYCODE_HPP
+#define VICTORIAM_IOKEYCODE_HPP
 
 #include <Victoriam/Core/CBase.hpp>
 
@@ -151,4 +151,4 @@ VIDECL typedef EKeyboardCode EKeyCode;
 
 VISRCEND
 
-#endif //VICTORIAM_IKEYCODE_HPP
+#endif //VICTORIAM_IOKEYCODE_HPP

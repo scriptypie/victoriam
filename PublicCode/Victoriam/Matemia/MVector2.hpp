@@ -75,6 +75,8 @@ struct VIDECL SVector2 {
 	template<>          VIDECL VIREQOUT inline Bool       operator!=(const SVector2& b) const { return !(*this == b);                                                         }
 };
 
+VIDECL          inline CStream& operator<<(CStream& stream, const SVector2& v) { return stream << "(" << v.x << ", " << v.y << ")"; }
+
 VIDECL VIREQOUT inline SVector2 operator+(const ScalarType& a, const SVector2& b) { return { a + b.x, a + b.y }; }
 VIDECL VIREQOUT inline SVector2 operator-(const ScalarType& a, const SVector2& b) { return { a - b.x, a - b.y }; }
 VIDECL VIREQOUT inline SVector2 operator*(const ScalarType& a, const SVector2& b) { return { a * b.x, a * b.y }; }

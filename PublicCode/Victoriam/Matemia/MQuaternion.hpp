@@ -26,6 +26,8 @@ struct VIDECL SQuaternion {
 
 };
 
+VIDECL inline CStream& operator<<(CStream& stream, const SQuaternion& quat) { return stream << "(" << quat.x << ", " << quat.y << ", " << quat.z << ", " << quat.w << ")"; }
+
 VISRCEND
 
 #endif //VICTORIAM_MQUATERNION_HPP

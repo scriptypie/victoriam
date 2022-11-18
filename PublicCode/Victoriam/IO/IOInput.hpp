@@ -2,14 +2,14 @@
 // Created by Вячеслав Кривенко on 11.10.2022.
 //
 
-#ifndef VICTORIAM_IINPUT_HPP
-#define VICTORIAM_IINPUT_HPP
+#ifndef VICTORIAM_IOINPUT_HPP
+#define VICTORIAM_IOINPUT_HPP
 
 #include <Victoriam/Core/CBase.hpp>
-#include <Victoriam/Input/IKeycode.hpp>
-#include <Victoriam/Input/IMousecode.hpp>
-#include <Victoriam/Input/IPadcode.hpp>
-#include <Victoriam/Input/IPadaxis.hpp>
+#include <Victoriam/IO/IOKeycode.hpp>
+#include <Victoriam/IO/IOMousecode.hpp>
+#include <Victoriam/IO/IOPadcode.hpp>
+#include <Victoriam/IO/IOPadaxis.hpp>
 #include <Victoriam/Graphics/GWindow.hpp>
 
 VISRCBEG
@@ -31,4 +31,4 @@ public:
 
 VISRCEND
 
-#endif //VICTORIAM_IINPUT_HPP
+#endif //VICTORIAM_IOINPUT_HPP

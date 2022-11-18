@@ -3,8 +3,8 @@
 //
 
 #include <Victoriam/Graphics/GCamera.hpp>
-#include <Victoriam/Input/IInput.hpp>
 #include <Victoriam/Matemia/MFrustum.hpp>
+#include <Victoriam/IO/IO.hpp>
 
 VISRCBEG
 
@@ -61,6 +61,7 @@ void CCamera::Update()
 		Float32 yawSign = Up().y < 0 ? -1.0f : 1.0f;
 		yaw += (yawSign * offset.x * m_Sensitivity);
 		pitch += (offset.y * m_Sensitivity);
+	}
 
 		if (pitch > 89.0f)
 			pitch = 89.0f;
@@ -70,7 +71,6 @@ void CCamera::Update()
 		m_Front.x = FCos(FRadians(yaw)) * FCos(FRadians(pitch));
 		m_Front.y = FSin(FRadians(pitch));
 		m_Front.z = FSin(FRadians(yaw)) * FCos(FRadians(pitch));
-	}
 }
 
 void CCamera::SetViewMatrix(const SMatrix4 &view) {

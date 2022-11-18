@@ -9,10 +9,7 @@
 #include <GLFW/glfw3.h>
 
 #include <Victoriam/Graphics/GWindow.hpp>
-#include <Victoriam/Input/IKeycode.hpp>
-#include <Victoriam/Input/IMousecode.hpp>
-#include <Victoriam/Input/IPadcode.hpp>
-#include <Victoriam/Input/IPadaxis.hpp>
+#include <Victoriam/IO/IO.hpp>
 
 VISRCBEG
 

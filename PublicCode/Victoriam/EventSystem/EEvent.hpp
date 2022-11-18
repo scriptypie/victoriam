@@ -6,6 +6,7 @@
 #define VICTORIAM_EEVENT_HPP
 
 #include <Victoriam/Core/CBase.hpp>
+#include <Victoriam/IO/IOStream.hpp>
 
 VISRCBEG
 

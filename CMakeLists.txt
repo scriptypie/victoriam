@@ -62,11 +62,11 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Graphics/Structs/GWindowCreateInfo.hpp
         PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp
         PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp
-        PublicCode/Victoriam/Input/IInput.hpp
-        PublicCode/Victoriam/Input/IKeycode.hpp
-        PublicCode/Victoriam/Input/IMousecode.hpp
-        PublicCode/Victoriam/Input/IPadaxis.hpp
-        PublicCode/Victoriam/Input/IPadcode.hpp
+        PublicCode/Victoriam/IO/IOInput.hpp
+        PublicCode/Victoriam/IO/IOKeycode.hpp
+        PublicCode/Victoriam/IO/IOMousecode.hpp
+        PublicCode/Victoriam/IO/IOPadaxis.hpp
+        PublicCode/Victoriam/IO/IOPadcode.hpp
         PublicCode/Victoriam/Matemia/Base/Base.hpp
         PublicCode/Victoriam/Matemia/Base/Random.hpp
         PublicCode/Victoriam/Matemia/Base/Scalar.hpp
@@ -86,7 +86,7 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Matemia/MVector4.hpp
         PublicCode/Victoriam/Utils/UCompression.hpp
         PublicCode/Victoriam/Utils/UCryptogen.hpp
-        PublicCode/Victoriam/Utils/UFile.hpp
+        PublicCode/Victoriam/IO/IOFile.hpp
         PublicCode/Victoriam/Utils/UGeometryBuilder.hpp
         PublicCode/Victoriam/Utils/UGeometryPacker.hpp
         PublicCode/Victoriam/Utils/UHash.hpp
@@ -160,7 +160,7 @@ set(SOURCE_FILES
         SourceCode/GVertex.cpp
         SourceCode/GVertexBuffer.cpp
         SourceCode/GWindow.cpp
-        SourceCode/IInput.cpp
+        SourceCode/IOInput.cpp
         SourceCode/Matemia/AABB.cpp
         SourceCode/Matemia/MatrixFunctions.cpp
         SourceCode/Matemia/QuaternionFunctions.cpp
@@ -192,7 +192,7 @@ set(SOURCE_FILES
         SourceCode/VulkanBackend/VulkanVertexBuffer.cpp
         SourceCode/WGameObject.cpp
         SourceCode/WWorld.cpp
-)
+        PublicCode/Victoriam/IO/IO.hpp PublicCode/Victoriam/IO/IOStream.hpp SourceCode/IOStream.cpp PublicCode/Victoriam/Core/CString.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

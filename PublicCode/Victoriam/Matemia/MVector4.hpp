@@ -121,6 +121,8 @@ struct VIDECL SVector4 {
 
 };
 
+VIDECL          inline CStream& operator<<(CStream& stream, const SVector4& v) { return stream << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")"; }
+
 VIDECL typedef SVector4 SRect;
 
 VIDECL VIREQOUT inline SVector4 operator+(const ScalarType& a, const SVector4& b) { return { a + b.x, a + b.y, a + b.z, a + b.w }; }

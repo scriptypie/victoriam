@@ -6,7 +6,6 @@
 #define VICTORIAM_CBASE_HPP
 
 #include <string>
-#include <sstream>
 #include <vector>
 #include <array>
 #include <cstdint>
@@ -22,16 +21,12 @@
 #include <Victoriam/Core/CMacroDefinitions.hpp>
 #include <Victoriam/Core/Memory/MSmartPointers.hpp>
 #include <Victoriam/Core/Memory/MStandardAllocator.hpp>
+#include <Victoriam/IO/IOStream.hpp>
 #include <Victoriam/Matemia/MMath.hpp> // Matemia math library (property of github.com/scriptypie)
 
 #include <Victoriam/Core/Containers/CArray.hpp>
 
 VISRCBEG
-
-VIDECL typedef const char* CString; /* Simple plain C string */
-
-VIDECL typedef std::basic_string<char, std::char_traits<char>, StdAllocator<char> > String;
-VIDECL typedef std::basic_stringstream<char, std::char_traits<char>, StdAllocator<char> > StringStream;
 
 template<class T>
 using CList = std::vector<T, StdAllocator<T>>;

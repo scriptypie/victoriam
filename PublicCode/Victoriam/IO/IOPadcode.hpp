@@ -2,8 +2,8 @@
 // Created by Вячеслав Кривенко on 11.10.2022.
 //
 
-#ifndef VICTORIAM_IPADCODE_HPP
-#define VICTORIAM_IPADCODE_HPP
+#ifndef VICTORIAM_IOPADCODE_HPP
+#define VICTORIAM_IOPADCODE_HPP
 
 #include <Victoriam/Core/CBase.hpp>
 
@@ -35,4 +35,4 @@ enum VIDECL EGamepadCode : UInt32
 
 VISRCEND
 
-#endif //VICTORIAM_IPADCODE_HPP
+#endif //VICTORIAM_IOPADCODE_HPP

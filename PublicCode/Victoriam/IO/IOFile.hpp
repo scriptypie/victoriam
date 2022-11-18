@@ -2,12 +2,12 @@
 // Created by Вячеслав Кривенко on 19.10.2022.
 //
 
-#ifndef VICTORIAM_UFILE_HPP
-#define VICTORIAM_UFILE_HPP
+#ifndef VICTORIAM_IOFILE_HPP
+#define VICTORIAM_IOFILE_HPP
 
 #include <fstream>
 
-#include <Victoriam/Core/CBase.hpp>
+#include "Victoriam/Core/CBase.hpp"
 
 VISRCBEG
 
@@ -86,4 +86,4 @@ private:
 
 VISRCEND
 
-#endif //VICTORIAM_UFILE_HPP
+#endif //VICTORIAM_IOFILE_HPP

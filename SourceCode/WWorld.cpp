@@ -4,7 +4,7 @@
 
 #include <Victoriam/World/WWorld.hpp>
 #include <Victoriam/World/WGameObject.hpp>
-#include <Victoriam/Input/IInput.hpp>
+#include <Victoriam/IO/IOInput.hpp>
 #include <Victoriam/Graphics/GRenderer.hpp>
 
 VISRCBEG

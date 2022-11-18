@@ -98,6 +98,8 @@ struct VIDECL SVector3 {
 
 };
 
+VIDECL          inline CStream& operator<<(CStream& stream, const SVector3& v) { return stream << "(" << v.x << ", " << v.y << ", " << v.z << ")"; }
+
 VIDECL VIREQOUT inline SVector3 operator+(const ScalarType& a, const SVector3& b) { return { a + b.x, a + b.y, a + b.z }; }
 VIDECL VIREQOUT inline SVector3 operator-(const ScalarType& a, const SVector3& b) { return { a - b.x, a - b.y, a - b.z }; }
 VIDECL VIREQOUT inline SVector3 operator*(const ScalarType& a, const SVector3& b) { return { a * b.x, a * b.y, a * b.z }; }
