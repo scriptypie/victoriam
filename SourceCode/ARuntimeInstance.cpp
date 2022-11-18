@@ -56,12 +56,12 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	CGeometryData monkeyGeometryData = m_Renderer->CreateGeometryData(monkeyCreateInfo);
 	CGeometryData quadGeometryData = m_Renderer->CreateGeometryData(quadCreateInfo);
 
-	for (auto x = 0; x < 8; x++) for (auto z = 0; z < 8; z++)
+	for (auto x = 0; x < 48; x++) for (auto z = 0; z < 48; z++)
 	{
 		auto monkey = m_World->CreateGameObject("TestMonkey");
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		auto transform = monkey->AddComponent<SComponentTransform>();
-		transform->Translation = { x * 10 - 40, 0, z * 10 - 40 };
+		transform->Translation = { x * 5 - 120, 0, z * 5 - 120 };
 		transform->Rotation = { 0, 0, 180 };
 	}
 	{
