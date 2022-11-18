@@ -56,13 +56,13 @@ void CDefaultRenderSubrender::Pass(SFrameInfo &frameInfo, const PWorld &world)
 	for (auto renderable_obj: renderable_objs) {
 		auto [rrc, rtc] = renderable_obj->Group<SComponentRenderable, SComponentTransform>();
 		auto geom = rrc->Geometry;
-		auto bound = geom.GetBounding();
+		auto bound = geom.GetBoundingAABB();
 
 		if (!geom.Empty()) {
 
-			auto transform = rtc->Transform();
+			const auto transform = rtc->Transform();
 
-			auto frustum = FGetFrustum(cam->Camera, camtransform->Translation);
+			const auto frustum = FGetFrustum(cam->Camera, camtransform->Translation);
 			if (!bound.IsOnFrustum(frustum, transform))
 				continue;
 

@@ -5,17 +5,17 @@
 #ifndef VICTORIAM_MFRUSTUM_HPP
 #define VICTORIAM_MFRUSTUM_HPP
 
-#include <Victoriam/Matemia/MPlan.hpp>
+#include <Victoriam/Matemia/MPlane.hpp>
 
 VISRCBEG
 
 struct VIDECL SFrustum {
-	SPlan top;
-	SPlan bottom;
-	SPlan right;
-	SPlan left;
-	SPlan far;
-	SPlan near;
+	SPlane top;
+	SPlane bottom;
+	SPlane right;
+	SPlane left;
+	SPlane far;
+	SPlane near;
 };
 
 VISRCEND

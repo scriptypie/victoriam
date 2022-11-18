@@ -22,7 +22,7 @@ typedef SVector2 SPoint2D;
 struct SVolume;
 struct SAABB;
 struct SSphere;
-struct SPlan;
+struct SPlane;
 struct SFrustum;
 
 VISRCEND

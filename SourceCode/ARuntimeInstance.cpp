@@ -139,8 +139,6 @@ void Vi::CRuntimeInstance::Startup() {
 		Float32 frameTime = currentTime.Delta() - newTime.Delta();
 		currentTime = newTime;
 
-		ViLog("UpdateTime: %.3fms \t", frameTime * 1000.0F);
-
 		for (auto & state : m_stateController)
 		{
 			state->OnUpdate(frameTime);
