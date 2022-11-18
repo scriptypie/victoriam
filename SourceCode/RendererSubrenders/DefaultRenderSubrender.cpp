@@ -63,8 +63,7 @@ void CDefaultRenderSubrender::Pass(SFrameInfo &frameInfo, const PWorld &world)
 			const auto transform = rtc->Transform();
 
 			const auto frustum = FGetFrustum(cam->Camera, camtransform->Translation);
-			if (!bound.IsOnFrustum(frustum, transform))
-				continue;
+			if (!bound.IsOnFrustum(frustum, transform)) continue;
 
 			frameInfo.Polycount += rrc->Geometry.GetPolycount();
 			SMaterialData materialData = {};

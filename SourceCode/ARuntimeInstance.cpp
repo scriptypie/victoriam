@@ -33,7 +33,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	{
 		SWindowCreateInfo info;
 		info.Name = m_info.AppName + " - NewWindow";
-		info.Resolution = {1024, 768};
+		info.Resolution = {800, 500};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = CWindow::Create(info);
 	}
@@ -58,14 +58,14 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 
 	UInt64 totalPoly = 0;
 
-	for (auto x = 0; x < 32; x++) for (auto z = 0; z < 32; z++)
+	for (auto x = 0; x < 48; x++) for (auto z = 0; z < 48; z++)
 	{
 		auto monkey = m_World->CreateGameObject("TestMonkey");
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		totalPoly += monkeyGeometryData.GetPolycount();
 		auto transform = monkey->AddComponent<SComponentTransform>();
 		auto sc = CRandom<Float32>::Range(1.0F, 10.0F);
-		transform->Translation = { x * 5 * sc - 80, 0, z * 5 * sc - 80 };
+		transform->Translation = { x * 5 * sc - 300, 0, z * 5 * sc - 300 };
 		transform->Rotation = { 0, 0, 180 };
 		transform->Scale = sc;
 	}
@@ -89,9 +89,9 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto sun = m_World->CreateGameObject("Sun");
 		sun->AddComponent<SComponentSun>(SVector3(1.0F, 3.0F, -3.0F));
 	}
-	for (auto i = 0; i < 16; i++)
+	for (auto i = 0; i < 12; i++)
 	{
-		for (auto j = 0; j < 16; j++) {
+		for (auto j = 0; j < 12; j++) {
 			auto light = m_World->CreateGameObject("Light");
 			auto componentTransform = light->AddComponent<SComponentTransform>();
 			componentTransform->Translation = {i * 50, -10, j * 50};
