@@ -94,9 +94,9 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		for (auto j = 0; j < 16; j++) {
 			auto light = m_World->CreateGameObject("Light");
 			auto componentTransform = light->AddComponent<SComponentTransform>();
-			componentTransform->Translation = {i * 50, -5, j * 50};
+			componentTransform->Translation = {i * 50, -10, j * 50};
 			auto componentPointLight = light->AddComponent<SComponentPointLight>();
-			componentPointLight->LightColor.w = 10.0F;
+			componentPointLight->LightColor.w = 50.0F;
 		}
 	}
 	{
