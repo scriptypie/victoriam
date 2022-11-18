@@ -43,8 +43,8 @@ SMatrix4 CCamera::GetViewProjection() const {
 
 void CCamera::Update()
 {
-	if (m_Aspect != Float32(m_Width / m_Height))
-		m_Projection = FPerspective(m_Fov, m_Aspect, m_Near, m_Far);
+	if (m_Aspect != m_Width / m_Height)
+		m_Projection = FPerspective(m_Fov, m_Aspect, m_Near);
 
 	SVector2 pos = CInput::GetMousePosition();
 
@@ -62,7 +62,6 @@ void CCamera::Update()
 		yaw += (yawSign * offset.x * m_Sensitivity);
 		pitch += (offset.y * m_Sensitivity);
 
-		// make sure that when pitch is out of bounds, screen doesn't get flipped
 		if (pitch > 89.0f)
 			pitch = 89.0f;
 		if (pitch < -89.0f)
@@ -106,14 +105,15 @@ SFrustum FGetFrustum(const CCamera& cam, const SVector3& position) {
 
 	const Float32 halfV = cam.m_Far * FTan(cam.m_Fov * 0.5F);
 	const Float32 halfH = halfV * cam.m_Aspect;
-	const SVector3 frontFar = cam.m_Far * cam.m_Front;
+	const SVector3 frontFar = cam.m_Front * cam.m_Far;
+	const SVector3 right = cam.Right();
 
 	frustum.near = { position + cam.m_Near * cam.m_Front, cam.m_Front };
 	frustum.far = { position + frontFar, -cam.m_Front };
-	frustum.right = { position, FCross(cam.Up(),frontFar + cam.Right() * halfH) };
-	frustum.left = { position, FCross(frontFar - cam.Right() * halfH, cam.Up()) };
-	frustum.top = { position, FCross(cam.Right(), frontFar - cam.Up() * halfV) };
-	frustum.bottom = { position, FCross(frontFar + cam.Up() * halfV, cam.Right()) };
+	frustum.right = { position, FCross(cam.m_Up, frontFar + right * halfH) };
+	frustum.left = { position, FCross(frontFar - right * halfH, cam.m_Up) };
+	frustum.top = { position, FCross(right, frontFar - cam.m_Up * halfV) };
+	frustum.bottom = { position, FCross(frontFar + cam.m_Up * halfV, right) };
 
 	return frustum;
 }

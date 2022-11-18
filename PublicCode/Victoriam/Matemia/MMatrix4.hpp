@@ -79,8 +79,4 @@ VIDECL VIREQOUT inline typename SMatrix4::ColumnType operator*(const SMatrix4& m
 
 VISRCEND
 
-	/*
-	  const typename SMatrix4::ColumnType Mov0(v[0]); const typename SMatrix4::ColumnType Mov1(v[1]); const typename SMatrix4::ColumnType Mul0 = m[0] * Mov0; const typename SMatrix4::ColumnType Mul1 = m[1] * Mov1; const typename SMatrix4::ColumnType Add0 = Mul0 + Mul1; const typename SMatrix4::ColumnType Mov2(v[2]); const typename SMatrix4::ColumnType Mov3(v[3]); const typename SMatrix4::ColumnType Mul2 = m[2] * Mov2; const typename SMatrix4::ColumnType Mul3 = m[3] * Mov3; const typename SMatrix4::ColumnType Add1 = Mul2 + Mul3; const typename SMatrix4::ColumnType Add2 = Add0 + Add1; return Add2;
-	 */
-
 #endif //VICTORIAM_FUNCTIONS_HPP

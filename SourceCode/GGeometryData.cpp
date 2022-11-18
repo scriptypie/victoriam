@@ -47,6 +47,7 @@ CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices)
 		maxAABB.z = FMax(maxAABB.z, vertex.Position.z);
 	}
 	data.m_BoundingSphere = { (maxAABB + minAABB) * 0.5F, FLength(minAABB - maxAABB) };
+	data.m_BoundingBox = { minAABB, maxAABB };
 
 	data.m_VertexBuffer = CVertexBuffer::Create(context, vertices);
 	return data;
@@ -79,6 +80,7 @@ CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices,
 		maxAABB.z = std::max(maxAABB.z, vertex.Position.z);
 	}
 	data.m_BoundingSphere = { (maxAABB + minAABB) * 0.5F, FLength(minAABB - maxAABB) };
+	data.m_BoundingBox = { minAABB, maxAABB };
 
 	data.m_VertexBuffer = CVertexBuffer::Create(context, vertices);
 	data.m_IndexBuffer = CIndexBuffer::Create(context, indices);
@@ -113,8 +115,12 @@ UInt64 CGeometryData::GetPolycount() const {
 	return m_Polycount;
 }
 
-SSphere CGeometryData::GetBounding() const {
+SSphere CGeometryData::GetBoundingSphere() const {
 	return m_BoundingSphere;
+}
+
+SAABB CGeometryData::GetBoundingAABB() const {
+	return m_BoundingBox;
 }
 
 VISRCEND

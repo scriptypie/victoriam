@@ -192,7 +192,7 @@ set(SOURCE_FILES
 
         ThirdParty/tinyobjloader/TinyObjLoader.cpp
 
-        PublicCode/Victoriam/Matemia/MPlan.hpp
+        PublicCode/Victoriam/Matemia/MPlane.hpp
         PublicCode/Victoriam/Matemia/MFrustum.hpp
         )
 

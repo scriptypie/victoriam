@@ -17,7 +17,7 @@ public:
 	VIDECL VIREQOUT virtual Bool IsIntersects(const SSphere& sphere) const = 0;
 	VIDECL VIREQOUT virtual Bool IsIntersects(const SAABB& box) const = 0;
 
-	VIDECL VIREQOUT virtual Bool IsOnOrForwardPlan(const SPlan& plan) const = 0;
+	VIDECL VIREQOUT virtual Bool IsOnOrForwardPlan(const SPlane& plan) const = 0;
 	VIDECL VIREQOUT virtual Bool IsOnFrustum(const SFrustum& frustum, const SMatrix4& transform) const = 0;
 	VIDECL VIREQOUT inline Bool IsOnFrustum(const SFrustum& frustum) const {
 		return  IsOnOrForwardPlan(frustum.left) &&
