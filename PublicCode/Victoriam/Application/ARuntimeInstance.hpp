@@ -6,7 +6,7 @@
 #define VICTORIAM_ARUNTIMEINSTANCE_HPP
 
 #include <Victoriam/Application/AAppStateChain.hpp>
-#include <Victoriam/Application/ARuntimeInstaceCreateInfo.hpp>
+#include <Victoriam/Application/ARuntimeInstanceCreateInfo.hpp>
 #include <Victoriam/Graphics/GRenderer.hpp>
 #include <Victoriam/Utils/UTimestep.hpp>
 #include <Victoriam/World/WWorld.hpp>
