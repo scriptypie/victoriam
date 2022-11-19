@@ -267,8 +267,8 @@ void CVulkanSwapchain::CreateFramebuffers(PRenderPass &renderPass) {
 	{
 		SFramebufferCreateInfo createInfo = {};
 		createInfo.Attachments = {
-				CCast<SImageView>(m_SwapchainImageViews[i]),
-				m_DepthImages[i]->GetImageView() };
+				CCast<SImageViewObject>(m_SwapchainImageViews[i]),
+				CCast<SImageViewObject>(Accessors::Image::GetImageView(m_DepthImages[i])) };
 		m_Framebuffers[i] = CFramebuffer::Create(m_Context, renderPass, createInfo);
 	}
 }

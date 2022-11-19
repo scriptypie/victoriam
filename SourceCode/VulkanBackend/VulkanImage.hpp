@@ -30,12 +30,12 @@ public:
 	VIDECL VIREQOUT UInt32    GetHeight() const override;
 	VIDECL VIREQOUT Signal    GetType()   const override;
 
-	VIDECL VIREQOUT inline SImageView GetImageView() override { return CCast<SImageView>(m_View); }
 private:
 	void CreateVulkanImage(const SImageCreateInfo& createInfo);
 	void CreateVulkanImageView(const SImageCreateInfo& createInfo);
 private:
 	VIDECL VIREQOUT inline VkImage GetImage() { return m_Image; }
+	VIDECL VIREQOUT inline VkImageView GetImageView() { return m_View; }
 	VIDECL VIREQOUT inline VkDeviceMemory GetImageMemory() { return m_Memory; }
 };
 

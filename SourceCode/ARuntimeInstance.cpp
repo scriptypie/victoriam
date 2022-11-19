@@ -103,7 +103,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto camera = m_World->CreateGameObject("MainCamera");
 		auto camcomp = camera->AddComponent<SComponentCamera>();
 		camcomp->Camera.SetViewBounds(0.01F, 1000.0F);
-		camcomp->Camera.SetFovY(FRadians(65.0F));
+		camcomp->Camera.SetFovY(FRadians(55.0F));
 		auto ctc = camera->AddComponent<SComponentTransform>();
 		ctc->Translation = { -6, -11, 24 };
 	}

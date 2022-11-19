@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_GIMAGECREATEINFO_HPP
 #define VICTORIAM_GIMAGECREATEINFO_HPP
 
-#include <Victoriam/Core/CBase.hpp>
+#include <Victoriam/Graphics/Basics.hpp>
 
 VISRCBEG
 
@@ -68,13 +68,13 @@ SignalDecl ImageMemoryCoherent   = 4;
 
 struct VIDECL SImageCreateInfo {
 	Signal Type;
-	Signal ViewType;
 	SExtent3D Extent;
 	Signal Format;
 	Signal Usage;
 	Bool bCreateView;
 	Signal Aspect;
 	Signal MemoryType;
+	Signal ViewType;
 };
 
 VISRCEND

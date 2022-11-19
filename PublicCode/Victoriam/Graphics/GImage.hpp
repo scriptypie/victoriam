@@ -7,6 +7,7 @@
 
 #include <Victoriam/Graphics/Structs/GImageCreateInfo.hpp>
 #include <Victoriam/Graphics/GGraphicsContext.hpp>
+#include <Victoriam/Graphics/GImageView.hpp>
 
 VISRCBEG
 
@@ -18,7 +19,6 @@ public:
 	VIDECL VIREQOUT virtual UInt32    GetWidth()  const = 0;
 	VIDECL VIREQOUT virtual UInt32    GetHeight() const = 0;
 	VIDECL VIREQOUT virtual Signal    GetType()   const = 0;
-	VIDECL VIREQOUT virtual SImageView GetImageView() = 0;
 
 	VIDECL VIREQOUT static SPtr<CImage> Create2D(PGraphicsContext& context, const SImageCreateInfo& createInfo);
 };

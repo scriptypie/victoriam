@@ -19,7 +19,7 @@ VIDECL typedef struct TSCommandBuffer* SCommandBuffer;
  */
 VIDECL typedef struct TSDescriptorSet* SDescriptorSet;
 
-VIDECL typedef struct TSImageView* SImageView;
+VIDECL typedef struct TSImageViewObject* SImageViewObject;
 
 VISRCEND
 

@@ -16,6 +16,9 @@ namespace Accessors {
 		VIDECL VIREQOUT inline static VkImage GetImage(const PImage& image) {
 			return CCast<CVulkanImage*>(image.get())->GetImage();
 		}
+		VIDECL VIREQOUT inline static VkImageView GetImageView(const PImage& image) {
+			return CCast<CVulkanImage*>(image.get())->GetImageView();
+		}
 		VIDECL VIREQOUT inline static VkDeviceMemory GetImageMemory(const PImage& image) {
 			return CCast<CVulkanImage*>(image.get())->GetImageMemory();
 		}
