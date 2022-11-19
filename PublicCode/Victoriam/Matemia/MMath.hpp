@@ -18,6 +18,8 @@
 #include <Victoriam/Matemia/MFrustum.hpp>
 #include <Victoriam/Matemia/MPlane.hpp>
 
+#include <Victoriam/Matemia/MExtent.hpp>
+
 #include <Victoriam/Matemia/Common/Hash.hpp>
 
 #endif //VICTORIAM_MMATH_HPP

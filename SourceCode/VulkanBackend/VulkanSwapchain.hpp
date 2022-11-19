@@ -5,11 +5,12 @@
 #ifndef VICTORIAM_VULKANSWAPCHAIN_HPP
 #define VICTORIAM_VULKANSWAPCHAIN_HPP
 
-#include "Victoriam/Graphics/GSwapchain.hpp"
-#include "Victoriam/Graphics/GFramebuffer.hpp"
-#include "Victoriam/Graphics/GRenderPass.hpp"
+#include <Victoriam/Graphics/GSwapchain.hpp>
+#include <Victoriam/Graphics/GFramebuffer.hpp>
+#include <Victoriam/Graphics/GRenderPass.hpp>
+#include <Victoriam/Graphics/GImage.hpp>
 
-#include "../Accessors/AGraphicsContext.hpp"
+#include <vulkan/vulkan.h>
 
 VISRCBEG
 
@@ -24,9 +25,7 @@ VIDECL
 	VIDECL VkFormat m_SwapchainImageFormat = {};
 	VIDECL VkFormat m_SwapchainDepthFormat = {};
 	VIDECL VkExtent2D m_SwapchainExtent = {};
-	VIDECL CList<VkImage> m_DepthImages = {};
-	VIDECL CList<VkDeviceMemory> m_DepthImageMemories = {};
-	VIDECL CList<VkImageView> m_DepthImageViews = {};
+	VIDECL CList<PImage> m_DepthImages = {};
 	VIDECL CList<VkImageView> m_SwapchainImageViews = {};
 	VIDECL CList<VkImage> m_SwapchainImages = {};
 	VIDECL PGraphicsContext& m_Context;

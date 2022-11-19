@@ -83,7 +83,7 @@ private:
 	VIDECL          void EndSingleTimeCommands(VkCommandBuffer commandBuffer);
 	VIDECL          void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 	VIDECL          void CopyBufferToImage(VkBuffer buffer, VkImage image, UInt32 width, UInt32 height, UInt32 layerCount);
-	VIDECL          void CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory);
+	VIDECL          void CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkDeviceSize memoryOffset, VkImage &image, VkDeviceMemory &imageMemory);
 	VIDECL VIREQOUT UInt32 FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags properties);
 private:
 	VIDECL VIREQOUT inline VkCommandPool GetCommandPool() { return m_CmdPool; }

@@ -6,7 +6,6 @@
 #define VICTORIAM_EWINDOWEVENTS_HPP
 
 #include <Victoriam/EventSystem/EEvent.hpp>
-#include <Victoriam/Graphics/Structs/GWindowExtent.hpp>
 
 VISRCBEG
 

@@ -6,7 +6,6 @@
 #define VICTORIAM_GRENDERPASSCREATEINFO_HPP
 
 #include <Victoriam/Core/CBase.hpp>
-#include <Victoriam/Graphics/Structs/GWindowExtent.hpp>
 
 VISRCBEG
 

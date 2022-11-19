@@ -9,6 +9,9 @@
 
 #include "VulkanSwapchain.hpp"
 
+#include "../Accessors/AGraphicsContext.hpp"
+#include "../Accessors/AImage.hpp"
+
 VISRCBEG
 
 CVulkanSwapchain::CVulkanSwapchain(PGraphicsContext &context, const SExtent2D &extent)
@@ -34,28 +37,24 @@ void CVulkanSwapchain::Init()
 }
 
 CVulkanSwapchain::~CVulkanSwapchain() {
+	auto device = Accessors::GraphicsContext::GetDevice(m_Context);
+
 	for (auto& imageView : m_SwapchainImageViews) {
-		vkDestroyImageView(Accessors::GraphicsContext::GetDevice(m_Context), imageView, nullptr);
+		vkDestroyImageView(device, imageView, nullptr);
 		imageView = nullptr;
 	}
 	m_SwapchainImageViews.clear();
 
 	if (m_Swapchain != nullptr) {
-		vkDestroySwapchainKHR(Accessors::GraphicsContext::GetDevice(m_Context), m_Swapchain, nullptr);
+		vkDestroySwapchainKHR(device, m_Swapchain, nullptr);
 		m_Swapchain = nullptr;
-	}
-
-	for (int i = 0; i < m_DepthImages.size(); i++) {
-		vkDestroyImageView(Accessors::GraphicsContext::GetDevice(m_Context), m_DepthImageViews[i], nullptr);
-		vkDestroyImage(Accessors::GraphicsContext::GetDevice(m_Context), m_DepthImages[i], nullptr);
-		vkFreeMemory(Accessors::GraphicsContext::GetDevice(m_Context), m_DepthImageMemories[i], nullptr);
 	}
 
 	// cleanup synchronization objects
 	for (UInt32 i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-		vkDestroySemaphore(Accessors::GraphicsContext::GetDevice(m_Context), m_RenderFinishedSemaphores[i], nullptr);
-		vkDestroySemaphore(Accessors::GraphicsContext::GetDevice(m_Context), m_ImageAvailableSemaphores[i], nullptr);
-		vkDestroyFence(Accessors::GraphicsContext::GetDevice(m_Context), m_InFlightFences[i], nullptr);
+		vkDestroySemaphore(device, m_RenderFinishedSemaphores[i], nullptr);
+		vkDestroySemaphore(device, m_ImageAvailableSemaphores[i], nullptr);
+		vkDestroyFence(device, m_InFlightFences[i], nullptr);
 	}
 }
 
@@ -98,12 +97,14 @@ void CVulkanSwapchain::CreateSwapchain()
 	if (m_OldSwapchain)
 		createInfo.oldSwapchain = CCast<CVulkanSwapchain*>(m_OldSwapchain)->m_Swapchain;
 
-	if (vkCreateSwapchainKHR(Accessors::GraphicsContext::GetDevice(m_Context), &createInfo, nullptr, &m_Swapchain) != VK_SUCCESS)
+	auto device = Accessors::GraphicsContext::GetDevice(m_Context);
+
+	if (vkCreateSwapchainKHR(device, &createInfo, nullptr, &m_Swapchain) != VK_SUCCESS)
 		ViAbort("failed to create swap chain!");
 
-	vkGetSwapchainImagesKHR(Accessors::GraphicsContext::GetDevice(m_Context), m_Swapchain, &imageCount, nullptr);
+	vkGetSwapchainImagesKHR(device, m_Swapchain, &imageCount, nullptr);
 	m_SwapchainImages.resize(imageCount);
-	vkGetSwapchainImagesKHR(Accessors::GraphicsContext::GetDevice(m_Context), m_Swapchain, &imageCount, m_SwapchainImages.data());
+	vkGetSwapchainImagesKHR(device, m_Swapchain, &imageCount, m_SwapchainImages.data());
 
 	m_SwapchainImageFormat = surfaceFormat.format;
 	m_SwapchainExtent = extent;
@@ -111,6 +112,7 @@ void CVulkanSwapchain::CreateSwapchain()
 
 void CVulkanSwapchain::CreateImageViews()
 {
+	auto device = Accessors::GraphicsContext::GetDevice(m_Context);
 	m_SwapchainImageViews.resize(m_SwapchainImages.size());
 	for (size_t i = 0; i < m_SwapchainImages.size(); i++) {
 		VkImageViewCreateInfo viewInfo = { VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO };
@@ -121,7 +123,7 @@ void CVulkanSwapchain::CreateImageViews()
 		viewInfo.subresourceRange.levelCount = 1;
 		viewInfo.subresourceRange.layerCount = 1;
 
-		if (vkCreateImageView(Accessors::GraphicsContext::GetDevice(m_Context), &viewInfo, nullptr, &m_SwapchainImageViews[i]) != VK_SUCCESS)
+		if (vkCreateImageView(device, &viewInfo, nullptr, &m_SwapchainImageViews[i]) != VK_SUCCESS)
 			ViAbort("Failed to create texture image view!");
 	}
 }
@@ -133,37 +135,18 @@ void CVulkanSwapchain::CreateDepthResources()
 	VkExtent2D swapChainExtent = GetSwapchainExtent();
 
 	m_DepthImages.resize(GetImageCount());
-	m_DepthImageMemories.resize(GetImageCount());
-	m_DepthImageViews.resize(GetImageCount());
+	for (auto & m_DepthImage : m_DepthImages) {
+		SImageCreateInfo imageCreateInfo = {};
+		imageCreateInfo.Type = ImageType2D;
+		imageCreateInfo.Extent.Width = swapChainExtent.width;
+		imageCreateInfo.Extent.Height = swapChainExtent.height;
+		imageCreateInfo.Extent.Depth = 1;
+		imageCreateInfo.Format = CCast<Signal>(m_SwapchainDepthFormat);
+		imageCreateInfo.Usage = ImageUsageDepthStencilAttachment;
+		imageCreateInfo.Aspect = ImageAspectDepth;
+		imageCreateInfo.bCreateView = true;
 
-	for (int i = 0; i < m_DepthImages.size(); i++) {
-		VkImageCreateInfo imageInfo = { VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO };
-		imageInfo.imageType = VK_IMAGE_TYPE_2D;
-		imageInfo.extent.width = swapChainExtent.width;
-		imageInfo.extent.height = swapChainExtent.height;
-		imageInfo.extent.depth = 1;
-		imageInfo.mipLevels = 1;
-		imageInfo.arrayLayers = 1;
-		imageInfo.format = m_SwapchainDepthFormat;
-		imageInfo.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
-		imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
-
-		Accessors::GraphicsContext::CreateImageWithInfo(m_Context,
-		                                                imageInfo,
-		                                                VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-		                                                m_DepthImages[i],
-		                                                m_DepthImageMemories[i]);
-
-		VkImageViewCreateInfo viewInfo = { VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO };
-		viewInfo.image = m_DepthImages[i];
-		viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-		viewInfo.format = m_SwapchainDepthFormat;
-		viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
-		viewInfo.subresourceRange.levelCount = 1;
-		viewInfo.subresourceRange.layerCount = 1;
-
-		if (vkCreateImageView(Accessors::GraphicsContext::GetDevice(m_Context), &viewInfo, nullptr, &m_DepthImageViews[i]) != VK_SUCCESS)
-			ViAbort("Failed to create texture image view!");
+		m_DepthImage = CImage::Create2D(m_Context, imageCreateInfo);
 	}
 }
 
@@ -178,21 +161,20 @@ void CVulkanSwapchain::SetupSynchronization()
 	VkFenceCreateInfo fenceInfo = { VK_STRUCTURE_TYPE_FENCE_CREATE_INFO };
 	fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
+	auto device = Accessors::GraphicsContext::GetDevice(m_Context);
+
 	for (UInt32 i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-		if (vkCreateSemaphore(Accessors::GraphicsContext::GetDevice(m_Context), &semaphoreInfo, nullptr, &m_ImageAvailableSemaphores[i]) != VK_SUCCESS ||
-		    vkCreateSemaphore(Accessors::GraphicsContext::GetDevice(m_Context), &semaphoreInfo, nullptr, &m_RenderFinishedSemaphores[i]) != VK_SUCCESS ||
-		    vkCreateFence(Accessors::GraphicsContext::GetDevice(m_Context), &fenceInfo, nullptr, &m_InFlightFences[i]) != VK_SUCCESS)
-			throw std::runtime_error("Failed to create synchronization objects for a frame!");
+		if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &m_ImageAvailableSemaphores[i]) != VK_SUCCESS ||
+		    vkCreateSemaphore(device, &semaphoreInfo, nullptr, &m_RenderFinishedSemaphores[i]) != VK_SUCCESS ||
+		        vkCreateFence(device, &fenceInfo,     nullptr, &m_InFlightFences[i])           != VK_SUCCESS)
+			ViAbort("Failed to create synchronization objects for a frame!");
 	}
 }
 
 VkSurfaceFormatKHR CVulkanSwapchain::ChooseSwapchainSurfaceFormat(const CList<VkSurfaceFormatKHR> &available)
 {
-	for (const auto &availableFormat : available)
-		if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB &&
-		    availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
-			return availableFormat;
-
+	for (const auto &availableFormat : available) if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+		return availableFormat;
 	return available[0];
 }
 
@@ -219,20 +201,21 @@ VkExtent2D CVulkanSwapchain::ChooseSwapchainExtent(const VkSurfaceCapabilitiesKH
 
 VkFormat CVulkanSwapchain::FindDepthFormat()
 {
-	return Accessors::GraphicsContext::FindSupportedFormat(m_Context,
-	                                                       {VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT}, VK_IMAGE_TILING_OPTIMAL, VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
+	return Accessors::GraphicsContext::FindSupportedFormat(m_Context, {VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT}, VK_IMAGE_TILING_OPTIMAL, VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
 }
 
 UInt32 CVulkanSwapchain::AcquireNextImage(UInt32 *imageIndex)
 {
-	vkWaitForFences(Accessors::GraphicsContext::GetDevice(m_Context), 1, &m_InFlightFences[m_CurrentFrame], true, std::numeric_limits<uint64_t>::max());
-	return vkAcquireNextImageKHR(Accessors::GraphicsContext::GetDevice(m_Context), m_Swapchain, std::numeric_limits<uint64_t>::max(), m_ImageAvailableSemaphores[m_CurrentFrame],  /* must be a not signaled semaphore */ nullptr, imageIndex);
+	auto device = Accessors::GraphicsContext::GetDevice(m_Context);
+	vkWaitForFences(device, 1, &m_InFlightFences[m_CurrentFrame], true, std::numeric_limits<uint64_t>::max());
+	return vkAcquireNextImageKHR(device, m_Swapchain, std::numeric_limits<uint64_t>::max(), m_ImageAvailableSemaphores[m_CurrentFrame],  /* must be a not signaled semaphore */ nullptr, imageIndex);
 }
 
 VkResult CVulkanSwapchain::SubmitCommandBuffers(const VkCommandBuffer *buffers, const UInt32 *imageIndex)
 {
+	auto device = Accessors::GraphicsContext::GetDevice(m_Context);
 	if (m_ImagesInFlight[*imageIndex] != nullptr)
-		vkWaitForFences(Accessors::GraphicsContext::GetDevice(m_Context), 1, &m_ImagesInFlight[*imageIndex], true, std::numeric_limits<uint64_t>::max());
+		vkWaitForFences(device, 1, &m_ImagesInFlight[*imageIndex], true, std::numeric_limits<uint64_t>::max());
 
 	m_ImagesInFlight[*imageIndex] = m_InFlightFences[m_CurrentFrame];
 
@@ -250,7 +233,7 @@ VkResult CVulkanSwapchain::SubmitCommandBuffers(const VkCommandBuffer *buffers, 
 	submitInfo.signalSemaphoreCount = 1;
 	submitInfo.pSignalSemaphores = signalSemaphores;
 
-	vkResetFences(Accessors::GraphicsContext::GetDevice(m_Context), 1, &m_InFlightFences[m_CurrentFrame]);
+	vkResetFences(device, 1, &m_InFlightFences[m_CurrentFrame]);
 	if (vkQueueSubmit(Accessors::GraphicsContext::GetGraphicsQueue(m_Context), 1, &submitInfo, m_InFlightFences[m_CurrentFrame]) != VK_SUCCESS)
 		ViAbort("Failed to submit draw command buffer!");
 
@@ -285,7 +268,7 @@ void CVulkanSwapchain::CreateFramebuffers(PRenderPass &renderPass) {
 		SFramebufferCreateInfo createInfo = {};
 		createInfo.Attachments = {
 				CCast<SImageView>(m_SwapchainImageViews[i]),
-				CCast<SImageView>(m_DepthImageViews[i]) };
+				m_DepthImages[i]->GetImageView() };
 		m_Framebuffers[i] = CFramebuffer::Create(m_Context, renderPass, createInfo);
 	}
 }

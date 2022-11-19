@@ -440,12 +440,10 @@ void CVulkanGraphicsContext::CopyBufferToImage(VkBuffer buffer, VkImage image, U
 	EndSingleTimeCommands(commandBuffer);
 }
 
-void CVulkanGraphicsContext::CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory)
+void CVulkanGraphicsContext::CreateImageWithInfo(const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkDeviceSize memoryOffset, VkImage &image, VkDeviceMemory &imageMemory)
 {
 	if (vkCreateImage(m_Device, &imageInfo, nullptr, &image) != VK_SUCCESS)
-	{
 		ViAbort("Failed to create image!");
-	}
 
 	VkMemoryRequirements memRequirements;
 	vkGetImageMemoryRequirements(m_Device, image, &memRequirements);
@@ -454,26 +452,19 @@ void CVulkanGraphicsContext::CreateImageWithInfo(const VkImageCreateInfo &imageI
 	allocInfo.allocationSize = memRequirements.size;
 	allocInfo.memoryTypeIndex = FindMemoryType(memRequirements.memoryTypeBits, properties);
 
-	if (vkAllocateMemory(m_Device, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS) {
+	if (vkAllocateMemory(m_Device, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS)
 		ViAbort("Failed to allocate image memory!");
-	}
 
-	if (vkBindImageMemory(m_Device, image, imageMemory, 0) != VK_SUCCESS)
-	{
+	if (vkBindImageMemory(m_Device, image, imageMemory, memoryOffset) != VK_SUCCESS)
 		ViAbort("Failed to bind image memory!");
-	}
 }
 
 UInt32 CVulkanGraphicsContext::FindMemoryType(UInt32 typeFilter, VkMemoryPropertyFlags properties)
 {
 	VkPhysicalDeviceMemoryProperties memProperties = {};
 	vkGetPhysicalDeviceMemoryProperties(m_PhysicalDevice, &memProperties);
-	for (UInt32 i = 0; i < memProperties.memoryTypeCount; i++) {
-		if ((typeFilter & (1 << i)) &&
-		    (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
-			return i;
-		}
-	}
+	for (UInt32 i = 0; i < memProperties.memoryTypeCount; i++) if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties)
+		return i;
 
 	ViAbort("Failed to find suitable memory type!");
 }

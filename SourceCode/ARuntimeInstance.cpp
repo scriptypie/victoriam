@@ -37,7 +37,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = CWindow::Create(info);
 	}
-	m_Window->SetEventCallbackFunction(BIND_EVENT_FN(CRuntimeInstance::OnEvent));
+	m_Window->SetEventCallbackFunction(BIND(CRuntimeInstance::OnEvent));
 	CInput::Init(m_Window);
 	rendererCreateInfo.WindowPtr = m_Window;
 	m_Renderer = CRenderer::Create(rendererCreateInfo);
@@ -169,8 +169,8 @@ void Vi::CRuntimeInstance::Startup() {
 
 void CRuntimeInstance::OnEvent(CEvent &e) {
 	CEventDispatcher dispatcher(e);
-	dispatcher.Dispatch<CWindowResizeEvent>(BIND_EVENT_FN(CRuntimeInstance::OnWindowResize));
-	dispatcher.Dispatch<CWindowCloseEvent>(BIND_EVENT_FN(CRuntimeInstance::OnWindowClose));
+	dispatcher.Dispatch<CWindowResizeEvent>(BIND(CRuntimeInstance::OnWindowResize));
+	dispatcher.Dispatch<CWindowCloseEvent>(BIND(CRuntimeInstance::OnWindowClose));
 
 
 

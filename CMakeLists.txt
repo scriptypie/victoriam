@@ -60,7 +60,6 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Graphics/Structs/GRendererCreateInfo.hpp
         PublicCode/Victoriam/Graphics/Structs/GVertex.hpp
         PublicCode/Victoriam/Graphics/Structs/GWindowCreateInfo.hpp
-        PublicCode/Victoriam/Graphics/Structs/GWindowExtent.hpp
         PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp
         PublicCode/Victoriam/IO/IOInput.hpp
         PublicCode/Victoriam/IO/IOKeycode.hpp
@@ -192,7 +191,7 @@ set(SOURCE_FILES
         SourceCode/VulkanBackend/VulkanVertexBuffer.cpp
         SourceCode/WGameObject.cpp
         SourceCode/WWorld.cpp
-        PublicCode/Victoriam/IO/IO.hpp PublicCode/Victoriam/IO/IOStream.hpp SourceCode/IOStream.cpp PublicCode/Victoriam/Core/CString.hpp)
+        PublicCode/Victoriam/IO/IO.hpp PublicCode/Victoriam/IO/IOStream.hpp SourceCode/IOStream.cpp PublicCode/Victoriam/Core/CString.hpp PublicCode/Victoriam/Graphics/Structs/GImageCreateInfo.hpp PublicCode/Victoriam/Matemia/MExtent.hpp PublicCode/Victoriam/Graphics/GImage.hpp SourceCode/GImage.cpp SourceCode/VulkanBackend/VulkanImage.cpp SourceCode/VulkanBackend/VulkanImage.hpp SourceCode/Accessors/AImage.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

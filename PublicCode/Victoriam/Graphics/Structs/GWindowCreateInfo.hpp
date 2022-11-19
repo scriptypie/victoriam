@@ -6,7 +6,6 @@
 #define VICTORIAM_GWINDOWCREATEINFO_HPP
 
 #include "Victoriam/Graphics/Basics.hpp"
-#include "GWindowExtent.hpp"
 
 VISRCBEG
 

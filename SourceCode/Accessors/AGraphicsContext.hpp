@@ -66,9 +66,9 @@ namespace Accessors {
 		{
 			CCast<CVulkanGraphicsContext*>(context.get())->CopyBufferToImage(buffer, image, width, height, layerCount);
 		}
-		VIDECL static void CreateImageWithInfo(const PGraphicsContext& context, const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory)
+		VIDECL static void CreateImageWithInfo(const PGraphicsContext& context, const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkDeviceSize memoryOffset, VkImage &image, VkDeviceMemory &imageMemory)
 		{
-			CCast<CVulkanGraphicsContext*>(context.get())->CreateImageWithInfo(imageInfo, properties, image, imageMemory);
+			CCast<CVulkanGraphicsContext*>(context.get())->CreateImageWithInfo(imageInfo, properties, memoryOffset, image, imageMemory);
 		}
 		VIDECL static VkFormat FindSupportedFormat(const PGraphicsContext& context, const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
 		{
