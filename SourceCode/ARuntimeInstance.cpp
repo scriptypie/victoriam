@@ -89,9 +89,9 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto sun = m_World->CreateGameObject("Sun");
 		sun->AddComponent<SComponentSun>(SVector3(1.0F, 3.0F, -3.0F));
 	}
-	for (auto i = 0; i < 12; i++)
+	for (auto i = 0; i < 8; i++)
 	{
-		for (auto j = 0; j < 12; j++) {
+		for (auto j = 0; j < 8; j++) {
 			auto light = m_World->CreateGameObject("Light");
 			auto componentTransform = light->AddComponent<SComponentTransform>();
 			componentTransform->Translation = {i * 50, -10, j * 50};
@@ -102,7 +102,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	{
 		auto camera = m_World->CreateGameObject("MainCamera");
 		auto camcomp = camera->AddComponent<SComponentCamera>();
-		camcomp->Camera.SetViewBounds(0.01F, 1000.0F);
+		camcomp->Camera.SetViewBounds(0.1F, 1000.0F);
 		camcomp->Camera.SetFovY(FRadians(55.0F));
 		auto ctc = camera->AddComponent<SComponentTransform>();
 		ctc->Translation = { -6, -11, 24 };

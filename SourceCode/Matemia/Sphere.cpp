@@ -25,7 +25,7 @@ Bool SSphere::IsIntersects(const SAABB &box) const {
 }
 
 Bool SSphere::IsOnOrForwardPlan(const SPlane &plan) const {
-	return FDistance(plan, position) > -radius;
+	return -FDistance(plan, position) < radius;
 }
 
 Bool SSphere::IsOnFrustum(const SFrustum &frustum, const SMatrix4 &transform) const {

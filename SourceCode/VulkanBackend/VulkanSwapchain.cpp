@@ -143,6 +143,7 @@ void CVulkanSwapchain::CreateDepthResources()
 		imageCreateInfo.Extent.Depth = 1;
 		imageCreateInfo.Format = CCast<Signal>(m_SwapchainDepthFormat);
 		imageCreateInfo.Usage = ImageUsageDepthStencilAttachment;
+		imageCreateInfo.MemoryType = ImageMemoryGPUOnly;
 		imageCreateInfo.Aspect = ImageAspectDepth;
 		imageCreateInfo.bCreateView = true;
 
