@@ -46,6 +46,8 @@ SignalDecl ImageFormatR16G16B16Uint     = 88;
 SignalDecl ImageFormatR16G16B16A16Unorm = 91;
 SignalDecl ImageFormatR16G16B16A16Snorm = 92;
 SignalDecl ImageFormatR16G16B16A16Uint  = 95;
+SignalDecl ImageFormatD32Sfloat         = 126;
+SignalDecl ImageFormatD32SfloatS8Uint   = 130;
 
 SignalDecl ImageUsageTransferSource         = 1;
 SignalDecl ImageUsageTransferDest           = 2;
