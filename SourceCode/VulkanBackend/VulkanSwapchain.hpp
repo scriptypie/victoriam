@@ -56,6 +56,7 @@ public:
 				/ CCast<Float32>(m_SwapchainExtent.height);
 	}
 	VIDECL VIREQOUT Bool CompareFormats(const PSwapchain& swapchain) const override;
+	VIDECL void CmdSubmit(const SCommandBuffer* buffers, const UInt32 *imageIndex) override;
 private:
 	VIDECL          void Init();
 	VIDECL          void CreateSwapchain();

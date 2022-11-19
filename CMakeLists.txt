@@ -31,7 +31,6 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Graphics/Basics.hpp
         PublicCode/Victoriam/Graphics/GBuffer.hpp
         PublicCode/Victoriam/Graphics/GCamera.hpp
-        PublicCode/Victoriam/Graphics/GCmdBufferSolver.hpp
         PublicCode/Victoriam/Graphics/GDescriptorPool.hpp
         PublicCode/Victoriam/Graphics/GDescriptorSetLayout.hpp
         PublicCode/Victoriam/Graphics/GDescriptorWriter.hpp
@@ -102,7 +101,6 @@ set(SOURCE_FILES
         PublicCode/Victoriam/World/Components/Components.hpp
         PublicCode/Victoriam/World/WGameObject.hpp
         PublicCode/Victoriam/World/WWorld.hpp
-        SourceCode/Accessors/ACmdBufferSolver.hpp
         SourceCode/Accessors/ADescriptorPool.hpp
         SourceCode/Accessors/ADescriptorSetLayout.hpp
         SourceCode/Accessors/ADescriptorWriter.hpp
@@ -118,7 +116,6 @@ set(SOURCE_FILES
         SourceCode/GLFWWindow.hpp
         SourceCode/RendererSubrenders/DefaultRenderSubrender.hpp
         SourceCode/RendererSubrenders/PointLightSubrender.hpp
-        SourceCode/VulkanBackend/VulkanCmdBufferSolver.hpp
         SourceCode/VulkanBackend/VulkanDescriptorPool.hpp
         SourceCode/VulkanBackend/VulkanDescriptorSetLayout.hpp
         SourceCode/VulkanBackend/VulkanDescriptorWriter.hpp
@@ -139,7 +136,6 @@ set(SOURCE_FILES
         SourceCode/Compression/UCompression.cpp
         SourceCode/EngineInfo.cpp
         SourceCode/GCamera.cpp
-        SourceCode/GCmdBufferSolver.cpp
         SourceCode/GDescriptorPool.cpp
         SourceCode/GDescriptorPoolCreateInfo.cpp
         SourceCode/GDescriptorSetLayout.cpp
@@ -174,7 +170,6 @@ set(SOURCE_FILES
         SourceCode/UGeometryPacker.cpp
         SourceCode/UJobWorker.cpp
         SourceCode/UShaderCooker.cpp
-        SourceCode/VulkanBackend/VulkanCmdBufferSolver.cpp
         SourceCode/VulkanBackend/VulkanDescriptorPool.cpp
         SourceCode/VulkanBackend/VulkanDescriptorSetLayout.cpp
         SourceCode/VulkanBackend/VulkanDescriptorWriter.cpp

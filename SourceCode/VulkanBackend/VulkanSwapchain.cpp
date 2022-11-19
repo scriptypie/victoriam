@@ -274,4 +274,8 @@ void CVulkanSwapchain::CreateFramebuffers(PRenderPass &renderPass) {
 	}
 }
 
+void CVulkanSwapchain::CmdSubmit(const SCommandBuffer *buffers, const UInt32 *imageIndex) {
+	SubmitCommandBuffers(CCast<VkCommandBuffer*>(buffers), imageIndex);
+}
+
 VISRCEND

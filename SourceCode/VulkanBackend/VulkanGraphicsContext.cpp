@@ -55,6 +55,9 @@ CVulkanGraphicsContext::CVulkanGraphicsContext(const SPtr<CWindow> &window)
 
 CVulkanGraphicsContext::~CVulkanGraphicsContext()
 {
+	vkFreeCommandBuffers(m_Device, m_CmdPool, CCast<UInt32>(m_CmdBuffers.size()), m_CmdBuffers.data());
+	m_CmdBuffers.clear();
+
 	vkDestroyCommandPool(m_Device, m_CmdPool, nullptr);
 	m_CmdPool = nullptr;
 
@@ -490,6 +493,31 @@ void CVulkanGraphicsContext::GraphicsAction(ImmediateGraphicsActionFN fn) {
 	auto commandBuffer = CCast<SCommandBuffer>(BeginSingleTimeCommands());
 	fn(commandBuffer);
 	EndSingleTimeCommands(CCast<VkCommandBuffer>(commandBuffer));
+}
+
+void CVulkanGraphicsContext::CmdCreate(const UInt32 &imageCount) {
+	m_CmdBuffers.resize(imageCount);
+
+	VkCommandBufferAllocateInfo allocateInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO };
+	allocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+	allocateInfo.commandPool = m_CmdPool;
+	allocateInfo.commandBufferCount = CCast<UInt32>(m_CmdBuffers.size());
+
+	if (vkAllocateCommandBuffers(m_Device, &allocateInfo, m_CmdBuffers.data()) != VK_SUCCESS)
+	ViAbort("Failed to allocate command buffers!");
+}
+
+SCommandBuffer CVulkanGraphicsContext::CmdBegin(const UInt32 &imageIndex) const {
+	VkCommandBufferBeginInfo beginInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO };
+	if (vkBeginCommandBuffer(m_CmdBuffers.at(imageIndex), &beginInfo) != VK_SUCCESS)
+	ViAbort("Failed to call vkBeginCommandBuffer()");
+
+	return CCast<SCommandBuffer>(m_CmdBuffers.at(imageIndex));
+}
+
+void CVulkanGraphicsContext::CmdEnd(SCommandBuffer const &cmdBuffer) const {
+	if (vkEndCommandBuffer(CCast<VkCommandBuffer>(cmdBuffer)) != VK_SUCCESS)
+	ViAbort("Failed to record command buffer!");
 }
 
 VISRCEND

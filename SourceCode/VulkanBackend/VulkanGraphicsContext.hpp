@@ -48,6 +48,7 @@ class CVulkanGraphicsContext : public CGraphicsContext
 	VkPhysicalDevice m_PhysicalDevice = {};
 	VkPhysicalDeviceProperties m_Properties = {};
 	VkCommandPool m_CmdPool = {};
+	CList<VkCommandBuffer> m_CmdBuffers = {};
 	VkDevice m_Device = {};
 	VkSurfaceKHR m_Surface = {};
 	VkQueue m_GraphicsQueue = {};
@@ -60,6 +61,10 @@ public:
 
 	VIDECL void WaitReleaseResources() override;
 	VIDECL void GraphicsAction(ImmediateGraphicsActionFN fn) override;
+
+	VIDECL void CmdCreate(const UInt32& imageCount) override;
+	VIDECL VIREQOUT SCommandBuffer CmdBegin(const UInt32& imageIndex) const override;
+	VIDECL void CmdEnd(const SCommandBuffer& cmdBuffer) const override;
 private:
 	VIDECL void CreateGraphicsInstance();
 	VIDECL void SetupDebugMessenger();

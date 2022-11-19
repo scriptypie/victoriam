@@ -35,6 +35,7 @@ public:
 	VIDECL VIREQOUT virtual UInt32 GetHeight() const = 0;
 	VIDECL VIREQOUT virtual Float32 GetExtentAspectRatio() const = 0;
 	VIDECL VIREQOUT virtual Bool CompareFormats(const UPtr<CSwapchain>& swapchain) const = 0;
+	VIDECL virtual void CmdSubmit(const SCommandBuffer* buffers, const UInt32 *imageIndex) = 0;
 
 	VIDECL VIREQOUT static UPtr<CSwapchain> Create(PGraphicsContext& context, const SExtent2D& extent);
 	VIDECL VIREQOUT static UPtr<CSwapchain> Create(PGraphicsContext& context, const SExtent2D& extent, CSwapchain* prev);

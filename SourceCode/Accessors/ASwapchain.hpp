@@ -35,10 +35,6 @@ namespace Accessors
 		{
 			return CCast<CVulkanSwapchain*>(swapchain.get())->FindDepthFormat();
 		}
-		VIDECL static VkResult SubmitCommandBuffers(const PSwapchain& swapchain, const VkCommandBuffer* buffers, UInt32* imageIndex)
-		{
-			return CCast<CVulkanSwapchain*>(swapchain.get())->SubmitCommandBuffers(buffers, imageIndex);
-		}
 	};
 
 }

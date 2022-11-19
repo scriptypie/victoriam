@@ -7,6 +7,7 @@
 #include "../Accessors/ADescriptorWriter.hpp"
 #include "../Accessors/AVertexBuffer.hpp"
 #include "../Accessors/AUniformBuffer.hpp"
+#include "../Accessors/ASwapchain.hpp"
 
 VISRCBEG
 
@@ -21,7 +22,7 @@ CVulkanRenderer::CVulkanRenderer(const SRendererCreateInfo &createInfo)
 
 void CVulkanRenderer::Setup()
 {
-	m_CmdBufferSolver = CCmdBufferSolver::Create(m_Swapchain, m_Context);
+	m_Context->CmdCreate(m_Swapchain->GetImageCount());
 
 	m_SubPasses[0] = CRenderSubrender::CreateDefaultSubrender(m_Context, m_MainRenderPass, m_GlobalDescriptorSetLayout);
 	m_SubPasses[1] = CRenderSubrender::CreatePointLightSubrender(m_Context, m_MainRenderPass, m_GlobalDescriptorSetLayout);
@@ -36,7 +37,7 @@ PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const CList<SVertex> &vertices
 	return CVertexBuffer::Create(m_Context, vertices);
 }
 
-SFrameInfo CVulkanRenderer::BeginFrame(const PWorld& world)
+SFrameInfo CVulkanRenderer::BeginFrame()
 {
 	auto result = CCast<VkResult>(m_Swapchain->AcquireNextImage(&m_ImageIndex));
 	if (result == VK_ERROR_OUT_OF_DATE_KHR)
@@ -47,7 +48,7 @@ SFrameInfo CVulkanRenderer::BeginFrame(const PWorld& world)
 	if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 		ViAbort("Failed to acquire next image!");
 
-	SCommandBuffer commandBuffer = m_CmdBufferSolver->Begin(world, m_ImageIndex);
+	SCommandBuffer commandBuffer = m_Context->CmdBegin(m_ImageIndex);
 
 	return { commandBuffer,
 			 m_GlobalDescriptorSets[m_Swapchain->GetFrameIndex()],
@@ -80,8 +81,8 @@ void CVulkanRenderer::DrawFrame(SFrameInfo& frameInfo, const PWorld& world)
 
 void CVulkanRenderer::EndFrame(const SFrameInfo& frameInfo)
 {
-	m_CmdBufferSolver->End(frameInfo.CommandBuffer);
-	Accessors::Swapchain::SubmitCommandBuffers(m_Swapchain, CCast<VkCommandBuffer*>(&frameInfo.CommandBuffer), &m_ImageIndex);
+	m_Context->CmdEnd(frameInfo.CommandBuffer);
+	m_Swapchain->CmdSubmit(&frameInfo.CommandBuffer, &m_ImageIndex);
 }
 
 void CVulkanRenderer::Shutdown(const PWorld& world)
