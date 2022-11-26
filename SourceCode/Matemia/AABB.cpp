@@ -37,10 +37,10 @@ Bool SAABB::IsOnFrustum(const SFrustum &frustum, const SMatrix4 &transform) cons
 	const SVector3 right = (transform[0] * extent.x).xyz;
 	const SVector3 up = (transform[1] * extent.y).xyz;
 	const SVector3 forward = (-transform[2] * extent.z).xyz;
-	const ScalarType newiI = FAbs(FDot(SVector3(1.0F, 0.0F, 0.0F), right)) + FAbs(FDot(SVector3(1.0F, 0.0F, 0.0F), up)) + FAbs(FDot(SVector3(1.0F, 0.0F, 0.0F), forward));
-	const ScalarType newiJ = FAbs(FDot(SVector3(0.0F, 1.0F, 0.0F), right)) + FAbs(FDot(SVector3(0.0F, 1.0F, 0.0F), up)) + FAbs(FDot(SVector3(0.0F, 1.0F, 0.0F), forward));
-	const ScalarType newiK = FAbs(FDot(SVector3(0.0F, 0.0F, 1.0F), right)) + FAbs(FDot(SVector3(0.0F, 0.0F, 1.0F), up)) + FAbs(FDot(SVector3(0.0F, 0.0F, 1.0F), forward));
-	const SAABB globalAABB(globalCenter, newiI, newiJ, newiK);
+	const ScalarType x = FAbs(FDot(SVector3(1.0F, 0.0F, 0.0F), right)) + FAbs(FDot(SVector3(1.0F, 0.0F, 0.0F), up)) + FAbs(FDot(SVector3(1.0F, 0.0F, 0.0F), forward));
+	const ScalarType y = FAbs(FDot(SVector3(0.0F, 1.0F, 0.0F), right)) + FAbs(FDot(SVector3(0.0F, 1.0F, 0.0F), up)) + FAbs(FDot(SVector3(0.0F, 1.0F, 0.0F), forward));
+	const ScalarType z = FAbs(FDot(SVector3(0.0F, 0.0F, 1.0F), right)) + FAbs(FDot(SVector3(0.0F, 0.0F, 1.0F), up)) + FAbs(FDot(SVector3(0.0F, 0.0F, 1.0F), forward));
+	const SAABB globalAABB(globalCenter, x, y, z);
 	return
 	globalAABB.IsOnOrForwardPlan(frustum.left) &&
 	globalAABB.IsOnOrForwardPlan(frustum.right) &&

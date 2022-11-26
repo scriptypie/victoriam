@@ -15,7 +15,7 @@ VISRCBEG
 struct VIDECL SWorldRendererSettings {
 	SVector4 Ambient = {1.0F, 1.0F, 1.0F, 0.1F};
 	Float32 Brightness = 1.0F;
-	Float32 IlluminationDistance = 1000.0F;
+	Float32 IlluminationDistance = 300.0F;
 };
 
 VISRCEND

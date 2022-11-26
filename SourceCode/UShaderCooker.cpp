@@ -84,7 +84,7 @@ bool CShaderCooker::IsCookedExists(const String &name)
 
 bool CShaderCooker::IsShaderChanged(const SEngineShader& shader, const String& name)
 {
-	CFile file(SHADERDIR + String("hashsum.") + name, ECOpenMode::Read);
+	CFile file(SHADERDIR + String(".hashsum.") + name, ECOpenMode::Read);
 	String sum; sum.resize(32);
 	if (file.Valid())
 	{
@@ -93,7 +93,7 @@ bool CShaderCooker::IsShaderChanged(const SEngineShader& shader, const String& n
 		bool result = shader.Checksum != sum;
 		if (result)
 		{
-			file.Open(SHADERDIR + String("hashsum.") + name, ECOpenMode::Write);
+			file.Open(SHADERDIR + String(".hashsum.") + name, ECOpenMode::Write);
 			VIGNORE file.Write(shader.Checksum);
 			file.Close();
 		}
@@ -101,7 +101,7 @@ bool CShaderCooker::IsShaderChanged(const SEngineShader& shader, const String& n
 	}
 	else
 	{
-		file.Open(SHADERDIR + String("hashsum.") + name, ECOpenMode::Write);
+		file.Open(SHADERDIR + String(".hashsum.") + name, ECOpenMode::Write);
 		VIGNORE file.Write(shader.Checksum);
 		file.Close();
 		return true;

@@ -40,7 +40,10 @@ ScalarType FDot(const SQuaternion& a, const SQuaternion& b) {
 }
 
 SQuaternion FCross(const SQuaternion& a, const SQuaternion& b) {
-	return { a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z, a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y, a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z, a.w * b.z + a.z * b.w + a.x * b.y - a.y * b.x };
+	return { a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z,
+			 a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
+			 a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z,
+			 a.w * b.z + a.z * b.w + a.x * b.y - a.y * b.x };
 }
 
 ScalarType FLength(const SQuaternion& quat) {
@@ -50,7 +53,7 @@ ScalarType FLength(const SQuaternion& quat) {
 SQuaternion FNormalize(const SQuaternion& q) {
 	ScalarType len = FLength(q);
 	if (len <= 0.0F) return { 1.0F, 0.0F, 0.0F, 0.0F };
-	ScalarType ool = 1.0F / len;
+	ScalarType ool = 1.0F / len; // one over length
 	return { q.w * ool, q.x * ool, q.y * ool, q.z * ool };
 }
 
