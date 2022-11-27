@@ -9,7 +9,7 @@
 VISRCBEG
 
 PVertexBuffer CVertexBuffer::Create(PGraphicsContext &context, const CList<SVertex> &vertices) {
-	return CreateSPtr<CVulkanVertexBuffer>(context, vertices);
+	return FCreateShared<CVulkanVertexBuffer>(context, vertices);
 }
 
 VISRCEND

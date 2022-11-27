@@ -12,27 +12,21 @@ VISRCBEG
 namespace Accessors
 {
 
-	class Swapchain
-	{
+	class Swapchain {
 	public:
-		VIDECL VIREQOUT static CList<PFramebuffer> GetFramebuffers(const PSwapchain& swapchain)
-		{
+		VIDECL VIREQOUT static CList<PFramebuffer> GetFramebuffers(const PSwapchain& swapchain) {
 			return CCast<CVulkanSwapchain*>(swapchain.get())->GetFramebuffers();
 		}
-		VIDECL VIREQOUT static VkImageView GetImageView(const PSwapchain& swapchain, const UInt32& index)
-		{
+		VIDECL VIREQOUT static VkImageView GetImageView(const PSwapchain& swapchain, const UInt32& index) {
 			return CCast<CVulkanSwapchain*>(swapchain.get())->GetImageView(index);
 		}
-		VIDECL VIREQOUT static VkFormat GetSwapchainImageFormat(const PSwapchain& swapchain)
-		{
+		VIDECL VIREQOUT static VkFormat GetSwapchainImageFormat(const PSwapchain& swapchain) {
 			return CCast<CVulkanSwapchain*>(swapchain.get())->GetSwapchainImageFormat();
 		}
-		VIDECL VIREQOUT static VkExtent2D GetSwapchainExtent(const PSwapchain& swapchain)
-		{
+		VIDECL VIREQOUT static VkExtent2D GetSwapchainExtent(const PSwapchain& swapchain) {
 			return CCast<CVulkanSwapchain*>(swapchain.get())->GetSwapchainExtent();
 		}
-		VIDECL VIREQOUT static VkFormat FindDepthFormat(const PSwapchain& swapchain)
-		{
+		VIDECL VIREQOUT static VkFormat FindDepthFormat(const PSwapchain& swapchain) {
 			return CCast<CVulkanSwapchain*>(swapchain.get())->FindDepthFormat();
 		}
 	};

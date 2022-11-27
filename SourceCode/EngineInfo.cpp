@@ -7,7 +7,8 @@ VISRCBEG
 
 void FGetEngineInfo(SEngineInfo& info)
 {
-    info.sVersion = "0.0.5";
+    info.Version = "0.0.6";
+	info.Owner = "Krivenko Slava (scriptypie)";
 }
 
 VISRCEND

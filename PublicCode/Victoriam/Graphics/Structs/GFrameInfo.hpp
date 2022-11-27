@@ -11,7 +11,7 @@
 VISRCBEG
 
 class CFramebuffer;
-VIDECL typedef SPtr<CFramebuffer> PFramebuffer;
+VIDECL typedef SShared<CFramebuffer> PFramebuffer;
 
 /**
  * Struct that handles all frame-related information.

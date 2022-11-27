@@ -31,23 +31,25 @@ struct VIDECL ScalarArray {
 
 };
 
-namespace Constant {
+namespace CONSTANT {
 
-	VIDECL constexpr ScalarType E = 2.71828182845904523536028747135266250F;   /* e              */
-	VIDECL constexpr ScalarType LOG2E = 1.44269504088896340735992468100189214F;   /* log2(e)        */
-	VIDECL constexpr ScalarType LOG10E = 0.434294481903251827651128918916605082F;  /* log10(e)       */
-	VIDECL constexpr ScalarType LN2 = 0.693147180559945309417232121458176568F;  /* loge(2)        */
-	VIDECL constexpr ScalarType LN10 = 2.30258509299404568401799145468436421F;   /* loge(10)       */
-	VIDECL constexpr ScalarType PI = 3.14159265358979323846264338327950288F;   /* pi             */
-	VIDECL constexpr ScalarType PI_HALF = 1.57079632679489661923132169163975144F;   /* pi/2           */
-	VIDECL constexpr ScalarType PI_QUAT = 0.785398163397448309615660845819875721F;  /* pi/4           */
-	VIDECL constexpr ScalarType ONE_OVER_PI = 0.318309886183790671537767526745028724F;  /* 1/pi           */
-	VIDECL constexpr ScalarType TWO_OVER_PI = 0.636619772367581343075535053490057448F;  /* 2/pi           */
-	VIDECL constexpr ScalarType TWO_OVER_SQRT_PI = 1.12837916709551257389615890312154517F;   /* 2/sqrt(pi)     */
-	VIDECL constexpr ScalarType SQRT2 = 1.41421356237309504880168872420969808F;   /* sqrt(2)        */
-	VIDECL constexpr ScalarType SQRT1_2 = 0.707106781186547524400844362104849039F;  /* 1/sqrt(2)      */
-	VIDECL constexpr ScalarType INF = 1e30F;
-	VIDECL constexpr ScalarType EPSILON = 1.192092896e-07F;
+	VIDECL const ScalarType E = 2.71828182845904523536028747135266250F;
+	VIDECL const ScalarType DEG = 57.295779513082320876798154814105F;
+	VIDECL const ScalarType RAD = 0.01745329251994329576923690768489F;
+	VIDECL const ScalarType LOG2E = 1.44269504088896340735992468100189214F;
+	VIDECL const ScalarType LOG10E = 0.434294481903251827651128918916605082F;
+	VIDECL const ScalarType LN2 = 0.693147180559945309417232121458176568F;
+	VIDECL const ScalarType LN10 = 2.30258509299404568401799145468436421F;
+	VIDECL const ScalarType PI = 3.14159265358979323846264338327950288F;
+	VIDECL const ScalarType PI_HALF = 1.57079632679489661923132169163975144F;
+	VIDECL const ScalarType PI_QUAT = 0.785398163397448309615660845819875721F;
+	VIDECL const ScalarType ONE_OVER_PI = 0.318309886183790671537767526745028724F;
+	VIDECL const ScalarType TWO_OVER_PI = 0.636619772367581343075535053490057448F;
+	VIDECL const ScalarType TWO_OVER_SQRT_PI = 1.12837916709551257389615890312154517F;
+	VIDECL const ScalarType SQRT2 = 1.41421356237309504880168872420969808F;
+	VIDECL const ScalarType SQRT1_2 = 0.707106781186547524400844362104849039F;
+	VIDECL const ScalarType INF = 1e30F;
+	VIDECL const ScalarType EPSILON = 1.192092896e-07F;
 
 }
 
@@ -62,13 +64,13 @@ VIDECL VIREQOUT ScalarType FRSqrt(const ScalarType& x); /*  */
 VIDECL VIREQOUT ScalarType FAbs(const ScalarType& x);   /*  */
 
 VIDECL VIREQOUT inline Bool CompareScalar(const ScalarType& a, const ScalarType& b) {
-	if (FAbs(a - b) > Constant::EPSILON) return false;
+	if (FAbs(a - b) > CONSTANT::EPSILON) return false;
 	return true;
 }
 
 template<class T>
 VIDECL VIREQOUT inline T FRadians(const T& radians) {
-	return CCast<T>(CCast<ScalarType>(radians) * CCast<ScalarType>(0.01745329251994329576923690768489F));
+	return CCast<T>(CCast<ScalarType>(radians) * CONSTANT::RAD);
 }
 
 VIDECL inline void FHashCombine(size_t& seed, size_t hash) {
@@ -78,7 +80,7 @@ VIDECL inline void FHashCombine(size_t& seed, size_t hash) {
 
 template<class T>
 VIDECL VIREQOUT inline T FDegrees(const T& radians) {
-	return CCast<T>(CCast<ScalarType>(radians) * CCast<ScalarType>(57.295779513082320876798154814105F));
+	return CCast<T>(CCast<ScalarType>(radians) * CONSTANT::DEG);
 }
 
 template<class T>

@@ -23,7 +23,7 @@ CVulkanSwapchain::CVulkanSwapchain(PGraphicsContext &context, const SExtent2D &e
 CVulkanSwapchain::CVulkanSwapchain(PGraphicsContext &context, const SExtent2D &extent, CSwapchain* prev)
 	: m_Context(context), m_WindowExtent(extent)
 {
-	m_OldSwapchain = prev;
+	m_OldSwapchain = FMove(prev);
 	Init();
 	m_OldSwapchain = nullptr;
 }
@@ -147,7 +147,7 @@ void CVulkanSwapchain::CreateDepthResources()
 		imageCreateInfo.Aspect = ImageAspectDepth;
 		imageCreateInfo.bCreateView = true;
 
-		m_DepthImage = CImage::Create2D(m_Context, imageCreateInfo);
+		m_DepthImage = CImage::Create(m_Context, imageCreateInfo);
 	}
 }
 

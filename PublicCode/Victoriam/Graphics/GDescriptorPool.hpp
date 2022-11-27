@@ -37,13 +37,13 @@ public:
 	 * Creates new descriptor pool object.
 	 * @param context Valid current context
 	 */
-	VIDECL VIREQOUT static UPtr<CDescriptorPool> Create(PGraphicsContext& context, const SDescriptorPoolCreateInfo& createInfo);
+	VIDECL VIREQOUT static SUnique<CDescriptorPool> Create(PGraphicsContext& context, const SDescriptorPoolCreateInfo& createInfo);
 };
 
 /**
  * DescriptorPool is like container and allocator for descriptor sets.
  */
-VIDECL typedef UPtr<CDescriptorPool> PDescriptorPool;
+VIDECL typedef SUnique<CDescriptorPool> PDescriptorPool;
 
 VISRCEND
 

@@ -133,7 +133,7 @@ SMatrix4 FPerspective(const ScalarType& fovy, const ScalarType& aspect, const Sc
 	const ScalarType right = range * aspect;
 	const ScalarType bottom = -range;
 	const ScalarType top = range;
-	const ScalarType ep = Constant::EPSILON;
+	const ScalarType ep = CONSTANT::EPSILON;
 
 	SMatrix4 Result(0.0F);
 	Result[0][0] = (2.0F * zNear) / (right - left);

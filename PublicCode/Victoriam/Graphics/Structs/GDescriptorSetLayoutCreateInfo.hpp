@@ -9,16 +9,16 @@
 
 VISRCBEG
 
-SignalDecl DescriptorTypeSampler = 0;
-SignalDecl DescriptorTypeSampledImage = 2;
-SignalDecl DescriptorTypeStorageImage = 3;
-SignalDecl DescriptorTypeUniformBuffer = 6;
-SignalDecl DescriptorTypeUniformBufferDynamic = 8;
+Constant<Signal, 0> DescriptorTypeSampler;
+Constant<Signal, 2> DescriptorTypeSampledImage;
+Constant<Signal, 3> DescriptorTypeStorageImage;
+Constant<Signal, 6> DescriptorTypeUniformBuffer;
+Constant<Signal, 8> DescriptorTypeUniformBufferDynamic;
 
-SignalDecl ShaderStageVertex = 1;
-SignalDecl ShaderStageGeometry = 8;
-SignalDecl ShaderStageFragment = 16;
-SignalDecl ShaderStageAllStages = 0x7FFFFFFF;
+Constant<Signal, 1> ShaderStageVertex;
+Constant<Signal, 8> ShaderStageGeometry;
+Constant<Signal, 16> ShaderStageFragment;
+Constant<Signal, 0x7FFFFFFF> ShaderStageAllStages;
 
 /**
  * Binding is what we want to bind to descriptor set.

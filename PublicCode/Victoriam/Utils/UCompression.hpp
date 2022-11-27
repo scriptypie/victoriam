@@ -9,7 +9,7 @@
 
 VISRCBEG
 
-SignalDecl CompressionAlgorithmLZ4 = 1;
+Constant<Signal, 0x00000001> CompressionAlgorithmLZ4;
 
 struct VIDECL SCompressor {
 	VIDECL static void Compress(String& buffer, const Signal& algorithm);

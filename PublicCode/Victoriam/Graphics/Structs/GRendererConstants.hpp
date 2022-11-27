@@ -19,7 +19,7 @@ struct VIDECL SPointLightInfo
 	VIDECL SVector4 Color;
 };
 
-VIDECL constexpr UInt32 MAX_POINT_LIGHTS = 1024U;
+Constant<UInt32, 1024> MAX_POINT_LIGHTS;
 
 struct VIDECL SRendererConstants
 {

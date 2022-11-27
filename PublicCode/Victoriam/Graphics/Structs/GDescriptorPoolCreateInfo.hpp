@@ -9,9 +9,9 @@
 
 VISRCBEG
 
-SignalDecl DescriptorPoolCreateFreeDescriptor = 1;
-SignalDecl DescriptorPoolCreateUpdateAfterBind = 2;
-SignalDecl DescriptorPoolCreateHostOnly = 4;
+Constant<Signal, 1> DescriptorPoolCreateFreeDescriptor;
+Constant<Signal, 2> DescriptorPoolCreateUpdateAfterBind;
+Constant<Signal, 4> DescriptorPoolCreateHostOnly;
 
 /**
  * Describes what type of descriptor we want to use, and it's size.

@@ -12,13 +12,13 @@ VISRCBEG
 PRenderSubrender
 CRenderSubrender::CreateDefaultSubrender(PGraphicsContext &context, PRenderPass& renderPass, const PDescriptorSetLayout &setLayout)
 {
-	return CreateUPtr<CDefaultRenderSubrender>(context, renderPass, setLayout);
+	return FCreateUnique<CDefaultRenderSubrender>(context, renderPass, setLayout);
 }
 
 PRenderSubrender
 CRenderSubrender::CreatePointLightSubrender(PGraphicsContext &context, PRenderPass& renderPass,
                                             const PDescriptorSetLayout &setLayout) {
-	return CreateUPtr<CPointLightSubrender>(context, renderPass, setLayout);
+	return FCreateUnique<CPointLightSubrender>(context, renderPass, setLayout);
 }
 
 VISRCEND

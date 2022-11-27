@@ -42,7 +42,7 @@ namespace
 
 }
 
-CVulkanGraphicsContext::CVulkanGraphicsContext(const SPtr<CWindow> &window)
+CVulkanGraphicsContext::CVulkanGraphicsContext(const SShared<CWindow> &window)
 	: m_Window(window)
 {
 	CreateGraphicsInstance();
@@ -489,7 +489,7 @@ void CVulkanGraphicsContext::WaitReleaseResources()
 	vkDeviceWaitIdle(m_Device);
 }
 
-void CVulkanGraphicsContext::GraphicsAction(ImmediateGraphicsActionFN fn) {
+void CVulkanGraphicsContext::Execute(ImmediateGraphicsActionFN fn) {
 	auto commandBuffer = CCast<SCommandBuffer>(BeginSingleTimeCommands());
 	fn(commandBuffer);
 	EndSingleTimeCommands(CCast<VkCommandBuffer>(commandBuffer));

@@ -20,10 +20,10 @@ public:
 	VIDECL VIREQOUT virtual UInt32    GetHeight() const = 0;
 	VIDECL VIREQOUT virtual Signal    GetType()   const = 0;
 
-	VIDECL VIREQOUT static SPtr<CImage> Create2D(PGraphicsContext& context, const SImageCreateInfo& createInfo);
+	VIDECL VIREQOUT static SShared<CImage> Create(PGraphicsContext& context, const SImageCreateInfo& createInfo);
 };
 
-VIDECL typedef SPtr<CImage> PImage;
+VIDECL typedef SShared<CImage> PImage;
 
 VISRCEND
 

@@ -10,7 +10,7 @@ VISRCBEG
 
 PRenderer CRenderer::Create(const SRendererCreateInfo &createInfo)
 {
-	return CreateUPtr<CVulkanRenderer>(createInfo);
+	return FCreateUnique<CVulkanRenderer>(createInfo);
 }
 
 VISRCEND

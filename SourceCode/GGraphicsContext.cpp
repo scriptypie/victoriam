@@ -8,8 +8,8 @@
 
 VISRCBEG
 
-PGraphicsContext CGraphicsContext::Create(const SPtr<CWindow> &window) {
-	return CreateSPtr<CVulkanGraphicsContext>(window);
+PGraphicsContext CGraphicsContext::Create(const SShared<CWindow> &window) {
+	return FCreateShared<CVulkanGraphicsContext>(window);
 }
 
 VISRCEND

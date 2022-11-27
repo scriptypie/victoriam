@@ -10,20 +10,24 @@
 VISRCBEG
 
 struct VIDECL SVector4 {
+	using Array2Type = ScalarArray<2>;
+	using Array3Type = ScalarArray<3>;
+	using Array4Type = ScalarArray<4>;
+
 	union {
-		ScalarArray<4> data = {};
+		Array4Type data = {};
 		struct {
 			union {
-				ScalarArray<4> xyzw;
-				ScalarArray<4> rgba;
+				Array4Type xyzw;
+				Array4Type rgba;
 				struct {
 					union {
-						ScalarArray<3> xyz;
-						ScalarArray<3> rgb;
+						Array3Type xyz;
+						Array3Type rgb;
 						struct {
 							union {
-								ScalarArray<2> xy;
-								ScalarArray<2> uv;
+								Array2Type xy;
+								Array2Type uv;
 								struct {
 									union {
 										ScalarType x, u, r, left;
@@ -46,21 +50,11 @@ struct VIDECL SVector4 {
 		};
 	};
 
-	VIDECL inline static    ScalarArray<4> Zero     = { 0.0F, 0.0F, 0.0F, 0.0F };
-	VIDECL inline static    ScalarArray<4> One      = { 1.0F, 1.0F, 1.0F, 1.0F };
-	VIDECL inline static    ScalarArray<4> Up       = { 0.0F, 1.0F, 0.0F, 0.0F };
-	VIDECL inline static    ScalarArray<4> Right    = { 1.0F, 0.0F, 0.0F, 0.0F };
-	VIDECL inline static    ScalarArray<4> Down     = { 0.0F,-1.0F, 0.0F, 0.0F };
-	VIDECL inline static    ScalarArray<4> Left     = {-1.0F, 0.0F, 0.0F, 0.0F };
-	VIDECL inline static    ScalarArray<4> Forward  = { 0.0F, 0.0F, 1.0F, 0.0F };
-	VIDECL inline static    ScalarArray<4> Backward = { 0.0F, 0.0F,-1.0F, 0.0F };
-	VIDECL inline static    ScalarArray<4> Identity = { 0.0F, 0.0F, 0.0F, 1.0F };
-
 	VIDECL inline ~SVector4() = default;
 	VIDECL inline  SVector4() : data() {}
-	VIDECL inline  SVector4(const ScalarArray<2>& other)            : data(other) {}
-	VIDECL inline  SVector4(const ScalarArray<3>& other)            : data(other) {}
-	VIDECL inline  SVector4(const ScalarArray<4>& other)            : data(other) {}
+	VIDECL inline  SVector4(const Array2Type& other)            : data(other) {}
+	VIDECL inline  SVector4(const Array3Type& other)            : data(other) {}
+	VIDECL inline  SVector4(const Array4Type& other)            : data(other) {}
 	VIDECL inline  SVector4(const ScalarType& v)                    : data(v, v, v, v) {}
 	VIDECL inline  SVector4(const ScalarType& x, const ScalarType& y, const ScalarType& z, const ScalarType& w) : data(x, y, z, w) {}
 	VIDECL inline  SVector4(const SVector2& other)                  : data(other.data) {}
@@ -130,7 +124,8 @@ VIDECL VIREQOUT inline SVector4 operator-(const ScalarType& a, const SVector4& b
 VIDECL VIREQOUT inline SVector4 operator*(const ScalarType& a, const SVector4& b) { return { a * b.x, a * b.y, a * b.z, a * b.w }; }
 VIDECL VIREQOUT inline SVector4 operator/(const ScalarType& a, const SVector4& b) { return { a / b.x, a / b.y, a / b.z, a / b.w }; }
 
-	namespace Color {
+namespace Color {
+
 	VIDECL inline static SVector4 Black     = { 0.0F, 0.0F, 0.0F, 1.0F };
 	VIDECL inline static SVector4 White     = { 1.0F, 1.0F, 1.0F, 1.0F };
 	VIDECL inline static SVector4 Red       = { 1.0F, 0.0F, 0.0F, 1.0F };

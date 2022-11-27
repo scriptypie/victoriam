@@ -15,6 +15,9 @@
 #include <unordered_map>
 
 #include <Victoriam/Core/CUtils.hpp>
+#include <Victoriam/Core/Containers/CArray.hpp>
+#include <Victoriam/Core/Containers/CConstant.hpp>
+#include <Victoriam/Core/Containers/CToggle.hpp>
 #include <Victoriam/Core/CNumerics.hpp>
 #include <Victoriam/Core/CLog.hpp>
 #include <Victoriam/Core/CFlags.hpp>
@@ -23,8 +26,6 @@
 #include <Victoriam/Core/Memory/MStandardAllocator.hpp>
 #include <Victoriam/IO/IOStream.hpp>
 #include <Victoriam/Matemia/MMath.hpp> // Matemia math library (property of github.com/scriptypie)
-
-#include <Victoriam/Core/Containers/CArray.hpp>
 
 VISRCBEG
 
@@ -35,7 +36,7 @@ template<class...T>
 using CTuple = std::tuple<T...>;
 
 template<class...T, class...Args>
-constexpr CTuple<T...> CreateTuple(Args&&...args)
+constexpr CTuple<T...> FCreateTuple(Args&&...args)
 {
 	return std::make_tuple<T...>(std::forward<Args>(args)...);
 }

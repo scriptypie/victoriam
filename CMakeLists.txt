@@ -88,7 +88,6 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Utils/UGeometryBuilder.hpp
         PublicCode/Victoriam/Utils/UGeometryPacker.hpp
         PublicCode/Victoriam/Utils/UHash.hpp
-        PublicCode/Victoriam/Utils/UJobWorker.hpp
         PublicCode/Victoriam/Utils/UShaderCooker.hpp
         PublicCode/Victoriam/Utils/UTimestep.hpp
         PublicCode/Victoriam/World/Components/ComponentBase.hpp
@@ -168,7 +167,6 @@ set(SOURCE_FILES
         SourceCode/UFile.cpp
         SourceCode/UGeometryBuilder.cpp
         SourceCode/UGeometryPacker.cpp
-        SourceCode/UJobWorker.cpp
         SourceCode/UShaderCooker.cpp
         SourceCode/VulkanBackend/VulkanDescriptorPool.cpp
         SourceCode/VulkanBackend/VulkanDescriptorSetLayout.cpp
@@ -186,7 +184,7 @@ set(SOURCE_FILES
         SourceCode/VulkanBackend/VulkanVertexBuffer.cpp
         SourceCode/WGameObject.cpp
         SourceCode/WWorld.cpp
-        PublicCode/Victoriam/IO/IO.hpp PublicCode/Victoriam/IO/IOStream.hpp SourceCode/IOStream.cpp PublicCode/Victoriam/Core/CString.hpp PublicCode/Victoriam/Graphics/Structs/GImageCreateInfo.hpp PublicCode/Victoriam/Matemia/MExtent.hpp PublicCode/Victoriam/Graphics/GImage.hpp SourceCode/GImage.cpp SourceCode/VulkanBackend/VulkanImage.cpp SourceCode/VulkanBackend/VulkanImage.hpp SourceCode/Accessors/AImage.hpp PublicCode/Victoriam/Graphics/GImageView.hpp PublicCode/Victoriam/Graphics/Structs/GImageViewCreateInfo.hpp SourceCode/GImageView.cpp SourceCode/VulkanBackend/VulkanImageView.cpp SourceCode/VulkanBackend/VulkanImageView.hpp)
+        PublicCode/Victoriam/IO/IO.hpp PublicCode/Victoriam/IO/IOStream.hpp SourceCode/IOStream.cpp PublicCode/Victoriam/Core/CString.hpp PublicCode/Victoriam/Graphics/Structs/GImageCreateInfo.hpp PublicCode/Victoriam/Matemia/MExtent.hpp PublicCode/Victoriam/Graphics/GImage.hpp SourceCode/GImage.cpp SourceCode/VulkanBackend/VulkanImage.cpp SourceCode/VulkanBackend/VulkanImage.hpp SourceCode/Accessors/AImage.hpp PublicCode/Victoriam/Graphics/GImageView.hpp PublicCode/Victoriam/Graphics/Structs/GImageViewCreateInfo.hpp SourceCode/GImageView.cpp SourceCode/VulkanBackend/VulkanImageView.cpp SourceCode/VulkanBackend/VulkanImageView.hpp PublicCode/Victoriam/Core/Containers/CConstant.hpp PublicCode/Victoriam/Core/Containers/CToggle.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

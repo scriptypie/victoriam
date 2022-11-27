@@ -10,7 +10,7 @@ VISRCBEG
 
 PDescriptorWriter CDescriptorWriter::Create(PDescriptorPool &pool, PDescriptorSetLayout &layout)
 {
-	return CreateSPtr<CVulkanDescriptorWriter>(pool, layout);
+	return FCreateShared<CVulkanDescriptorWriter>(pool, layout);
 }
 
 VISRCEND

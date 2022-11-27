@@ -9,17 +9,14 @@
 
 VISRCBEG
 
-namespace Accessors
-{
-	class VIDECL DescriptorPool
-	{
+namespace Accessors {
+
+	class VIDECL DescriptorPool {
 	public:
-		VIDECL VIREQOUT static PGraphicsContext& GetContext(const PDescriptorPool& pool)
-		{
+		VIDECL VIREQOUT static PGraphicsContext& GetContext(const PDescriptorPool& pool) {
 			return CCast<CVulkanDescriptorPool*>(pool.get())->GetContext();
 		}
-		VIDECL VIREQOUT static VkDescriptorPool GetPool(const PDescriptorPool& pool)
-		{
+		VIDECL VIREQOUT static VkDescriptorPool GetPool(const PDescriptorPool& pool) {
 			return CCast<CVulkanDescriptorPool*>(pool.get())->GetPool();
 		}
 	};

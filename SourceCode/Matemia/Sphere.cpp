@@ -10,18 +10,15 @@
 VISRCBEG
 
 Bool SSphere::IsIntersects(const SPoint3D &point) const {
-	const ScalarType distance = FDistance(position, point);
-	return distance < radius;
+	return FDistance(position, point) < radius;
 }
 
 Bool SSphere::IsIntersects(const SSphere &sphere) const {
-	const ScalarType distance = FDistance(position, sphere.position);
-	return distance < (radius + sphere.radius);
+	return FDistance(position, sphere.position) < (radius + sphere.radius);
 }
 
 Bool SSphere::IsIntersects(const SAABB &box) const {
-	const ScalarType distance = FDistance(position, box.center);
-	return distance < radius;
+	return FDistance(position, box.center) < radius;
 }
 
 Bool SSphere::IsOnOrForwardPlan(const SPlane &plan) const {

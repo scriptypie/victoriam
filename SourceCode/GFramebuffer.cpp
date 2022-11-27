@@ -10,7 +10,7 @@ VISRCBEG
 
 PFramebuffer CFramebuffer::Create(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo)
 {
-	return CreateSPtr<CVulkanFramebuffer>(context, renderPass, createInfo);
+	return FCreateShared<CVulkanFramebuffer>(context, renderPass, createInfo);
 }
 
 VISRCEND

@@ -10,7 +10,7 @@ VISRCBEG
 
 PWindow CWindow::Create(const SWindowCreateInfo &info)
 {
-	return CreateSPtr<CGLFWWindow>(info);
+	return FCreateShared<CGLFWWindow>(info);
 }
 
 VISRCEND

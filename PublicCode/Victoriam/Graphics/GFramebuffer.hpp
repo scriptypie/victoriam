@@ -11,16 +11,16 @@
 VISRCBEG
 
 class CRenderPass;
-VIDECL typedef UPtr<CRenderPass> PRenderPass;
+VIDECL typedef SUnique<CRenderPass> PRenderPass;
 
 class VIDECL CFramebuffer {
 public:
 	VIDECL virtual ~CFramebuffer() = default;
 
-	VIDECL VIREQOUT static SPtr<CFramebuffer> Create(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo);
+	VIDECL VIREQOUT static SShared<CFramebuffer> Create(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo);
 };
 
-VIDECL typedef SPtr<CFramebuffer> PFramebuffer;
+VIDECL typedef SShared<CFramebuffer> PFramebuffer;
 
 VISRCEND
 

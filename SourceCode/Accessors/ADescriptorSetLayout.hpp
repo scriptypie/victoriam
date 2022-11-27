@@ -9,13 +9,11 @@
 
 VISRCBEG
 
-namespace Accessors
-{
-	class VIDECL DescriptorSetLayout
-	{
+namespace Accessors {
+
+	class VIDECL DescriptorSetLayout {
 	public:
-		VIDECL VIREQOUT static VkDescriptorSetLayout GetDescriptorSetLayout(const PDescriptorSetLayout& descriptorSetLayout)
-		{
+		VIDECL VIREQOUT static VkDescriptorSetLayout GetDescriptorSetLayout(const PDescriptorSetLayout& descriptorSetLayout) {
 			return CCast<CVulkanDescriptorSetLayout*>(descriptorSetLayout.get())->GetDescriptorSetLayout();
 		}
 	};

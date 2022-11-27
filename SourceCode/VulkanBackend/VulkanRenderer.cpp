@@ -63,18 +63,16 @@ void CVulkanRenderer::DrawFrame(SFrameInfo& frameInfo, const PWorld& world)
 	for (auto& subpass : m_SubPasses) {
 		subpass->Compute(frameInfo, world);
 	}
-
 	// end computations
 	auto& constantBuffer = world->GetConstantsBuffer(frameInfo.FrameIndex);
 	constantBuffer->SubmitToGPU(frameInfo.Constants);
+
 
 	m_MainRenderPass->Begin(frameInfo);
 
 	for (auto& subpass : m_SubPasses) {
 		subpass->Pass(frameInfo, world);
 	}
-
-	ViLog("Polycount:      %llu\r", frameInfo.Polycount);
 
 	m_MainRenderPass->End(frameInfo);
 }
@@ -89,10 +87,10 @@ void CVulkanRenderer::Shutdown(const PWorld& world)
 {
 	m_Context->WaitReleaseResources();
 
-	auto renderable_objs = world->AllWith<SComponentRenderable>(); // all renderables MUST have a transform component!!!
-	for (auto renderable_obj : renderable_objs)
+	auto rrls = world->AllWith<SComponentRenderable>();
+	for (auto rrl : rrls)
 	{
-		auto rrc = renderable_obj->GetComponent<SComponentRenderable>();
+		auto rrc = rrl->GetComponent<SComponentRenderable>();
 		rrc->Geometry.Release();
 	}
 
@@ -112,13 +110,13 @@ void CVulkanRenderer::RecreateSwapchain(const SExtent2D &newExtent) {
 		return;
 	}
 
-	vkDeviceWaitIdle(Accessors::GraphicsContext::GetDevice(m_Context));
+	m_Context->WaitReleaseResources();
 
 	if (!m_Swapchain)
 		m_Swapchain = CSwapchain::Create(m_Context, newExtent);
 	else
 	{
-		PSwapchain oldSwapchain = std::move(m_Swapchain);
+		auto oldSwapchain = std::move(m_Swapchain);
 		m_Swapchain = CSwapchain::Create(m_Context, newExtent, oldSwapchain.get());
 		if (!oldSwapchain->CompareFormats(m_Swapchain))
 			ViAbort("Swapchain image or depth format is changed!!!");

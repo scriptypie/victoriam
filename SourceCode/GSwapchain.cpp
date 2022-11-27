@@ -9,12 +9,12 @@
 VISRCBEG
 
 PSwapchain CSwapchain::Create(PGraphicsContext &context, const SExtent2D &extent) {
-	return CreateUPtr<CVulkanSwapchain>(context, extent);
+	return FCreateUnique<CVulkanSwapchain>(context, extent);
 }
 
 PSwapchain CSwapchain::Create(PGraphicsContext &context, const SExtent2D &extent, CSwapchain* prev)
 {
-	return CreateUPtr<CVulkanSwapchain>(context, extent, prev);
+	return FCreateUnique<CVulkanSwapchain>(context, extent, prev);
 }
 
 VISRCEND

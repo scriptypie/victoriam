@@ -26,10 +26,10 @@ public:
 	/**
 	 * Creates new Descriptor writer object
 	 */
-	VIDECL VIREQOUT static SPtr<CDescriptorWriter> Create(PDescriptorPool& pool, PDescriptorSetLayout& layout);
+	VIDECL VIREQOUT static SShared<CDescriptorWriter> Create(PDescriptorPool& pool, PDescriptorSetLayout& layout);
 };
 
-VIDECL typedef SPtr<CDescriptorWriter> PDescriptorWriter;
+VIDECL typedef SShared<CDescriptorWriter> PDescriptorWriter;
 
 VISRCEND
 

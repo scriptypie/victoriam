@@ -63,7 +63,7 @@ public:
 	VIDECL          void Open(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
 	VIDECL          void Open(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat = ECFileFormat::ASCII);
 
-	VIDECL VIREQOUT bool Valid() const;
+	VIDECL VIREQOUT Bool Valid() const;
 	VIDECL VIREQOUT SFileView View();
 	VIDECL VIREQOUT ECFileResult Read(String& output);
 	VIDECL VIREQOUT ECFileResult Read(char* outdata, size_t sizedata);

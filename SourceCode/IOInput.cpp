@@ -8,7 +8,7 @@
 
 VISRCBEG
 
-void CInput::Init(const SPtr<CWindow> &window) {
+void CInput::Init(const SShared<CWindow> &window) {
 	m_InputStatePtr = &CCast<CGLFWWindow*>(window.get())->m_Data.InputState;
 }
 

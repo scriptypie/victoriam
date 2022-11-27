@@ -11,7 +11,8 @@ VISRCBEG
 
 struct VIDECL SEngineInfo
 {
-    String sVersion;
+    StringView Version;
+	StringView Owner;
 };
 
 VIDECL void FGetEngineInfo(SEngineInfo& info);

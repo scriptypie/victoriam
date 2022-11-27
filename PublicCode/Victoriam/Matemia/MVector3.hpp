@@ -10,16 +10,19 @@
 VISRCBEG
 
 struct VIDECL SVector3 {
+	using Array3Type = ScalarArray<3>;
+	using Array2Type = ScalarArray<2>;
+
 	union {
-		ScalarArray<3> data = {};
+		Array3Type data = {};
 		struct {
 			union {
-				ScalarArray<3> xyz;
-				ScalarArray<3> rgb;
+				Array3Type xyz;
+				Array3Type rgb;
 				struct {
 					union {
-						ScalarArray<2> xy;
-						ScalarArray<2> uv;
+						Array2Type xy;
+						Array2Type uv;
 						struct {
 							union {
 								ScalarType x, u, r;
@@ -37,19 +40,19 @@ struct VIDECL SVector3 {
 		};
 	};
 
-	VIDECL inline static    ScalarArray<3> Zero     = { 0.0F, 0.0F, 0.0F };
-	VIDECL inline static    ScalarArray<3> One      = { 1.0F, 1.0F, 1.0F };
-	VIDECL inline static    ScalarArray<3> Up       = { 0.0F, 1.0F, 0.0F };
-	VIDECL inline static    ScalarArray<3> Right    = { 1.0F, 0.0F, 0.0F };
-	VIDECL inline static    ScalarArray<3> Down     = { 0.0F,-1.0F, 0.0F };
-	VIDECL inline static    ScalarArray<3> Left     = {-1.0F, 0.0F, 0.0F };
-	VIDECL inline static    ScalarArray<3> Forward  = { 0.0F, 0.0F, 1.0F };
-	VIDECL inline static    ScalarArray<3> Backward = { 0.0F, 0.0F,-1.0F };
+	VIDECL inline static    Array3Type Zero     = { 0.0F, 0.0F, 0.0F };
+	VIDECL inline static    Array3Type One      = { 1.0F, 1.0F, 1.0F };
+	VIDECL inline static    Array3Type Up       = { 0.0F, 1.0F, 0.0F };
+	VIDECL inline static    Array3Type Right    = { 1.0F, 0.0F, 0.0F };
+	VIDECL inline static    Array3Type Down     = { 0.0F,-1.0F, 0.0F };
+	VIDECL inline static    Array3Type Left     = {-1.0F, 0.0F, 0.0F };
+	VIDECL inline static    Array3Type Forward  = { 0.0F, 0.0F, 1.0F };
+	VIDECL inline static    Array3Type Backward = { 0.0F, 0.0F,-1.0F };
 
 	VIDECL inline ~SVector3() = default;
 	VIDECL inline  SVector3() : data() {}
-	VIDECL inline  SVector3(const ScalarArray<2>& other) : data(other) { }
-	VIDECL inline  SVector3(const ScalarArray<3>& other) : data(other) { }
+	VIDECL inline  SVector3(const Array2Type& other) : data(other) { }
+	VIDECL inline  SVector3(const Array3Type& other) : data(other) { }
 	VIDECL inline  SVector3(const ScalarType& x) : data(x, x, x) {}
 	VIDECL inline  SVector3(const ScalarType& x, const ScalarType& y, const ScalarType& z) : data(x, y, z) {}
 	VIDECL inline  SVector3(const SVector2& v) : data(v.x, v.y, 0.0F) {}

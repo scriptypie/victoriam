@@ -9,7 +9,7 @@
 VISRCBEG
 
 PImageView CImageView::Create(PGraphicsContext &context, const PImage &image, const SImageViewCreateInfo &createInfo) {
-	return CreateSPtr<CVulkanImageView>(context, image, createInfo);
+	return FCreateShared<CVulkanImageView>(context, image, createInfo);
 }
 
 VISRCEND

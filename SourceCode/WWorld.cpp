@@ -56,14 +56,13 @@ CGameObject* CWorld::FindGameObjectByUID(const UID &id)
 	}
 }
 
-SPtr<CWorld> CWorld::Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings) {
-	return CreateSPtr<CWorld>(renderer, rendererSettings);
+SShared<CWorld> CWorld::Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings) {
+	return FCreateShared<CWorld>(renderer, rendererSettings);
 }
 
 void CWorld::Clear()
 {
-	for (auto object : m_Registry)
-		object->Destroy();
+	m_Registry.clear();
 }
 
 CGameObject *CWorld::FindGameObjectByName(const String &name)

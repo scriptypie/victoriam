@@ -13,7 +13,7 @@
 VISRCBEG
 
 class CRenderer;
-typedef UPtr<CRenderer> PRenderer;
+typedef SUnique<CRenderer> PRenderer;
 
 class VIDECL CWorld
 {
@@ -55,13 +55,13 @@ public:
 	VIDECL VIREQOUT inline PUniformBuffer& GetConstantsBuffer(const UInt32& frameIndex) { return m_RendererConstantsBuffers.at(frameIndex); }
 	VIDECL          void Update(const Float32& dt);
 	VIDECL          void Clear();
-	VIDECL VIREQOUT static SPtr<CWorld> Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings = SWorldRendererSettings());
+	VIDECL VIREQOUT static SShared<CWorld> Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings = SWorldRendererSettings());
 private:
 	VIDECL          void OnGameObjectCreated(CGameObject* object);
 	VIDECL          void OnGameObjectDestroyed(CGameObject* object);
 };
 
-VIDECL typedef SPtr<CWorld> PWorld;
+VIDECL typedef SShared<CWorld> PWorld;
 
 VISRCEND
 

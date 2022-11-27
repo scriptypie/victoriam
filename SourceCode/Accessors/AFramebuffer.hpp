@@ -9,13 +9,11 @@
 
 VISRCBEG
 
-namespace Accessors
-{
-	class VIDECL Framebuffer
-	{
+namespace Accessors {
+
+	class VIDECL Framebuffer {
 	public:
-		VIDECL VIREQOUT inline static VkFramebuffer GetFramebuffer(const PFramebuffer& framebuffer)
-		{
+		VIDECL VIREQOUT inline static VkFramebuffer GetFramebuffer(const PFramebuffer& framebuffer) {
 			return CCast<CVulkanFramebuffer*>(framebuffer.get())->GetFramebuffer();
 		}
 	};

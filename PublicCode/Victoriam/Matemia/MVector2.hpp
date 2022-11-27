@@ -11,12 +11,14 @@
 VISRCBEG
 
 struct VIDECL SVector2 {
+	using Array2Type = ScalarArray<2>;
+
 	union {
-		ScalarArray<2> data = {};
+		Array2Type data = {};
 		struct {
 			union {
-				ScalarArray<2> xy;
-				ScalarArray<2> uv;
+				Array2Type xy;
+				Array2Type uv;
 				struct {
 					union {
 						ScalarType x, u;
@@ -29,16 +31,16 @@ struct VIDECL SVector2 {
 		};
 	};
 
-	VIDECL inline static    ScalarArray<2> Zero = { 0.0F,  0.0F };
-	VIDECL inline static    ScalarArray<2> One  = { 1.0F,  1.0F };
-	VIDECL inline static    ScalarArray<2> Up   = { 0.0F,  1.0F };
-	VIDECL inline static    ScalarArray<2> Right= { 1.0F,  0.0F };
-	VIDECL inline static    ScalarArray<2> Down = { 0.0F, -1.0F };
-	VIDECL inline static    ScalarArray<2> Left=  {-1.0F,  0.0F };
+	VIDECL inline static    Array2Type Zero = { 0.0F,  0.0F };
+	VIDECL inline static    Array2Type One  = { 1.0F,  1.0F };
+	VIDECL inline static    Array2Type Up   = { 0.0F,  1.0F };
+	VIDECL inline static    Array2Type Right= { 1.0F,  0.0F };
+	VIDECL inline static    Array2Type Down = { 0.0F, -1.0F };
+	VIDECL inline static    Array2Type Left = {-1.0F,  0.0F };
 
 	VIDECL inline ~SVector2() = default;
 	VIDECL inline  SVector2() : data() {}
-	VIDECL inline  SVector2(const ScalarArray<2>& other) : data(other) {}
+	VIDECL inline  SVector2(const Array2Type& other) : data(other) {}
 	VIDECL inline  SVector2(const ScalarType& v) : data(v, v) {}
 	VIDECL inline  SVector2(const ScalarType& x, const ScalarType& y) : data{x, y} {}
 	VIDECL inline  SVector2(const SVector2& other) : data(other.data) {}

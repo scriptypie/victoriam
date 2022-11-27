@@ -20,8 +20,8 @@ class VIDECL CCryptogen
 	VIDECL ECHashingAlgorithm  m_Algorithm     = {ECHashingAlgorithm::None };
 	VIDECL String              m_Buffer        = {};
 
-	VIDECL inline static constexpr UInt32  BUFFER_SIZE     = 0x40;
-	VIDECL inline static constexpr UInt32  BLOCK_SIZE      = 0x10;
+	VIDECL static SConstant<UInt32, 0x40> BUFFER_SIZE;
+	VIDECL static SConstant<UInt32, 0x10> BLOCK_SIZE;
 
 	struct VIDECL SMD5ALGCTX
 	{

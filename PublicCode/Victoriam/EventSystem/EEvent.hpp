@@ -21,12 +21,11 @@ enum class VIDECL ECEventType : UInt32
 	MouseMoved,         MouseButtonDown,    MouseButtonUp,          MouseScrolled
 };
 
-SignalDecl None                        = 0x00000000;
-SignalDecl EventCategoryApplication    = 0x00000001;
-SignalDecl EventCategoryInput          = 0x00000010;
-SignalDecl EventCategoryKeyboard       = 0x00000100;
-SignalDecl EventCategoryMouse          = 0x00001000;
-SignalDecl EventCategoryMouseButton    = 0x00010000;
+Constant<Signal, 0x00000001> EventCategoryApplication;
+Constant<Signal, 0x00000010> EventCategoryInput;
+Constant<Signal, 0x00000100> EventCategoryKeyboard;
+Constant<Signal, 0x00001000> EventCategoryMouse;
+Constant<Signal, 0x00010000> EventCategoryMouseButton;
 
 // Helper macros only for event system internal usage
 

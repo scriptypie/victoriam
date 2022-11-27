@@ -12,20 +12,18 @@
 VISRCBEG
 
 template<class T>
-using UPtr = std::unique_ptr<T>;
+using SUnique = std::unique_ptr<T>;
 
 template<class T, class ...Args>
-VIDECL inline constexpr UPtr<T> CreateUPtr(Args&&...args)
-{
-    return UPtr<T>(new T(std::forward<Args>(args)...));
+VIDECL inline constexpr SUnique<T> FCreateUnique(Args&&...args) {
+    return SUnique<T> (new T(std::forward<Args>(args)...));
 }
 
 template<class T>
-using SPtr = std::shared_ptr<T>;
+using SShared = std::shared_ptr<T>;
 
 template<class T, class ...Args>
-VIDECL inline constexpr SPtr<T> CreateSPtr(Args&&...args)
-{
+VIDECL inline constexpr SShared<T> FCreateShared(Args&&...args) {
     return std::make_shared<T>(std::forward<Args>(args)...);
 }
 

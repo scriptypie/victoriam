@@ -9,17 +9,14 @@
 
 VISRCBEG
 
-namespace Accessors
-{
-	class VIDECL DescriptorWriter
-	{
+namespace Accessors {
+
+	class VIDECL DescriptorWriter {
 	public:
-		VIDECL inline static void WriteBuffer(PDescriptorWriter& writer, const UInt32& binding, VkDescriptorBufferInfo* bufferInfo)
-		{
+		VIDECL inline static void WriteBuffer(PDescriptorWriter& writer, const UInt32& binding, VkDescriptorBufferInfo* bufferInfo) {
 			CCast<CVulkanDescriptorWriter*>(writer.get())->WriteBuffer(binding, bufferInfo);
 		}
-		VIDECL inline static void WriteImage(PDescriptorWriter& writer, const UInt32& binding, VkDescriptorImageInfo* imageInfo)
-		{
+		VIDECL inline static void WriteImage(PDescriptorWriter& writer, const UInt32& binding, VkDescriptorImageInfo* imageInfo) {
 			CCast<CVulkanDescriptorWriter*>(writer.get())->WriteImage(binding, imageInfo);
 		}
 	};

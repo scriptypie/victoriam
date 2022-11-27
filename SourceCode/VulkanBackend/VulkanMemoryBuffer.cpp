@@ -104,7 +104,8 @@ CVulkanMemoryBuffer::Create(PGraphicsContext &context,
                             const VkBufferUsageFlags &usageFlags,
 							const VkMemoryPropertyFlags &memoryPropertyFlags,
                             const VkDeviceSize &minOffsetAlignment) {
-	return CreateUPtr<CVulkanMemoryBuffer>(context, instanceSize, instanceCount, usageFlags, memoryPropertyFlags, minOffsetAlignment);
+	return FCreateUnique<CVulkanMemoryBuffer>(context, instanceSize, instanceCount, usageFlags, memoryPropertyFlags,
+	                                          minOffsetAlignment);
 }
 
 VISRCEND

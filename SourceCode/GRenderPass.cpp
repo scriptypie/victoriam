@@ -11,7 +11,7 @@ VISRCBEG
 PRenderPass CRenderPass::Create(Vi::PGraphicsContext &context, Vi::PSwapchain &swapchain,
                                 const Vi::SRenderPassCreateInfo &createInfo)
 {
-	return CreateUPtr<CVulkanRenderPass>(context, swapchain, createInfo);
+	return FCreateUnique<CVulkanRenderPass>(context, swapchain, createInfo);
 }
 
 VISRCEND

@@ -34,7 +34,7 @@ public:
 	template<class...T>
 	VIDECL VIREQOUT CTuple<T*...> Group()
 	{
-		return CreateTuple<T*...>(GetComponent<T>()...);
+		return FCreateTuple<T *...>(GetComponent<T>()...);
 	}
 	template<class...T>
 	VIDECL VIREQOUT Bool HasComponent() const

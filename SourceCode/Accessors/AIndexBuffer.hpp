@@ -9,13 +9,11 @@
 
 VISRCBEG
 
-namespace Accessors
-{
-	class VIDECL IndexBuffer
-	{
+namespace Accessors {
+
+	class VIDECL IndexBuffer {
 	public:
-	VIDECL VIREQOUT inline static VkDescriptorBufferInfo GetDescriptorBufferInfo(const PIndexBuffer& buffer, const VkDeviceSize& size = VK_WHOLE_SIZE, const VkDeviceSize& offset = {})
-		{
+	VIDECL VIREQOUT inline static VkDescriptorBufferInfo GetDescriptorBufferInfo(const PIndexBuffer& buffer, const VkDeviceSize& size = VK_WHOLE_SIZE, const VkDeviceSize& offset = {}) {
 			return CCast<CVulkanIndexBuffer*>(buffer.get())->GetDescriptorBufferInfo(size, offset);
 		}
 	};

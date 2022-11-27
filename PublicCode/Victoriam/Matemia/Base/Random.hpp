@@ -12,8 +12,8 @@ VISRCBEG
 namespace Functions
 {
 
-	VIDECL VIREQOUT Float32 FRandomF32(const Float32& max = (Float32)Constant::INF, const Float32& min = (Float32)-Constant::INF);
-	VIDECL VIREQOUT Float64 FRandomF64(const Float64& max = (Float64)Constant::INF, const Float64& min = (Float64)-Constant::INF);
+	VIDECL VIREQOUT Float32 FRandomF32(const Float32& max = (Float32)CONSTANT::INF, const Float32& min = (Float32)-CONSTANT::INF);
+	VIDECL VIREQOUT Float64 FRandomF64(const Float64& max = (Float64)CONSTANT::INF, const Float64& min = (Float64)-CONSTANT::INF);
 	VIDECL VIREQOUT Int8    FRandomI08(const Int8& max = (Int8)127, const Int8& min = (Int8)-128);
 	VIDECL VIREQOUT UInt8   FRandomU08(const UInt8& max = (UInt8)255, const UInt8& min = (UInt8)0);
 	VIDECL VIREQOUT Int16   FRandomI16(const Int16& max = (Int16)32767, const Int16& min = (Int16)-32768);

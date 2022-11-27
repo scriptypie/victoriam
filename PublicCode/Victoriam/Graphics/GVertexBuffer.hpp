@@ -14,12 +14,12 @@ VISRCBEG
 class VIDECL CVertexBuffer : public CBuffer
 {
 public:
-	VIDECL virtual ~CVertexBuffer() override = default;
+	VIDECL ~CVertexBuffer() override = default;
 
-	VIDECL VIREQOUT static SPtr<CVertexBuffer> Create(PGraphicsContext& context, const CList<SVertex>& vertices);
+	VIDECL VIREQOUT static SShared<CVertexBuffer> Create(PGraphicsContext& context, const CList<SVertex>& vertices);
 };
 
-VIDECL typedef SPtr<CVertexBuffer> PVertexBuffer;
+VIDECL typedef SShared<CVertexBuffer> PVertexBuffer;
 
 VIDECL static PVertexBuffer DefaultVertexBuffer;
 

@@ -15,8 +15,8 @@
 
 VISRCBEG
 
-SignalDecl BindPointGraphics = 0;
-SignalDecl BindPointCompute = 1;
+Constant<Signal, 0x00000000> BindPointGraphics;
+Constant<Signal, 0x00000001> BindPointCompute;
 
 /**
  *
@@ -29,8 +29,7 @@ public:
 	VIDECL virtual void BindCommandBuffer(const SCommandBuffer& buffer) const = 0;
 
 	template<class T>
-	VIDECL inline void PushSimpleData(const SCommandBuffer& buffer, const UInt32& offset, const T* data)
-	{
+	VIDECL inline void PushSimpleData(const SCommandBuffer& buffer, const UInt32& offset, const T* data) {
 		PushSimpleData(buffer, offset, data, sizeof(T));
 	}
 
@@ -38,15 +37,14 @@ public:
 	VIDECL virtual void BindConstantsDescriptorSet(const Signal& bindPoint, const SFrameInfo& frameInfo) const = 0;
 
 	template<class T>
-	VIDECL VIREQOUT inline static UPtr<CPipeline> CreateFor(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo)
-	{
+	VIDECL VIREQOUT inline static SUnique<CPipeline> CreateFor(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo) {
 		return Create(context, renderPass, setLayout, createInfo, sizeof(T));
 	}
 
-	VIDECL VIREQOUT static UPtr<CPipeline> Create(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
+	VIDECL VIREQOUT static SUnique<CPipeline> Create(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
 };
 
-VIDECL typedef UPtr<CPipeline> PPipeline;
+VIDECL typedef SUnique<CPipeline> PPipeline;
 
 VISRCEND
 

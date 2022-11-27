@@ -13,7 +13,7 @@ void SCompressor::Compress(String &buffer, const Signal &algorithm) {
 		char* out = new char[buffer.size()]{};
 		auto size = CLZ4Backend::Compress(CCast<char*>(buffer.data()), out, buffer.size());
 		const String newBuffer(out, size);
-		delete[] out; // avoiding memory leak
+		delete[] out; // TODO: avoiding memory leak???
 		buffer = newBuffer;
 	}
 }

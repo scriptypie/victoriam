@@ -9,7 +9,7 @@
 VISRCBEG
 
 PUniformBuffer CUniformBuffer::Create(PGraphicsContext& context, const UInt32& count) {
-	return CreateUPtr<CVulkanUniformBuffer>(context, count);
+	return FCreateUnique<CVulkanUniformBuffer>(context, count);
 }
 
 VISRCEND

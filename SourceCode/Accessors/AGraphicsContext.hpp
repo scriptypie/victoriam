@@ -50,28 +50,22 @@ namespace Accessors {
 		VIDECL static VkQueue GetPresentQueue(const PGraphicsContext &context) {
 			return CCast<CVulkanGraphicsContext*>(context.get())->GetPresentQueue();
 		}
-		VIDECL static SQueueFamilyIndices FindQueueFamilies(const PGraphicsContext& context)
-		{
+		VIDECL static SQueueFamilyIndices FindQueueFamilies(const PGraphicsContext& context) {
 			return CCast<CVulkanGraphicsContext*>(context.get())->FindQueueFamilies(CCast<CVulkanGraphicsContext*>(context.get())->m_PhysicalDevice);
 		}
-		VIDECL static void CreateBuffer(const PGraphicsContext& context, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer &buffer, VkDeviceMemory &bufferMemory)
-		{
+		VIDECL static void CreateBuffer(const PGraphicsContext& context, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer &buffer, VkDeviceMemory &bufferMemory) {
 			CCast<CVulkanGraphicsContext*>(context.get())->CreateBuffer(size, usage, properties, buffer, bufferMemory);
 		}
-		VIDECL static void CopyBuffer(const PGraphicsContext& context, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
-		{
+		VIDECL static void CopyBuffer(const PGraphicsContext& context, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
 			CCast<CVulkanGraphicsContext*>(context.get())->CopyBuffer(srcBuffer, dstBuffer, size);
 		}
-		VIDECL static void CopyBufferToImage(const PGraphicsContext& context, VkBuffer buffer, VkImage image, UInt32 width, UInt32 height, UInt32 layerCount)
-		{
+		VIDECL static void CopyBufferToImage(const PGraphicsContext& context, VkBuffer buffer, VkImage image, UInt32 width, UInt32 height, UInt32 layerCount) {
 			CCast<CVulkanGraphicsContext*>(context.get())->CopyBufferToImage(buffer, image, width, height, layerCount);
 		}
-		VIDECL static void CreateImageWithInfo(const PGraphicsContext& context, const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkDeviceSize memoryOffset, VkImage &image, VkDeviceMemory &imageMemory)
-		{
+		VIDECL static void CreateImageWithInfo(const PGraphicsContext& context, const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkDeviceSize memoryOffset, VkImage &image, VkDeviceMemory &imageMemory) {
 			CCast<CVulkanGraphicsContext*>(context.get())->CreateImageWithInfo(imageInfo, properties, memoryOffset, image, imageMemory);
 		}
-		VIDECL static VkFormat FindSupportedFormat(const PGraphicsContext& context, const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
-		{
+		VIDECL static VkFormat FindSupportedFormat(const PGraphicsContext& context, const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
 			return CCast<CVulkanGraphicsContext*>(context.get())->FindSupportedFormat(candidates, tiling, features);
 		}
 

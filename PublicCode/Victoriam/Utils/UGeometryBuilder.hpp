@@ -9,7 +9,6 @@
 #include <Victoriam/Graphics/Structs/GGeometryDataCreateInfo.hpp>
 #include <Victoriam/Graphics/GGeometryData.hpp>
 #include <Victoriam/Graphics/GRenderer.hpp>
-#include <Victoriam/Utils/UJobWorker.hpp>
 
 VISRCBEG
 

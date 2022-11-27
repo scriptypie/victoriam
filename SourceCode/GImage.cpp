@@ -8,8 +8,8 @@
 
 VISRCBEG
 
-PImage CImage::Create2D(PGraphicsContext &context, const SImageCreateInfo &createInfo) {
-	return CreateSPtr<CVulkanImage>(context, createInfo);
+PImage CImage::Create(PGraphicsContext &context, const SImageCreateInfo &createInfo) {
+	return FCreateShared<CVulkanImage>(context, createInfo);
 }
 
 VISRCEND

@@ -18,16 +18,16 @@ public:
 	VIDECL virtual ~CGraphicsContext() = default;
 
 	VIDECL virtual void WaitReleaseResources() = 0;
-	VIDECL virtual void GraphicsAction(ImmediateGraphicsActionFN fn) = 0;
+	VIDECL virtual void Execute(ImmediateGraphicsActionFN fn) = 0;
 
 	VIDECL          virtual void CmdCreate(const UInt32& imageCount) = 0;
 	VIDECL VIREQOUT virtual SCommandBuffer CmdBegin(const UInt32& imageIndex) const = 0;
 	VIDECL          virtual void CmdEnd(const SCommandBuffer& cmdBuffer) const = 0;
 
-	VIDECL VIREQOUT static SPtr<CGraphicsContext> Create(const SPtr<CWindow>& window);
+	VIDECL VIREQOUT static SShared<CGraphicsContext> Create(const SShared<CWindow>& window);
 };
 
-VIDECL typedef SPtr<CGraphicsContext> PGraphicsContext;
+VIDECL typedef SShared<CGraphicsContext> PGraphicsContext;
 
 VISRCEND
 
