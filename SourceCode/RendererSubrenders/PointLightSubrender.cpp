@@ -48,8 +48,7 @@ void CPointLightSubrender::Pass(SFrameInfo &frameInfo, const PWorld &world) {
 	m_Pipeline->BindConstantsDescriptorSet(BindPointGraphics, frameInfo);
 
 	auto plObjects = world->AllWith<SComponentTransform, SComponentPointLight>();
-	for (auto plObj : plObjects)
-	{
+	for (auto plObj : plObjects) {
 		auto [componentTransform, componentPointLight] = plObj->Group<SComponentTransform, SComponentPointLight>();
 
 		SPointLightData plData = {};

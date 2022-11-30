@@ -90,4 +90,21 @@ void CVulkanImage::CreateVulkanImageView(const SImageCreateInfo &createInfo) {
 		ViAbort("Failed to create image view!");
 }
 
+CVulkanImage::CVulkanImage(PGraphicsContext &context, const PPicture &picture, const SImageCreateInfo &createInfo) : m_Context(context) {
+	m_Extent = createInfo.Extent;
+	m_Type = createInfo.Type;
+
+	CreateVulkanImage(createInfo);
+	if (createInfo.bCreateView) {
+		CreateVulkanImageView(createInfo);
+		if (picture) {
+
+		}
+	}
+}
+
+void CVulkanImage::SetPicture(const PPicture &picture) {
+
+}
+
 VISRCEND

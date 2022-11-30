@@ -7,22 +7,17 @@
 
 VISRCBEG
 
-CGameObject::CGameObject(CWorld *owner)
-{
+CGameObject::CGameObject(const PWorld& owner) {
 	m_Owner = owner;
-
 	m_ID = m_Owner->m_Registry.size();
-	m_Owner->OnGameObjectCreated(this);
 }
 
-UID CGameObject::GetUID() const
-{
+UID CGameObject::GetUID() const {
 	return m_ID;
 }
 
-void CGameObject::Destroy()
-{
-	m_Owner->OnGameObjectDestroyed(this);
+void CGameObject::Destroy() {
+	m_Owner->OnGameObjectDestroyed(shared_from_this());
 }
 
 VISRCEND

@@ -23,16 +23,19 @@ class VIDECL CVulkanImage : public CImage {
 	Signal m_Type = {};
 public:
 	VIDECL  CVulkanImage(PGraphicsContext& context, const SImageCreateInfo& createInfo);
+	VIDECL  CVulkanImage(PGraphicsContext &context, const PPicture &picture, const SImageCreateInfo &createInfo);
 	VIDECL ~CVulkanImage() override;
 
 	VIDECL VIREQOUT SExtent3D GetExtent() const override;
 	VIDECL VIREQOUT UInt32    GetWidth()  const override;
 	VIDECL VIREQOUT UInt32    GetHeight() const override;
 	VIDECL VIREQOUT Signal    GetType()   const override;
+	VIDECL void SetPicture(const PPicture& picture) override;
 
 private:
 	void CreateVulkanImage(const SImageCreateInfo& createInfo);
 	void CreateVulkanImageView(const SImageCreateInfo& createInfo);
+	void CopyPictureToImage(const PPicture& picture);
 private:
 	VIDECL VIREQOUT inline VkImage GetImage() { return m_Image; }
 	VIDECL VIREQOUT inline VkImageView GetImageView() { return m_View; }

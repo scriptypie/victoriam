@@ -62,6 +62,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	{
 		auto monkey = m_World->CreateGameObject("TestMonkey");
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
+		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		totalPoly += monkeyGeometryData.GetPolycount();
 		auto transform = monkey->AddComponent<SComponentTransform>();
 		auto sc = CRandom<Float32>::Range(1.0F, 20.0F);

@@ -8,6 +8,7 @@
 #include <Victoriam/Graphics/Structs/GImageCreateInfo.hpp>
 #include <Victoriam/Graphics/GGraphicsContext.hpp>
 #include <Victoriam/Graphics/GImageView.hpp>
+#include <Victoriam/Graphics/GPicture.hpp>
 
 VISRCBEG
 
@@ -19,8 +20,10 @@ public:
 	VIDECL VIREQOUT virtual UInt32    GetWidth()  const = 0;
 	VIDECL VIREQOUT virtual UInt32    GetHeight() const = 0;
 	VIDECL VIREQOUT virtual Signal    GetType()   const = 0;
+	VIDECL          virtual void SetPicture(const PPicture& picture) = 0;
 
 	VIDECL VIREQOUT static SShared<CImage> Create(PGraphicsContext& context, const SImageCreateInfo& createInfo);
+	VIDECL VIREQOUT static SShared<CImage> Create(PGraphicsContext& context, const PPicture& picture, const SImageCreateInfo& createInfo);
 };
 
 VIDECL typedef SShared<CImage> PImage;

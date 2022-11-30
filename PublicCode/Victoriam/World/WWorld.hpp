@@ -15,24 +15,30 @@ VISRCBEG
 class CRenderer;
 typedef SUnique<CRenderer> PRenderer;
 
-class VIDECL CWorld
+class VIDECL CWorld : public std::enable_shared_from_this<CWorld>
 {
 	friend class CGameObject;
 
-	CList<CGameObject*> m_Registry = {};
+	CList<PGameObject> m_Registry = {};
 	SWorldRendererSettings m_RendererSettings = {};
 	CList<PUniformBuffer> m_RendererConstantsBuffers = {};
 public:
-	VIDECL VIREQOUT CGameObject* CreateGameObject();
-	VIDECL VIREQOUT CGameObject* CreateGameObject(const String& name);
-	VIDECL          void DestroyGameObject(CGameObject* object);
-	VIDECL VIREQOUT CGameObject* FindGameObjectByUID(const UID& id);
-	VIDECL VIREQOUT CGameObject* FindGameObjectByName(const String& name);
+	VIDECL VIREQOUT PGameObject CreateGameObject();
+	VIDECL VIREQOUT PGameObject CreateGameObject(const String& name);
+	VIDECL          void DestroyGameObject(const PGameObject& object);
+	VIDECL VIREQOUT PGameObject FindGameObjectByUID(const UID& id);
+	VIDECL VIREQOUT PGameObject FindGameObjectByName(const String& name);
+
+	VIDECL VIREQOUT PGameObject CreateChild(const PGameObject& parent);
+	VIDECL void AddChild(const PGameObject& parent, const PGameObject& child);
+	VIDECL void AddChildren(const PGameObject& parent, const CList<PGameObject>& children);
+	VIDECL void RemoveChildren(const PGameObject& parent);
+	VIDECL void RemoveChildAt(const PGameObject& parent, const UInt32& index);
 
 	template<class...T>
-	VIDECL VIREQOUT CList<CGameObject*> AllWith()
+	VIDECL VIREQOUT CList<PGameObject> AllWith()
 	{
-		CList<CGameObject*> result;
+		CList<PGameObject> result;
 
 		for (auto obj : m_Registry)
 			if ((obj->HasComponent<T>() && ...))
@@ -42,7 +48,7 @@ public:
 	}
 
 	template<class...T>
-	VIDECL CGameObject* OneWith()
+	VIDECL PGameObject OneWith()
 	{
 		for (auto obj : m_Registry)
 			if ((obj->HasComponent<T>() && ...))
@@ -50,15 +56,15 @@ public:
 		return nullptr;
 	}
 
-	VIDECL          explicit CWorld(PRenderer& renderer, const SWorldRendererSettings& rendererSettings);
+	VIDECL          explicit CWorld(PRenderer& renderer, SWorldRendererSettings  rendererSettings);
 	VIDECL VIREQOUT inline SWorldRendererSettings& GetRendererSettings() { return m_RendererSettings; }
 	VIDECL VIREQOUT inline PUniformBuffer& GetConstantsBuffer(const UInt32& frameIndex) { return m_RendererConstantsBuffers.at(frameIndex); }
 	VIDECL          void Update(const Float32& dt);
 	VIDECL          void Clear();
 	VIDECL VIREQOUT static SShared<CWorld> Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings = SWorldRendererSettings());
 private:
-	VIDECL          void OnGameObjectCreated(CGameObject* object);
-	VIDECL          void OnGameObjectDestroyed(CGameObject* object);
+	VIDECL          void OnGameObjectCreated(const PGameObject& object);
+	VIDECL          void OnGameObjectDestroyed(const PGameObject& object);
 };
 
 VIDECL typedef SShared<CWorld> PWorld;

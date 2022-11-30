@@ -17,7 +17,6 @@
 #include <Victoriam/Core/CUtils.hpp>
 #include <Victoriam/Core/Containers/CArray.hpp>
 #include <Victoriam/Core/Containers/CConstant.hpp>
-#include <Victoriam/Core/Containers/CToggle.hpp>
 #include <Victoriam/Core/CNumerics.hpp>
 #include <Victoriam/Core/CLog.hpp>
 #include <Victoriam/Core/CFlags.hpp>

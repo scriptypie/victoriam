@@ -6,34 +6,32 @@
 #include <Victoriam/World/WGameObject.hpp>
 #include <Victoriam/IO/IOInput.hpp>
 #include <Victoriam/Graphics/GRenderer.hpp>
+#include <utility>
 
 VISRCBEG
 
-CGameObject* CWorld::CreateGameObject()
-{
-	return new CGameObject(this);
+PGameObject CWorld::CreateGameObject() {
+	auto object = FCreateShared<CGameObject>(shared_from_this());
+	OnGameObjectCreated(object);
+	return object;
 }
 
-CGameObject* CWorld::CreateGameObject(const String &name)
-{
-	CGameObject* obj = CreateGameObject();
+PGameObject CWorld::CreateGameObject(const String &name) {
+	auto obj = CreateGameObject();
 	auto nc = obj->AddComponent<SComponentName>();
 	nc->Name = name;
 	return obj;
 }
 
-void CWorld::DestroyGameObject(CGameObject* object)
-{
+void CWorld::DestroyGameObject(const PGameObject& object) {
 	object->Destroy();
 }
-void CWorld::OnGameObjectCreated(CGameObject *object)
-{
+void CWorld::OnGameObjectCreated(const PGameObject& object) {
 	m_Registry.push_back(object);
 }
 
 
-void CWorld::OnGameObjectDestroyed(CGameObject *object)
-{
+void CWorld::OnGameObjectDestroyed(const PGameObject& object) {
 	for (auto it = m_Registry.begin(); it != m_Registry.end(); it++)
 		if ((*it)->GetUID() == object->GetUID()) {
 			m_Registry.erase(it);
@@ -41,9 +39,8 @@ void CWorld::OnGameObjectDestroyed(CGameObject *object)
 		}
 }
 
-CGameObject* CWorld::FindGameObjectByUID(const UID &id)
-{
-	Bool found = std::all_of(m_Registry.begin(), m_Registry.end(), [&](CGameObject* obj) -> Bool
+PGameObject CWorld::FindGameObjectByUID(const UID &id) {
+	auto found = std::all_of(m_Registry.begin(), m_Registry.end(), [&](const PGameObject& obj) -> Bool
 	{
 		return obj->GetUID() == id;
 	});
@@ -51,24 +48,21 @@ CGameObject* CWorld::FindGameObjectByUID(const UID &id)
 		return m_Registry.at(id);
 	else
 	{
-		ViLog("GameObject not found. Creating new one...\n");
-		return CreateGameObject();
+		ViLog("GameObject not found!\n");
+		return nullptr;
 	}
 }
 
-SShared<CWorld> CWorld::Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings) {
+PWorld CWorld::Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings) {
 	return FCreateShared<CWorld>(renderer, rendererSettings);
 }
 
-void CWorld::Clear()
-{
+void CWorld::Clear() {
 	m_Registry.clear();
 }
 
-CGameObject *CWorld::FindGameObjectByName(const String &name)
-{
-	for (auto obj : m_Registry)
-	{
+PGameObject CWorld::FindGameObjectByName(const String &name) {
+	for (auto obj : m_Registry) {
 		auto componentName = obj->GetComponent<SComponentName>();
 		if (componentName && componentName->Name == name)
 			return obj;
@@ -77,18 +71,42 @@ CGameObject *CWorld::FindGameObjectByName(const String &name)
 	return CreateGameObject(name);
 }
 
-void CWorld::Update(const Float32 &dt)
-{
+void CWorld::Update(const Float32 &dt) {}
 
-}
-
-CWorld::CWorld(PRenderer& renderer, const SWorldRendererSettings &rendererSettings) : m_RendererSettings(rendererSettings), m_RendererConstantsBuffers(renderer->GetSwapchain()->GetMaxFramesInFlight())
-{
-	for (auto& m_RendererConstantsBuffer : m_RendererConstantsBuffers)
-	{
+CWorld::CWorld(PRenderer& renderer, SWorldRendererSettings  rendererSettings)
+	: m_RendererSettings(FMove(rendererSettings)),
+	  m_RendererConstantsBuffers(renderer->GetSwapchain()->GetMaxFramesInFlight()) {
+	for (auto& m_RendererConstantsBuffer : m_RendererConstantsBuffers) {
 		m_RendererConstantsBuffer = renderer->CreateUniformBuffer();
 		m_RendererConstantsBuffer->Bind(nullptr); // command buffers on binding uniform buffers are unnecessary.
 	}
+}
+
+PGameObject CWorld::CreateChild(const PGameObject &parent) {
+	auto child = CreateGameObject();
+	child->m_Parent = parent.get();
+	parent->m_Children.emplace_back(child.get());
+	return child;
+}
+
+void CWorld::RemoveChildren(const PGameObject &parent) {
+	for (auto& child : parent->m_Children)
+		child->Destroy();
+	parent->m_Children.clear();
+}
+
+void CWorld::RemoveChildAt(const PGameObject &parent, const UInt32 &index) {
+	if (parent->m_Children.size() > index)
+		parent->m_Children[index]->Destroy();
+}
+
+void CWorld::AddChild(const PGameObject &parent, const PGameObject &child) {
+	parent->m_Children.push_back(child.get());
+}
+
+void CWorld::AddChildren(const PGameObject &parent, const CList<PGameObject> &children) {
+	for (auto& child : children)
+		parent->m_Children.push_back(child.get());
 }
 
 VISRCEND
