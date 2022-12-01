@@ -42,7 +42,7 @@ namespace
 
 }
 
-CVulkanGraphicsContext::CVulkanGraphicsContext(const SShared<CWindow> &window)
+CVulkanGraphicsContext::CVulkanGraphicsContext(const CShared<CWindow> &window)
 	: m_Window(window)
 {
 	CreateGraphicsInstance();
@@ -469,7 +469,7 @@ UInt32 CVulkanGraphicsContext::FindMemoryType(UInt32 typeFilter, VkMemoryPropert
 	for (UInt32 i = 0; i < memProperties.memoryTypeCount; i++) if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties)
 		return i;
 
-	ViAbort("Failed to find suitable memory type!");
+	ViAbort("Failed to find suitable memory Type!");
 }
 
 VkFormat CVulkanGraphicsContext::FindSupportedFormat(const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)

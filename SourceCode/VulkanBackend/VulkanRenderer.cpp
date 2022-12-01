@@ -94,8 +94,8 @@ void CVulkanRenderer::Shutdown(const PWorld& world)
 		rrc->Geometry.Release();
 	}
 
-	DefaultVertexBuffer.reset();
-	DefaultIndexBuffer.reset();
+	DefaultVertexBuffer.Reset();
+	DefaultIndexBuffer.Reset();
 
 	world->Clear();
 }

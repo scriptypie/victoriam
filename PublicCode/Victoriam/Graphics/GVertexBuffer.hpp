@@ -16,10 +16,10 @@ class VIDECL CVertexBuffer : public CBuffer
 public:
 	VIDECL ~CVertexBuffer() override = default;
 
-	VIDECL VIREQOUT static SShared<CVertexBuffer> Create(PGraphicsContext& context, const CList<SVertex>& vertices);
+	VIDECL VIREQOUT static CShared<CVertexBuffer> Create(PGraphicsContext& context, const CList<SVertex>& vertices);
 };
 
-VIDECL typedef SShared<CVertexBuffer> PVertexBuffer;
+VIDECL typedef CShared<CVertexBuffer> PVertexBuffer;
 
 VIDECL static PVertexBuffer DefaultVertexBuffer;
 

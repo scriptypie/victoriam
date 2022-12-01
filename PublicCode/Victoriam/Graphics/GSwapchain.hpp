@@ -6,14 +6,12 @@
 #define VICTORIAM_GSWAPCHAIN_HPP
 
 #include <Victoriam/Graphics/GGraphicsContext.hpp>
+#include <Victoriam/Graphics/GFramebuffer.hpp>
 #include <Victoriam/Graphics/GWindow.hpp>
 
 VISRCBEG
 
 // Forward declarations
-
-class CFramebuffer;
-typedef SShared<CFramebuffer> PFramebuffer;
 
 class CRenderPass;
 VIDECL typedef SUnique<CRenderPass> PRenderPass;

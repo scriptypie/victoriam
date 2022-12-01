@@ -8,11 +8,11 @@
 VISRCBEG
 
 PImage CImage::Create(PGraphicsContext &context, const SImageCreateInfo &createInfo) {
-	return FCreateShared<CVulkanImage>(context, createInfo);
+	return FMakeShared<CVulkanImage>(context, createInfo);
 }
 
 PImage CImage::Create(PGraphicsContext &context, const PPicture &picture, const SImageCreateInfo &createInfo) {
-	return FCreateShared<CVulkanImage>(context, picture, createInfo);
+	return FMakeShared<CVulkanImage>(context, picture, createInfo);
 }
 
 VISRCEND

@@ -3,14 +3,17 @@ project(victoriam)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(PublicCode /opt/homebrew/Cellar/glfw/3.3.8/include ThirdParty /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
+set(GLFW_INCLUDE /opt/homebrew/Cellar/glfw/3.3.8/include)
+set(VULKAN_INCLUDE /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
+
+include_directories(PublicCode ${GLFW_INCLUDE} ${VULKAN_INCLUDE} ThirdParty)
 
 set(SOURCE_FILES
         PublicCode/Victoriam/Application/AAppState.hpp
         PublicCode/Victoriam/Application/AAppStateChain.hpp
         PublicCode/Victoriam/Application/AArgumentLineTool.hpp
-        PublicCode/Victoriam/Application/ARuntimeInstanceCreateInfo.hpp
         PublicCode/Victoriam/Application/ARuntimeInstance.hpp
+        PublicCode/Victoriam/Application/ARuntimeInstanceCreateInfo.hpp
         PublicCode/Victoriam/Application/AStartPoint.hpp
         PublicCode/Victoriam/Application/AStartPoint.hpp
         PublicCode/Victoriam/Core/CBase.hpp
@@ -19,8 +22,11 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Core/CLog.hpp
         PublicCode/Victoriam/Core/CMacroDefinitions.hpp
         PublicCode/Victoriam/Core/CNumerics.hpp
+        PublicCode/Victoriam/Core/CString.hpp
         PublicCode/Victoriam/Core/CUtils.hpp
         PublicCode/Victoriam/Core/Containers/CArray.hpp
+        PublicCode/Victoriam/Core/Containers/CConstant.hpp
+        PublicCode/Victoriam/Core/Memory/MShared.hpp
         PublicCode/Victoriam/Core/Memory/MSmartPointers.hpp
         PublicCode/Victoriam/Core/Memory/MStandardAllocator.hpp
         PublicCode/Victoriam/Core/Memory/MUtils.hpp
@@ -37,7 +43,10 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Graphics/GFramebuffer.hpp
         PublicCode/Victoriam/Graphics/GGeometryData.hpp
         PublicCode/Victoriam/Graphics/GGraphicsContext.hpp
+        PublicCode/Victoriam/Graphics/GImage.hpp
+        PublicCode/Victoriam/Graphics/GImageView.hpp
         PublicCode/Victoriam/Graphics/GIndexBuffer.hpp
+        PublicCode/Victoriam/Graphics/GPicture.hpp
         PublicCode/Victoriam/Graphics/GPipeline.hpp
         PublicCode/Victoriam/Graphics/GRenderPass.hpp
         PublicCode/Victoriam/Graphics/GRenderSubrender.hpp
@@ -51,7 +60,10 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Graphics/Structs/GFrameInfo.hpp
         PublicCode/Victoriam/Graphics/Structs/GFramebufferCreateInfo.hpp
         PublicCode/Victoriam/Graphics/Structs/GGeometryDataCreateInfo.hpp
+        PublicCode/Victoriam/Graphics/Structs/GImageCreateInfo.hpp
+        PublicCode/Victoriam/Graphics/Structs/GImageViewCreateInfo.hpp
         PublicCode/Victoriam/Graphics/Structs/GMaterialData.hpp
+        PublicCode/Victoriam/Graphics/Structs/GPictureMetrics.hpp
         PublicCode/Victoriam/Graphics/Structs/GPipelineCreateInfo.hpp
         PublicCode/Victoriam/Graphics/Structs/GPointLightsData.hpp
         PublicCode/Victoriam/Graphics/Structs/GRenderPassCreateInfo.hpp
@@ -60,11 +72,14 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Graphics/Structs/GVertex.hpp
         PublicCode/Victoriam/Graphics/Structs/GWindowCreateInfo.hpp
         PublicCode/Victoriam/Graphics/Structs/GWorldRendererSettings.hpp
+        PublicCode/Victoriam/IO/IO.hpp
+        PublicCode/Victoriam/IO/IOFile.hpp
         PublicCode/Victoriam/IO/IOInput.hpp
         PublicCode/Victoriam/IO/IOKeycode.hpp
         PublicCode/Victoriam/IO/IOMousecode.hpp
         PublicCode/Victoriam/IO/IOPadaxis.hpp
         PublicCode/Victoriam/IO/IOPadcode.hpp
+        PublicCode/Victoriam/IO/IOStream.hpp
         PublicCode/Victoriam/Matemia/Base/Base.hpp
         PublicCode/Victoriam/Matemia/Base/Random.hpp
         PublicCode/Victoriam/Matemia/Base/Scalar.hpp
@@ -73,6 +88,7 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Matemia/Bounding/Volume.hpp
         PublicCode/Victoriam/Matemia/Common/Functions.hpp
         PublicCode/Victoriam/Matemia/Common/Hash.hpp
+        PublicCode/Victoriam/Matemia/MExtent.hpp
         PublicCode/Victoriam/Matemia/MFrustum.hpp
         PublicCode/Victoriam/Matemia/MMath.hpp
         PublicCode/Victoriam/Matemia/MMatrix4.hpp
@@ -84,10 +100,10 @@ set(SOURCE_FILES
         PublicCode/Victoriam/Matemia/MVector4.hpp
         PublicCode/Victoriam/Utils/UCompression.hpp
         PublicCode/Victoriam/Utils/UCryptogen.hpp
-        PublicCode/Victoriam/IO/IOFile.hpp
         PublicCode/Victoriam/Utils/UGeometryBuilder.hpp
         PublicCode/Victoriam/Utils/UGeometryPacker.hpp
         PublicCode/Victoriam/Utils/UHash.hpp
+        PublicCode/Victoriam/Utils/UPathTracker.hpp
         PublicCode/Victoriam/Utils/UShaderCooker.hpp
         PublicCode/Victoriam/Utils/UTimestep.hpp
         PublicCode/Victoriam/World/Components/ComponentBase.hpp
@@ -105,6 +121,7 @@ set(SOURCE_FILES
         SourceCode/Accessors/ADescriptorWriter.hpp
         SourceCode/Accessors/AFramebuffer.hpp
         SourceCode/Accessors/AGraphicsContext.hpp
+        SourceCode/Accessors/AImage.hpp
         SourceCode/Accessors/AIndexBuffer.hpp
         SourceCode/Accessors/ARenderPass.hpp
         SourceCode/Accessors/ASwapchain.hpp
@@ -120,7 +137,11 @@ set(SOURCE_FILES
         SourceCode/VulkanBackend/VulkanDescriptorWriter.hpp
         SourceCode/VulkanBackend/VulkanFramebuffer.hpp
         SourceCode/VulkanBackend/VulkanGraphicsContext.hpp
+        SourceCode/VulkanBackend/VulkanImage.hpp
+        SourceCode/VulkanBackend/VulkanImageView.hpp
+        SourceCode/VulkanBackend/VulkanIndexBuffer.hpp
         SourceCode/VulkanBackend/VulkanMemoryBuffer.hpp
+        SourceCode/VulkanBackend/VulkanPicture.hpp
         SourceCode/VulkanBackend/VulkanPipeline.hpp
         SourceCode/VulkanBackend/VulkanRenderPass.hpp
         SourceCode/VulkanBackend/VulkanRenderer.hpp
@@ -143,8 +164,11 @@ set(SOURCE_FILES
         SourceCode/GFramebuffer.cpp
         SourceCode/GGeometryData.cpp
         SourceCode/GGraphicsContext.cpp
+        SourceCode/GImage.cpp
+        SourceCode/GImageView.cpp
         SourceCode/GIndexBuffer.cpp
         SourceCode/GLFWWindow.cpp
+        SourceCode/GPicture.cpp
         SourceCode/GPipeline.cpp
         SourceCode/GRenderPass.cpp
         SourceCode/GRenderSubrender.cpp
@@ -155,6 +179,7 @@ set(SOURCE_FILES
         SourceCode/GVertexBuffer.cpp
         SourceCode/GWindow.cpp
         SourceCode/IOInput.cpp
+        SourceCode/IOStream.cpp
         SourceCode/Matemia/AABB.cpp
         SourceCode/Matemia/MatrixFunctions.cpp
         SourceCode/Matemia/QuaternionFunctions.cpp
@@ -167,15 +192,18 @@ set(SOURCE_FILES
         SourceCode/UFile.cpp
         SourceCode/UGeometryBuilder.cpp
         SourceCode/UGeometryPacker.cpp
+        SourceCode/UPathTracker.cpp
         SourceCode/UShaderCooker.cpp
         SourceCode/VulkanBackend/VulkanDescriptorPool.cpp
         SourceCode/VulkanBackend/VulkanDescriptorSetLayout.cpp
         SourceCode/VulkanBackend/VulkanDescriptorWriter.cpp
         SourceCode/VulkanBackend/VulkanFramebuffer.cpp
         SourceCode/VulkanBackend/VulkanGraphicsContext.cpp
+        SourceCode/VulkanBackend/VulkanImage.cpp
+        SourceCode/VulkanBackend/VulkanImageView.cpp
         SourceCode/VulkanBackend/VulkanIndexBuffer.cpp
-        SourceCode/VulkanBackend/VulkanIndexBuffer.hpp
         SourceCode/VulkanBackend/VulkanMemoryBuffer.cpp
+        SourceCode/VulkanBackend/VulkanPicture.cpp
         SourceCode/VulkanBackend/VulkanPipeline.cpp
         SourceCode/VulkanBackend/VulkanRenderPass.cpp
         SourceCode/VulkanBackend/VulkanRenderer.cpp
@@ -184,7 +212,9 @@ set(SOURCE_FILES
         SourceCode/VulkanBackend/VulkanVertexBuffer.cpp
         SourceCode/WGameObject.cpp
         SourceCode/WWorld.cpp
-        PublicCode/Victoriam/IO/IO.hpp PublicCode/Victoriam/IO/IOStream.hpp SourceCode/IOStream.cpp PublicCode/Victoriam/Core/CString.hpp PublicCode/Victoriam/Graphics/Structs/GImageCreateInfo.hpp PublicCode/Victoriam/Matemia/MExtent.hpp PublicCode/Victoriam/Graphics/GImage.hpp SourceCode/GImage.cpp SourceCode/VulkanBackend/VulkanImage.cpp SourceCode/VulkanBackend/VulkanImage.hpp SourceCode/Accessors/AImage.hpp PublicCode/Victoriam/Graphics/GImageView.hpp PublicCode/Victoriam/Graphics/Structs/GImageViewCreateInfo.hpp SourceCode/GImageView.cpp SourceCode/VulkanBackend/VulkanImageView.cpp SourceCode/VulkanBackend/VulkanImageView.hpp PublicCode/Victoriam/Core/Containers/CConstant.hpp PublicCode/Victoriam/Utils/UPathTracker.hpp SourceCode/UPathTracker.cpp ThirdParty/stb_image.h PublicCode/Victoriam/Graphics/Structs/GPictureMetrics.hpp PublicCode/Victoriam/Graphics/GPicture.hpp SourceCode/GPicture.cpp SourceCode/VulkanBackend/VulkanPicture.cpp SourceCode/VulkanBackend/VulkanPicture.hpp)
+
+        ThirdParty/stb_image.h
+)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

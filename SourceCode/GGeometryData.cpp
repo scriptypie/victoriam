@@ -6,10 +6,7 @@
 
 VISRCBEG
 
-CGeometryData::~CGeometryData() {
-	if (m_VertexBuffer) m_VertexBuffer.reset();
-	if (m_IndexBuffer) m_IndexBuffer.reset();
-}
+CGeometryData::~CGeometryData() = default;
 
 void CGeometryData::Bind(SCommandBuffer const &buffer) {
 	m_VertexBuffer->Bind(buffer);
@@ -95,11 +92,11 @@ CGeometryData::Create(const PVertexBuffer &vertexBuffer) {
 }
 
 Bool CGeometryData::HasVertexBuffer() const {
-	return m_VertexBuffer != nullptr;
+	return m_VertexBuffer;
 }
 
 Bool CGeometryData::HasIndexBuffer() const {
-	return m_IndexBuffer != nullptr;
+	return m_IndexBuffer;
 }
 
 Bool CGeometryData::Empty() const {
@@ -107,8 +104,8 @@ Bool CGeometryData::Empty() const {
 }
 
 void CGeometryData::Release() {
-	if (m_IndexBuffer) m_IndexBuffer.reset();
-	if (m_VertexBuffer) m_VertexBuffer.reset();
+	if (m_VertexBuffer) m_VertexBuffer.Reset();
+	if (m_IndexBuffer) m_IndexBuffer.Reset();
 }
 
 UInt64 CGeometryData::GetPolycount() const {

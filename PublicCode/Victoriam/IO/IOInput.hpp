@@ -18,7 +18,7 @@ class VIDECL CInput
 {
 	inline static struct SInputState* m_InputStatePtr = nullptr;
 public:
-	VIDECL          static void Init(const SShared<CWindow>& window);
+	VIDECL          static void Init(const CShared<CWindow>& window);
 	VIDECL VIREQOUT static Bool IsKeyDown(const EKeyCode& code);
 	VIDECL VIREQOUT static Bool IsKeyUp(const EKeyCode& code);
 	VIDECL VIREQOUT static Bool IsMouseDown(const EMouseCode& code);

@@ -14,7 +14,7 @@ Constant<Signal, 2> DescriptorPoolCreateUpdateAfterBind;
 Constant<Signal, 4> DescriptorPoolCreateHostOnly;
 
 /**
- * Describes what type of descriptor we want to use, and it's size.
+ * Describes what Type of descriptor we want to use, and it's size.
  */
 struct VIDECL SDescriptorPoolSize
 {

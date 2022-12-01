@@ -22,11 +22,11 @@ public:
 	VIDECL VIREQOUT virtual UInt32 GetChannels() const = 0;
 	VIDECL VIREQOUT virtual Bool IsHDR() const = 0;
 
-	VIDECL VIREQOUT static SShared<CPicture> Create(PGraphicsContext& context, const StringView& filename);
-	VIDECL VIREQOUT static SShared<CPicture> Create(PGraphicsContext& context, const void* data, const UInt64& size);
+	VIDECL VIREQOUT static CShared<CPicture> Create(PGraphicsContext& context, const StringView& filename);
+	VIDECL VIREQOUT static CShared<CPicture> Create(PGraphicsContext& context, const void* data, const UInt64& size);
 };
 
-VIDECL typedef SShared<CPicture> PPicture;
+VIDECL typedef CShared<CPicture> PPicture;
 
 Bool operator==(const PPicture& a, const PPicture& b);
 Bool operator!=(const PPicture& a, const PPicture& b);

@@ -17,7 +17,7 @@ UID CGameObject::GetUID() const {
 }
 
 void CGameObject::Destroy() {
-	m_Owner->OnGameObjectDestroyed(shared_from_this());
+	m_Owner->OnGameObjectDestroyed(SharedFromThis());
 }
 
 VISRCEND

@@ -14,7 +14,7 @@ namespace Accessors {
 	class VIDECL Framebuffer {
 	public:
 		VIDECL VIREQOUT inline static VkFramebuffer GetFramebuffer(const PFramebuffer& framebuffer) {
-			return CCast<CVulkanFramebuffer*>(framebuffer.get())->GetFramebuffer();
+			return CCast<CVulkanFramebuffer*>(framebuffer.Get())->GetFramebuffer();
 		}
 	};
 }

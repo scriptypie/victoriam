@@ -14,13 +14,13 @@ namespace Accessors {
 	class VIDECL Image {
 	public:
 		VIDECL VIREQOUT inline static VkImage GetImage(const PImage& image) {
-			return CCast<CVulkanImage*>(image.get())->GetImage();
+			return CCast<CVulkanImage*>(image.Get())->GetImage();
 		}
 		VIDECL VIREQOUT inline static VkImageView GetImageView(const PImage& image) {
-			return CCast<CVulkanImage*>(image.get())->GetImageView();
+			return CCast<CVulkanImage*>(image.Get())->GetImageView();
 		}
 		VIDECL VIREQOUT inline static VkDeviceMemory GetImageMemory(const PImage& image) {
-			return CCast<CVulkanImage*>(image.get())->GetImageMemory();
+			return CCast<CVulkanImage*>(image.Get())->GetImageMemory();
 		}
 	};
 

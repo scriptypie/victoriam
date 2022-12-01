@@ -24,10 +24,10 @@ public:
 	VIDECL VIREQOUT virtual SCommandBuffer CmdBegin(const UInt32& imageIndex) const = 0;
 	VIDECL          virtual void CmdEnd(const SCommandBuffer& cmdBuffer) const = 0;
 
-	VIDECL VIREQOUT static SShared<CGraphicsContext> Create(const SShared<CWindow>& window);
+	VIDECL VIREQOUT static CShared<CGraphicsContext> Create(const CShared<CWindow>& window);
 };
 
-VIDECL typedef SShared<CGraphicsContext> PGraphicsContext;
+VIDECL typedef CShared<CGraphicsContext> PGraphicsContext;
 
 VISRCEND
 

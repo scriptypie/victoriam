@@ -15,7 +15,7 @@ VISRCBEG
 class CRenderer;
 typedef SUnique<CRenderer> PRenderer;
 
-class VIDECL CWorld : public std::enable_shared_from_this<CWorld>
+class VIDECL CWorld : public CEnableSharedFrom<CWorld>
 {
 	friend class CGameObject;
 
@@ -61,13 +61,13 @@ public:
 	VIDECL VIREQOUT inline PUniformBuffer& GetConstantsBuffer(const UInt32& frameIndex) { return m_RendererConstantsBuffers.at(frameIndex); }
 	VIDECL          void Update(const Float32& dt);
 	VIDECL          void Clear();
-	VIDECL VIREQOUT static SShared<CWorld> Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings = SWorldRendererSettings());
+	VIDECL VIREQOUT static CShared<CWorld> Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings = SWorldRendererSettings());
 private:
 	VIDECL          void OnGameObjectCreated(const PGameObject& object);
 	VIDECL          void OnGameObjectDestroyed(const PGameObject& object);
 };
 
-VIDECL typedef SShared<CWorld> PWorld;
+VIDECL typedef CShared<CWorld> PWorld;
 
 VISRCEND
 

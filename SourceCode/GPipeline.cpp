@@ -9,7 +9,7 @@
 VISRCBEG
 
 PPipeline CPipeline::Create(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize) {
-	return FCreateUnique<CVulkanPipeline>(context, renderPass, setLayout, createInfo, pushDataSize);
+	return FMakeUnique<CVulkanPipeline>(context, renderPass, setLayout, createInfo, pushDataSize);
 }
 
 VISRCEND

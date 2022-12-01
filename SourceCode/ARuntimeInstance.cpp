@@ -99,7 +99,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		componentCamera->Camera.SetViewBounds(0.1F, 2000.0F);
 		componentCamera->Camera.SetFovY(FRadians(55.0F));
 		auto componentTransform = camera->AddComponent<SComponentTransform>();
-		componentTransform->Translation = { -6, -11, 24 };
+		componentTransform->Translation = { 0.0F, -10.0F, 300.0F };
 	}
 
 	ViLog("Total polygons: %llu\n", totalPoly);

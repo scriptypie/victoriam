@@ -14,7 +14,7 @@ namespace Accessors {
 	class VIDECL VertexBuffer {
 	public:
 		VIDECL VIREQOUT inline static VkDescriptorBufferInfo GetDescriptorBufferInfo(const PVertexBuffer& buffer, const VkDeviceSize& size = VK_WHOLE_SIZE, const VkDeviceSize& offset = {}) {
-			return CCast<CVulkanVertexBuffer*>(buffer.get())->GetDescriptorBufferInfo(size, offset);
+			return CCast<CVulkanVertexBuffer*>(buffer.Get())->GetDescriptorBufferInfo(size, offset);
 		}
 	};
 }

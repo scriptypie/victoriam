@@ -7,11 +7,9 @@
 
 #include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/Graphics/Structs/GRendererConstants.hpp>
+#include <Victoriam/Graphics/GFramebuffer.hpp>
 
 VISRCBEG
-
-class CFramebuffer;
-VIDECL typedef SShared<CFramebuffer> PFramebuffer;
 
 /**
  * Struct that handles all frame-related information.

@@ -9,7 +9,7 @@
 VISRCBEG
 
 PIndexBuffer CIndexBuffer::Create(PGraphicsContext &context, const CList<UInt32> &indices) {
-	return FCreateShared<CVulkanIndexBuffer>(context, indices);
+	return FMakeShared<CVulkanIndexBuffer>(context, indices);
 }
 
 VISRCEND

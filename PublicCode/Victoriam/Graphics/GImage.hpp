@@ -22,11 +22,11 @@ public:
 	VIDECL VIREQOUT virtual Signal    GetType()   const = 0;
 	VIDECL          virtual void SetPicture(const PPicture& picture) = 0;
 
-	VIDECL VIREQOUT static SShared<CImage> Create(PGraphicsContext& context, const SImageCreateInfo& createInfo);
-	VIDECL VIREQOUT static SShared<CImage> Create(PGraphicsContext& context, const PPicture& picture, const SImageCreateInfo& createInfo);
+	VIDECL VIREQOUT static CShared<CImage> Create(PGraphicsContext& context, const SImageCreateInfo& createInfo);
+	VIDECL VIREQOUT static CShared<CImage> Create(PGraphicsContext& context, const PPicture& picture, const SImageCreateInfo& createInfo);
 };
 
-VIDECL typedef SShared<CImage> PImage;
+VIDECL typedef CShared<CImage> PImage;
 
 VISRCEND
 

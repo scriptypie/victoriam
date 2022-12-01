@@ -11,7 +11,7 @@
 VISRCBEG
 
 PGameObject CWorld::CreateGameObject() {
-	auto object = FCreateShared<CGameObject>(shared_from_this());
+	auto object = FMakeShared<CGameObject>(SharedFromThis());
 	OnGameObjectCreated(object);
 	return object;
 }
@@ -54,7 +54,7 @@ PGameObject CWorld::FindGameObjectByUID(const UID &id) {
 }
 
 PWorld CWorld::Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings) {
-	return FCreateShared<CWorld>(renderer, rendererSettings);
+	return FMakeShared<CWorld>(renderer, rendererSettings);
 }
 
 void CWorld::Clear() {
@@ -84,8 +84,8 @@ CWorld::CWorld(PRenderer& renderer, SWorldRendererSettings  rendererSettings)
 
 PGameObject CWorld::CreateChild(const PGameObject &parent) {
 	auto child = CreateGameObject();
-	child->m_Parent = parent.get();
-	parent->m_Children.emplace_back(child.get());
+	child->m_Parent = parent.Get();
+	parent->m_Children.emplace_back(child.Get());
 	return child;
 }
 
@@ -101,12 +101,12 @@ void CWorld::RemoveChildAt(const PGameObject &parent, const UInt32 &index) {
 }
 
 void CWorld::AddChild(const PGameObject &parent, const PGameObject &child) {
-	parent->m_Children.push_back(child.get());
+	parent->m_Children.push_back(child.Get());
 }
 
 void CWorld::AddChildren(const PGameObject &parent, const CList<PGameObject> &children) {
 	for (auto& child : children)
-		parent->m_Children.push_back(child.get());
+		parent->m_Children.push_back(child.Get());
 }
 
 VISRCEND

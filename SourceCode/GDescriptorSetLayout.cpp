@@ -10,7 +10,7 @@ VISRCBEG
 
 PDescriptorSetLayout CDescriptorSetLayout::Create(PGraphicsContext &context, const SDescriptorSetLayoutCreateInfo &createInfo)
 {
-	return FCreateUnique<CVulkanDescriptorSetLayout>(context, createInfo);
+	return FMakeUnique<CVulkanDescriptorSetLayout>(context, createInfo);
 }
 
 VISRCEND

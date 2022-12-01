@@ -20,11 +20,11 @@ Bool operator!=(const PPicture& a, const PPicture& b) {
 }
 
 PPicture CPicture::Create(PGraphicsContext& context, const StringView &filename) {
-	return FCreateShared<CVulkanPicture>(context, filename);
+	return FMakeShared<CVulkanPicture>(context, filename);
 }
 
 PPicture CPicture::Create(PGraphicsContext& context, const void* data, const UInt64& size) {
-	return FCreateShared<CVulkanPicture>(context, data, size);
+	return FMakeShared<CVulkanPicture>(context, data, size);
 }
 
 VISRCEND

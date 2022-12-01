@@ -10,7 +10,7 @@
 VISRCBEG
 
 /**
- * Flag definition object type
+ * Flag definition object Type
  */
 VIDECL typedef unsigned long long FlagDef;
 

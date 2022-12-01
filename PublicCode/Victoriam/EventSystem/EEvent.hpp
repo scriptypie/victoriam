@@ -11,7 +11,7 @@
 VISRCBEG
 
 /**
- * Enum class of event type.
+ * Enum class of event Type.
  */
 enum class VIDECL ECEventType : UInt32
 {

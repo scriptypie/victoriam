@@ -8,8 +8,8 @@
 
 VISRCBEG
 
-void CInput::Init(const SShared<CWindow> &window) {
-	m_InputStatePtr = &CCast<CGLFWWindow*>(window.get())->m_Data.InputState;
+void CInput::Init(const CShared<CWindow> &window) {
+	m_InputStatePtr = &CCast<CGLFWWindow*>(window.Get())->m_Data.InputState;
 }
 
 Bool CInput::IsKeyDown(const EKeyCode &code) {

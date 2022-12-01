@@ -11,9 +11,9 @@
 
 VISRCBEG
 
-template<class T> struct VIDECL SRemoveReference      { typedef T type; };
-template<class T> struct VIDECL SRemoveReference<T&>  { typedef T type; };
-template<class T> struct VIDECL SRemoveReference<T&&> { typedef T type; };
+template<class T> struct VIDECL SRemoveReference      { typedef T Type; };
+template<class T> struct VIDECL SRemoveReference<T&>  { typedef T Type; };
+template<class T> struct VIDECL SRemoveReference<T&&> { typedef T Type; };
 
 template<class T, auto N>
 VIDECL constexpr auto FSize(T(&)[N]) { return N; }
@@ -22,6 +22,23 @@ template<class T>
 VIDECL VIREQOUT constexpr T&& FMove(T&& v) noexcept { return static_cast<T&&>(v); }
 
 template<class T>
+VIDECL void FSwap(T& a, T& b) noexcept {
+	T t = Vi::FMove(a);
+	a = Vi::FMove(b);
+	b = Vi::FMove(t);
+}
+
+template<class T>
+inline T&& FForward(typename SRemoveReference<T>::Type& t) noexcept {
+	return CCast<T&&>(t);
+}
+
+template<class T>
+inline T&& FForward(typename SRemoveReference<T>::Type&& t) noexcept {
+	return CCast<T&&>(t);
+}
+
+	template<class T>
 VIDECL VIREQOUT inline T FMin(const T& a, const T& b) { return (a < b) ? a : b; }
 
 template<class T>

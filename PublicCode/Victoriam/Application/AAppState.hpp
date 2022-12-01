@@ -39,7 +39,7 @@ public:
 };
 
 /*
- * Poiner type of AppState class
+ * Poiner Type of AppState class
  */
 VIDECL typedef SUnique<CAppState> PAppState;
 

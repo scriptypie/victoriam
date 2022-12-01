@@ -42,7 +42,7 @@ class CVulkanGraphicsContext : public CGraphicsContext
 #else
 		const Bool m_EnableValidation = true;
 #endif
-	SShared<CWindow> m_Window = {};
+	CShared<CWindow> m_Window = {};
 	VkInstance m_Instance = {};
 	VkDebugUtilsMessengerEXT m_DebugMessenger = {};
 	VkPhysicalDevice m_PhysicalDevice = {};
@@ -56,7 +56,7 @@ class CVulkanGraphicsContext : public CGraphicsContext
 	const CList<CString> VALIDATION_LAYERS = {"VK_LAYER_KHRONOS_validation" };
 	CList<CString> DEVICE_EXTENSIONS = {VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 public:
-	VIDECL explicit CVulkanGraphicsContext(const SShared<CWindow> &window);
+	VIDECL explicit CVulkanGraphicsContext(const CShared<CWindow> &window);
 	VIDECL ~CVulkanGraphicsContext() override;
 
 	VIDECL void WaitReleaseResources() override;

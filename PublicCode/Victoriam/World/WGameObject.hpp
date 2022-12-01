@@ -11,15 +11,15 @@
 VISRCBEG
 
 class CWorld;
-VIDECL typedef SShared<CWorld> PWorld;
+VIDECL typedef CShared<CWorld> PWorld;
 
-class VIDECL CGameObject : public std::enable_shared_from_this<CGameObject>
+class VIDECL CGameObject : public CEnableSharedFrom<CGameObject>
 {
 	friend class CWorld;
 
 	UID m_ID = {};
 	PWorld m_Owner = {};
-	CList<SShared<SComponentBase>> m_Components = {};
+	CList<CShared<SComponentBase>> m_Components = {};
 	CGameObject* m_Parent = {};
 	CList<CGameObject*> m_Children = {};
 public:
@@ -30,9 +30,9 @@ public:
 	template<class T, class...Args>
 	VIDECL T* AddComponent(Args&&...args) {
 		if (HasComponent<T>()) return nullptr;
-		auto component = FCreateShared<T>(std::forward<Args>(args)...);
+		auto component = FMakeShared<T>(std::forward<Args>(args)...);
 		m_Components.push_back(component);
-		return component.get();
+		return component.Get();
 	}
 
 	template<class...T>
@@ -59,14 +59,14 @@ public:
 	VIDECL T* GetComponent() {
 		for (auto& component : m_Components)
 			if (component->GetComponentID() == T::GetStaticComponentID())
-				return CCast<T*>(component.get());
+				return CCast<T*>(component.Get());
 		return nullptr;
 	}
 private:
 	VIDECL void Destroy();
 };
 
-VIDECL typedef SShared<CGameObject> PGameObject;
+VIDECL typedef CShared<CGameObject> PGameObject;
 
 VISRCEND
 

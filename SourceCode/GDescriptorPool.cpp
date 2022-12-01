@@ -10,7 +10,7 @@ VISRCBEG
 
 PDescriptorPool CDescriptorPool::Create(PGraphicsContext& context, const SDescriptorPoolCreateInfo& createInfo)
 {
-	return FCreateUnique<CVulkanDescriptorPool>(context, createInfo);
+	return FMakeUnique<CVulkanDescriptorPool>(context, createInfo);
 }
 
 VISRCEND

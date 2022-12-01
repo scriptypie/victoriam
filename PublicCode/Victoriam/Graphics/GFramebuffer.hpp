@@ -17,10 +17,10 @@ class VIDECL CFramebuffer {
 public:
 	VIDECL virtual ~CFramebuffer() = default;
 
-	VIDECL VIREQOUT static SShared<CFramebuffer> Create(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo);
+	VIDECL VIREQOUT static CShared<CFramebuffer> Create(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo);
 };
 
-VIDECL typedef SShared<CFramebuffer> PFramebuffer;
+VIDECL typedef CShared<CFramebuffer> PFramebuffer;
 
 VISRCEND
 

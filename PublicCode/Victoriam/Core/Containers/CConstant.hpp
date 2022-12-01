@@ -11,7 +11,7 @@ VISRCBEG
 
 /*
  * The reason why I'm use custom class for constants instead of having them manually
- * is that manually set constant have a full type size, while constant class of type
+ * is that manually set constant have a full Type size, while constant class of Type
  * have size of only 1 byte for some point. ://
  */
 template<class T, T TValue>
