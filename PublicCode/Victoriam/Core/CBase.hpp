@@ -5,25 +5,16 @@
 #ifndef VICTORIAM_CBASE_HPP
 #define VICTORIAM_CBASE_HPP
 
-#include <string>
 #include <vector>
-#include <array>
-#include <cstdint>
 #include <tuple>
-#include <thread>
 #include <functional>
 #include <unordered_map>
 
-#include <Victoriam/Core/CUtils.hpp>
 #include <Victoriam/Core/Containers/CArray.hpp>
 #include <Victoriam/Core/Containers/CConstant.hpp>
-#include <Victoriam/Core/CNumerics.hpp>
 #include <Victoriam/Core/CLog.hpp>
 #include <Victoriam/Core/CFlags.hpp>
-#include <Victoriam/Core/CMacroDefinitions.hpp>
 #include <Victoriam/Core/Memory/MSmartPointers.hpp>
-#include <Victoriam/Core/Memory/MStandardAllocator.hpp>
-#include <Victoriam/IO/IOStream.hpp>
 #include <Victoriam/Matemia/MMath.hpp> // Matemia math library (property of github.com/scriptypie)
 
 VISRCBEG

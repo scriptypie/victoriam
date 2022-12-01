@@ -214,7 +214,7 @@ set(SOURCE_FILES
         SourceCode/WWorld.cpp
 
         ThirdParty/stb_image.h
-)
+        PublicCode/Victoriam/Core/Memory/MUnique.hpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

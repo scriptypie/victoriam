@@ -7,7 +7,6 @@
 
 #include <Victoriam/Core/CNumerics.hpp>
 #include <Victoriam/Core/CUtils.hpp>
-#include <utility>
 
 VISRCBEG
 
@@ -24,7 +23,7 @@ struct VIDECL ScalarArray {
 	VIDECL inline                               ScalarArray(ScalarArray&& other)  noexcept { for (UInt32 e = 0; e < N; e += 1) data[e] = FMove(other[e]); }
 	template<UInt32 M> VIDECL inline explicit   ScalarArray(ScalarArray<M>&& other)  noexcept { for (UInt32 e = 0; e < M; e += 1) data[e] = FMove(other[e]); }
 	VIDECL explicit inline                      ScalarArray(ScalarType* arr) { for (UInt32 e = 0; e < N; e += 1) data[e] = FMove(arr[e]); }
-	template<class...Args> VIDECL inline        ScalarArray(Args&&...args) : data{std::forward<Args>(args)...} {}
+	template<class...Args> VIDECL inline        ScalarArray(Args&&...args) : data{FForward<Args>(args)...} {}
 
 	VIDECL inline ScalarType&               operator[](int pos) { return data[pos]; }
 	VIDECL inline ScalarType                operator[](int pos) const { return data[pos]; }
