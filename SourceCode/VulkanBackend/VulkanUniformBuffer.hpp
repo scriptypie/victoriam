@@ -18,7 +18,6 @@ class CVulkanUniformBuffer : public CUniformBuffer
 	friend class Accessors::UniformBuffer;
 	PGraphicsContext& m_Context;
 	PVulkanMemoryBuffer m_MemoryBuffer = nullptr;
-	UInt64 m_Count = {};
 public:
 	VIDECL CVulkanUniformBuffer(PGraphicsContext &context, const UInt32& maxFramesInFlight);
 	VIDECL ~CVulkanUniformBuffer() override = default;

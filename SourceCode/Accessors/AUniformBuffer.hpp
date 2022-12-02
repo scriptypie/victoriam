@@ -14,7 +14,7 @@ namespace Accessors {
 	class VIDECL UniformBuffer {
 	public:
 		VIDECL VIREQOUT inline static VkDescriptorBufferInfo GetDescriptorBufferInfo(const PUniformBuffer& buffer, const VkDeviceSize& size = VK_WHOLE_SIZE, const VkDeviceSize& offset = {}) {
-			return CCast<CVulkanUniformBuffer*>(buffer.get())->GetDescriptorBufferInfo(size, offset);
+			return CCast<CVulkanUniformBuffer*>(buffer.Get())->GetDescriptorBufferInfo(size, offset);
 		}
 	};
 }

@@ -3,7 +3,6 @@
 //
 
 #include <Victoriam/Utils/UGeometryBuilder.hpp>
-
 #include <Victoriam/Utils/UGeometryPacker.hpp>
 
 VISRCBEG

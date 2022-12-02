@@ -15,6 +15,10 @@ template<class T> struct VIDECL SRemoveReference      { typedef T Type; };
 template<class T> struct VIDECL SRemoveReference<T&>  { typedef T Type; };
 template<class T> struct VIDECL SRemoveReference<T&&> { typedef T Type; };
 
+template<class T> struct VIDECL SRemoveExtent               { typedef T Type; };
+template<class T> struct VIDECL SRemoveExtent<T[]>          { typedef T Type; };
+template<class T, auto N> struct VIDECL SRemoveExtent<T[N]> { typedef T Type; };
+
 template<class T, auto N>
 VIDECL constexpr auto FSize(T(&)[N]) { return N; }
 

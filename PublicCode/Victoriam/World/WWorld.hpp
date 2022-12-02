@@ -13,7 +13,7 @@
 VISRCBEG
 
 class CRenderer;
-typedef SUnique<CRenderer> PRenderer;
+typedef CUnique<CRenderer> PRenderer;
 
 class VIDECL CWorld : public CEnableSharedFrom<CWorld>
 {

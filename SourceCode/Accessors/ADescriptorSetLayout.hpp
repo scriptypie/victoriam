@@ -14,7 +14,7 @@ namespace Accessors {
 	class VIDECL DescriptorSetLayout {
 	public:
 		VIDECL VIREQOUT static VkDescriptorSetLayout GetDescriptorSetLayout(const PDescriptorSetLayout& descriptorSetLayout) {
-			return CCast<CVulkanDescriptorSetLayout*>(descriptorSetLayout.get())->GetDescriptorSetLayout();
+			return CCast<CVulkanDescriptorSetLayout*>(descriptorSetLayout.Get())->GetDescriptorSetLayout();
 		}
 	};
 }

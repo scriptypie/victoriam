@@ -102,11 +102,14 @@ void CWorld::RemoveChildAt(const PGameObject &parent, const UInt32 &index) {
 
 void CWorld::AddChild(const PGameObject &parent, const PGameObject &child) {
 	parent->m_Children.push_back(child.Get());
+	child->m_Parent = parent.Get();
 }
 
 void CWorld::AddChildren(const PGameObject &parent, const CList<PGameObject> &children) {
-	for (auto& child : children)
+	for (auto& child : children) {
 		parent->m_Children.push_back(child.Get());
+		child->m_Parent = parent.Get();
+	}
 }
 
 VISRCEND

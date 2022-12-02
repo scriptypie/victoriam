@@ -258,8 +258,8 @@ VkResult CVulkanSwapchain::SubmitCommandBuffers(const VkCommandBuffer *buffers, 
 Bool CVulkanSwapchain::CompareFormats(const PSwapchain& swapchain) const
 {
 	if (!swapchain) return false;
-	return  m_SwapchainImageFormat == CCast<CVulkanSwapchain*>(swapchain.get())->m_SwapchainImageFormat &&
-			m_SwapchainDepthFormat == CCast<CVulkanSwapchain*>(swapchain.get())->m_SwapchainDepthFormat;
+	return  m_SwapchainImageFormat == CCast<CVulkanSwapchain*>(swapchain.Get())->m_SwapchainImageFormat &&
+			m_SwapchainDepthFormat == CCast<CVulkanSwapchain*>(swapchain.Get())->m_SwapchainDepthFormat;
 }
 
 void CVulkanSwapchain::CreateFramebuffers(PRenderPass &renderPass) {

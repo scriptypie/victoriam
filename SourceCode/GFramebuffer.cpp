@@ -8,8 +8,7 @@
 
 VISRCBEG
 
-PFramebuffer CFramebuffer::Create(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo)
-{
+PFramebuffer CFramebuffer::Create(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo) {
 	return FMakeShared<CVulkanFramebuffer>(context, renderPass, createInfo);
 }
 

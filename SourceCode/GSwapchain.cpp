@@ -12,8 +12,7 @@ PSwapchain CSwapchain::Create(PGraphicsContext &context, const SExtent2D &extent
 	return FMakeUnique<CVulkanSwapchain>(context, extent);
 }
 
-PSwapchain CSwapchain::Create(PGraphicsContext &context, const SExtent2D &extent, CSwapchain* prev)
-{
+PSwapchain CSwapchain::Create(PGraphicsContext &context, const SExtent2D &extent, CSwapchain* prev) {
 	return FMakeUnique<CVulkanSwapchain>(context, extent, prev);
 }
 

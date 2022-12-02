@@ -8,8 +8,7 @@
 
 VISRCBEG
 
-PDescriptorWriter CDescriptorWriter::Create(PDescriptorPool &pool, PDescriptorSetLayout &layout)
-{
+PDescriptorWriter CDescriptorWriter::Create(PDescriptorPool &pool, PDescriptorSetLayout &layout) {
 	return FMakeShared<CVulkanDescriptorWriter>(pool, layout);
 }
 

@@ -14,7 +14,7 @@ VISRCBEG
 // Forward declarations
 
 class CRenderPass;
-VIDECL typedef SUnique<CRenderPass> PRenderPass;
+VIDECL typedef CUnique<CRenderPass> PRenderPass;
 
 // !Forward declarations
 
@@ -32,14 +32,14 @@ public:
 	VIDECL VIREQOUT virtual UInt32 GetWidth() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetHeight() const = 0;
 	VIDECL VIREQOUT virtual Float32 GetExtentAspectRatio() const = 0;
-	VIDECL VIREQOUT virtual Bool CompareFormats(const SUnique<CSwapchain>& swapchain) const = 0;
+	VIDECL VIREQOUT virtual Bool CompareFormats(const CUnique<CSwapchain>& swapchain) const = 0;
 	VIDECL virtual void CmdSubmit(const SCommandBuffer* buffers, const UInt32 *imageIndex) = 0;
 
-	VIDECL VIREQOUT static SUnique<CSwapchain> Create(PGraphicsContext& context, const SExtent2D& extent);
-	VIDECL VIREQOUT static SUnique<CSwapchain> Create(PGraphicsContext& context, const SExtent2D& extent, CSwapchain* prev);
+	VIDECL VIREQOUT static CUnique<CSwapchain> Create(PGraphicsContext& context, const SExtent2D& extent);
+	VIDECL VIREQOUT static CUnique<CSwapchain> Create(PGraphicsContext& context, const SExtent2D& extent, CSwapchain* prev);
 };
 
-VIDECL typedef SUnique<CSwapchain> PSwapchain;
+VIDECL typedef CUnique<CSwapchain> PSwapchain;
 
 VISRCEND
 

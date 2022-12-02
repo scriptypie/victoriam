@@ -56,7 +56,7 @@ public:
 	VIDECL VIREQOUT inline VkBufferUsageFlags GetBufferUsageFlags() const { return m_UsageFlags; }
 	VIDECL VIREQOUT inline VkMemoryPropertyFlags GetMemoryPropertyFlags() const { return m_MemoryPropertyFlags; }
 
-	VIDECL static SUnique<CVulkanMemoryBuffer> Create(PGraphicsContext&            context,
+	VIDECL static CUnique<CVulkanMemoryBuffer> Create(PGraphicsContext&            context,
 	                                                  const VkDeviceSize&          instanceSize,
 	                                                  const UInt64&                instanceCount,
 	                                                  const VkBufferUsageFlags&    usageFlags,
@@ -67,7 +67,7 @@ private:
 													 const VkDeviceSize& minOffsetAlignment);
 };
 
-VIDECL typedef SUnique<CVulkanMemoryBuffer> PVulkanMemoryBuffer;
+VIDECL typedef CUnique<CVulkanMemoryBuffer> PVulkanMemoryBuffer;
 
 VISRCEND
 

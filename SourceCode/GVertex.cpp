@@ -6,8 +6,7 @@
 
 VISRCBEG
 
-Bool operator==(const SVertex& a, const SVertex& b)
-{
+Bool operator==(const SVertex& a, const SVertex& b) {
 	return
 	a.Position == b.Position &&
 	a.Color    == b.Color &&
@@ -15,8 +14,7 @@ Bool operator==(const SVertex& a, const SVertex& b)
 	a.UV       == b.UV;
 }
 
-Bool operator!=(const SVertex& a, const SVertex& b)
-{
+Bool operator!=(const SVertex& a, const SVertex& b) {
 	return !(a == b);
 }
 

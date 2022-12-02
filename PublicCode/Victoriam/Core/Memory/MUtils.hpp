@@ -13,12 +13,12 @@ VISRCBEG
 
 template<class T>
 VIDECL inline void FMemcpy(T* dst, const T* src) {
-	::memcpy(dst, src, sizeof(T));
+	__builtin_memcpy(dst, src, sizeof(T));
 }
 
 template<class T>
 VIDECL inline void FMemcpy(T* dst, const T* src, const size_t& size) {
-	::memcpy(dst, src, size);
+	__builtin_memcpy(dst, src, size);
 }
 
 VISRCEND

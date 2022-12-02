@@ -14,10 +14,10 @@ namespace Accessors
 	class RenderPass {
 	public:
 		VIDECL VIREQOUT inline static VkRenderPass GetRenderPass(const PRenderPass& renderPass) {
-			return CCast<CVulkanRenderPass*>(renderPass.get())->GetRenderPass();
+			return CCast<CVulkanRenderPass*>(renderPass.Get())->GetRenderPass();
 		}
 		VIDECL VIREQOUT inline static SExtent2D GetExtent(const PRenderPass& renderPass) {
-			return CCast<CVulkanRenderPass*>(renderPass.get())->GetExtent();
+			return CCast<CVulkanRenderPass*>(renderPass.Get())->GetExtent();
 		}
 	};
 }

@@ -41,7 +41,7 @@ public:
 /*
  * Poiner Type of AppState class
  */
-VIDECL typedef SUnique<CAppState> PAppState;
+VIDECL typedef CUnique<CAppState> PAppState;
 
 VISRCEND
 

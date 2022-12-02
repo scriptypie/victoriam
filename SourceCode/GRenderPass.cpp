@@ -8,9 +8,7 @@
 
 VISRCBEG
 
-PRenderPass CRenderPass::Create(Vi::PGraphicsContext &context, Vi::PSwapchain &swapchain,
-                                const Vi::SRenderPassCreateInfo &createInfo)
-{
+PRenderPass CRenderPass::Create(Vi::PGraphicsContext &context, Vi::PSwapchain &swapchain, const Vi::SRenderPassCreateInfo &createInfo) {
 	return FMakeUnique<CVulkanRenderPass>(context, swapchain, createInfo);
 }
 

@@ -37,14 +37,14 @@ public:
 	VIDECL virtual void BindConstantsDescriptorSet(const Signal& bindPoint, const SFrameInfo& frameInfo) const = 0;
 
 	template<class T>
-	VIDECL VIREQOUT inline static SUnique<CPipeline> CreateFor(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo) {
+	VIDECL VIREQOUT inline static CUnique<CPipeline> CreateFor(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo) {
 		return Create(context, renderPass, setLayout, createInfo, sizeof(T));
 	}
 
-	VIDECL VIREQOUT static SUnique<CPipeline> Create(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
+	VIDECL VIREQOUT static CUnique<CPipeline> Create(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
 };
 
-VIDECL typedef SUnique<CPipeline> PPipeline;
+VIDECL typedef CUnique<CPipeline> PPipeline;
 
 VISRCEND
 

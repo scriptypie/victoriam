@@ -11,7 +11,7 @@
 VISRCBEG
 
 class CRenderPass;
-VIDECL typedef SUnique<CRenderPass> PRenderPass;
+VIDECL typedef CUnique<CRenderPass> PRenderPass;
 
 class VIDECL CFramebuffer {
 public:

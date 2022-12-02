@@ -21,11 +21,11 @@ public:
 	VIDECL virtual void Compute(SFrameInfo& frameInfo, const PWorld& world) {}
 	VIDECL virtual void Pass(SFrameInfo& frameInfo, const PWorld& world) {};
 
-	VIDECL VIREQOUT static SUnique<CRenderSubrender> CreateDefaultSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
-	VIDECL VIREQOUT static SUnique<CRenderSubrender> CreatePointLightSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
+	VIDECL VIREQOUT static CUnique<CRenderSubrender> CreateDefaultSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
+	VIDECL VIREQOUT static CUnique<CRenderSubrender> CreatePointLightSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
 };
 
-VIDECL typedef SUnique<CRenderSubrender> PRenderSubrender;
+VIDECL typedef CUnique<CRenderSubrender> PRenderSubrender;
 
 VISRCEND
 

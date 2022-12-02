@@ -2,9 +2,9 @@
 // Created by Вячеслав Кривенко on 19.10.2022.
 //
 
-#include <sys/stat.h>
-
 #include "Victoriam/IO/IOFile.hpp"
+
+#include <sys/stat.h>
 
 VISRCBEG
 
@@ -49,57 +49,47 @@ namespace {
 }
 
 CFile::CFile(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat)
-	: m_Filename(filename)
-{
+	: m_Filename(filename) {
 	Open(filename, omode, fformat);
 }
 
 CFile::CFile(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat)
-		: m_Filename(filename)
-{
+		: m_Filename(filename) {
 	Open(filename, omode, fformat);
 }
 
-CFile::~CFile()
-{
+CFile::~CFile() {
 	if (!m_Empty)
 		Release();
 }
 
-void CFile::Close()
-{
+void CFile::Close() {
 	Release();
 }
 
-void CFile::Clear()
-{
+void CFile::Clear() {
 	m_Handle.clear();
 }
 
-void CFile::Release()
-{
+void CFile::Release() {
 	m_Handle.close();
 	m_Filename.clear();
 	m_Empty = true;
 }
 
-bool CFile::Valid() const
-{
+bool CFile::Valid() const {
 	return m_Handle.is_open();
 }
 
-UInt32 CFile::ToStandardOpenMode(const ECOpenMode& omode)
-{
+UInt32 CFile::ToStandardOpenMode(const ECOpenMode& omode) {
 	return CCast<UInt32>(omode);
 }
 
-UInt32 CFile::ToStandardFormat(const ECFileFormat& format)
-{
+UInt32 CFile::ToStandardFormat(const ECFileFormat& format) {
 	return CCast<UInt32>(format);
 }
 
-SFileView CFile::View()
-{
+SFileView CFile::View() {
 	SFileView view = {};
 	if (Valid())
 	{
@@ -112,18 +102,15 @@ SFileView CFile::View()
 	return view;
 }
 
-void CFile::Open(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat)
-{
+void CFile::Open(const String& filename, const ECOpenMode& omode, const ECFileFormat& fformat) {
 	m_Handle.open(filename, ToStandardOpenMode(omode) | ToStandardFormat(fformat));
 }
 
-void CFile::Open(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat)
-{
+void CFile::Open(const char* filename, const ECOpenMode& omode, const ECFileFormat& fformat) {
 	m_Handle.open(filename, ToStandardOpenMode(omode) | ToStandardFormat(fformat));
 }
 
-ECFileResult CFile::Read(char *outdata, size_t sizedata)
-{
+ECFileResult CFile::Read(char *outdata, size_t sizedata) {
 	if (!Valid())
 		return ECFileResult::FileNotFound;
 
@@ -133,8 +120,7 @@ ECFileResult CFile::Read(char *outdata, size_t sizedata)
 	return ECFileResult::Ok;
 }
 
-	ECFileResult CFile::Read(String& output)
-{
+ECFileResult CFile::Read(String& output) {
 	if (!Valid())
 		return ECFileResult::FileNotFound;
 
@@ -146,8 +132,7 @@ ECFileResult CFile::Read(char *outdata, size_t sizedata)
 	return ECFileResult::Ok;
 }
 
-ECFileResult CFile::Write(const String& data)
-{
+ECFileResult CFile::Write(const String& data) {
 	if (data.empty())
 		return ECFileResult::NullInput;
 
@@ -157,8 +142,7 @@ ECFileResult CFile::Write(const String& data)
 	return ECFileResult::Ok;
 }
 
-ECFileResult CFile::Write(const char* data, const UInt64& size)
-{
+ECFileResult CFile::Write(const char* data, const UInt64& size) {
 	if (!size || !data)
 		return ECFileResult::NullInput;
 

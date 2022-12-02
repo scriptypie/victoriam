@@ -18,10 +18,10 @@ public:
 	VIDECL virtual void Begin(const SFrameInfo& frameInfo) = 0;
 	VIDECL virtual void End(const SFrameInfo& frameInfo) = 0;
 
-	VIDECL VIREQOUT static SUnique<CRenderPass> Create(PGraphicsContext& context, PSwapchain& swapchain, const SRenderPassCreateInfo& createInfo);
+	VIDECL VIREQOUT static CUnique<CRenderPass> Create(PGraphicsContext& context, PSwapchain& swapchain, const SRenderPassCreateInfo& createInfo);
 };
 
-VIDECL typedef SUnique<CRenderPass> PRenderPass;
+VIDECL typedef CUnique<CRenderPass> PRenderPass;
 
 VISRCEND
 

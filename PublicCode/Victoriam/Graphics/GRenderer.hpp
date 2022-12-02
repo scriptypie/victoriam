@@ -18,7 +18,7 @@ class VIDECL CRenderer
 public:
 	VIDECL virtual ~CRenderer() = default;
 
-	VIDECL VIREQOUT static SUnique<CRenderer> Create(const SRendererCreateInfo& createInfo);
+	VIDECL VIREQOUT static CUnique<CRenderer> Create(const SRendererCreateInfo& createInfo);
 
 	VIDECL          virtual void Setup() = 0;
 	VIDECL VIREQOUT virtual PSwapchain& GetSwapchain() = 0;
@@ -41,7 +41,7 @@ public:
 	VIDECL          virtual void Shutdown(const PWorld& world) = 0;
 };
 
-VIDECL typedef SUnique<CRenderer> PRenderer;
+VIDECL typedef CUnique<CRenderer> PRenderer;
 
 VISRCEND
 

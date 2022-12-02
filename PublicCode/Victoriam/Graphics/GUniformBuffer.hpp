@@ -20,10 +20,10 @@ public:
 	 */
 	VIDECL virtual void SubmitToGPU(const SRendererConstants& constants) = 0;
 
-	VIDECL VIREQOUT static SUnique<CUniformBuffer> Create(PGraphicsContext& context, const UInt32& count);
+	VIDECL VIREQOUT static CUnique<CUniformBuffer> Create(PGraphicsContext& context, const UInt32& count);
 };
 
-VIDECL typedef SUnique<CUniformBuffer> PUniformBuffer;
+VIDECL typedef CUnique<CUniformBuffer> PUniformBuffer;
 
 VISRCEND
 

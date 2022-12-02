@@ -8,8 +8,7 @@
 
 VISRCBEG
 
-PWindow CWindow::Create(const SWindowCreateInfo &info)
-{
+PWindow CWindow::Create(const SWindowCreateInfo &info) {
 	return FMakeShared<CGLFWWindow>(info);
 }
 
