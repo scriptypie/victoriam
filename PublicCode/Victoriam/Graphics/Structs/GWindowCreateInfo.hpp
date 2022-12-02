@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_GWINDOWCREATEINFO_HPP
 #define VICTORIAM_GWINDOWCREATEINFO_HPP
 
-#include "Victoriam/Graphics/Basics.hpp"
+#include <Victoriam/Graphics/Basics.hpp>
 
 VISRCBEG
 

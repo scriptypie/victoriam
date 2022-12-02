@@ -19,7 +19,10 @@ template<class T, auto N>
 VIDECL constexpr auto FSize(T(&)[N]) { return N; }
 
 template<class T>
-VIDECL VIREQOUT constexpr T&& FMove(T&& v) noexcept { return static_cast<T&&>(v); }
+VIDECL VIREQOUT inline constexpr typename SRemoveReference<T>::Type&& FMove(T&& v) noexcept {
+	typedef typename SRemoveReference<T>::Type ReType;
+	return static_cast<ReType&&>(v);
+}
 
 template<class T>
 VIDECL void FSwap(T& a, T& b) noexcept {

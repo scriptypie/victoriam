@@ -6,7 +6,7 @@
 #define VICTORIAM_GWINDOW_HPP
 
 #include <Victoriam/Graphics/Basics.hpp>
-#include "Victoriam/Graphics/Structs/GWindowCreateInfo.hpp"
+#include <Victoriam/Graphics/Structs/GWindowCreateInfo.hpp>
 #include <Victoriam/EventSystem/EWindowEvents.hpp>
 
 VISRCBEG

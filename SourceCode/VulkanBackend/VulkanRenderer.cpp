@@ -116,7 +116,7 @@ void CVulkanRenderer::RecreateSwapchain(const SExtent2D &newExtent) {
 		m_Swapchain = CSwapchain::Create(m_Context, newExtent);
 	else
 	{
-		auto oldSwapchain = std::move(m_Swapchain);
+		auto oldSwapchain = FMove(m_Swapchain);
 		m_Swapchain = CSwapchain::Create(m_Context, newExtent, oldSwapchain.get());
 		if (!oldSwapchain->CompareFormats(m_Swapchain))
 			ViAbort("Swapchain image or depth format is changed!!!");

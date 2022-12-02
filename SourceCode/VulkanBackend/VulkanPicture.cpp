@@ -3,13 +3,13 @@
 //
 
 #include "VulkanPicture.hpp"
+
+#define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
 VISRCBEG
 
-CVulkanPicture::~CVulkanPicture() {
-
-}
+CVulkanPicture::~CVulkanPicture() = default;
 
 CVulkanPicture::CVulkanPicture(PGraphicsContext& context, const StringView &filename) {
 	m_Metrics.HDR = stbi_is_hdr(filename.data());

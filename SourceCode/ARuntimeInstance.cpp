@@ -3,12 +3,11 @@
 //
 
 #include <filesystem>
-#include <utility>
 
 #include <Victoriam/Application/ARuntimeInstance.hpp>
 #include <Victoriam/EventSystem/EEventDispatcher.hpp>
 #include <Victoriam/Utils/UGeometryBuilder.hpp>
-#include "Victoriam/IO/IO.hpp"
+#include <Victoriam/IO/IO.hpp>
 
 VISRCBEG
 
@@ -36,8 +35,8 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		info.Resolution = {800, 500};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
 		m_Window = CWindow::Create(info);
+		m_Window->SetEventCallbackFunction(BIND(CRuntimeInstance::OnEvent));
 	}
-	m_Window->SetEventCallbackFunction(BIND(CRuntimeInstance::OnEvent));
 	CInput::Init(m_Window);
 	rendererCreateInfo.WindowPtr = m_Window;
 	m_Renderer = CRenderer::Create(rendererCreateInfo);
@@ -66,7 +65,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		totalPoly += monkeyGeometryData.GetPolycount();
 		auto transform = monkey->AddComponent<SComponentTransform>();
 		auto sc = CRandom<Float32>::Range(1.0F, 20.0F);
-		transform->Translation = { x * 5 * sc - 300, 0, z * 5 * sc - 300 };
+		transform->Translation = { x * 5 * sc - 300, -5, z * 5 * sc - 300 };
 		transform->Rotation = { 0, 0, 180 };
 		transform->Scale = sc;
 	}
