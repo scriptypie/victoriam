@@ -8,15 +8,29 @@
 #include <Victoriam/Matemia/MMatrix4.hpp>
 #include <functional>
 
+VISRCBEG
+
+template<class HashType, class ST>
+VIDECL constexpr HashType FHash(const ST& i) noexcept {
+	union {
+		ST hashable;
+		HashType hashed;
+	} packer;
+	packer.hashed = CCast<HashType>(0);
+	packer.hashable = i;
+	return packer.hashed;
+}
+
+VISRCEND
+
 namespace std {
 
 	template<>
 	struct hash<Vi::SVector2> {
 		size_t operator()(const Vi::SVector2& v) const {
 			size_t seed = 0;
-			hash<Vi::ScalarType> hasher;
-			Vi::FHashCombine(seed, hasher(v.x));
-			Vi::FHashCombine(seed, hasher(v.y));
+			Vi::FHashCombine(seed, Vi::FHash<std::size_t>(v.x));
+			Vi::FHashCombine(seed, Vi::FHash<std::size_t>(v.y));
 			return seed;
 		}
 	};
@@ -25,10 +39,9 @@ namespace std {
 	struct hash<Vi::SVector3> {
 		size_t operator()(const Vi::SVector3& v) const {
 			size_t seed = 0;
-			hash<Vi::ScalarType> hasher;
-			Vi::FHashCombine(seed, hasher(v.x));
-			Vi::FHashCombine(seed, hasher(v.y));
-			Vi::FHashCombine(seed, hasher(v.z));
+			Vi::FHashCombine(seed, Vi::FHash<std::size_t>(v.x));
+			Vi::FHashCombine(seed, Vi::FHash<std::size_t>(v.y));
+			Vi::FHashCombine(seed, Vi::FHash<std::size_t>(v.z));
 			return seed;
 		}
 	};
@@ -37,11 +50,10 @@ namespace std {
 	struct hash<Vi::SVector4> {
 		size_t operator()(const Vi::SVector4& v) const {
 			size_t seed = 0;
-			hash<Vi::ScalarType> hasher;
-			Vi::FHashCombine(seed, hasher(v.x));
-			Vi::FHashCombine(seed, hasher(v.y));
-			Vi::FHashCombine(seed, hasher(v.z));
-			Vi::FHashCombine(seed, hasher(v.w));
+			Vi::FHashCombine(seed, Vi::FHash<std::size_t>(v.x));
+			Vi::FHashCombine(seed, Vi::FHash<std::size_t>(v.y));
+			Vi::FHashCombine(seed, Vi::FHash<std::size_t>(v.z));
+			Vi::FHashCombine(seed, Vi::FHash<std::size_t>(v.w));
 			return seed;
 		}
 	};

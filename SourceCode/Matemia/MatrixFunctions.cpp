@@ -39,13 +39,13 @@ SMatrix4 FInverse(const SMatrix4& m) {
 	const SVector4   Inv1(Vec0 * Fac0 - Vec2 * Fac3 + Vec3 * Fac4);
 	const SVector4   Inv2(Vec0 * Fac1 - Vec1 * Fac3 + Vec3 * Fac5);
 	const SVector4   Inv3(Vec0 * Fac2 - Vec1 * Fac4 + Vec2 * Fac5);
-	const SVector4   SignA(+1, -1, +1, -1);
-	const SVector4   SignB(-1, +1, -1, +1);
+	const SVector4   SignA(CCast<ScalarType>(1), CCast<ScalarType>(-1), CCast<ScalarType>(1), CCast<ScalarType>(-1));
+	const SVector4   SignB(CCast<ScalarType>(-1), CCast<ScalarType>(1), CCast<ScalarType>(-1), CCast<ScalarType>(1));
 	const SMatrix4   Inverse(Inv0 * SignA, Inv1 * SignB, Inv2 * SignA, Inv3 * SignB);
 	const SVector4   Row0(Inverse[0][0], Inverse[1][0], Inverse[2][0], Inverse[3][0]);
 	const SVector4   Dot0(m[0] * Row0);
 	const ScalarType Dot1 = (Dot0.x + Dot0.y) + (Dot0.z + Dot0.w);
-	const ScalarType OneOverDeterminant = 1.0F / Dot1;
+	const ScalarType OneOverDeterminant = CCast<ScalarType>(1) / Dot1;
 
 	return Inverse * OneOverDeterminant;
 }
@@ -71,7 +71,7 @@ SMatrix4 FRotate(const SMatrix4& m, const SVector3& v, const ScalarType& angle) 
 	const ScalarType s = FSin(a);
 
 	SVector3 axis(FNormalize(v));
-	SVector3 temp((axis * (1.0F - c)));
+	SVector3 temp((axis * (CCast<ScalarType>(1) - c)));
 
 	SMatrix4 Rotate;
 	Rotate[0][0] = c + temp[0] * axis[0];
@@ -95,15 +95,15 @@ SMatrix4 FRotate(const SMatrix4& m, const SVector3& v, const ScalarType& angle) 
 }
 
 SMatrix4 FRotateX(const SMatrix4& m, const ScalarType& angle) {
-	return FRotate(m, { 1.0F, 0.0F, 0.0F }, angle);
+	return FRotate(m, { CCast<ScalarType>(1), 0, 0 }, angle);
 }
 
 SMatrix4 FRotateY(const SMatrix4& m, const ScalarType& angle) {
-	return FRotate(m, { 0.0F, 1.0F, 0.0F }, angle);
+	return FRotate(m, { 0, CCast<ScalarType>(1), 0 }, angle);
 }
 
 SMatrix4 FRotateZ(const SMatrix4& m, const ScalarType& angle) {
-	return FRotate(m, { 0.0F, 0.0F, 1.0F }, angle);
+	return FRotate(m, { 0, 0, CCast<ScalarType>(1) }, angle);
 }
 
 SMatrix4 FLookAt(const SVector3& position, const SVector3& direction, const SVector3& up) {
@@ -128,7 +128,7 @@ SMatrix4 FLookAt(const SVector3& position, const SVector3& direction, const SVec
 }
 
 SMatrix4 FPerspective(const ScalarType& fovy, const ScalarType& aspect, const ScalarType& zNear) {
-	const ScalarType range = FTan(fovy / 2.0F) * zNear;
+	const ScalarType range = FTan(fovy / CCast<ScalarType>(2)) * zNear;
 	const ScalarType left = -range * aspect;
 	const ScalarType right = range * aspect;
 	const ScalarType bottom = -range;
@@ -136,31 +136,31 @@ SMatrix4 FPerspective(const ScalarType& fovy, const ScalarType& aspect, const Sc
 	const ScalarType ep = CONSTANT::EPSILON;
 
 	SMatrix4 Result(0.0F);
-	Result[0][0] = (2.0F * zNear) / (right - left);
-	Result[1][1] = (2.0F * zNear) / (top - bottom);
-	Result[2][2] = ep - 1.0F;
-	Result[2][3] = -1.0F;
-	Result[3][2] = (ep - 2.0F) * zNear;
+	Result[0][0] = (CCast<ScalarType>(2) * zNear) / (right - left);
+	Result[1][1] = (CCast<ScalarType>(2) * zNear) / (top - bottom);
+	Result[2][2] = ep - CCast<ScalarType>(1);
+	Result[2][3] = -CCast<ScalarType>(1);
+	Result[3][2] = (ep - CCast<ScalarType>(2)) * zNear;
 	return Result;
 }
 
 SMatrix4 FPerspective(const ScalarType& fovy, const ScalarType& aspect, const ScalarType& zNear, const ScalarType& zFar) {
-	const ScalarType tanHalfFovy = FTan(fovy / 2.0F);
+	const ScalarType tanHalfFovy = FTan(fovy / CCast<ScalarType>(2));
 
 	SMatrix4 Result(0.0F);
-	Result[0][0] = 1.0F / (aspect * tanHalfFovy);
-	Result[1][1] = 1.0F / (tanHalfFovy);
+	Result[0][0] = CCast<ScalarType>(1) / (aspect * tanHalfFovy);
+	Result[1][1] = CCast<ScalarType>(1) / (tanHalfFovy);
 	Result[2][2] = - (zFar + zNear) / (zFar - zNear);
-	Result[2][3] = - 1.0F;
-	Result[3][2] = - (2.0F * zFar * zNear) / (zFar - zNear);
+	Result[2][3] = -CCast<ScalarType>(1);
+	Result[3][2] = - (CCast<ScalarType>(2) * zFar * zNear) / (zFar - zNear);
 	return Result;
 }
 
 SMatrix4 FOrthographic(const ScalarType& left, const ScalarType& right, const ScalarType& bottom, const ScalarType& top, const ScalarType& zNear, const ScalarType& zFar) {
-	SMatrix4 Result(1.0F);
-	Result[0][0] = 2.0F / (right - left);
-	Result[1][1] = 2.0F / (top - bottom);
-	Result[2][2] = - 2.0F / (zFar - zNear);
+	SMatrix4 Result(CCast<ScalarType>(1));
+	Result[0][0] = CCast<ScalarType>(2) / (right - left);
+	Result[1][1] = CCast<ScalarType>(2) / (top - bottom);
+	Result[2][2] = - CCast<ScalarType>(2) / (zFar - zNear);
 	Result[3][0] = - (right + left) / (right - left);
 	Result[3][1] = - (top + bottom) / (top - bottom);
 	Result[3][2] = - (zFar + zNear) / (zFar - zNear);

@@ -18,15 +18,30 @@ VIDECL VIREQOUT inline static CList<VkVertexInputBindingDescription> FGetVertexB
 
 VIDECL VIREQOUT inline static CList<VkVertexInputAttributeDescription> FGetVertexAttributeDescriptions()
 {
-	return
-	{
-		{ 0, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Position) },
-		{ 1, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(SVertex, Color)    },
-		{ 2, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Normal)   },
-		{ 3, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Tangent)   },
-		{ 4, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Bitangent)   },
-		{ 5, 0, VK_FORMAT_R32G32_SFLOAT,       offsetof(SVertex, UV)       },
-	};
+	switch (sizeof(ScalarType)) {
+		case 8: {
+			return
+					{
+							{0, 0, VK_FORMAT_R64G64B64_SFLOAT,    offsetof(SVertex, Position)},
+							{1, 0, VK_FORMAT_R64G64B64A64_SFLOAT, offsetof(SVertex, Color)},
+							{2, 0, VK_FORMAT_R64G64B64_SFLOAT,    offsetof(SVertex, Normal)},
+							{3, 0, VK_FORMAT_R64G64B64_SFLOAT,    offsetof(SVertex, Tangent)},
+							{4, 0, VK_FORMAT_R64G64B64_SFLOAT,    offsetof(SVertex, Bitangent)},
+							{5, 0, VK_FORMAT_R64G64_SFLOAT,       offsetof(SVertex, UV)},
+					};
+		}
+		case 4: {
+			return
+					{
+							{0, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Position)},
+							{1, 0, VK_FORMAT_R32G32B32A32_SFLOAT, offsetof(SVertex, Color)},
+							{2, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Normal)},
+							{3, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Tangent)},
+							{4, 0, VK_FORMAT_R32G32B32_SFLOAT,    offsetof(SVertex, Bitangent)},
+							{5, 0, VK_FORMAT_R32G32_SFLOAT,       offsetof(SVertex, UV)},
+					};
+		}
+	}
 }
 
 
