@@ -14,7 +14,7 @@ namespace Accessors
 
 	class Swapchain {
 	public:
-		VIDECL VIREQOUT static CList<PFramebuffer> GetFramebuffers(const PSwapchain& swapchain) {
+		VIDECL VIREQOUT static CSet<PFramebuffer> GetFramebuffers(const PSwapchain& swapchain) {
 			return CCast<CVulkanSwapchain*>(swapchain.Get())->GetFramebuffers();
 		}
 		VIDECL VIREQOUT static VkImageView GetImageView(const PSwapchain& swapchain, const UInt32& index) {

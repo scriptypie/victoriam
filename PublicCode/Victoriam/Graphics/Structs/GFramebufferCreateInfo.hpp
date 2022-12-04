@@ -10,7 +10,7 @@
 VISRCBEG
 
 struct VIDECL SFramebufferCreateInfo {
-	CList<SImageViewObject> Attachments;
+	CSet<SImageViewObject> Attachments;
 };
 
 VISRCEND

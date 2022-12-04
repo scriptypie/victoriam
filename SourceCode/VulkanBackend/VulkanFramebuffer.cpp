@@ -12,9 +12,9 @@ VISRCBEG
 CVulkanFramebuffer::CVulkanFramebuffer(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo)
 	: m_Context(context), m_RenderPass(renderPass)
 {
-	if (!createInfo.Attachments.empty())
+	if (!createInfo.Attachments.Empty())
 		for (auto& attachment : createInfo.Attachments)
-			m_Attachments.push_back(CCast<VkImageView>(attachment));
+			m_Attachments.PushBack(CCast<VkImageView>(attachment));
 	CreateFramebuffer();
 }
 
@@ -26,8 +26,8 @@ void CVulkanFramebuffer::CreateFramebuffer() {
 	SExtent2D extent = Accessors::RenderPass::GetExtent(m_RenderPass);
 	VkFramebufferCreateInfo framebufferInfo = { VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO };
 	framebufferInfo.renderPass = Accessors::RenderPass::GetRenderPass(m_RenderPass);
-	framebufferInfo.attachmentCount = CCast<UInt32>(m_Attachments.size());
-	framebufferInfo.pAttachments = m_Attachments.data();
+	framebufferInfo.attachmentCount = CCast<UInt32>(m_Attachments.Size());
+	framebufferInfo.pAttachments = m_Attachments.Data();
 	framebufferInfo.width = extent.Width;
 	framebufferInfo.height = extent.Height;
 	framebufferInfo.layers = 1;

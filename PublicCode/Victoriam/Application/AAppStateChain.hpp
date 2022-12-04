@@ -16,7 +16,7 @@ VISRCBEG
  */
 class VIDECL CAppStateChain
 {
-    CList<CAppState*> m_states = {};
+    CSet<CAppState*> m_states = {};
     UInt32 m_insertIndex = {};
 public:
     VIDECL CAppStateChain() = default;
@@ -43,10 +43,10 @@ public:
 	 */
     VIDECL void RemoveOverlayState(CAppState* state);
 
-    VIDECL VIREQOUT inline CList<CAppState*>::iterator begin() { return m_states.begin(); }
-    VIDECL VIREQOUT inline CList<CAppState*>::iterator end() { return m_states.end(); }
-    VIDECL VIREQOUT inline CList<CAppState*>::reverse_iterator rbegin() { return m_states.rbegin(); }
-    VIDECL VIREQOUT inline CList<CAppState*>::reverse_iterator rend() { return m_states.rend(); }
+    VIDECL VIREQOUT inline CSet<CAppState*>::IteratorType begin() { return m_states.begin(); }
+    VIDECL VIREQOUT inline CSet<CAppState*>::IteratorType end() { return m_states.end(); }
+    VIDECL VIREQOUT inline CSet<CAppState*>::ReverseIteratorType rbegin() { return m_states.rbegin(); }
+    VIDECL VIREQOUT inline CSet<CAppState*>::ReverseIteratorType rend() { return m_states.rend(); }
 };
 
 VISRCEND

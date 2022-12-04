@@ -2,11 +2,6 @@
 // Created by Вячеслав Кривенко on 17.10.2022.
 //
 
-#include <cstdlib>
-#include <limits>
-#include <set>
-#include <stdexcept>
-
 #include "VulkanSwapchain.hpp"
 
 #include "../Accessors/AGraphicsContext.hpp"
@@ -43,7 +38,7 @@ CVulkanSwapchain::~CVulkanSwapchain() {
 		vkDestroyImageView(device, imageView, nullptr);
 		imageView = nullptr;
 	}
-	m_SwapchainImageViews.clear();
+	m_SwapchainImageViews.Clear();
 
 	if (m_Swapchain != nullptr) {
 		vkDestroySwapchainKHR(device, m_Swapchain, nullptr);
@@ -103,8 +98,8 @@ void CVulkanSwapchain::CreateSwapchain()
 		ViAbort("failed to create swap chain!");
 
 	vkGetSwapchainImagesKHR(device, m_Swapchain, &imageCount, nullptr);
-	m_SwapchainImages.resize(imageCount);
-	vkGetSwapchainImagesKHR(device, m_Swapchain, &imageCount, m_SwapchainImages.data());
+	m_SwapchainImages.Resize(imageCount);
+	vkGetSwapchainImagesKHR(device, m_Swapchain, &imageCount, m_SwapchainImages.Data());
 
 	m_SwapchainImageFormat = surfaceFormat.format;
 	m_SwapchainExtent = extent;
@@ -113,8 +108,8 @@ void CVulkanSwapchain::CreateSwapchain()
 void CVulkanSwapchain::CreateImageViews()
 {
 	auto device = Accessors::GraphicsContext::GetDevice(m_Context);
-	m_SwapchainImageViews.resize(m_SwapchainImages.size());
-	for (size_t i = 0; i < m_SwapchainImages.size(); i++) {
+	m_SwapchainImageViews.Resize(m_SwapchainImages.Size());
+	for (size_t i = 0; i < m_SwapchainImages.Size(); i++) {
 		VkImageViewCreateInfo viewInfo = { VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO };
 		viewInfo.image = m_SwapchainImages[i];
 		viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
@@ -134,7 +129,7 @@ void CVulkanSwapchain::CreateDepthResources()
 	m_SwapchainDepthFormat = depthFormat;
 	VkExtent2D swapChainExtent = GetSwapchainExtent();
 
-	m_DepthImages.resize(GetImageCount());
+	m_DepthImages.Resize(GetImageCount());
 	for (auto & m_DepthImage : m_DepthImages) {
 		SImageCreateInfo imageCreateInfo = {};
 		imageCreateInfo.Type = ImageType2D;
@@ -153,10 +148,10 @@ void CVulkanSwapchain::CreateDepthResources()
 
 void CVulkanSwapchain::SetupSynchronization()
 {
-	m_ImageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
-	m_RenderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
-	m_InFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
-	m_ImagesInFlight.resize(GetImageCount(), nullptr);
+	m_ImageAvailableSemaphores.Resize(MAX_FRAMES_IN_FLIGHT);
+	m_RenderFinishedSemaphores.Resize(MAX_FRAMES_IN_FLIGHT);
+	m_InFlightFences.Resize(MAX_FRAMES_IN_FLIGHT);
+	m_ImagesInFlight.Resize(GetImageCount(), nullptr);
 
 	VkSemaphoreCreateInfo semaphoreInfo = { VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO };
 	VkFenceCreateInfo fenceInfo = { VK_STRUCTURE_TYPE_FENCE_CREATE_INFO };
@@ -172,14 +167,14 @@ void CVulkanSwapchain::SetupSynchronization()
 	}
 }
 
-VkSurfaceFormatKHR CVulkanSwapchain::ChooseSwapchainSurfaceFormat(const CList<VkSurfaceFormatKHR> &available)
+VkSurfaceFormatKHR CVulkanSwapchain::ChooseSwapchainSurfaceFormat(const CSet<VkSurfaceFormatKHR> &available)
 {
 	for (const auto &availableFormat : available) if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 		return availableFormat;
 	return available[0];
 }
 
-VkPresentModeKHR CVulkanSwapchain::ChooseSwapchainPresentMode(const CList<VkPresentModeKHR> &available)
+VkPresentModeKHR CVulkanSwapchain::ChooseSwapchainPresentMode(const CSet<VkPresentModeKHR> &available)
 {
 	for (const auto &availablePresentMode : available)
 		if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR)
@@ -208,15 +203,15 @@ VkFormat CVulkanSwapchain::FindDepthFormat()
 UInt32 CVulkanSwapchain::AcquireNextImage(UInt32 *imageIndex)
 {
 	auto device = Accessors::GraphicsContext::GetDevice(m_Context);
-	vkWaitForFences(device, 1, &m_InFlightFences[m_CurrentFrame], true, std::numeric_limits<uint64_t>::max());
-	return vkAcquireNextImageKHR(device, m_Swapchain, std::numeric_limits<uint64_t>::max(), m_ImageAvailableSemaphores[m_CurrentFrame],  /* must be a not signaled semaphore */ nullptr, imageIndex);
+	vkWaitForFences(device, 1, &m_InFlightFences[m_CurrentFrame], true, CCast<UInt64>(-1));
+	return vkAcquireNextImageKHR(device, m_Swapchain, CCast<UInt64>(-1), m_ImageAvailableSemaphores[m_CurrentFrame],  /* must be a not signaled semaphore */ nullptr, imageIndex);
 }
 
 VkResult CVulkanSwapchain::SubmitCommandBuffers(const VkCommandBuffer *buffers, const UInt32 *imageIndex)
 {
 	auto device = Accessors::GraphicsContext::GetDevice(m_Context);
 	if (m_ImagesInFlight[*imageIndex] != nullptr)
-		vkWaitForFences(device, 1, &m_ImagesInFlight[*imageIndex], true, std::numeric_limits<uint64_t>::max());
+		vkWaitForFences(device, 1, &m_ImagesInFlight[*imageIndex], true, CCast<UInt64>(-1));
 
 	m_ImagesInFlight[*imageIndex] = m_InFlightFences[m_CurrentFrame];
 
@@ -263,7 +258,7 @@ Bool CVulkanSwapchain::CompareFormats(const PSwapchain& swapchain) const
 }
 
 void CVulkanSwapchain::CreateFramebuffers(PRenderPass &renderPass) {
-	m_Framebuffers.resize(GetImageCount());
+	m_Framebuffers.Resize(GetImageCount());
 	for (UInt32 i = 0; i < GetImageCount(); i++)
 	{
 		SFramebufferCreateInfo createInfo = {};

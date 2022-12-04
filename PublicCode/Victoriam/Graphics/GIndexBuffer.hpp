@@ -15,7 +15,7 @@ class VIDECL CIndexBuffer : public CBuffer
 public:
 	VIDECL ~CIndexBuffer() override = default;
 
-	VIDECL VIREQOUT static CShared<CIndexBuffer> Create(PGraphicsContext& context, const CList<UInt32>& indices);
+	VIDECL VIREQOUT static CShared<CIndexBuffer> Create(PGraphicsContext& context, const CSet<UInt32>& indices);
 };
 
 VIDECL typedef CShared<CIndexBuffer> PIndexBuffer;

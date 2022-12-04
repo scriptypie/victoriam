@@ -65,6 +65,7 @@ VIDECL VIREQOUT ScalarType FArcTan(const ScalarType& x);/*  */
 VIDECL VIREQOUT ScalarType FSqrt(const ScalarType& x);  /*  */
 VIDECL VIREQOUT ScalarType FRSqrt(const ScalarType& x); /*  */
 VIDECL VIREQOUT ScalarType FAbs(const ScalarType& x);   /*  */
+VIDECL VIREQOUT ScalarType FPow(const ScalarType& x, const ScalarType& y);   /*  */
 
 VIDECL VIREQOUT inline Bool CompareScalar(const ScalarType& a, const ScalarType& b) {
 	if (FAbs(a - b) > CONSTANT::EPSILON) return false;

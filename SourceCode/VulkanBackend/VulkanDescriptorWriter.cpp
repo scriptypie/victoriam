@@ -21,7 +21,7 @@ void CVulkanDescriptorWriter::Overwrite(SDescriptorSet &descriptorSet) {
 		write.dstSet = CCast<VkDescriptorSet>(descriptorSet);
 	auto& context = Accessors::DescriptorPool::GetContext(m_Pool);
 	vkUpdateDescriptorSets(Accessors::GraphicsContext::GetDevice(context),
-						   CCast<UInt32>(m_WriteList.size()), m_WriteList.data(), 0, nullptr);
+						   CCast<UInt32>(m_WriteList.Size()), m_WriteList.Data(), 0, nullptr);
 }
 
 void CVulkanDescriptorWriter::WriteBuffer(const UInt32 &binding, VkDescriptorBufferInfo *bufferInfo) {
@@ -38,7 +38,7 @@ void CVulkanDescriptorWriter::WriteBuffer(const UInt32 &binding, VkDescriptorBuf
 	writeDescriptorSet.pBufferInfo = bufferInfo;
 	writeDescriptorSet.descriptorCount = bindingDesc.Count;
 
-	m_WriteList.push_back(writeDescriptorSet);
+	m_WriteList.PushBack(writeDescriptorSet);
 }
 
 void CVulkanDescriptorWriter::WriteImage(const UInt32 &binding, VkDescriptorImageInfo *imageInfo) {
@@ -55,7 +55,7 @@ void CVulkanDescriptorWriter::WriteImage(const UInt32 &binding, VkDescriptorImag
 	writeDescriptorSet.pImageInfo = imageInfo;
 	writeDescriptorSet.descriptorCount = bindingDesc.Count;
 
-	m_WriteList.push_back(writeDescriptorSet);
+	m_WriteList.PushBack(writeDescriptorSet);
 }
 
 VISRCEND

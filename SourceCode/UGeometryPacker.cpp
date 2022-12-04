@@ -10,19 +10,19 @@ VISRCBEG
 
 void FPackGeometryToFile(const String& filename, const SPackedGeometryInfo& info) {
 	SPackedGeometryHeader packedHeader = {};
-	packedHeader.NumIndices = info.Indices.size();
-	packedHeader.NumVertices = info.Vertices.size();
+	packedHeader.NumIndices = info.Indices.Size();
+	packedHeader.NumVertices = info.Vertices.Size();
 
-	const SVertex* rawVertices = info.Vertices.data();
-	const UInt32* rawIndices = info.Indices.data();
-	const UInt64 verticesSize = sizeof(SVertex) * info.Vertices.size();
-	const UInt64 indicesSize = sizeof(UInt32) * info.Indices.size();
+	const SVertex* rawVertices = info.Vertices.Data();
+	const UInt32* rawIndices = info.Indices.Data();
+	const UInt64 verticesSize = sizeof(SVertex) * info.Vertices.Size();
+	const UInt64 indicesSize = sizeof(UInt32) * info.Indices.Size();
 
 	char* rawUniformVertices = CCast<char*>(rawVertices);
 	char* rawUniformIndices = CCast<char*>(rawIndices);
 
 	String containedVertices(rawUniformVertices, verticesSize);
-	if (info.Vertices.size() > 50000) {
+	if (info.Vertices.Size() > 50000) {
 		SCompressor::Compress(containedVertices, CompressionAlgorithmLZ4);
 	}
 
@@ -47,8 +47,8 @@ void FUnpackGeometryFromFile(const String& filename, SPackedGeometryInfo& geom) 
 	if (file.Valid()) {
 		VIGNORE file.Read(CCast<char*>(&packedHeader), sizeof(SPackedGeometryHeader));
 
-		geom.Vertices.resize(packedHeader.NumVertices);
-		geom.Indices.resize(packedHeader.NumIndices);
+		geom.Vertices.Resize(packedHeader.NumVertices);
+		geom.Indices.Resize(packedHeader.NumIndices);
 
 		String containedCompressedVertices(packedHeader.CompressedVerticesSize, 0);
 		String containedCompressedIndices(packedHeader.CompressedIndicesSize, 0);
@@ -57,21 +57,21 @@ void FUnpackGeometryFromFile(const String& filename, SPackedGeometryInfo& geom) 
 		VIGNORE file.Read(CCast<char*>(containedCompressedIndices.data()), packedHeader.CompressedIndicesSize);
 		file.Close();
 
-		const UInt64 verticesSize = sizeof(SVertex) * geom.Vertices.size();
+		const UInt64 verticesSize = sizeof(SVertex) * geom.Vertices.Size();
 
 		if (packedHeader.CompressedVerticesSize != verticesSize) { // we proceed decompression
 			SCompressor::Decompress(containedCompressedVertices, CompressionAlgorithmLZ4, verticesSize);
 		}
 
-		void* rawVertices = geom.Vertices.data();
-		void*  rawIndices = geom.Indices.data();
+		void* rawVertices = geom.Vertices.Data();
+		void*  rawIndices = geom.Indices.Data();
 
 		memmove(rawVertices, CCast<void*>(containedCompressedVertices.data()), containedCompressedVertices.size());
 		memmove(rawIndices, CCast<void*>(containedCompressedIndices.data()), containedCompressedIndices.size());
 	}
 	else {
 		String error = "Error: file '" + filename + "' does not exists!";
-		ViLog("%s\n", error.c_str());
+		ViLog(error);
 	}
 
 }

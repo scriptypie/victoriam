@@ -101,7 +101,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		componentTransform->Translation = { 0.0F, -10.0F, 300.0F };
 	}
 
-	ViLog("Total polygons: %llu\n", totalPoly);
+	ViLog("Total polygons: " << totalPoly);
 
 	m_running = true;
 }

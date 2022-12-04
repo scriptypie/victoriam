@@ -65,7 +65,7 @@ namespace Accessors {
 		VIDECL static void CreateImageWithInfo(const PGraphicsContext& context, const VkImageCreateInfo &imageInfo, VkMemoryPropertyFlags properties, VkDeviceSize memoryOffset, VkImage &image, VkDeviceMemory &imageMemory) {
 			CCast<CVulkanGraphicsContext*>(context.Get())->CreateImageWithInfo(imageInfo, properties, memoryOffset, image, imageMemory);
 		}
-		VIDECL static VkFormat FindSupportedFormat(const PGraphicsContext& context, const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
+		VIDECL static VkFormat FindSupportedFormat(const PGraphicsContext& context, const CSet<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
 			return CCast<CVulkanGraphicsContext*>(context.Get())->FindSupportedFormat(candidates, tiling, features);
 		}
 

@@ -71,8 +71,8 @@ public:
 	VIDECL VIREQOUT ECFileResult Read(T& output)
 	{
 		SFileView view = View();
-		output.resize(view.Size);
-		return Read(CCast<char*>(output.data()), view.Size * sizeof(typename T::value_type));
+		output.Resize(view.Size);
+		return Read(CCast<char*>(output.Data()), view.Size * sizeof(typename T::ValueType));
 	}
 	VIDECL VIREQOUT ECFileResult Write(const String& data);
 	VIDECL VIREQOUT ECFileResult Write(const char* data, const UInt64& size);

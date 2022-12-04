@@ -7,7 +7,7 @@
 VISRCBEG
 
 SDescriptorPoolCreateInfo &SDescriptorPoolCreateInfo::AddPoolSize(const SDescriptorPoolSize &poolSize) {
-	PoolSizeList.push_back(poolSize);
+	PoolSizeList.PushBack(poolSize);
 	return *this;
 }
 

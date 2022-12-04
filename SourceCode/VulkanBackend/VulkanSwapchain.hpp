@@ -25,17 +25,17 @@ VIDECL
 	VIDECL VkFormat m_SwapchainImageFormat = {};
 	VIDECL VkFormat m_SwapchainDepthFormat = {};
 	VIDECL VkExtent2D m_SwapchainExtent = {};
-	VIDECL CList<PImage> m_DepthImages = {};
-	VIDECL CList<VkImageView> m_SwapchainImageViews = {};
-	VIDECL CList<VkImage> m_SwapchainImages = {};
+	VIDECL CSet<PImage> m_DepthImages = {};
+	VIDECL CSet<VkImageView> m_SwapchainImageViews = {};
+	VIDECL CSet<VkImage> m_SwapchainImages = {};
 	VIDECL PGraphicsContext& m_Context;
-	VIDECL CList<PFramebuffer> m_Framebuffers = {};
+	VIDECL CSet<PFramebuffer> m_Framebuffers = {};
 	VIDECL SExtent2D m_WindowExtent = {};
 	VIDECL VkSwapchainKHR m_Swapchain = {};
-	VIDECL CList<VkSemaphore> m_ImageAvailableSemaphores = {};
-	VIDECL CList<VkSemaphore> m_RenderFinishedSemaphores = {};
-	VIDECL CList<VkFence> m_InFlightFences = {};
-	VIDECL CList<VkFence> m_ImagesInFlight = {};
+	VIDECL CSet<VkSemaphore> m_ImageAvailableSemaphores = {};
+	VIDECL CSet<VkSemaphore> m_RenderFinishedSemaphores = {};
+	VIDECL CSet<VkFence> m_InFlightFences = {};
+	VIDECL CSet<VkFence> m_ImagesInFlight = {};
 	VIDECL UInt32 m_CurrentFrame = {};
 	VIDECL CSwapchain* m_OldSwapchain = {};
 
@@ -45,7 +45,7 @@ public:
 	VIDECL ~CVulkanSwapchain() override;
 
 	VIDECL VIREQOUT UInt32 AcquireNextImage(UInt32* imageIndex) override;
-	VIDECL VIREQOUT inline UInt32 GetImageCount() const override { return m_SwapchainImages.size(); }
+	VIDECL VIREQOUT inline UInt32 GetImageCount() const override { return m_SwapchainImages.Size(); }
 	VIDECL VIREQOUT inline UInt32 GetFrameIndex() const override { return m_CurrentFrame; }
 	VIDECL VIREQOUT inline UInt32 GetMaxFramesInFlight() const override { return MAX_FRAMES_IN_FLIGHT; }
 	VIDECL VIREQOUT inline UInt32 GetWidth() const override { return m_SwapchainExtent.width; }
@@ -64,14 +64,14 @@ private:
 	VIDECL          void CreateDepthResources();
 	VIDECL          void SetupSynchronization();
 
-	VIDECL VIREQOUT static VkSurfaceFormatKHR ChooseSwapchainSurfaceFormat(const CList<VkSurfaceFormatKHR>& available);
-	VIDECL VIREQOUT static VkPresentModeKHR ChooseSwapchainPresentMode(const CList<VkPresentModeKHR>& available);
+	VIDECL VIREQOUT static VkSurfaceFormatKHR ChooseSwapchainSurfaceFormat(const CSet<VkSurfaceFormatKHR>& available);
+	VIDECL VIREQOUT static VkPresentModeKHR ChooseSwapchainPresentMode(const CSet<VkPresentModeKHR>& available);
 	VIDECL VIREQOUT VkExtent2D ChooseSwapchainExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 
 	VIDECL VIREQOUT VkFormat FindDepthFormat();
 	VIDECL          VkResult SubmitCommandBuffers(const VkCommandBuffer* buffers, const UInt32* imageIndex);
 private:
-	VIDECL VIREQOUT inline CList<PFramebuffer>& GetFramebuffers() override { return m_Framebuffers; }
+	VIDECL VIREQOUT inline CSet<PFramebuffer>& GetFramebuffers() override { return m_Framebuffers; }
 	VIDECL void CreateFramebuffers(PRenderPass& renderPass) override;
 	VIDECL VIREQOUT inline VkImageView GetImageView(const UInt32& index) const { return m_SwapchainImageViews[index]; }
 	VIDECL VIREQOUT inline VkFormat GetSwapchainImageFormat() const { return m_SwapchainImageFormat; }

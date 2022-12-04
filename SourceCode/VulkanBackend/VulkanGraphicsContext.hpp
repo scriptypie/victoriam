@@ -15,8 +15,8 @@ VISRCBEG
 struct VIDECL SSwapchainSupportDetails
 {
 	VkSurfaceCapabilitiesKHR capabilities;
-	CList<VkSurfaceFormatKHR> formats;
-	CList<VkPresentModeKHR> presentModes;
+	CSet<VkSurfaceFormatKHR> formats;
+	CSet<VkPresentModeKHR> presentModes;
 };
 
 struct VIDECL SQueueFamilyIndices
@@ -48,13 +48,13 @@ class CVulkanGraphicsContext : public CGraphicsContext
 	VkPhysicalDevice m_PhysicalDevice = {};
 	VkPhysicalDeviceProperties m_Properties = {};
 	VkCommandPool m_CmdPool = {};
-	CList<VkCommandBuffer> m_CmdBuffers = {};
+	CSet<VkCommandBuffer> m_CmdBuffers = {};
 	VkDevice m_Device = {};
 	VkSurfaceKHR m_Surface = {};
 	VkQueue m_GraphicsQueue = {};
 	VkQueue m_PresentQueue = {};
-	const CList<CString> VALIDATION_LAYERS = {"VK_LAYER_KHRONOS_validation" };
-	CList<CString> DEVICE_EXTENSIONS = {VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+	const CSet<CString> VALIDATION_LAYERS = {"VK_LAYER_KHRONOS_validation" };
+	CSet<CString> DEVICE_EXTENSIONS = {VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 public:
 	VIDECL explicit CVulkanGraphicsContext(const CShared<CWindow> &window);
 	VIDECL ~CVulkanGraphicsContext() override;
@@ -74,10 +74,10 @@ private:
 	VIDECL void CreateCommandPool();
 
 	VIDECL VIREQOUT Bool IsPhysicalDeviceSuitable(VkPhysicalDevice device);
-	VIDECL VIREQOUT CList<CString> GetRequiredExtensions() const;
+	VIDECL VIREQOUT CSet<CString> GetRequiredExtensions() const;
 	VIDECL VIREQOUT Bool CheckValidationLayerSupport();
 	VIDECL VIREQOUT SQueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
-	VIDECL VIREQOUT VkFormat FindSupportedFormat(const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
+	VIDECL VIREQOUT VkFormat FindSupportedFormat(const CSet<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 	VIDECL          static void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& info);
 	VIDECL          void HasGLFWRequiredInstanceExtensions();
 	VIDECL VIREQOUT Bool CheckDeviceExtensionSupport(VkPhysicalDevice device);

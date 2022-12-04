@@ -21,6 +21,7 @@ struct VIDECL SDescriptorPoolSize
 	VIDECL Signal DescriptorType = {};
 	VIDECL UInt32 DescriptorCount = {};
 
+	VIDECL SDescriptorPoolSize() = default;
 	VIDECL explicit inline SDescriptorPoolSize(const Signal& type, const UInt32& count) : DescriptorType(type), DescriptorCount(count) {}
 };
 
@@ -29,7 +30,7 @@ struct VIDECL SDescriptorPoolSize
  */
 struct VIDECL SDescriptorPoolCreateInfo
 {
-	CList<SDescriptorPoolSize> PoolSizeList = {};
+	CSet<SDescriptorPoolSize> PoolSizeList = {};
 	Signal DescriptorPoolCreateSignal = 0;
 	UInt32 MaxSets = {};
 

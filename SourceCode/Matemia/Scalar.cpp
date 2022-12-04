@@ -50,5 +50,9 @@ ScalarType FAbs(const ScalarType& x) {
 	return std::abs(x);
 }
 
+ScalarType FPow(const ScalarType &x, const ScalarType &y) {
+	return std::pow(x, y);
+}
+
 
 VISRCEND

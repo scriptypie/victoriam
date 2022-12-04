@@ -7,6 +7,7 @@
 
 #include <Victoriam/Core/CMacroDefinitions.hpp>
 #include <Victoriam/Core/Memory/MUtils.hpp>
+#include <Victoriam/Core/CNumerics.hpp>
 #include <Victoriam/Core/CCast.hpp>
 
 VISRCBEG
@@ -28,11 +29,33 @@ VIDECL VIREQOUT inline constexpr typename SRemoveReference<T>::Type&& FMove(T&& 
 	return static_cast<ReType&&>(v);
 }
 
+template<class InputType, class OutputType>
+VIDECL constexpr OutputType FMove(InputType f, InputType l, OutputType dst_f) {
+	while (f != l)
+		*dst_f++ = FMove(*f++);
+	return dst_f;
+}
+
+template<class BDirIteratorType1, class BDirIteratorType2>
+VIDECL constexpr BDirIteratorType2 FMoveBackward(BDirIteratorType1 f, BDirIteratorType1 l, BDirIteratorType2 dst_l) {
+	while (l != f)
+		*(--dst_l) = FMove(*(--l));
+	return dst_l;
+}
+
+template<class IteratorType, class T>
+VIDECL VIREQOUT constexpr IteratorType FFind(IteratorType f, IteratorType l, const T& v) {
+	for (; f != l; ++f)
+		if (*f == v)
+			break;
+	return f;
+}
+
 template<class T>
 VIDECL void FSwap(T& a, T& b) noexcept {
-	T t = Vi::FMove(a);
-	a = Vi::FMove(b);
-	b = Vi::FMove(t);
+	T t = FMove(a);
+	a = FMove(b);
+	b = FMove(t);
 }
 
 template<class T>

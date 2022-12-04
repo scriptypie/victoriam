@@ -19,19 +19,19 @@ class VIDECL CGameObject : public CEnableSharedFrom<CGameObject>
 
 	UID m_ID = {};
 	PWorld m_Owner = {};
-	CList<CShared<SComponentBase>> m_Components = {};
+	CSet<CShared<SComponentBase>> m_Components = {};
 	CGameObject* m_Parent = {};
-	CList<CGameObject*> m_Children = {};
+	CSet<CGameObject*> m_Children = {};
 public:
 	VIDECL explicit CGameObject(const PWorld& owner);
-	VIDECL ~CGameObject() { m_Components.clear(); }
+	VIDECL ~CGameObject() = default;
 	VIDECL VIREQOUT UID GetUID() const;
 
 	template<class T, class...Args>
 	VIDECL T* AddComponent(Args&&...args) {
 		if (HasComponent<T>()) return nullptr;
 		auto component = FMakeShared<T>(std::forward<Args>(args)...);
-		m_Components.push_back(component);
+		m_Components.PushBack(component);
 		return component.Get();
 	}
 
@@ -39,7 +39,7 @@ public:
 	VIDECL void RemoveComponent() {
 		for (auto it = m_Components.begin(); it != m_Components.end(); it++)
 			if ((((*it)->GetComponentID() == T::GetStaticComponentID()) || ...)) {
-				m_Components.erase(it);
+				m_Components.Erase(it);
 				return;
 			}
 	}
@@ -50,7 +50,7 @@ public:
 	}
 	template<class...T>
 	VIDECL VIREQOUT Bool HasComponent() const {
-		if (m_Components.empty()) return false;
+		if (m_Components.Empty()) return false;
 		return std::any_of(m_Components.begin(), m_Components.end(), [&](const auto &item) {
 			return (((item->GetComponentID() == T::GetStaticComponentID()) && ...));
 		});

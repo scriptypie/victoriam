@@ -25,9 +25,9 @@ CVulkanPipeline::CVulkanPipeline(PGraphicsContext& context, PRenderPass& renderP
 	m_Info.Name = createInfo.Name;
 
 	if (!m_Info.bProvideBindings)
-		m_Info.BindingDescriptions.clear();
+		m_Info.BindingDescriptions.Clear();
 	if (!m_Info.bProvideAttributes)
-		m_Info.AttributeDescriptions.clear();
+		m_Info.AttributeDescriptions.Clear();
 
 	// I know, it's wrong, but in this case it's okay 'cause our virtual function will be existed
 	CreateShaderModule(m_ShaderCooker.LoadVertexShader(m_Info.Name), &m_VertexShaderModule);
@@ -51,8 +51,8 @@ CVulkanPipeline::~CVulkanPipeline()
 void CVulkanPipeline::CreateShaderModule(const CBinaryData &sourceData, VkShaderModule *shaderModule)
 {
 	VkShaderModuleCreateInfo createInfo = { VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO };
-	createInfo.codeSize = sourceData.size();
-	createInfo.pCode = CCast<const UInt32*>(sourceData.data());
+	createInfo.codeSize = sourceData.Size();
+	createInfo.pCode = CCast<const UInt32*>(sourceData.Data());
 
 	if (vkCreateShaderModule(Accessors::GraphicsContext::GetDevice(m_Context), &createInfo, nullptr, shaderModule) != VK_SUCCESS)
 		 ViAbort("Failed to create shader module!");
@@ -76,12 +76,12 @@ void CVulkanPipeline::CreateGraphicsPipeline()
 	VkPipelineVertexInputStateCreateInfo vertexInputStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO };
 
 	if (m_Info.bProvideAttributes) {
-		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_Info.AttributeDescriptions.data();
-		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = CCast<UInt32>(m_Info.AttributeDescriptions.size());
+		vertexInputStateCreateInfo.pVertexAttributeDescriptions = m_Info.AttributeDescriptions.Data();
+		vertexInputStateCreateInfo.vertexAttributeDescriptionCount = CCast<UInt32>(m_Info.AttributeDescriptions.Size());
 	}
 	if (m_Info.bProvideBindings) {
-		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_Info.BindingDescriptions.data();
-		vertexInputStateCreateInfo.vertexBindingDescriptionCount = CCast<UInt32>(m_Info.BindingDescriptions.size());
+		vertexInputStateCreateInfo.pVertexBindingDescriptions = m_Info.BindingDescriptions.Data();
+		vertexInputStateCreateInfo.vertexBindingDescriptionCount = CCast<UInt32>(m_Info.BindingDescriptions.Size());
 	}
 
 	VkGraphicsPipelineCreateInfo pipelineCreateInfo = { VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO };
@@ -116,10 +116,10 @@ void CVulkanPipeline::CreatePipelineLayout(const PDescriptorSetLayout& setLayout
 		createInfo.pPushConstantRanges = &pushConstantRange;
 	}
 
-	CList<VkDescriptorSetLayout> setLayouts = {Accessors::DescriptorSetLayout::GetDescriptorSetLayout(setLayout)};
+	CSet<VkDescriptorSetLayout> setLayouts = {Accessors::DescriptorSetLayout::GetDescriptorSetLayout(setLayout)};
 
-	createInfo.pSetLayouts = setLayouts.data();
-	createInfo.setLayoutCount = CCast<UInt32>(setLayouts.size());
+	createInfo.pSetLayouts = setLayouts.Data();
+	createInfo.setLayoutCount = CCast<UInt32>(setLayouts.Size());
 
 	if (vkCreatePipelineLayout(Accessors::GraphicsContext::GetDevice(m_Context), &createInfo, nullptr, &m_Info.PipelineLayout) != VK_SUCCESS)
 		ViAbort("Failed to create pipeline layout!");

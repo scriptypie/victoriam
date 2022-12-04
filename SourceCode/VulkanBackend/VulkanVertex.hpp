@@ -5,18 +5,18 @@
 #ifndef VICTORIAM_VULKANVERTEX_HPP
 #define VICTORIAM_VULKANVERTEX_HPP
 
-#include "Victoriam/Graphics/Structs/GVertex.hpp"
+#include <Victoriam/Graphics/Structs/GVertex.hpp>
 
 #include <vulkan/vulkan.h>
 
 VISRCBEG
 
-VIDECL VIREQOUT inline static CList<VkVertexInputBindingDescription> FGetVertexBindingDescriptions()
+VIDECL VIREQOUT inline static CSet<VkVertexInputBindingDescription> FGetVertexBindingDescriptions()
 {
 	return {{0, sizeof(SVertex), VK_VERTEX_INPUT_RATE_VERTEX}};
 }
 
-VIDECL VIREQOUT inline static CList<VkVertexInputAttributeDescription> FGetVertexAttributeDescriptions()
+VIDECL VIREQOUT inline static CSet<VkVertexInputAttributeDescription> FGetVertexAttributeDescriptions()
 {
 	switch (sizeof(ScalarType)) {
 		case 8: {

@@ -21,14 +21,16 @@ struct VIDECL SSPIRVShader
 {
 	enum VIDECL EShaderType
 	{
+		Undefined = -1,
 		Vertex,
 		Fragment
-	} Type;
-	String Source;
-	String Name;
+	} Type = Undefined;
+	String Source = {};
+	String Name = {};
 
 	VIDECL VIREQOUT static String toString(const EShaderType& type) ;
 
+	VIDECL inline SSPIRVShader() = default;
 	VIDECL inline SSPIRVShader(const EShaderType& type, String src, String name)
 			: Type(type), Source(std::move(src)), Name(std::move(name))
 	{}
@@ -36,7 +38,7 @@ struct VIDECL SSPIRVShader
 
 class VIDECL CShaderCooker
 {
-	const CList<CString> EXT = {".vert.spv", ".frag.spv" };
+	const CSet<CString> EXT = {".vert.spv", ".frag.spv" };
 	String INFO;
 	const String COMPILER = "glslc ";
 	const String SHADERDIR = "./../Resources/Shaders/";
@@ -51,7 +53,7 @@ private:
 	VIDECL VIREQOUT bool IsCookedExists(const String& name);
 	VIDECL VIREQOUT bool IsShaderChanged(const SEngineShader& shader, const String& name);
 	VIDECL VIREQOUT SEngineShader ReadShader(const String& name);
-	VIDECL VIREQOUT String CookShader(const CList<SSPIRVShader>& sshader);
+	VIDECL VIREQOUT String CookShader(const CSet<SSPIRVShader>& sshader);
 	VIDECL VIREQOUT CBinaryData LoadCookedShaderFromName(const String& name, const SSPIRVShader::EShaderType& type);
 };
 

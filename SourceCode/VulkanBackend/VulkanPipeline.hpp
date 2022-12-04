@@ -16,8 +16,8 @@ namespace Accessors { class Pipeline; }
 
 struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 {
-	VIDECL CList<VkVertexInputBindingDescription> BindingDescriptions = {};
-	VIDECL CList<VkVertexInputAttributeDescription> AttributeDescriptions = {};
+	VIDECL CSet<VkVertexInputBindingDescription> BindingDescriptions = {};
+	VIDECL CSet<VkVertexInputAttributeDescription> AttributeDescriptions = {};
 	VIDECL VkPipelineInputAssemblyStateCreateInfo InputAssemblyStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO };
 	VIDECL VkPipelineRasterizationStateCreateInfo RasterizationStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO };
 	VIDECL VkPipelineMultisampleStateCreateInfo MultisampleStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO };
@@ -26,7 +26,7 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 	VIDECL VkPipelineDepthStencilStateCreateInfo DepthStencilStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO };
 	VIDECL VkPipelineViewportStateCreateInfo ViewportStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO };
 	VIDECL VkPipelineDynamicStateCreateInfo DynamicStateCreateInfo = { VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO };
-	VIDECL CList<VkDynamicState> DynamicStateEnables = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
+	VIDECL CSet<VkDynamicState> DynamicStateEnables = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
 	VIDECL VkPipelineLayout PipelineLayout = VK_NULL_HANDLE;
 	VIDECL VkRenderPass RenderPass = VK_NULL_HANDLE;
 	VIDECL UInt32 Subpass = {};
@@ -48,11 +48,11 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 
 		if (!bProvideBindings)
 		{
-			BindingDescriptions.clear();
+			BindingDescriptions.Clear();
 		}
 		if (!bProvideAttributes)
 		{
-			AttributeDescriptions.clear();
+			AttributeDescriptions.Clear();
 		}
 	}
 
@@ -91,8 +91,8 @@ struct VIDECL SVulkanPipelineCreateInfo : SPipelineCreateInfo
 		DepthStencilStateCreateInfo.depthCompareOp = VK_COMPARE_OP_LESS;
 		DepthStencilStateCreateInfo.maxDepthBounds = 1.0f;
 		// DynamicStateCreateInfo
-		DynamicStateCreateInfo.dynamicStateCount = CCast<UInt32>(DynamicStateEnables.size());
-		DynamicStateCreateInfo.pDynamicStates = DynamicStateEnables.data();
+		DynamicStateCreateInfo.dynamicStateCount = CCast<UInt32>(DynamicStateEnables.Size());
+		DynamicStateCreateInfo.pDynamicStates = DynamicStateEnables.Data();
 
 		BindingDescriptions = FGetVertexBindingDescriptions();
 		AttributeDescriptions = FGetVertexAttributeDescriptions();

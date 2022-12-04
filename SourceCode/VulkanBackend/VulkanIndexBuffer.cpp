@@ -6,7 +6,7 @@
 
 VISRCBEG
 
-CVulkanIndexBuffer::CVulkanIndexBuffer(PGraphicsContext &context, const CList<UInt32> &indices)
+CVulkanIndexBuffer::CVulkanIndexBuffer(PGraphicsContext &context, const CSet<UInt32> &indices)
 	: m_Context(context)
 {
 	CreateIndexBuffer(indices);
@@ -20,8 +20,8 @@ void CVulkanIndexBuffer::Draw(SCommandBuffer const &buffer) const {
 	vkCmdDrawIndexed(CCast<VkCommandBuffer>(buffer), m_IndexCount, 1, 0, 0, 0);
 }
 
-void CVulkanIndexBuffer::CreateIndexBuffer(const CList<UInt32> &indices) {
-	m_IndexCount = indices.size();
+void CVulkanIndexBuffer::CreateIndexBuffer(const CSet<UInt32> &indices) {
+	m_IndexCount = indices.Size();
 	if (!m_IndexCount) return;
 
 	PVulkanMemoryBuffer stagingBuffer = CVulkanMemoryBuffer::Create(
@@ -31,7 +31,7 @@ void CVulkanIndexBuffer::CreateIndexBuffer(const CList<UInt32> &indices) {
 			VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 	stagingBuffer->Map();
-	stagingBuffer->WriteToBuffer(indices.data());
+	stagingBuffer->WriteToBuffer(indices.Data());
 	m_MemoryBuffer = CVulkanMemoryBuffer::Create(
 			m_Context,
 			sizeof(indices[0]),

@@ -32,7 +32,7 @@ void CVulkanRenderer::Setup()
 
 }
 
-PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const CList<SVertex> &vertices)
+PVertexBuffer CVulkanRenderer::CreateVertexBuffer(const CSet<SVertex> &vertices)
 {
 	return CVertexBuffer::Create(m_Context, vertices);
 }
@@ -116,7 +116,7 @@ void CVulkanRenderer::RecreateSwapchain(const SExtent2D &newExtent) {
 		m_Swapchain = CSwapchain::Create(m_Context, newExtent);
 	else
 	{
-		auto oldSwapchain = FMove(m_Swapchain);
+		auto&& oldSwapchain = m_Swapchain;
 		m_Swapchain = CSwapchain::Create(m_Context, newExtent, oldSwapchain.Get());
 		if (!oldSwapchain->CompareFormats(m_Swapchain))
 			ViAbort("Swapchain image or depth format is changed!!!");
@@ -145,21 +145,21 @@ void CVulkanRenderer::RecreateSwapchain(const SExtent2D &newExtent) {
 }
 
 
-PIndexBuffer CVulkanRenderer::CreateIndexBuffer(const CList<UInt32> &indices) {
+PIndexBuffer CVulkanRenderer::CreateIndexBuffer(const CSet<UInt32> &indices) {
 	return CIndexBuffer::Create(m_Context, indices);
 }
 
-CGeometryData CVulkanRenderer::CreateGeometryData(const CList<SVertex> &vertices) {
+CGeometryData CVulkanRenderer::CreateGeometryData(const CSet<SVertex> &vertices) {
 	return CGeometryData::Create(m_Context, vertices);
 }
 
-CGeometryData CVulkanRenderer::CreateGeometryData(const CList<SVertex> &vertices, const CList<UInt32> &indices) {
+CGeometryData CVulkanRenderer::CreateGeometryData(const CSet<SVertex> &vertices, const CSet<UInt32> &indices) {
 	return CGeometryData::Create(m_Context, vertices, indices);
 }
 
 CGeometryData CVulkanRenderer::CreateGeometryData(const SGeometryDataCreateInfo &createInfo)
 {
-	if (!createInfo.Indices.empty())
+	if (!createInfo.Indices.Empty())
 		return CGeometryData::Create(m_Context, createInfo.Vertices, createInfo.Indices);
 	else
 		return CGeometryData::Create(m_Context, createInfo.Vertices);
@@ -200,8 +200,8 @@ void CVulkanRenderer::CreateDescriptorSetLayout() {
 }
 
 void CVulkanRenderer::CreateDescriptors(const PWorld &world) {
-	m_GlobalDescriptorSets.resize(m_Swapchain->GetMaxFramesInFlight());
-	for (UInt32 i = 0; i < m_GlobalDescriptorSets.size(); i++)
+	m_GlobalDescriptorSets.Resize(m_Swapchain->GetMaxFramesInFlight());
+	for (UInt32 i = 0; i < m_GlobalDescriptorSets.Size(); i++)
 	{
 		auto& rcb = world->GetConstantsBuffer(i);
 		auto bufferInfo = Accessors::UniformBuffer::GetDescriptorBufferInfo(rcb);

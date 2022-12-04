@@ -24,7 +24,7 @@ public:
 	VIDECL ~CVulkanDescriptorPool() override;
 
 	VIDECL Bool AllocateDescriptorSet(const PDescriptorSetLayout& layout, SDescriptorSet& descriptorSet) const override;
-	VIDECL void FreeDescriptorSets(CList<SDescriptorSet>& descriptors) const override;
+	VIDECL void FreeDescriptorSets(CSet<SDescriptorSet>& descriptors) const override;
 	VIDECL void ResetPool() override;
 
 private:

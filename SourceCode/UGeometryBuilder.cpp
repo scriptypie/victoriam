@@ -27,8 +27,8 @@ void CGeometryBuilder::InternalLoadModelFromFile(const String &filename, SGeomet
 {
 	SPackedGeometryInfo geom = {};
 	FUnpackGeometryFromFile(filename, geom);
-	outinfo.Vertices = FMove(geom.Vertices);
-	outinfo.Indices = FMove(geom.Indices);
+	outinfo.Vertices = geom.Vertices;
+	outinfo.Indices = geom.Indices;
 }
 
 VISRCEND

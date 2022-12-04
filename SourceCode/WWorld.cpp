@@ -27,14 +27,14 @@ void CWorld::DestroyGameObject(const PGameObject& object) {
 	object->Destroy();
 }
 void CWorld::OnGameObjectCreated(const PGameObject& object) {
-	m_Registry.push_back(object);
+	m_Registry.PushBack(object);
 }
 
 
 void CWorld::OnGameObjectDestroyed(const PGameObject& object) {
 	for (auto it = m_Registry.begin(); it != m_Registry.end(); it++)
 		if ((*it)->GetUID() == object->GetUID()) {
-			m_Registry.erase(it);
+			m_Registry.Erase(it);
 			return;
 		}
 }
@@ -45,7 +45,7 @@ PGameObject CWorld::FindGameObjectByUID(const UID &id) {
 		return obj->GetUID() == id;
 	});
 	if (found)
-		return m_Registry.at(id);
+		return m_Registry.At(id);
 	else
 	{
 		ViLog("GameObject not found!\n");
@@ -58,7 +58,7 @@ PWorld CWorld::Create(PRenderer& renderer, const SWorldRendererSettings& rendere
 }
 
 void CWorld::Clear() {
-	m_Registry.clear();
+	m_Registry.Clear();
 }
 
 PGameObject CWorld::FindGameObjectByName(const String &name) {
@@ -67,7 +67,7 @@ PGameObject CWorld::FindGameObjectByName(const String &name) {
 		if (componentName && componentName->Name == name)
 			return obj;
 	}
-	ViLog("GameObject '%s' not found. Creating new one with the given name...\n", name.c_str());
+	ViLog("GameObject \'" << name << "\' not found. Creating new one with the given name...");
 	return CreateGameObject(name);
 }
 
@@ -85,29 +85,29 @@ CWorld::CWorld(PRenderer& renderer, SWorldRendererSettings  rendererSettings)
 PGameObject CWorld::CreateChild(const PGameObject &parent) {
 	auto child = CreateGameObject();
 	child->m_Parent = parent.Get();
-	parent->m_Children.emplace_back(child.Get());
+	parent->m_Children.EmplaceBack(child.Get());
 	return child;
 }
 
 void CWorld::RemoveChildren(const PGameObject &parent) {
 	for (auto& child : parent->m_Children)
 		child->Destroy();
-	parent->m_Children.clear();
+	parent->m_Children.Clear();
 }
 
 void CWorld::RemoveChildAt(const PGameObject &parent, const UInt32 &index) {
-	if (parent->m_Children.size() > index)
+	if (parent->m_Children.Size() > index)
 		parent->m_Children[index]->Destroy();
 }
 
 void CWorld::AddChild(const PGameObject &parent, const PGameObject &child) {
-	parent->m_Children.push_back(child.Get());
+	parent->m_Children.PushBack(child.Get());
 	child->m_Parent = parent.Get();
 }
 
-void CWorld::AddChildren(const PGameObject &parent, const CList<PGameObject> &children) {
+void CWorld::AddChildren(const PGameObject &parent, const CSet<PGameObject> &children) {
 	for (auto& child : children) {
-		parent->m_Children.push_back(child.Get());
+		parent->m_Children.PushBack(child.Get());
 		child->m_Parent = parent.Get();
 	}
 }

@@ -41,17 +41,17 @@ String Path::Get(const StringView &virt) {
 	return {};
 }
 
-CList<StringView> Path::VirtualList() {
+CSet<StringView> Path::VirtualList() {
 	auto instance = Instance();
-	CList<StringView> result = {};
-	for (auto [virt, _] : instance.VirtualToActual) result.emplace_back(virt);
+	CSet<StringView> result = {};
+	for (auto [virt, _] : instance.VirtualToActual) result.EmplaceBack(virt);
 	return result;
 }
 
-CList<StringView> Path::ActualList() {
+CSet<StringView> Path::ActualList() {
 	auto instance = Instance();
-	CList<StringView> result = {};
-	for (auto [act, _] : instance.ActualToVirtual) result.emplace_back(act);
+	CSet<StringView> result = {};
+	for (auto [act, _] : instance.ActualToVirtual) result.EmplaceBack(act);
 	return result;
 }
 

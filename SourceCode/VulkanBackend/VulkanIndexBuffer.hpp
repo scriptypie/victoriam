@@ -20,7 +20,7 @@ class CVulkanIndexBuffer : public CIndexBuffer
 	PVulkanMemoryBuffer m_MemoryBuffer = nullptr;
 	UInt64 m_IndexCount = {};
 public:
-	VIDECL CVulkanIndexBuffer(PGraphicsContext &context, const CList<UInt32> &indices);
+	VIDECL CVulkanIndexBuffer(PGraphicsContext &context, const CSet<UInt32> &indices);
 	VIDECL ~CVulkanIndexBuffer() override = default;
 
 	VIDECL void Bind(const SCommandBuffer& buffer) override;
@@ -33,7 +33,7 @@ private:
 	}
 
 private:
-	VIDECL void CreateIndexBuffer(const CList<UInt32>& indices);
+	VIDECL void CreateIndexBuffer(const CSet<UInt32>& indices);
 };
 
 VISRCEND

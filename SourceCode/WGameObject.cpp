@@ -9,7 +9,7 @@ VISRCBEG
 
 CGameObject::CGameObject(const PWorld& owner) {
 	m_Owner = owner;
-	m_ID = m_Owner->m_Registry.size();
+	m_ID = m_Owner->m_Registry.Size();
 }
 
 UID CGameObject::GetUID() const {

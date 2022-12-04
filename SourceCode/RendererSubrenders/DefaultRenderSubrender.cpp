@@ -53,7 +53,7 @@ void CDefaultRenderSubrender::Pass(SFrameInfo &frameInfo, const PWorld &world)
 	auto [camtransform,cam] = cam_obj->Group<SComponentTransform, SComponentCamera>();
 
 	auto renderable_objs = world->AllWith<SComponentRenderable, SComponentTransform>(); // all renderables MUST have a transform component!!!
-	for (auto renderable_obj: renderable_objs) {
+	for (const auto& renderable_obj: renderable_objs) {
 		auto [rrc, rtc] = renderable_obj->Group<SComponentRenderable, SComponentTransform>();
 		auto geom = rrc->Geometry;
 		auto bound = geom.GetBoundingSphere();

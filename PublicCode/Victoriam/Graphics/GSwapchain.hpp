@@ -26,7 +26,7 @@ public:
 	VIDECL VIREQOUT virtual UInt32 AcquireNextImage(UInt32* imageIndex) = 0;
 	VIDECL VIREQOUT virtual UInt32 GetImageCount() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetFrameIndex() const = 0;
-	VIDECL VIREQOUT virtual CList<PFramebuffer>& GetFramebuffers() = 0;
+	VIDECL VIREQOUT virtual CSet<PFramebuffer>& GetFramebuffers() = 0;
 	VIDECL virtual void CreateFramebuffers(PRenderPass& renderPass) = 0;
 	VIDECL VIREQOUT virtual UInt32 GetMaxFramesInFlight() const = 0;
 	VIDECL VIREQOUT virtual UInt32 GetWidth() const = 0;

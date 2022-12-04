@@ -26,7 +26,7 @@ void CPointLightSubrender::Compute(SFrameInfo &frameInfo, const PWorld &world) {
 	Int32 index = 0;
 	auto& constants = frameInfo.Constants;
 
-	for (auto plObj : plObjects)
+	for (const auto& plObj : plObjects)
 	{
 		auto [componentTransform, componentPointLight] = plObj->Group<SComponentTransform, SComponentPointLight>();
 		auto& pointLight = constants.PointLights[index];
@@ -48,7 +48,7 @@ void CPointLightSubrender::Pass(SFrameInfo &frameInfo, const PWorld &world) {
 	m_Pipeline->BindConstantsDescriptorSet(BindPointGraphics, frameInfo);
 
 	auto plObjects = world->AllWith<SComponentTransform, SComponentPointLight>();
-	for (auto plObj : plObjects) {
+	for (const auto& plObj : plObjects) {
 		auto [componentTransform, componentPointLight] = plObj->Group<SComponentTransform, SComponentPointLight>();
 
 		SPointLightData plData = {};

@@ -5,8 +5,6 @@
 #ifndef VICTORIAM_CARRAY_HPP
 #define VICTORIAM_CARRAY_HPP
 
-#include <cassert>
-
 #include <Victoriam/Core/CMacroDefinitions.hpp>
 
 VISRCBEG

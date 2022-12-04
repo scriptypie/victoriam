@@ -18,7 +18,7 @@ class VIDECL CVulkanFramebuffer : public CFramebuffer {
 	PGraphicsContext& m_Context;
 	PRenderPass& m_RenderPass;
 	VkFramebuffer m_Framebuffer = {};
-	CList<VkImageView> m_Attachments = {};
+	CSet<VkImageView> m_Attachments = {};
 public:
 	VIDECL CVulkanFramebuffer(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo);
 	VIDECL ~CVulkanFramebuffer() override;

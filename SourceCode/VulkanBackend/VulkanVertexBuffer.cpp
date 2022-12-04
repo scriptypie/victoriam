@@ -6,7 +6,7 @@
 
 VISRCBEG
 
-CVulkanVertexBuffer::CVulkanVertexBuffer(PGraphicsContext &context, const CList<SVertex> &vertices) : m_Context(context)
+CVulkanVertexBuffer::CVulkanVertexBuffer(PGraphicsContext &context, const CSet<SVertex> &vertices) : m_Context(context)
 {
 	CreateVertexBuffer(vertices);
 }
@@ -21,8 +21,8 @@ void CVulkanVertexBuffer::Draw(SCommandBuffer const &buffer) const {
 	vkCmdDraw(CCast<VkCommandBuffer>(buffer), m_VertexCount, 1, 0, 0);
 }
 
-void CVulkanVertexBuffer::CreateVertexBuffer(const CList<SVertex> &vertices) {
-	m_VertexCount = vertices.size();
+void CVulkanVertexBuffer::CreateVertexBuffer(const CSet<SVertex> &vertices) {
+	m_VertexCount = vertices.Size();
 	ViAssert(m_VertexCount >= 3, "There MUST be at least 3 vertices!");
 
 	PVulkanMemoryBuffer stagingBuffer = CVulkanMemoryBuffer::Create(
@@ -32,7 +32,7 @@ void CVulkanVertexBuffer::CreateVertexBuffer(const CList<SVertex> &vertices) {
 			VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 	stagingBuffer->Map();
-	stagingBuffer->WriteToBuffer(vertices.data());
+	stagingBuffer->WriteToBuffer(vertices.Data());
 
 	m_MemoryBuffer = CVulkanMemoryBuffer::Create(
 			m_Context,

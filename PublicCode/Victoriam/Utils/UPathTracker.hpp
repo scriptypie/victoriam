@@ -23,8 +23,8 @@ public:
 	VIDECL        CPathTracker& To(const StringView& virtualPath);
 
 	VIDECL static String Get(const StringView& virt);
-	VIDECL static CList<StringView> VirtualList();
-	VIDECL static CList<StringView> ActualList();
+	VIDECL static CSet<StringView> VirtualList();
+	VIDECL static CSet<StringView> ActualList();
 	VIDECL static Bool Exists(const StringView& virt);
 
 };

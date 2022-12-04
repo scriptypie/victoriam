@@ -17,14 +17,14 @@ namespace {
 CVulkanDescriptorPool::CVulkanDescriptorPool(PGraphicsContext &context, const SDescriptorPoolCreateInfo &createInfo)
 	: m_Context(context)
 {
-	CList<VkDescriptorPoolSize> poolSizeList = {};
+	CSet<VkDescriptorPoolSize> poolSizeList = {};
 
 	for (auto poolSize : createInfo.PoolSizeList)
-		poolSizeList.push_back(Convert(poolSize));
+		poolSizeList.PushBack(Convert(poolSize));
 
 	VkDescriptorPoolCreateInfo poolCreateInfo = { VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO };
-	poolCreateInfo.poolSizeCount = CCast<UInt32>(poolSizeList.size());
-	poolCreateInfo.pPoolSizes = poolSizeList.data();
+	poolCreateInfo.poolSizeCount = CCast<UInt32>(poolSizeList.Size());
+	poolCreateInfo.pPoolSizes = poolSizeList.Data();
 	poolCreateInfo.maxSets = createInfo.MaxSets;
 	poolCreateInfo.flags = createInfo.DescriptorPoolCreateSignal;
 
@@ -50,9 +50,9 @@ Bool CVulkanDescriptorPool::AllocateDescriptorSet(const PDescriptorSetLayout &la
 	return true;
 }
 
-void CVulkanDescriptorPool::FreeDescriptorSets(CList<SDescriptorSet> &descriptors) const {
+void CVulkanDescriptorPool::FreeDescriptorSets(CSet<SDescriptorSet> &descriptors) const {
 	vkFreeDescriptorSets(Accessors::GraphicsContext::GetDevice(m_Context), m_Pool,
-	                     CCast<UInt32>(descriptors.size()), CCast<VkDescriptorSet*>(descriptors.data()));
+	                     CCast<UInt32>(descriptors.Size()), CCast<VkDescriptorSet*>(descriptors.Data()));
 }
 
 void CVulkanDescriptorPool::ResetPool() {

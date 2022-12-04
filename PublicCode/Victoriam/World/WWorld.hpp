@@ -19,9 +19,9 @@ class VIDECL CWorld : public CEnableSharedFrom<CWorld>
 {
 	friend class CGameObject;
 
-	CList<PGameObject> m_Registry = {};
+	CSet<PGameObject> m_Registry = {};
 	SWorldRendererSettings m_RendererSettings = {};
-	CList<PUniformBuffer> m_RendererConstantsBuffers = {};
+	CSet<PUniformBuffer> m_RendererConstantsBuffers = {};
 public:
 	VIDECL VIREQOUT PGameObject CreateGameObject();
 	VIDECL VIREQOUT PGameObject CreateGameObject(const String& name);
@@ -31,18 +31,18 @@ public:
 
 	VIDECL VIREQOUT PGameObject CreateChild(const PGameObject& parent);
 	VIDECL void AddChild(const PGameObject& parent, const PGameObject& child);
-	VIDECL void AddChildren(const PGameObject& parent, const CList<PGameObject>& children);
+	VIDECL void AddChildren(const PGameObject& parent, const CSet<PGameObject>& children);
 	VIDECL void RemoveChildren(const PGameObject& parent);
 	VIDECL void RemoveChildAt(const PGameObject& parent, const UInt32& index);
 
 	template<class...T>
-	VIDECL VIREQOUT CList<PGameObject> AllWith()
+	VIDECL VIREQOUT CSet<PGameObject> AllWith()
 	{
-		CList<PGameObject> result;
+		CSet<PGameObject> result;
 
 		for (auto obj : m_Registry)
 			if ((obj->HasComponent<T>() && ...))
-				result.push_back(obj);
+				result.PushBack(obj);
 
 		return result;
 	}
@@ -58,7 +58,7 @@ public:
 
 	VIDECL          explicit CWorld(PRenderer& renderer, SWorldRendererSettings  rendererSettings);
 	VIDECL VIREQOUT inline SWorldRendererSettings& GetRendererSettings() { return m_RendererSettings; }
-	VIDECL VIREQOUT inline PUniformBuffer& GetConstantsBuffer(const UInt32& frameIndex) { return m_RendererConstantsBuffers.at(frameIndex); }
+	VIDECL VIREQOUT inline PUniformBuffer& GetConstantsBuffer(const UInt32& frameIndex) { return m_RendererConstantsBuffers.At(frameIndex); }
 	VIDECL          void Update(const Float32& dt);
 	VIDECL          void Clear();
 	VIDECL VIREQOUT static CShared<CWorld> Create(PRenderer& renderer, const SWorldRendererSettings& rendererSettings = SWorldRendererSettings());

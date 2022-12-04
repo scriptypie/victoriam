@@ -14,8 +14,8 @@ VISRCBEG
  */
 struct VIDECL SGeometryDataCreateInfo
 {
-	VIDECL CList<SVertex> Vertices;
-	VIDECL CList<UInt32> Indices;
+	VIDECL CSet<SVertex> Vertices;
+	VIDECL CSet<UInt32> Indices;
 };
 
 VISRCEND

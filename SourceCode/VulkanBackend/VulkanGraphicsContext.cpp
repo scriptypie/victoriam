@@ -21,7 +21,7 @@ namespace
 			void*
 	)
 	{
-		ViLog("%s\n", pCallbackData->pMessage);
+		ViLog(pCallbackData->pMessage);
 		return VK_FALSE;
 	}
 
@@ -55,8 +55,8 @@ CVulkanGraphicsContext::CVulkanGraphicsContext(const CShared<CWindow> &window)
 
 CVulkanGraphicsContext::~CVulkanGraphicsContext()
 {
-	vkFreeCommandBuffers(m_Device, m_CmdPool, CCast<UInt32>(m_CmdBuffers.size()), m_CmdBuffers.data());
-	m_CmdBuffers.clear();
+	vkFreeCommandBuffers(m_Device, m_CmdPool, CCast<UInt32>(m_CmdBuffers.Size()), m_CmdBuffers.Data());
+	m_CmdBuffers.Clear();
 
 	vkDestroyCommandPool(m_Device, m_CmdPool, nullptr);
 	m_CmdPool = nullptr;
@@ -92,15 +92,15 @@ void CVulkanGraphicsContext::CreateGraphicsInstance()
 	auto extensions = GetRequiredExtensions();
 #ifdef __APPLE__
 	instanceCreateInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
-	extensions.emplace_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+	extensions.EmplaceBack(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
 #endif
-	instanceCreateInfo.enabledExtensionCount = CCast<UInt32>(extensions.size());
-	instanceCreateInfo.ppEnabledExtensionNames = extensions.data();
+	instanceCreateInfo.enabledExtensionCount = CCast<UInt32>(extensions.Size());
+	instanceCreateInfo.ppEnabledExtensionNames = extensions.Data();
 	VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo = {};
 	if (m_EnableValidation)
 	{
-		instanceCreateInfo.enabledLayerCount = CCast<UInt32>(VALIDATION_LAYERS.size());
-		instanceCreateInfo.ppEnabledLayerNames = VALIDATION_LAYERS.data();
+		instanceCreateInfo.enabledLayerCount = CCast<UInt32>(VALIDATION_LAYERS.Size());
+		instanceCreateInfo.ppEnabledLayerNames = VALIDATION_LAYERS.Data();
 		PopulateDebugMessengerCreateInfo(debugCreateInfo);
 		instanceCreateInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
 	}
@@ -137,8 +137,8 @@ void CVulkanGraphicsContext::ChoosePhysicalDevice()
 	UInt32 deviceCount = {};
 	vkEnumeratePhysicalDevices(m_Instance, &deviceCount, nullptr);
 	if (!deviceCount) { ViAbort("There's no supported GPU!"); }
-	CList<VkPhysicalDevice> physicalDevices(deviceCount);
-	vkEnumeratePhysicalDevices(m_Instance, &deviceCount, physicalDevices.data());
+	CSet<VkPhysicalDevice> physicalDevices(deviceCount);
+	vkEnumeratePhysicalDevices(m_Instance, &deviceCount, physicalDevices.Data());
 
 	VIGNORE std::find_if(physicalDevices.begin(), physicalDevices.end(), [&](const auto& device) -> Bool
 	{
@@ -161,7 +161,7 @@ void CVulkanGraphicsContext::ChoosePhysicalDevice()
 void CVulkanGraphicsContext::CreateLogicalDevice()
 {
 	SQueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice);
-	CList<VkDeviceQueueCreateInfo> queueCreateInfos;
+	CSet<VkDeviceQueueCreateInfo> queueCreateInfos;
 	std::set<UInt32> uniqueQueueFamilies = { indices.GraphicsFamily, indices.PresentFamily };
 	Float32 queuePriority = 1.0F;
 	for (UInt32 queueFamily : uniqueQueueFamilies)
@@ -170,22 +170,22 @@ void CVulkanGraphicsContext::CreateLogicalDevice()
 		queueCreateInfo.queueFamilyIndex = queueFamily;
 		queueCreateInfo.queueCount = 1;
 		queueCreateInfo.pQueuePriorities = &queuePriority;
-		queueCreateInfos.push_back(queueCreateInfo);
+		queueCreateInfos.PushBack(queueCreateInfo);
 	}
 	VkPhysicalDeviceFeatures features = {};
 	features.samplerAnisotropy = VK_TRUE;
 
 	VkDeviceCreateInfo createInfo = { VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO };
-	createInfo.queueCreateInfoCount = CCast<UInt32>(queueCreateInfos.size());
-	createInfo.pQueueCreateInfos = queueCreateInfos.data();
+	createInfo.queueCreateInfoCount = CCast<UInt32>(queueCreateInfos.Size());
+	createInfo.pQueueCreateInfos = queueCreateInfos.Data();
 	createInfo.pEnabledFeatures = &features;
-	createInfo.enabledExtensionCount = CCast<UInt32>(DEVICE_EXTENSIONS.size());
-	createInfo.ppEnabledExtensionNames = DEVICE_EXTENSIONS.data();
+	createInfo.enabledExtensionCount = CCast<UInt32>(DEVICE_EXTENSIONS.Size());
+	createInfo.ppEnabledExtensionNames = DEVICE_EXTENSIONS.Data();
 
 	if (m_EnableValidation)
 	{
-		createInfo.enabledLayerCount = CCast<UInt32>(VALIDATION_LAYERS.size());
-		createInfo.ppEnabledLayerNames = VALIDATION_LAYERS.data();
+		createInfo.enabledLayerCount = CCast<UInt32>(VALIDATION_LAYERS.Size());
+		createInfo.ppEnabledLayerNames = VALIDATION_LAYERS.Data();
 	}
 	else
 		createInfo.enabledLayerCount = 0;
@@ -221,7 +221,7 @@ Bool CVulkanGraphicsContext::IsPhysicalDeviceSuitable(VkPhysicalDevice device)
 	if (extensionsSupported)
 	{
 		SSwapchainSupportDetails swapchainSupportDetails = QuerySwapchainSupport(device);
-		swapchainIsOkay = !swapchainSupportDetails.formats.empty() && !swapchainSupportDetails.presentModes.empty();
+		swapchainIsOkay = !swapchainSupportDetails.formats.Empty() && !swapchainSupportDetails.presentModes.Empty();
 	}
 	VkPhysicalDeviceFeatures supportedFeatures;
 	vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
@@ -229,13 +229,13 @@ Bool CVulkanGraphicsContext::IsPhysicalDeviceSuitable(VkPhysicalDevice device)
 	return indices.IsCompleted() && extensionsSupported && swapchainIsOkay && supportedFeatures.samplerAnisotropy;
 }
 
-CList<CString> CVulkanGraphicsContext::GetRequiredExtensions() const {
+CSet<CString> CVulkanGraphicsContext::GetRequiredExtensions() const {
 	UInt32 glfwExtensionCount = {};
 	CString* glfwExtensions;
 	glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-	CList<CString> requiredExtensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+	CSet<CString> requiredExtensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
 	if (m_EnableValidation)
-		requiredExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+		requiredExtensions.PushBack(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 
 	return requiredExtensions;
 }
@@ -244,8 +244,8 @@ Bool CVulkanGraphicsContext::CheckValidationLayerSupport()
 {
 	UInt32 layerCount = {};
 	vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
-	CList<VkLayerProperties> availableLayers(layerCount);
-	vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
+	CSet<VkLayerProperties> availableLayers(layerCount);
+	vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.Data());
 
 	for (CString layerName : VALIDATION_LAYERS)
 	{
@@ -270,8 +270,8 @@ SQueueFamilyIndices CVulkanGraphicsContext::FindQueueFamilies(VkPhysicalDevice d
 	UInt32 queueFamilyCount = 0;
 	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
 
-	CList<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+	CSet<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+	vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.Data());
 
 	UInt32 i = {};
 	for (const auto &queueFamily : queueFamilies) {
@@ -311,8 +311,8 @@ void CVulkanGraphicsContext::HasGLFWRequiredInstanceExtensions()
 {
 	UInt32 extensionCount = {};
 	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-	CList<VkExtensionProperties> extensions(extensionCount);
-	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
+	CSet<VkExtensionProperties> extensions(extensionCount);
+	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.Data());
 
 	std::unordered_set<String> available;
 	for (const auto &extension : extensions)
@@ -329,8 +329,8 @@ Bool CVulkanGraphicsContext::CheckDeviceExtensionSupport(VkPhysicalDevice device
 	UInt32 extensionCount;
 	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
-	CList<VkExtensionProperties> availableExtensions(extensionCount);
-	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+	CSet<VkExtensionProperties> availableExtensions(extensionCount);
+	vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.Data());
 
 	std::set<String> requiredExtensions(DEVICE_EXTENSIONS.begin(), DEVICE_EXTENSIONS.end());
 
@@ -349,16 +349,16 @@ SSwapchainSupportDetails CVulkanGraphicsContext::QuerySwapchainSupport(VkPhysica
 	vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_Surface, &formatCount, nullptr);
 
 	if (formatCount) {
-		details.formats.resize(formatCount);
-		vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_Surface, &formatCount, details.formats.data());
+		details.formats.Resize(formatCount);
+		vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_Surface, &formatCount, details.formats.Data());
 	}
 
 	UInt32 presentModeCount;
 	vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_Surface, &presentModeCount, nullptr);
 
 	if (presentModeCount != 0) {
-		details.presentModes.resize(presentModeCount);
-		vkGetPhysicalDeviceSurfacePresentModesKHR( device, m_Surface, &presentModeCount, details.presentModes.data());
+		details.presentModes.Resize(presentModeCount);
+		vkGetPhysicalDeviceSurfacePresentModesKHR( device, m_Surface, &presentModeCount, details.presentModes.Data());
 	}
 
 	return details;
@@ -472,7 +472,7 @@ UInt32 CVulkanGraphicsContext::FindMemoryType(UInt32 typeFilter, VkMemoryPropert
 	ViAbort("Failed to find suitable memory Type!");
 }
 
-VkFormat CVulkanGraphicsContext::FindSupportedFormat(const CList<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
+VkFormat CVulkanGraphicsContext::FindSupportedFormat(const CSet<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
 {
 	for (VkFormat format : candidates) {
 		VkFormatProperties props = {};
@@ -496,23 +496,23 @@ void CVulkanGraphicsContext::Execute(ImmediateGraphicsActionFN fn) {
 }
 
 void CVulkanGraphicsContext::CmdCreate(const UInt32 &imageCount) {
-	m_CmdBuffers.resize(imageCount);
+	m_CmdBuffers.Resize(imageCount);
 
 	VkCommandBufferAllocateInfo allocateInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO };
 	allocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 	allocateInfo.commandPool = m_CmdPool;
-	allocateInfo.commandBufferCount = CCast<UInt32>(m_CmdBuffers.size());
+	allocateInfo.commandBufferCount = CCast<UInt32>(m_CmdBuffers.Size());
 
-	if (vkAllocateCommandBuffers(m_Device, &allocateInfo, m_CmdBuffers.data()) != VK_SUCCESS)
+	if (vkAllocateCommandBuffers(m_Device, &allocateInfo, m_CmdBuffers.Data()) != VK_SUCCESS)
 	ViAbort("Failed to allocate command buffers!");
 }
 
 SCommandBuffer CVulkanGraphicsContext::CmdBegin(const UInt32 &imageIndex) const {
 	VkCommandBufferBeginInfo beginInfo = { VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO };
-	if (vkBeginCommandBuffer(m_CmdBuffers.at(imageIndex), &beginInfo) != VK_SUCCESS)
+	if (vkBeginCommandBuffer(m_CmdBuffers.At(imageIndex), &beginInfo) != VK_SUCCESS)
 	ViAbort("Failed to call vkBeginCommandBuffer()");
 
-	return CCast<SCommandBuffer>(m_CmdBuffers.at(imageIndex));
+	return CCast<SCommandBuffer>(m_CmdBuffers.At(imageIndex));
 }
 
 void CVulkanGraphicsContext::CmdEnd(SCommandBuffer const &cmdBuffer) const {

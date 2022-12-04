@@ -17,8 +17,8 @@ struct VIDECL SPackedGeometryHeader {
 };
 
 struct VIDECL SPackedGeometryInfo {
-	CList<SVertex> Vertices;
-	CList<UInt32>  Indices;
+	CSet<SVertex> Vertices;
+	CSet<UInt32>  Indices;
 };
 
 VIDECL void FPackGeometryToFile(const String& filename, const SPackedGeometryInfo& info);

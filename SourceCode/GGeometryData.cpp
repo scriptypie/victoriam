@@ -27,9 +27,9 @@ void CGeometryData::SubmitDraw(SCommandBuffer const &buffer)
 }
 
 CGeometryData
-CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices) {
+CGeometryData::Create(PGraphicsContext& context, const CSet<SVertex> &vertices) {
 	CGeometryData data = {};
-	data.m_Polycount = vertices.size() / 3;
+	data.m_Polycount = vertices.Size() / 3;
 
 	SVector3 minAABB = SVector3(std::numeric_limits<ScalarType>::min());
 	SVector3 maxAABB = SVector3(std::numeric_limits<ScalarType>::max());
@@ -60,9 +60,9 @@ CGeometryData::Create(const PVertexBuffer& vertexBuffer, const PIndexBuffer& ind
 }
 
 CGeometryData
-CGeometryData::Create(PGraphicsContext& context, const CList<SVertex> &vertices, const CList<UInt32> &indices) {
+CGeometryData::Create(PGraphicsContext& context, const CSet<SVertex> &vertices, const CSet<UInt32> &indices) {
 	CGeometryData data = {};
-	data.m_Polycount = vertices.size() / 3;
+	data.m_Polycount = vertices.Size() / 3;
 
 	SVector3 minAABB = SVector3(std::numeric_limits<ScalarType>::max());
 	SVector3 maxAABB = SVector3(std::numeric_limits<ScalarType>::min());
