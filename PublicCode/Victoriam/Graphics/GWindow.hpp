@@ -28,10 +28,8 @@ public:
 	VIDECL          virtual void SetEventCallbackFunction(const EventCallbackFn& fn) = 0;
 	VIDECL          virtual void WaitForEvents() = 0;
 
-	VIDECL VIREQOUT static CShared<CWindow> Create(const SWindowCreateInfo& info);
+	VIDECL VIREQOUT static PWindow Create(const SWindowCreateInfo& info);
 };
-
-VIDECL typedef CShared<CWindow> PWindow;
 
 VISRCEND
 

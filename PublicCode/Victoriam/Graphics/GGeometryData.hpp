@@ -5,6 +5,7 @@
 #ifndef VICTORIAM_GGEOMETRYDATA_HPP
 #define VICTORIAM_GGEOMETRYDATA_HPP
 
+#include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/Graphics/GVertexBuffer.hpp>
 #include <Victoriam/Graphics/GIndexBuffer.hpp>
 

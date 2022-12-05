@@ -9,9 +9,6 @@
 #include <Victoriam/Graphics/Structs/GPipelineCreateInfo.hpp>
 #include <Victoriam/Graphics/Structs/GMaterialData.hpp>
 #include <Victoriam/Graphics/Structs/GFrameInfo.hpp>
-#include <Victoriam/Graphics/GGraphicsContext.hpp>
-#include <Victoriam/Graphics/GRenderPass.hpp>
-#include <Victoriam/Graphics/GDescriptorSetLayout.hpp>
 
 VISRCBEG
 
@@ -37,14 +34,12 @@ public:
 	VIDECL virtual void BindConstantsDescriptorSet(const Signal& bindPoint, const SFrameInfo& frameInfo) const = 0;
 
 	template<class T>
-	VIDECL VIREQOUT inline static CUnique<CPipeline> CreateFor(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo) {
+	VIDECL VIREQOUT inline static PPipeline CreateFor(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo) {
 		return Create(context, renderPass, setLayout, createInfo, sizeof(T));
 	}
 
-	VIDECL VIREQOUT static CUnique<CPipeline> Create(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
+	VIDECL VIREQOUT static PPipeline Create(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout, const SPipelineCreateInfo& createInfo, const UInt32& pushDataSize);
 };
-
-VIDECL typedef CUnique<CPipeline> PPipeline;
 
 VISRCEND
 

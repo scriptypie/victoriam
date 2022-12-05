@@ -7,7 +7,6 @@
 
 #include <Victoriam/Graphics/GBuffer.hpp>
 #include <Victoriam/Graphics/Structs/GRendererConstants.hpp>
-#include <Victoriam/Graphics/GGraphicsContext.hpp>
 
 VISRCBEG
 
@@ -20,10 +19,8 @@ public:
 	 */
 	VIDECL virtual void SubmitToGPU(const SRendererConstants& constants) = 0;
 
-	VIDECL VIREQOUT static CUnique<CUniformBuffer> Create(PGraphicsContext& context, const UInt32& count);
+	VIDECL VIREQOUT static PUniformBuffer Create(PGraphicsContext& context, const UInt32& count);
 };
-
-VIDECL typedef CUnique<CUniformBuffer> PUniformBuffer;
 
 VISRCEND
 

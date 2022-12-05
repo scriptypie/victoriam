@@ -20,10 +20,8 @@ public:
 	/**
 	 * Creates new descriptor set layout
 	 */
-	VIDECL VIREQOUT static CUnique<CDescriptorSetLayout> Create(PGraphicsContext& context, const SDescriptorSetLayoutCreateInfo& createInfo);
+	VIDECL VIREQOUT static PDescriptorSetLayout Create(PGraphicsContext& context, const SDescriptorSetLayoutCreateInfo& createInfo);
 };
-
-VIDECL typedef CUnique<CDescriptorSetLayout> PDescriptorSetLayout;
 
 VISRCEND
 

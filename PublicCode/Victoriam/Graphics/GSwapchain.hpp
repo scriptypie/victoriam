@@ -5,18 +5,9 @@
 #ifndef VICTORIAM_GSWAPCHAIN_HPP
 #define VICTORIAM_GSWAPCHAIN_HPP
 
-#include <Victoriam/Graphics/GGraphicsContext.hpp>
-#include <Victoriam/Graphics/GFramebuffer.hpp>
-#include <Victoriam/Graphics/GWindow.hpp>
+#include <Victoriam/Graphics/Basics.hpp>
 
 VISRCBEG
-
-// Forward declarations
-
-class CRenderPass;
-VIDECL typedef CUnique<CRenderPass> PRenderPass;
-
-// !Forward declarations
 
 class VIDECL CSwapchain
 {
@@ -35,11 +26,9 @@ public:
 	VIDECL VIREQOUT virtual Bool CompareFormats(const CUnique<CSwapchain>& swapchain) const = 0;
 	VIDECL virtual void CmdSubmit(const SCommandBuffer* buffers, const UInt32 *imageIndex) = 0;
 
-	VIDECL VIREQOUT static CUnique<CSwapchain> Create(PGraphicsContext& context, const SExtent2D& extent);
-	VIDECL VIREQOUT static CUnique<CSwapchain> Create(PGraphicsContext& context, const SExtent2D& extent, CSwapchain* prev);
+	VIDECL VIREQOUT static PSwapchain Create(PGraphicsContext& context, const SExtent2D& extent);
+	VIDECL VIREQOUT static PSwapchain Create(PGraphicsContext& context, const SExtent2D& extent, CSwapchain* prev);
 };
-
-VIDECL typedef CUnique<CSwapchain> PSwapchain;
 
 VISRCEND
 

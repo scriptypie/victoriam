@@ -7,7 +7,6 @@
 #include "../Accessors/ADescriptorWriter.hpp"
 #include "../Accessors/AVertexBuffer.hpp"
 #include "../Accessors/AUniformBuffer.hpp"
-#include "../Accessors/ASwapchain.hpp"
 
 VISRCBEG
 

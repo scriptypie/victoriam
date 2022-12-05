@@ -9,8 +9,7 @@
 
 VISRCBEG
 
-struct VIDECL SPointLightData
-{
+struct VIDECL SPointLightData {
 	VIDECL SVector4 Position;
 	VIDECL SVector4 Color;
 };

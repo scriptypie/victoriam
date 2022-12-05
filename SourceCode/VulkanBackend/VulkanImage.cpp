@@ -3,8 +3,7 @@
 //
 
 #include "VulkanImage.hpp"
-
-#include "../Accessors/AGraphicsContext.hpp"
+#include "VulkanMemoryBuffer.hpp"
 
 VISRCBEG
 
@@ -98,13 +97,19 @@ CVulkanImage::CVulkanImage(PGraphicsContext &context, const PPicture &picture, c
 	if (createInfo.bCreateView) {
 		CreateVulkanImageView(createInfo);
 		if (picture) {
-
+			CopyPictureToImage(picture);
 		}
 	}
 }
 
 void CVulkanImage::SetPicture(const PPicture &picture) {
+	CopyPictureToImage(picture);
+}
 
+void CVulkanImage::CopyPictureToImage(const PPicture &picture) {
+	auto imageBuffer = CCast<VkBuffer>(picture->GetBuffer());
+	auto bufferToImage = Accessors::GraphicsContext::CopyBufferToImage;
+	bufferToImage(m_Context, imageBuffer, m_Image, m_Extent.Width, m_Extent.Height, 1);
 }
 
 VISRCEND

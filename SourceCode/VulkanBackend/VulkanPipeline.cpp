@@ -4,8 +4,6 @@
 
 #include "VulkanPipeline.hpp"
 
-#include "Victoriam/Graphics/Structs/GMaterialData.hpp"
-
 #include "../Accessors/AWindow.hpp"
 #include "../Accessors/AGraphicsContext.hpp"
 #include "../Accessors/ASwapchain.hpp"

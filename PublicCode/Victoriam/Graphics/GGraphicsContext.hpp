@@ -6,7 +6,6 @@
 #define VICTORIAM_GGRAPHICSCONTEXT_HPP
 
 #include <Victoriam/Graphics/Basics.hpp>
-#include <Victoriam/Graphics/GWindow.hpp>
 
 VISRCBEG
 
@@ -24,10 +23,8 @@ public:
 	VIDECL VIREQOUT virtual SCommandBuffer CmdBegin(const UInt32& imageIndex) const = 0;
 	VIDECL          virtual void CmdEnd(const SCommandBuffer& cmdBuffer) const = 0;
 
-	VIDECL VIREQOUT static CShared<CGraphicsContext> Create(const CShared<CWindow>& window);
+	VIDECL VIREQOUT static PGraphicsContext Create(const CShared<CWindow>& window);
 };
-
-VIDECL typedef CShared<CGraphicsContext> PGraphicsContext;
 
 VISRCEND
 

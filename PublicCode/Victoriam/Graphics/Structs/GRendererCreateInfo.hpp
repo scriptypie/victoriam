@@ -5,18 +5,14 @@
 #ifndef VICTORIAM_GRENDERERCREATEINFO_HPP
 #define VICTORIAM_GRENDERERCREATEINFO_HPP
 
-#include <Victoriam/Graphics/GGraphicsContext.hpp>
-#include <Victoriam/Graphics/GSwapchain.hpp>
-#include <Victoriam/Graphics/GWindow.hpp>
-#include <Victoriam/Graphics/GPipeline.hpp>
+#include <Victoriam/Graphics/Basics.hpp>
 
 VISRCBEG
 
 /**
  * Contains all information required to create renderer object.
  */
-struct VIDECL SRendererCreateInfo
-{
+struct VIDECL SRendererCreateInfo {
 	PWindow WindowPtr = {};
 };
 

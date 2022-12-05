@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_GDESCRIPTORPOOLCREATEINFO_HPP
 #define VICTORIAM_GDESCRIPTORPOOLCREATEINFO_HPP
 
-#include <Victoriam/Graphics/Structs/GDescriptorSetLayoutCreateInfo.hpp>
+#include <Victoriam/Graphics/Basics.hpp>
 
 VISRCBEG
 
@@ -16,8 +16,7 @@ Constant<Signal, 4> DescriptorPoolCreateHostOnly;
 /**
  * Describes what Type of descriptor we want to use, and it's size.
  */
-struct VIDECL SDescriptorPoolSize
-{
+struct VIDECL SDescriptorPoolSize {
 	VIDECL Signal DescriptorType = {};
 	VIDECL UInt32 DescriptorCount = {};
 
@@ -28,8 +27,7 @@ struct VIDECL SDescriptorPoolSize
 /**
  * Struct that handles information for creation of descriptor pool object.
  */
-struct VIDECL SDescriptorPoolCreateInfo
-{
+struct VIDECL SDescriptorPoolCreateInfo {
 	CSet<SDescriptorPoolSize> PoolSizeList = {};
 	Signal DescriptorPoolCreateSignal = 0;
 	UInt32 MaxSets = {};

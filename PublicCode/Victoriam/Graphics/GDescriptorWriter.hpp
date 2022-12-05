@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_GDESCRIPTORWRITER_HPP
 #define VICTORIAM_GDESCRIPTORWRITER_HPP
 
-#include <Victoriam/Graphics/GDescriptorPool.hpp>
+#include <Victoriam/Graphics/Basics.hpp>
 
 VISRCBEG
 
@@ -26,10 +26,8 @@ public:
 	/**
 	 * Creates new Descriptor writer object
 	 */
-	VIDECL VIREQOUT static CShared<CDescriptorWriter> Create(PDescriptorPool& pool, PDescriptorSetLayout& layout);
+	VIDECL VIREQOUT static PDescriptorWriter Create(PDescriptorPool& pool, PDescriptorSetLayout& layout);
 };
-
-VIDECL typedef CShared<CDescriptorWriter> PDescriptorWriter;
 
 VISRCEND
 

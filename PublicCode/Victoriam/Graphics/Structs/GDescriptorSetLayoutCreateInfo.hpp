@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_GDESCRIPTORSETLAYOUTCREATEINFO_HPP
 #define VICTORIAM_GDESCRIPTORSETLAYOUTCREATEINFO_HPP
 
-#include <Victoriam/Graphics/GGraphicsContext.hpp>
+#include <Victoriam/Graphics/Basics.hpp>
 
 VISRCBEG
 
@@ -23,8 +23,7 @@ Constant<Signal, 0x7FFFFFFF> ShaderStageAllStages;
 /**
  * Binding is what we want to bind to descriptor set.
  */
-struct VIDECL SDescriptorSetBinding
-{
+struct VIDECL SDescriptorSetBinding {
 	UInt32 Binding = {};
 	Signal DescriptorType = {};
 	Signal ShaderStage = {};
@@ -36,8 +35,7 @@ VIDECL typedef CHashTable<UInt32, SDescriptorSetBinding> DescriptorSetBindingLis
 /**
  * Structure that handles all information required to create descriptor set object.
  */
-struct VIDECL SDescriptorSetLayoutCreateInfo
-{
+struct VIDECL SDescriptorSetLayoutCreateInfo {
 	DescriptorSetBindingList Bindings = {};
 
 	VIDECL SDescriptorSetLayoutCreateInfo& AddBinding(const UInt32& binding,

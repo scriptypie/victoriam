@@ -6,21 +6,15 @@
 #define VICTORIAM_GFRAMEBUFFER_HPP
 
 #include <Victoriam/Graphics/Structs/GFramebufferCreateInfo.hpp>
-#include <Victoriam/Graphics/GGraphicsContext.hpp>
 
 VISRCBEG
-
-class CRenderPass;
-VIDECL typedef CUnique<CRenderPass> PRenderPass;
 
 class VIDECL CFramebuffer {
 public:
 	VIDECL virtual ~CFramebuffer() = default;
 
-	VIDECL VIREQOUT static CShared<CFramebuffer> Create(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo);
+	VIDECL VIREQOUT static PFramebuffer Create(PGraphicsContext& context, PRenderPass& renderPass, const SFramebufferCreateInfo& createInfo);
 };
-
-VIDECL typedef CShared<CFramebuffer> PFramebuffer;
 
 VISRCEND
 

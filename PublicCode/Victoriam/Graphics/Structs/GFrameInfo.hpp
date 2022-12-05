@@ -14,8 +14,7 @@ VISRCBEG
 /**
  * Struct that handles all frame-related information.
  */
-struct VIDECL SFrameInfo
-{
+struct VIDECL SFrameInfo {
 	VIDECL PFramebuffer Framebuffer = {};
 	VIDECL SCommandBuffer CommandBuffer = {};
 	VIDECL SDescriptorSet ConstantsDescriptorSet = {};

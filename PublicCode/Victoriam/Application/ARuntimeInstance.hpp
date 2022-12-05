@@ -7,7 +7,9 @@
 
 #include <Victoriam/Application/AAppStateChain.hpp>
 #include <Victoriam/Application/ARuntimeInstanceCreateInfo.hpp>
+#include <Victoriam/EventSystem/EWindowEvents.hpp>
 #include <Victoriam/Graphics/GRenderer.hpp>
+#include <Victoriam/Graphics/GWindow.hpp>
 #include <Victoriam/Utils/UTimestep.hpp>
 #include <Victoriam/World/WWorld.hpp>
 

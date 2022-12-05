@@ -4,6 +4,9 @@
 
 #include <Victoriam/Graphics/GGeometryData.hpp>
 
+#include <Victoriam/Graphics/GVertexBuffer.hpp>
+#include <Victoriam/Graphics/GIndexBuffer.hpp>
+
 VISRCBEG
 
 CGeometryData::~CGeometryData() = default;

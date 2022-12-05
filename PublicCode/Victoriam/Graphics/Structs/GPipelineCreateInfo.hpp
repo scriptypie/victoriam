@@ -6,16 +6,13 @@
 #define VICTORIAM_GPIPELINECREATEINFO_HPP
 
 #include <Victoriam/Graphics/Basics.hpp>
-#include <Victoriam/Graphics/GSwapchain.hpp>
-#include <Victoriam/Graphics/GDescriptorSetLayout.hpp>
 
 VISRCBEG
 
 /**
  * Struct that contain all information required to create new pipeline object.
  */
-struct VIDECL SPipelineCreateInfo
-{
+struct VIDECL SPipelineCreateInfo {
 	UInt32 Width = {};
 	UInt32 Height = {};
 	String Name = {};

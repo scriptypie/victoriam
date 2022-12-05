@@ -9,21 +9,13 @@
 
 VISRCBEG
 
-class CImage;
-typedef CShared<CImage> PImage;
-
-class CGraphicsContext;
-typedef CShared<CGraphicsContext> PGraphicsContext;
-
 class VIDECL CImageView {
 public:
 	VIDECL virtual ~CImageView() = default;
 	VIDECL VIREQOUT virtual SImageViewObject GetObject() = 0;
 
-	VIDECL VIREQOUT static CShared<CImageView> Create(PGraphicsContext& context, const PImage& image, const SImageViewCreateInfo& createInfo);
+	VIDECL VIREQOUT static PImageView Create(PGraphicsContext& context, const PImage& image, const SImageViewCreateInfo& createInfo);
 };
-
-VIDECL typedef CShared<CImageView> PImageView;
 
 VISRCEND
 

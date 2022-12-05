@@ -77,7 +77,7 @@ void *CVulkanPicture::GetMemory() const {
 }
 
 void *CVulkanPicture::GetBuffer() const {
-	return m_Buffer.Get();
+	return m_Buffer->GetBuffer();
 }
 
 UInt32 CVulkanPicture::GetWidth() const {

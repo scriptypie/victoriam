@@ -5,6 +5,9 @@
 #ifndef VICTORIAM_DEFAULTRENDERSUBRENDER_HPP
 #define VICTORIAM_DEFAULTRENDERSUBRENDER_HPP
 
+#include <Victoriam/Graphics/GPipeline.hpp>
+#include <Victoriam/Graphics/GFramebuffer.hpp>
+
 #include <Victoriam/Graphics/GRenderSubrender.hpp>
 
 VISRCBEG

@@ -5,8 +5,8 @@
 #ifndef VICTORIAM_GPICTURE_HPP
 #define VICTORIAM_GPICTURE_HPP
 
+#include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/Graphics/Structs/GPictureMetrics.hpp>
-#include <Victoriam/Graphics/GGraphicsContext.hpp>
 
 VISRCBEG
 
@@ -22,11 +22,9 @@ public:
 	VIDECL VIREQOUT virtual UInt32 GetChannels() const = 0;
 	VIDECL VIREQOUT virtual Bool IsHDR() const = 0;
 
-	VIDECL VIREQOUT static CShared<CPicture> Create(PGraphicsContext& context, const StringView& filename);
-	VIDECL VIREQOUT static CShared<CPicture> Create(PGraphicsContext& context, const void* data, const UInt64& size);
+	VIDECL VIREQOUT static PPicture Create(PGraphicsContext& context, const StringView& filename);
+	VIDECL VIREQOUT static PPicture Create(PGraphicsContext& context, const void* data, const UInt64& size);
 };
-
-VIDECL typedef CShared<CPicture> PPicture;
 
 Bool operator==(const PPicture& a, const PPicture& b);
 Bool operator!=(const PPicture& a, const PPicture& b);

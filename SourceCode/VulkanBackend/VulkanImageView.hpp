@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_VULKANIMAGEVIEW_HPP
 #define VICTORIAM_VULKANIMAGEVIEW_HPP
 
-#include <Victoriam/Graphics/GImage.hpp>
+#include <Victoriam/Graphics/GImageView.hpp>
 
 #include <vulkan/vulkan.h>
 

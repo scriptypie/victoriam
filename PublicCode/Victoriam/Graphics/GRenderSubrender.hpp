@@ -5,10 +5,8 @@
 #ifndef VICTORIAM_GRENDERSUBRENDER_HPP
 #define VICTORIAM_GRENDERSUBRENDER_HPP
 
-#include <Victoriam/Graphics/GRenderPass.hpp>
-#include <Victoriam/Graphics/GPipeline.hpp>
-#include <Victoriam/Graphics/GGraphicsContext.hpp>
-#include <Victoriam/Graphics/GDescriptorSetLayout.hpp>
+#include <Victoriam/Graphics/Basics.hpp>
+#include <Victoriam/Graphics/Structs/GFrameInfo.hpp>
 #include <Victoriam/World/WWorld.hpp>
 
 VISRCBEG
@@ -21,11 +19,9 @@ public:
 	VIDECL virtual void Compute(SFrameInfo& frameInfo, const PWorld& world) {}
 	VIDECL virtual void Pass(SFrameInfo& frameInfo, const PWorld& world) {};
 
-	VIDECL VIREQOUT static CUnique<CRenderSubrender> CreateDefaultSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
-	VIDECL VIREQOUT static CUnique<CRenderSubrender> CreatePointLightSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
+	VIDECL VIREQOUT static PRenderSubrender CreateDefaultSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
+	VIDECL VIREQOUT static PRenderSubrender CreatePointLightSubrender(PGraphicsContext& context, PRenderPass& renderPass, const PDescriptorSetLayout& setLayout);
 };
-
-VIDECL typedef CUnique<CRenderSubrender> PRenderSubrender;
 
 VISRCEND
 

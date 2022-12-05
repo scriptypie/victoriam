@@ -6,7 +6,6 @@
 #define VICTORIAM_GDESCRIPTORPOOL_HPP
 
 #include <Victoriam/Graphics/Structs/GDescriptorPoolCreateInfo.hpp>
-#include <Victoriam/Graphics/GDescriptorSetLayout.hpp>
 
 VISRCBEG
 
@@ -37,13 +36,8 @@ public:
 	 * Creates new descriptor pool object.
 	 * @param context Valid current context
 	 */
-	VIDECL VIREQOUT static CUnique<CDescriptorPool> Create(PGraphicsContext& context, const SDescriptorPoolCreateInfo& createInfo);
+	VIDECL VIREQOUT static PDescriptorPool Create(PGraphicsContext& context, const SDescriptorPoolCreateInfo& createInfo);
 };
-
-/**
- * DescriptorPool is like container and allocator for descriptor sets.
- */
-VIDECL typedef CUnique<CDescriptorPool> PDescriptorPool;
 
 VISRCEND
 

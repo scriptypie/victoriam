@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_VULKANMEMORYBUFFER_HPP
 #define VICTORIAM_VULKANMEMORYBUFFER_HPP
 
-#include "Victoriam/Graphics/Basics.hpp"
+#include <Victoriam/Graphics/Basics.hpp>
 #include "../Accessors/AGraphicsContext.hpp"
 
 VISRCBEG

@@ -5,8 +5,8 @@
 #ifndef VICTORIAM_GRENDERPASS_HPP
 #define VICTORIAM_GRENDERPASS_HPP
 
+#include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/Graphics/Structs/GRenderPassCreateInfo.hpp>
-#include <Victoriam/Graphics/GSwapchain.hpp>
 #include <Victoriam/Graphics/Structs/GFrameInfo.hpp>
 
 VISRCBEG
@@ -18,10 +18,8 @@ public:
 	VIDECL virtual void Begin(const SFrameInfo& frameInfo) = 0;
 	VIDECL virtual void End(const SFrameInfo& frameInfo) = 0;
 
-	VIDECL VIREQOUT static CUnique<CRenderPass> Create(PGraphicsContext& context, PSwapchain& swapchain, const SRenderPassCreateInfo& createInfo);
+	VIDECL VIREQOUT static PRenderPass Create(PGraphicsContext& context, PSwapchain& swapchain, const SRenderPassCreateInfo& createInfo);
 };
-
-VIDECL typedef CUnique<CRenderPass> PRenderPass;
 
 VISRCEND
 

@@ -5,7 +5,7 @@
 #ifndef VICTORIAM_GVERTEX_HPP
 #define VICTORIAM_GVERTEX_HPP
 
-#include <Victoriam/Graphics/Basics.hpp>
+#include <Victoriam/Core/CBase.hpp>
 #include <Victoriam/Utils/UHash.hpp>
 
 VISRCBEG
@@ -13,8 +13,7 @@ VISRCBEG
 /**
  * General vertex structure.
  */
-struct VIDECL SVertex
-{
+struct VIDECL SVertex {
 	VIDECL SVector3 Position;
 	VIDECL SVector4 Color;
 	VIDECL SVector3 Normal;
@@ -38,13 +37,9 @@ VIDECL inline static const CSet<UInt32> DefaultIndices = {
 
 VISRCEND
 
-namespace std
-{
-	template<>
-	struct hash<Vi::SVertex>
-	{
-		size_t operator()(const Vi::SVertex& vertex) const
-		{
+namespace std {
+	template<> struct hash<Vi::SVertex> {
+		size_t operator()(const Vi::SVertex& vertex) const {
 			size_t seed = 0;
 			Vi::FHashCombined(seed, vertex.Position, vertex.Color, vertex.Normal, vertex.Tangent, vertex.Bitangent, vertex.UV);
 			return seed;

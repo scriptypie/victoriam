@@ -13,16 +13,14 @@ VISRCBEG
  * Contains all information required per-frame.
  */
 
-struct VIDECL SPointLightInfo
-{
+struct VIDECL SPointLightInfo {
 	VIDECL SVector4 Position; // w is radius
 	VIDECL SVector4 Color;
 };
 
 Constant<UInt32, 1024> MAX_POINT_LIGHTS;
 
-struct VIDECL SRendererConstants
-{
+struct VIDECL SRendererConstants {
 	VIDECL SMatrix4 View;
 	VIDECL SMatrix4 Projection;
 	VIDECL SVector4 SunDirection; // ignore w component

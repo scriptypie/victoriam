@@ -8,7 +8,7 @@
 #include <Victoriam/Graphics/Structs/GRendererCreateInfo.hpp>
 #include <Victoriam/Graphics/Structs/GGeometryDataCreateInfo.hpp>
 #include <Victoriam/Graphics/Structs/GFrameInfo.hpp>
-#include <Victoriam/Graphics/GUniformBuffer.hpp>
+#include <Victoriam/Graphics/Basics.hpp>
 #include <Victoriam/World/WWorld.hpp>
 
 VISRCBEG
@@ -18,7 +18,7 @@ class VIDECL CRenderer
 public:
 	VIDECL virtual ~CRenderer() = default;
 
-	VIDECL VIREQOUT static CUnique<CRenderer> Create(const SRendererCreateInfo& createInfo);
+	VIDECL VIREQOUT static PRenderer Create(const SRendererCreateInfo& createInfo);
 
 	VIDECL          virtual void Setup() = 0;
 	VIDECL VIREQOUT virtual PSwapchain& GetSwapchain() = 0;
@@ -40,8 +40,6 @@ public:
 	VIDECL          virtual void EndUIFrame(SCommandBuffer commandBuffer) = 0;
 	VIDECL          virtual void Shutdown(const PWorld& world) = 0;
 };
-
-VIDECL typedef CUnique<CRenderer> PRenderer;
 
 VISRCEND
 

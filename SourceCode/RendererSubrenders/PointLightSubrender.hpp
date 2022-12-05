@@ -5,6 +5,9 @@
 #ifndef VICTORIAM_POINTLIGHTSUBRENDER_HPP
 #define VICTORIAM_POINTLIGHTSUBRENDER_HPP
 
+#include <Victoriam/Graphics/GPipeline.hpp>
+#include <Victoriam/Graphics/GFramebuffer.hpp>
+
 #include <Victoriam/Graphics/GRenderSubrender.hpp>
 
 VISRCBEG

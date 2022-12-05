@@ -5,15 +5,14 @@
 #ifndef VICTORIAM_GMATERIALDATA_HPP
 #define VICTORIAM_GMATERIALDATA_HPP
 
-#include <Victoriam/Core/CBase.hpp>
+#include <Victoriam/Graphics/Basics.hpp>
 
 VISRCBEG
 
 /**
  * Per-mesh struct that handles information required for every mesh to render.
  */
-struct VIDECL SMaterialData
-{
+struct VIDECL SMaterialData {
 	VIDECL SMatrix4 ModelMatrix;
 };
 

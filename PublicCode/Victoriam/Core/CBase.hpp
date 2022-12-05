@@ -5,9 +5,7 @@
 #ifndef VICTORIAM_CBASE_HPP
 #define VICTORIAM_CBASE_HPP
 
-#include <vector>
 #include <tuple>
-#include <functional>
 #include <unordered_map>
 
 #include <Victoriam/Core/Containers/CArray.hpp>

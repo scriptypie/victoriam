@@ -6,6 +6,7 @@
 #define VICTORIAM_VULKANIMAGE_HPP
 
 #include <Victoriam/Graphics/GImage.hpp>
+#include <Victoriam/Graphics/GPicture.hpp>
 
 #include <vulkan/vulkan.h>
 

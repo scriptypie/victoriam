@@ -12,8 +12,7 @@ VISRCBEG
 /**
  * Additional flags for window creation.
  */
-enum VIDECL EWindowCreateWindowFlags : FlagDef
-{
+enum VIDECL EWindowCreateWindowFlags : FlagDef {
 	/**
 	 * Create default window with default settings.
 	 */
@@ -31,8 +30,7 @@ enum VIDECL EWindowCreateWindowFlags : FlagDef
 /**
  * Contains all information required to create window object.
  */
-struct VIDECL SWindowCreateInfo
-{
+struct VIDECL SWindowCreateInfo {
 	String Name;
 	SExtent2D Offset;
 	SExtent2D Resolution;
