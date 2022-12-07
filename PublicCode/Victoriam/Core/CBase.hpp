@@ -11,6 +11,7 @@
 #include <Victoriam/Core/Containers/CArray.hpp>
 #include <Victoriam/Core/Containers/CConstant.hpp>
 #include <Victoriam/Core/Containers/CSet.hpp>
+#include <Victoriam/Core/Containers/CUniform.hpp>
 #include <Victoriam/Core/CLog.hpp>
 #include <Victoriam/Core/CFlags.hpp>
 #include <Victoriam/Core/Memory/MSmartPointers.hpp>
