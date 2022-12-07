@@ -26,6 +26,9 @@ public:
 		assert(n < m_Count);
 		return m_Args[n];
 	}
+	VIDECL VIREQOUT inline UInt32 Count() const {
+		return m_Count;
+	}
 };
 
 VISRCEND

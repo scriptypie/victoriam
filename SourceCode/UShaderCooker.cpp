@@ -2,71 +2,28 @@
 // Created by Вячеслав Кривенко on 14.10.2022.
 //
 
-#include <filesystem>
-#include <vector>
-#include <iostream>
-
 #include <Victoriam/Utils/UShaderCooker.hpp>
 #include <Victoriam/Utils/UCryptogen.hpp>
+#include <Victoriam/Utils/UShaderTranslator.hpp>
 #include "Victoriam/IO/IOFile.hpp"
 
 VISRCBEG
 
 namespace {
 
-	const char g_Keywords[4][9] =
-	{
-			"group",
-			"vertex",
-			"fragment",
-			"endgroup"
-	};
+	const char g_hashmark[10] = { ".hashsum." };
 
-	Bool CheckKeyword(String::iterator &it, CString keyword) {
-		Int8 len = (Int8) (strlen)(keyword);
-		for (Int8 i = 0; i < len; i++)
-			if ((*(it + 1)) == keyword[i]) {
-				it++;
-				continue;
-			} else
-				return false;
-		it++;
-		return true;
-	}
-
-	CSet<SSPIRVShader> SplitShader(const SEngineShader &shader)
-	{
+	CSet<SSPIRVShader> SplitShader(const SEngineShader &shader) {
 		CSet<SSPIRVShader> result;
-		String tmp, source = shader.Source;
-		auto it = source.begin();
-		while (it != source.end())
-		{
-			if ((*it) == 64)
-				if (CheckKeyword(it, g_Keywords[0]))
-				{
-					if (CheckKeyword(it, g_Keywords[1]))
-					{
-						while ((*(++it)) != 64) tmp.push_back(*it);
-						if (CheckKeyword(it, g_Keywords[3]))
-						{
-							result.PushBack({ SSPIRVShader::Vertex, tmp, shader.Name });
-							tmp = {};
-							continue;
-						}
-					}
-					if (CheckKeyword(it, g_Keywords[2]))
-					{
-						while ((*(++it)) != 64) tmp.push_back(*it);
-						if (CheckKeyword(it, g_Keywords[3]))
-						{
-							result.PushBack({ SSPIRVShader::Fragment, tmp, shader.Name });
-							tmp = {};
-							continue;
-						}
-					}
-				}
-			it++;
-		}
+		CShaderTranslator translator;
+		SSPIRVShader vs{SSPIRVShader::Vertex, shader.Name}, fs{SSPIRVShader::Pixel, shader.Name};
+
+		vs.Source = translator(shader.Source, TargetVertex);
+		fs.Source = translator(shader.Source, TargetPixel);
+
+		result.PushBack(vs);
+		result.PushBack(fs);
+
 		return result;
 	}
 
@@ -74,34 +31,28 @@ namespace {
 
 bool CShaderCooker::IsCookedExists(const String &name)
 {
-	return std::all_of(EXT.begin(), EXT.end(),[=](CString ext) -> Bool
-	{
-		if (!std::filesystem::exists(COOKEDDIR + name + ext))
-			return false;
-		return true;
+	return std::all_of(EXT.begin(), EXT.end(),[=](CString ext) -> Bool {
+		return std::filesystem::exists(COOKEDDIR + name + ext);
 	});
 }
 
 bool CShaderCooker::IsShaderChanged(const SEngineShader& shader, const String& name)
 {
-	CFile file(SHADERDIR + String(".hashsum.") + name, ECOpenMode::Read);
-	String sum; sum.resize(32);
-	if (file.Valid())
-	{
+	CFile file(SHADERDIR + String(g_hashmark) + name, ECOpenMode::Read);
+	String sum(32, 0);
+	if (file.Valid()) {
 		VIGNORE file.Read(sum);
 		file.Close();
-		bool result = shader.Checksum != sum;
-		if (result)
-		{
-			file.Open(SHADERDIR + String(".hashsum.") + name, ECOpenMode::Write);
+		auto result = shader.Checksum != sum;
+		if (result) {
+			file.Open(SHADERDIR + String(g_hashmark) + name, ECOpenMode::Write);
 			VIGNORE file.Write(shader.Checksum);
 			file.Close();
 		}
 		return result;
 	}
-	else
-	{
-		file.Open(SHADERDIR + String(".hashsum.") + name, ECOpenMode::Write);
+	else {
+		file.Open(SHADERDIR + String(g_hashmark) + name, ECOpenMode::Write);
 		VIGNORE file.Write(shader.Checksum);
 		file.Close();
 		return true;
@@ -189,7 +140,7 @@ CBinaryData CShaderCooker::LoadVertexShader(const String &name)
 	{
 		CSet<SSPIRVShader> shaders = SplitShader(shader);
 		INFO += CookShader(shaders);
-        std::cout << INFO << std::endl;
+		ViLog(INFO);
 	}
 	return LoadCookedShaderFromName(name, SSPIRVShader::Vertex);
 }
@@ -201,9 +152,9 @@ CBinaryData CShaderCooker::LoadFragmentShader(const String &name)
 	{
 		CSet<SSPIRVShader> shaders = SplitShader(shader);
 		INFO += CookShader(shaders);
-		std::cout << INFO << std::endl;
+		ViLog(INFO);
 	}
-	return LoadCookedShaderFromName(name, SSPIRVShader::Fragment);
+	return LoadCookedShaderFromName(name, SSPIRVShader::Pixel);
 }
 
 String SSPIRVShader::toString(const SSPIRVShader::EShaderType &type)
@@ -211,7 +162,7 @@ String SSPIRVShader::toString(const SSPIRVShader::EShaderType &type)
 	switch (type)
 	{
 		case Vertex: return "vert";
-		case Fragment: return "frag";
+		case Pixel: return "frag";
 		default: return "Unknown";
 	}
 }

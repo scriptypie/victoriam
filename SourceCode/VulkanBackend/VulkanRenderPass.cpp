@@ -12,7 +12,7 @@ VISRCBEG
 
 CVulkanRenderPass::CVulkanRenderPass(PGraphicsContext &context, PSwapchain &swapchain,
                                          const SRenderPassCreateInfo &createInfo)
-										 : m_Context(context), m_Swapchain(swapchain)
+										 : m_Swapchain(swapchain), m_Context(context)
 {
 	m_ClearColor = createInfo.ClearColor;
 	m_Depth = createInfo.Depth;

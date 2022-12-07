@@ -70,7 +70,7 @@ public:
 	VIDECL CSet& operator=(SelfType&& other) noexcept { m_Vector = other.m_Vector; return *this; }
 	template<class...Args>
 	VIDECL ReferenceType EmplaceBack(Args&&...args) {
-		return m_Vector.template emplace_back(FForward<Args>(args)...);
+		return m_Vector.emplace_back(FForward<Args>(args)...);
 	}
 	template<class...Args>
 	VIDECL IteratorType Emplace(IteratorType pos, Args&&...args) {
@@ -84,6 +84,9 @@ public:
 	}
 	VIDECL void Insert(IteratorType pos, SizeType n, ConstReferenceType v) {
 		m_Vector.insert(pos, n, v);
+	}
+	VIDECL IteratorType Insert(IteratorType pos, IteratorType f, IteratorType l) {
+		return m_Vector.insert(pos, f, l);
 	}
 	VIDECL void PushBack(ConstReferenceType v) {
 		m_Vector.push_back(v);

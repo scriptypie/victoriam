@@ -27,27 +27,27 @@ Bool SAABB::IsIntersects(const SSphere &other) const {
 	return other.IsIntersects(*this);
 }
 
-Bool SAABB::IsOnOrForwardPlan(const SPlane &plan) const {
+Bool SAABB::IsOnOrForwardPlane(const SPlane &plan) const {
 	const ScalarType r = extent.x * FAbs(plan.normal.x) + extent.y * FAbs(plan.normal.y) + extent.z * FAbs(plan.normal.z);
 	return -r <= FDistance(plan, center);
 }
 
 Bool SAABB::IsOnFrustum(const SFrustum &frustum, const SMatrix4 &transform) const {
-	const SVector3 globalCenter = (transform * SVector4(center, 1.0F)).xyz;
-	const SVector3 right = (transform[0] * extent.x).xyz;
-	const SVector3 up = (transform[1] * extent.y).xyz;
-	const SVector3 forward = (-transform[2] * extent.z).xyz;
+	const SVector3 globalCenter = (transform * SVector4(center, 1.0F)).xyzw;
+	const SVector3 right = SVector4(transform[0] * extent.x).xyzw;
+	const SVector3 up = SVector4(transform[1] * extent.y).xyzw;
+	const SVector3 forward = SVector4(-transform[2] * extent.z).xyzw;
 	const ScalarType x = FAbs(FDot(SVector3(1.0F, 0.0F, 0.0F), right)) + FAbs(FDot(SVector3(1.0F, 0.0F, 0.0F), up)) + FAbs(FDot(SVector3(1.0F, 0.0F, 0.0F), forward));
 	const ScalarType y = FAbs(FDot(SVector3(0.0F, 1.0F, 0.0F), right)) + FAbs(FDot(SVector3(0.0F, 1.0F, 0.0F), up)) + FAbs(FDot(SVector3(0.0F, 1.0F, 0.0F), forward));
 	const ScalarType z = FAbs(FDot(SVector3(0.0F, 0.0F, 1.0F), right)) + FAbs(FDot(SVector3(0.0F, 0.0F, 1.0F), up)) + FAbs(FDot(SVector3(0.0F, 0.0F, 1.0F), forward));
 	const SAABB globalAABB(globalCenter, x, y, z);
 	return
-	globalAABB.IsOnOrForwardPlan(frustum.left) &&
-	globalAABB.IsOnOrForwardPlan(frustum.right) &&
-	globalAABB.IsOnOrForwardPlan(frustum.top) &&
-	globalAABB.IsOnOrForwardPlan(frustum.bottom) &&
-	globalAABB.IsOnOrForwardPlan(frustum.far) &&
-	globalAABB.IsOnOrForwardPlan(frustum.near);
+			globalAABB.IsOnOrForwardPlane(frustum.left) &&
+			globalAABB.IsOnOrForwardPlane(frustum.right) &&
+			globalAABB.IsOnOrForwardPlane(frustum.top) &&
+			globalAABB.IsOnOrForwardPlane(frustum.bottom) &&
+			globalAABB.IsOnOrForwardPlane(frustum.far) &&
+			globalAABB.IsOnOrForwardPlane(frustum.near);
 }
 
 Bool SAABB::IsIntersects(const SAABB &box) const {

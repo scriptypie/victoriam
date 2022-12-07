@@ -59,7 +59,7 @@ public:
 	VIDECL explicit CVulkanGraphicsContext(const CShared<CWindow> &window);
 	VIDECL ~CVulkanGraphicsContext() override;
 
-	VIDECL void WaitReleaseResources() override;
+	VIDECL void WaitGPUReady() override;
 	VIDECL void Execute(ImmediateGraphicsActionFN fn) override;
 
 	VIDECL void CmdCreate(const UInt32& imageCount) override;

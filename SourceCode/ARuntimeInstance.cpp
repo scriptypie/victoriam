@@ -34,12 +34,12 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		info.Name = m_info.AppName + " - NewWindow";
 		info.Resolution = {800, 500};
 		info.Flags += WindowCreateWindowFlag_DefaultWindow;
-		m_Window = CWindow::Create(info);
+		m_Window = Window::Create(info);
 		m_Window->SetEventCallbackFunction(BIND(CRuntimeInstance::OnEvent));
 	}
 	CInput::Init(m_Window);
 	rendererCreateInfo.WindowPtr = m_Window;
-	m_Renderer = CRenderer::Create(rendererCreateInfo);
+	m_Renderer = Renderer::Create(rendererCreateInfo);
 	m_Renderer->Setup();
 
 	m_World = CWorld::Create(m_Renderer);
@@ -55,24 +55,20 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	CGeometryData monkeyGeometryData = m_Renderer->CreateGeometryData(monkeyCreateInfo);
 	CGeometryData quadGeometryData = m_Renderer->CreateGeometryData(quadCreateInfo);
 
-	UInt64 totalPoly = 0;
-
-	for (auto x = 0; x < 32; x++) for (auto z = 0; z < 32; z++)
+	for (auto x = 0; x < 64; x++) for (auto z = 0; z < 64; z++)
 	{
 		auto monkey = m_World->CreateGameObject("TestMonkey");
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
-		totalPoly += monkeyGeometryData.GetPolycount();
 		auto transform = monkey->AddComponent<SComponentTransform>();
 		auto sc = CRandom<Float32>::Range(1.0F, 20.0F);
-		transform->Translation = { x * 5 * sc - 300, -5, z * 5 * sc - 300 };
+		transform->Translation = { x * 5 * sc - 700, -5, z * 5 * sc - 700 };
 		transform->Rotation = { 0, 0, 180 };
 		transform->Scale = sc;
 	}
 	{
 		auto plane = m_World->CreateGameObject("Plane");
 		plane->AddComponent<SComponentRenderable>(quadGeometryData);
-		totalPoly += quadGeometryData.GetPolycount();
 		auto transform = plane->AddComponent<SComponentTransform>();
 		transform->Translation = { 0, 1, 0 };
 		transform->Rotation = { 180.0F, 0.0F, 0.0F };
@@ -100,8 +96,6 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto componentTransform = camera->AddComponent<SComponentTransform>();
 		componentTransform->Translation = { 0.0F, -10.0F, 300.0F };
 	}
-
-	ViLog("Total polygons: " << totalPoly);
 
 	m_running = true;
 }
@@ -146,10 +140,10 @@ void Vi::CRuntimeInstance::Startup() {
 			state->OnUpdate(frameTime);
 		}
 		// m_Renderer->BeginUIFrame();
-		for (auto& state : m_stateController)
-		{
+		// for (auto& state : m_stateController)
+		// {
 			//state->OnUpdateGUI();
-		}
+		// }
 		if (auto frameInfo = m_Renderer->BeginFrame())
 		{
 			m_Renderer->DrawFrame(frameInfo, m_World);
@@ -164,9 +158,6 @@ void CRuntimeInstance::OnEvent(CEvent &e) {
 	CEventDispatcher dispatcher(e);
 	dispatcher.Dispatch<CWindowResizeEvent>(BIND(CRuntimeInstance::OnWindowResize));
 	dispatcher.Dispatch<CWindowCloseEvent>(BIND(CRuntimeInstance::OnWindowClose));
-
-
-
 }
 
 bool CRuntimeInstance::OnWindowResize(const CWindowResizeEvent &e) {

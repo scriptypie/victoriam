@@ -29,7 +29,7 @@ struct VIDECL SFrameInfo {
 		: CommandBuffer(commandBuffer), ImageIndex(imageIndex), FrameIndex(frameIndex)
 	{}
 	VIDECL inline SFrameInfo(const SCommandBuffer& commandBuffer, const SDescriptorSet& descriptorSet, const UInt32& imageIndex, const UInt32& frameIndex, const Float32& aspectRatio, const PFramebuffer& framebuffer)
-		: CommandBuffer(commandBuffer), ConstantsDescriptorSet(descriptorSet), ImageIndex(imageIndex), FrameIndex(frameIndex), AspectRatio(aspectRatio), Framebuffer(framebuffer)
+		: Framebuffer(framebuffer), CommandBuffer(commandBuffer), ConstantsDescriptorSet(descriptorSet), AspectRatio(aspectRatio), ImageIndex(imageIndex), FrameIndex(frameIndex)
 	{}
 
 	VIDECL inline explicit operator Bool() const { return CCast<Bool>(CommandBuffer); }

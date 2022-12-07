@@ -102,13 +102,13 @@ SMatrix4 CCamera::GetProjection() const {
 SFrustum FGetFrustum(const CCamera& cam, const SVector3& pos) {
 	SFrustum frustum;
 
-	const Float32 halfV = cam.m_Far * FTan((cam.m_Fov) * 0.5F);
+	const Float32 halfV = cam.m_Far * FTan(cam.m_Fov * 0.5F);
 	const Float32 halfH = halfV * cam.m_Aspect;
 	const SVector3 frontFar = cam.m_Front * cam.m_Far;
 	const SVector3 right = cam.Right();
 
-	SVector3 position = { pos.x, pos.y, pos.z };
-	position -= (cam.m_Front * 5);
+	SVector3 position = pos;
+	position -= (cam.m_Front * 2.0);
 
 	frustum.near = { position + cam.m_Near * cam.m_Front, cam.m_Front };
 	frustum.far = { position + frontFar, -cam.m_Front };

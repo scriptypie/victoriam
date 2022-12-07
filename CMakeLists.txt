@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 project(victoriam)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS -Wall)
 
 set(GLFW_INCLUDE /opt/homebrew/Cellar/glfw/3.3.8/include)
 set(VULKAN_INCLUDE /Users/old_cd_rom/VulkanSDK/1.3.224.1/macOS/include)
@@ -214,7 +215,7 @@ set(SOURCE_FILES
         SourceCode/WWorld.cpp
 
         ThirdParty/stb_image.h
-        PublicCode/Victoriam/Core/Memory/MUnique.hpp PublicCode/Victoriam/Core/CFunction.hpp PublicCode/Victoriam/Core/Containers/CSet.hpp)
+        PublicCode/Victoriam/Core/Memory/MUnique.hpp PublicCode/Victoriam/Core/CFunction.hpp PublicCode/Victoriam/Core/Containers/CSet.hpp PublicCode/Victoriam/Core/Containers/CUniform.hpp PublicCode/Victoriam/Utils/UShaderTranslator.hpp SourceCode/UShaderTranslator.cpp)
 
 add_library(victoriam STATIC ${SOURCE_FILES})
 

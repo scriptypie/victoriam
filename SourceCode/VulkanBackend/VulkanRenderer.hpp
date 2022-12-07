@@ -7,6 +7,8 @@
 
 #include <Victoriam/Graphics/GRenderer.hpp>
 #include <Victoriam/Graphics/GDescriptorWriter.hpp>
+#include <Victoriam/Graphics/GDescriptorSetLayout.hpp>
+#include <Victoriam/Graphics/GDescriptorPool.hpp>
 #include <Victoriam/Graphics/GRenderSubrender.hpp>
 #include <Victoriam/Graphics/GRenderPass.hpp>
 #include <Victoriam/Graphics/GIndexBuffer.hpp>

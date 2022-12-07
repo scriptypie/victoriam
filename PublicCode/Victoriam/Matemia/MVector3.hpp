@@ -10,6 +10,7 @@
 VISRCBEG
 
 struct VIDECL SVector3 {
+	using Array4Type = ScalarArray<4>;
 	using Array3Type = ScalarArray<3>;
 	using Array2Type = ScalarArray<2>;
 
@@ -53,6 +54,7 @@ struct VIDECL SVector3 {
 	VIDECL inline  SVector3() : data() {}
 	VIDECL inline  SVector3(const Array2Type& other) : data(other) { }
 	VIDECL inline  SVector3(const Array3Type& other) : data(other) { }
+	VIDECL inline  SVector3(const Array4Type& other) : data(other) { }
 	VIDECL inline  SVector3(const ScalarType& x) : data(x, x, x) {}
 	VIDECL inline  SVector3(const ScalarType& x, const ScalarType& y, const ScalarType& z) : data(x, y, z) {}
 	VIDECL inline  SVector3(const SVector2& v) : data(v.x, v.y, 0.0F) {}

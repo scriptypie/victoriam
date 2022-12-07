@@ -1,104 +1,79 @@
-@group vertex
+VERSION 1
 
-#version 450
-
-layout (location = 0) in vec3 m_Position;
-layout (location = 1) in vec4 m_Color;
-layout (location = 2) in vec3 m_Normal;
-layout (location = 3) in vec3 m_Tangent;
-layout (location = 4) in vec3 m_Bitangent;
-layout (location = 5) in vec2 m_UV;
-
-layout (location = 0) out vec4 o_Color;
-layout (location = 1) out vec3 o_PosWorld;
-layout (location = 2) out vec3 o_NormalWorld;
-
-struct PointLight
-{
-    vec4 Position; // w is radius
-    vec4 Color; // w is intensity
-};
-
-#define MAX_POINT_LIGHTS 1024
-
-layout (set = 0, binding = 0) uniform WorldConstants {
-    mat4 View;
-    mat4 Projection;
-    vec4 SunDirection;
-    vec4 Ambient; // w is intensity
-    PointLight PointLights[MAX_POINT_LIGHTS];
-    float Brightness;
-    int ActivePLCount;
-} Constants;
-
-layout (push_constant) uniform PushData {
-    mat4 ModelMatrix;
-} m_Data;
-
-void main()
-{
-
-    vec4 positionWorld = m_Data.ModelMatrix * vec4(m_Position, 1);;
-    gl_Position = Constants.Projection * Constants.View * positionWorld;
-
-    o_NormalWorld = normalize(mat3(m_Data.ModelMatrix) * m_Normal);
-    o_PosWorld = positionWorld.xyz;
-    o_Color = m_Color;
+INPUT VERTEX {
+    Vector3 m_Position;
+    Vector4 m_Color;
+    Vector3 m_Normal;
+    Vector3 m_Tangent;
+    Vector3 m_Bitangent;
+    Vector2 m_UV;
 }
 
-@endgroup
+OUTPUT VERTEX {
+    Vector4 o_Color;
+    Vector3 o_PosWorld;
+    Vector3 o_NormalWorld;
+}
 
-@group fragment
+INPUT PIXEL {
+    Vector4 m_Color;
+    Vector3 m_PosWorld;
+    Vector3 m_NormalWorld;
+}
 
-#version 450
+OUTPUT PIXEL {
+    Vector4 o_Color;
+}
 
-layout (location = 0) in vec4 m_Color;
-layout (location = 1) in vec3 m_PosWorld;
-layout (location = 2) in vec3 m_NormalWorld;
+GLOBAL STRUCT PointLight {
+    Vector4 Position;
+    Vector4 Color;
+}
 
-layout (location = 0) out vec4 o_Color;
+GLOBAL CONSTANT MAX_POINT_LIGHTS = 1024;
 
-struct PointLight
-{
-    vec4 Position; // w is radius
-    vec4 Color; // w is intensity
-};
-
-#define MAX_POINT_LIGHTS 1024
-
-layout (set = 0, binding = 0) uniform WorldConstants {
-    mat4 View;
-    mat4 Projection;
-    vec4 SunDirection;
-    vec4 Ambient; // w is intensity
+GLOBAL UNIFORM STRUCT Constants {
+    Matrix4 View;
+    Matrix4 Projection;
+    Vector4 SunDirection;
+    Vector4 Ambient;
     PointLight PointLights[MAX_POINT_LIGHTS];
-    float Brightness;
-    int ActivePLCount;
-} Constants;
+    Float32 Brightness;
+    Int32 ActivePLCount;
+}
 
-layout (push_constant) uniform PushData
-{
-    mat4 ModelMatrix;
-} m_Data;
+GLOBAL PUSH STRUCT Data {
+    Matrix4 ModelMatrix;
+}
 
-void main() {
+PROGRAM VERTEX {
 
-    vec3 diffuseLight = Constants.Ambient.xyz * Constants.Ambient.w;
-    vec3 surfaceNormal = normalize(m_NormalWorld);
+    Vector4 positionWorld = Data.ModelMatrix * Vector4(m_Position, 1);
+    VERTEX_POSITION = Constants.Projection * Constants.View * positionWorld;
 
-    for (int i = 0; i < Constants.ActivePLCount; i++)
+    o_NormalWorld = FNormalize(Matrix3(Data.ModelMatrix) * m_Normal);
+    o_PosWorld = positionWorld.xyz;
+    o_Color = m_Color;
+
+} ENDPROGRAM
+
+PROGRAM PIXEL {
+
+    Vector3 diffuseLight = Constants.Ambient.xyz * Constants.Ambient.w;
+    Vector3 surfaceNormal = FNormalize(m_NormalWorld);
+
+    for (Int32 i = 0; i < Constants.ActivePLCount; i++)
     {
         PointLight plData = Constants.PointLights[i];
 
-        vec3 dirToLight = plData.Position.xyz - m_PosWorld;
-        float atten = 1.0 / dot(dirToLight, dirToLight);
-        float cosAngleIncidence = max(dot(surfaceNormal, normalize(dirToLight)), 0.0);
-        vec3 intensity = plData.Color.xyz * plData.Color.w * atten;
+        Vector3 dirToLight = plData.Position.xyz - m_PosWorld;
+        Float32 atten = 1.0 / FDot(dirToLight, dirToLight);
+        Float32 cosAngleIncidence = FMax(FDot(surfaceNormal, FNormalize(dirToLight)), 0.0);
+        Vector3 intensity = plData.Color.xyz * plData.Color.w * atten;
 
         diffuseLight += (intensity * cosAngleIncidence) / 1.0;
     }
 
-    o_Color = m_Color * vec4(diffuseLight, 1.0);
-}
+    o_Color = m_Color * Vector4(diffuseLight, 1.0);
 
-@endgroup
+} ENDPROGRAM

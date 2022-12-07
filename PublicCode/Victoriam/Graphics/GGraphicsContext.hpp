@@ -16,7 +16,7 @@ class VIDECL CGraphicsContext
 public:
 	VIDECL virtual ~CGraphicsContext() = default;
 
-	VIDECL virtual void WaitReleaseResources() = 0;
+	VIDECL virtual void WaitGPUReady() = 0;
 	VIDECL virtual void Execute(ImmediateGraphicsActionFN fn) = 0;
 
 	VIDECL          virtual void CmdCreate(const UInt32& imageCount) = 0;

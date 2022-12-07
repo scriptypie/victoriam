@@ -20,7 +20,7 @@ struct VIDECL SSphere : SVolume {
 	VIDECL VIREQOUT Bool IsIntersects(const SPoint3D& point) const override;
 	VIDECL VIREQOUT Bool IsIntersects(const SSphere& sphere) const override;
 	VIDECL VIREQOUT Bool IsIntersects(const SAABB& box) const override;
-	VIDECL VIREQOUT Bool IsOnOrForwardPlan(const SPlane& plan) const override;
+	VIDECL VIREQOUT Bool IsOnOrForwardPlane(const SPlane& plan) const override;
 	VIDECL VIREQOUT Bool IsOnFrustum(const SFrustum& frustum, const SMatrix4& transform) const override;
 
 };

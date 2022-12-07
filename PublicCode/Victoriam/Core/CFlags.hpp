@@ -21,8 +21,8 @@ struct VIDECL SFlags
 {
 	FlagDef _base_;
 
-	SFlags() : _base_(0x0000000000000000) {}
-	explicit SFlags(const FlagDef& f) : _base_(f) {}
+	VIDECL SFlags() : _base_(0x0000000000000000) {}
+	VIDECL SFlags(const FlagDef& f) : _base_(f) {}
 
 	VIDECL void operator+=(const FlagDef& f)
 	{
@@ -31,6 +31,10 @@ struct VIDECL SFlags
 	VIDECL bool operator==(const FlagDef& f) const
 	{
 		return (_base_ & f) == f;
+	}
+	VIDECL bool operator!=(const FlagDef& f) const
+	{
+		return !Contains(f);
 	}
 	/**
 	 * Checks if container contains flag

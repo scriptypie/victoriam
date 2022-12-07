@@ -477,14 +477,14 @@ VkFormat CVulkanGraphicsContext::FindSupportedFormat(const CSet<VkFormat> &candi
 	for (VkFormat format : candidates) {
 		VkFormatProperties props = {};
 		vkGetPhysicalDeviceFormatProperties(m_PhysicalDevice, format, &props);
-		if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features ||
-			tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features)
+		if ((tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features) ||
+			(tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features))
 			return format;
 	}
 	ViAbort("Failed to find supported format!");
 }
 
-void CVulkanGraphicsContext::WaitReleaseResources()
+void CVulkanGraphicsContext::WaitGPUReady()
 {
 	vkDeviceWaitIdle(m_Device);
 }

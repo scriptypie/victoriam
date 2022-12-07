@@ -28,11 +28,11 @@ VISRCBEG
 #endif
 
 CCryptogen::CCryptogen(const String& str, const ECHashingAlgorithm &algorithm)
-	: m_Buffer(str), m_Algorithm(algorithm)
+	: m_Algorithm(algorithm), m_Buffer(str)
 {}
 
 CCryptogen::CCryptogen(CString dat, const UInt64 &len, const ECHashingAlgorithm &algorithm)
-	: m_Buffer(dat, len), m_Algorithm(algorithm)
+	: m_Algorithm(algorithm), m_Buffer(dat, len)
 {}
 
 void CCryptogen::SetInputString(const String &str)

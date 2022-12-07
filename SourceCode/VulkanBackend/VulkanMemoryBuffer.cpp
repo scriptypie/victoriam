@@ -12,7 +12,7 @@ CVulkanMemoryBuffer::CVulkanMemoryBuffer(PGraphicsContext&              context,
 										 const VkBufferUsageFlags&      usageFlags,
                                          const VkMemoryPropertyFlags&   memoryPropertyFlags,
                                          const VkDeviceSize&            minOffsetAlignment)
-											 : m_Context(context), m_InstanceSize(instanceSize), m_InstanceCount(instanceCount),
+											 : m_Context(context), m_InstanceCount(instanceCount), m_InstanceSize(instanceSize),
 											   m_UsageFlags(usageFlags), m_MemoryPropertyFlags(memoryPropertyFlags)
 {
 	m_AlignmentSize = GetAlignment(m_InstanceSize, minOffsetAlignment);

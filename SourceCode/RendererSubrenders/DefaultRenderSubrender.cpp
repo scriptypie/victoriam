@@ -56,7 +56,7 @@ void CDefaultRenderSubrender::Pass(SFrameInfo &frameInfo, const PWorld &world)
 	for (const auto& renderable_obj: renderable_objs) {
 		auto [rrc, rtc] = renderable_obj->Group<SComponentRenderable, SComponentTransform>();
 		auto geom = rrc->Geometry;
-		auto bound = geom.GetBoundingSphere();
+		auto bound = geom.GetBoundingAABB();
 
 		if (!geom.Empty()) {
 

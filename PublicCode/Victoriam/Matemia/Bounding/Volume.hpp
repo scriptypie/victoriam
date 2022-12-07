@@ -17,15 +17,15 @@ public:
 	VIDECL VIREQOUT virtual Bool IsIntersects(const SSphere& sphere) const = 0;
 	VIDECL VIREQOUT virtual Bool IsIntersects(const SAABB& box) const = 0;
 
-	VIDECL VIREQOUT virtual Bool IsOnOrForwardPlan(const SPlane& plan) const = 0;
+	VIDECL VIREQOUT virtual Bool IsOnOrForwardPlane(const SPlane& plan) const = 0;
 	VIDECL VIREQOUT virtual Bool IsOnFrustum(const SFrustum& frustum, const SMatrix4& transform) const = 0;
 	VIDECL VIREQOUT inline Bool IsOnFrustum(const SFrustum& frustum) const {
-		return  IsOnOrForwardPlan(frustum.left) &&
-				IsOnOrForwardPlan(frustum.right) &&
-				IsOnOrForwardPlan(frustum.top) &&
-				IsOnOrForwardPlan(frustum.bottom) &&
-				IsOnOrForwardPlan(frustum.near) &&
-				IsOnOrForwardPlan(frustum.far);
+		return IsOnOrForwardPlane(frustum.left) &&
+		       IsOnOrForwardPlane(frustum.right) &&
+		       IsOnOrForwardPlane(frustum.top) &&
+		       IsOnOrForwardPlane(frustum.bottom) &&
+		       IsOnOrForwardPlane(frustum.near) &&
+		       IsOnOrForwardPlane(frustum.far);
 	}
 };
 

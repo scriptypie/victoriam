@@ -6,7 +6,6 @@
 #define VICTORIAM_USHADERCOOKER_HPP
 
 #include <Victoriam/Core/CBase.hpp>
-#include <utility>
 
 VISRCBEG
 
@@ -23,17 +22,12 @@ struct VIDECL SSPIRVShader
 	{
 		Undefined = -1,
 		Vertex,
-		Fragment
+		Pixel
 	} Type = Undefined;
-	String Source = {};
 	String Name = {};
+	String Source = {};
 
-	VIDECL VIREQOUT static String toString(const EShaderType& type) ;
-
-	VIDECL inline SSPIRVShader() = default;
-	VIDECL inline SSPIRVShader(const EShaderType& type, String src, String name)
-			: Type(type), Source(std::move(src)), Name(std::move(name))
-	{}
+	VIDECL VIREQOUT static String toString(const EShaderType& type);
 };
 
 class VIDECL CShaderCooker
