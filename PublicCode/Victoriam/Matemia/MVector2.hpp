@@ -78,6 +78,7 @@ struct VIDECL SVector2 {
 };
 
 VIDECL          inline CStream& operator<<(CStream& stream, const SVector2& v) { return stream << "(" << v.x << ", " << v.y << ")"; }
+VIDECL          inline OStream& operator<<(OStream& stream, const SVector2& v) { return stream << "(" << v.x << ", " << v.y << ")"; }
 
 VIDECL VIREQOUT inline SVector2 operator+(const ScalarType& a, const SVector2& b) { return { a + b.x, a + b.y }; }
 VIDECL VIREQOUT inline SVector2 operator-(const ScalarType& a, const SVector2& b) { return { a - b.x, a - b.y }; }

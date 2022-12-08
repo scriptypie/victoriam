@@ -10,6 +10,8 @@
 
 VISRCBEG
 
+VIDECL typedef std::ostream OStream;
+
 class VIDECL CStream {
 	StringStream buffer = {};
 public:

@@ -20,10 +20,11 @@ struct VIDECL SComponentTransform : SComponentBase
 	SVector3 Rotation = {};
 
 	VIDECL VIREQOUT inline SMatrix4 Transform() const {
-		SMatrix4 rotation = FMatrix4(SQuaternion(FRadians(Rotation)));
-		return FTranslate(SMatrix4(1.0f), Translation)
-		       * rotation
-		       * FScale(SMatrix4(1.0f), SVector3(Scale));
+		SMatrix4 transform(1.0);
+		transform *= FTranslate(SMatrix4(1.0), Translation);
+		transform *= FMatrix4(SQuaternion(FRadians(Rotation)));
+		transform *= FScale(SMatrix4(1.0), Scale);
+		return transform;
 	}
 
 };

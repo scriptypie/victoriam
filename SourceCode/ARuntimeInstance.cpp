@@ -55,14 +55,14 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	CGeometryData monkeyGeometryData = m_Renderer->CreateGeometryData(monkeyCreateInfo);
 	CGeometryData quadGeometryData = m_Renderer->CreateGeometryData(quadCreateInfo);
 
-	for (auto x = 0; x < 64; x++) for (auto z = 0; z < 64; z++)
+	for (auto x = 0; x < 32; x++) for (auto z = 0; z < 32; z++)
 	{
 		auto monkey = m_World->CreateGameObject("TestMonkey");
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		monkey->AddComponent<SComponentRenderable>(monkeyGeometryData);
 		auto transform = monkey->AddComponent<SComponentTransform>();
-		auto sc = CRandom<Float32>::Range(1.0F, 20.0F);
-		transform->Translation = { x * 5 * sc - 700, -5, z * 5 * sc - 700 };
+		auto sc = CRandom<Float32>::Range(20.0F, 100.0F);
+		transform->Translation = { x * 5 * sc - 700, -10, z * 5 * sc - 700 };
 		transform->Rotation = { 0, 0, 180 };
 		transform->Scale = sc;
 	}
@@ -70,7 +70,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		auto plane = m_World->CreateGameObject("Plane");
 		plane->AddComponent<SComponentRenderable>(quadGeometryData);
 		auto transform = plane->AddComponent<SComponentTransform>();
-		transform->Translation = { 0, 1, 0 };
+		transform->Translation = { 0, 0, 0 };
 		transform->Rotation = { 180.0F, 0.0F, 0.0F };
 		transform->Scale = 1000.0F;
 	}
@@ -83,7 +83,7 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 		for (auto j = 0; j < 8; j++) {
 			auto light = m_World->CreateGameObject("Light");
 			auto componentTransform = light->AddComponent<SComponentTransform>();
-			componentTransform->Translation = {i * 50, -15, j * 50};
+			componentTransform->Translation = {i * 50, -10, j * 50};
 			auto componentPointLight = light->AddComponent<SComponentPointLight>();
 			componentPointLight->LightColor.w = 50.0F;
 		}
@@ -91,10 +91,10 @@ CRuntimeInstance::CRuntimeInstance(SRuntimeInstanceCreateInfo createInfo)
 	{
 		auto camera = m_World->CreateGameObject("MainCamera");
 		auto componentCamera = camera->AddComponent<SComponentCamera>();
-		componentCamera->Camera.SetViewBounds(0.1F, 2000.0F);
-		componentCamera->Camera.SetFovY(FRadians(55.0F));
+		componentCamera->Camera.SetViewBounds(0.1F, 10000.0F);
+		componentCamera->Camera.SetFovY(FRadians(65.0F));
 		auto componentTransform = camera->AddComponent<SComponentTransform>();
-		componentTransform->Translation = { 0.0F, -10.0F, 300.0F };
+		componentTransform->Translation = { -75, -50, -32 };
 	}
 
 	m_running = true;
@@ -135,19 +135,11 @@ void Vi::CRuntimeInstance::Startup() {
 		Float32 frameTime = currentTime.Delta() - newTime.Delta();
 		currentTime = newTime;
 
-		for (auto & state : m_stateController)
-		{
+		for (auto & state : m_stateController) {
 			state->OnUpdate(frameTime);
 		}
-		// m_Renderer->BeginUIFrame();
-		// for (auto& state : m_stateController)
-		// {
-			//state->OnUpdateGUI();
-		// }
-		if (auto frameInfo = m_Renderer->BeginFrame())
-		{
+		if (auto frameInfo = m_Renderer->BeginFrame()) {
 			m_Renderer->DrawFrame(frameInfo, m_World);
-			//m_Renderer->EndUIFrame(frameInfo.CommandBuffer);
 			m_Renderer->EndFrame(frameInfo);
 		}
 	}

@@ -50,14 +50,14 @@ struct VIDECL SMatrix4 {
 	VIDECL VIREQOUT inline SMatrix4  operator+() const { return *this; }
 	VIDECL VIREQOUT inline SMatrix4  operator-() const { return { -value[0], -value[1], -value[2], -value[3] }; }
 
-	template<class T> VIDECL VIREQOUT inline SMatrix4& operator+=(const T       & other) { *this = { value[0] + other,    value[1] + other,    value[2] + other,    value[3] + other    }; return *this; }
-	template<class T> VIDECL VIREQOUT inline SMatrix4& operator-=(const T       & other) { *this = { value[0] - other,    value[1] - other,    value[2] - other,    value[3] - other    }; return *this; }
-	template<class T> VIDECL VIREQOUT inline SMatrix4& operator*=(const T       & other) { *this = { value[0] * other,    value[1] * other,    value[2] * other,    value[3] * other    }; return *this; }
-	template<class T> VIDECL VIREQOUT inline SMatrix4& operator/=(const T       & other) { *this = { value[0] / other,    value[1] / other,    value[2] / other,    value[3] / other    }; return *this; }
-	template<>        VIDECL VIREQOUT inline SMatrix4& operator+=(const SMatrix4& other) { *this = { value[0] + other[0], value[1] + other[1], value[2] + other[2], value[3] + other[3] }; return *this; }
-	template<>        VIDECL VIREQOUT inline SMatrix4& operator-=(const SMatrix4& other) { *this = { value[0] - other[0], value[1] - other[1], value[2] - other[2], value[3] - other[3] }; return *this; }
-	template<>        VIDECL VIREQOUT inline SMatrix4& operator*=(const SMatrix4& other) { return (*this = *this * other); }
-	template<>        VIDECL VIREQOUT inline SMatrix4& operator/=(const SMatrix4& other) { return *this *= FInverse(other); }
+	template<class T> VIDECL inline SMatrix4& operator+=(const T       & other) { *this = { value[0] + other,    value[1] + other,    value[2] + other,    value[3] + other    }; return *this; }
+	template<class T> VIDECL inline SMatrix4& operator-=(const T       & other) { *this = { value[0] - other,    value[1] - other,    value[2] - other,    value[3] - other    }; return *this; }
+	template<class T> VIDECL inline SMatrix4& operator*=(const T       & other) { *this = { value[0] * other,    value[1] * other,    value[2] * other,    value[3] * other    }; return *this; }
+	template<class T> VIDECL inline SMatrix4& operator/=(const T       & other) { *this = { value[0] / other,    value[1] / other,    value[2] / other,    value[3] / other    }; return *this; }
+	template<>        VIDECL inline SMatrix4& operator+=(const SMatrix4& other) { *this = { value[0] + other[0], value[1] + other[1], value[2] + other[2], value[3] + other[3] }; return *this; }
+	template<>        VIDECL inline SMatrix4& operator-=(const SMatrix4& other) { *this = { value[0] - other[0], value[1] - other[1], value[2] - other[2], value[3] - other[3] }; return *this; }
+	template<>        VIDECL inline SMatrix4& operator*=(const SMatrix4& other) { return (*this = *this * other); }
+	template<>        VIDECL inline SMatrix4& operator/=(const SMatrix4& other) { return *this *= FInverse(other); }
 
 	template<class T> VIDECL VIREQOUT inline SMatrix4  operator+(const T       & other) const { return { value[0] + other,          value[1] + other,          value[2] + other,          value[3] + other          }; }
 	template<class T> VIDECL VIREQOUT inline SMatrix4  operator-(const T       & other) const { return { value[0] - other,          value[1] - other,          value[2] - other,          value[3] - other          }; }
@@ -76,6 +76,7 @@ struct VIDECL SMatrix4 {
 };
 
 VIDECL inline CStream& operator<<(CStream& stream, const SMatrix4& m) { return stream << "(" << m[0][0] << ", " << m[0][1] << ", " << m[0][2] << ", " << m[0][3] << ")" << Newline << "(" << m[1][0] << ", " << m[1][1] << ", " << m[1][2] << ", " << m[1][3] << ")" << Newline << "(" << m[2][0] << ", " << m[2][1] << ", " << m[2][2] << ", " << m[2][3] << ")" << Newline << "(" << m[3][0] << ", " << m[3][1] << ", " << m[3][2] << ", " << m[3][3] << ")"; }
+VIDECL inline OStream& operator<<(OStream& stream, const SMatrix4& m) { return stream << "(" << m[0][0] << ", " << m[0][1] << ", " << m[0][2] << ", " << m[0][3] << ")" << Newline << "(" << m[1][0] << ", " << m[1][1] << ", " << m[1][2] << ", " << m[1][3] << ")" << Newline << "(" << m[2][0] << ", " << m[2][1] << ", " << m[2][2] << ", " << m[2][3] << ")" << Newline << "(" << m[3][0] << ", " << m[3][1] << ", " << m[3][2] << ", " << m[3][3] << ")"; }
 
 VIDECL VIREQOUT inline typename SMatrix4::ColumnType operator*(const SMatrix4& m, const typename SMatrix4::RowType& v) { const auto Mov0(v[0]); const auto Mov1(v[1]); const auto Mul0 = m[0] * Mov0; const auto Mul1 = m[1] * Mov1; const auto Add0 = Mul0 + Mul1; const auto Mov2(v[2]); const auto Mov3(v[3]); const auto Mul2 = m[2] * Mov2; const auto Mul3 = m[3] * Mov3; const auto Add1 = Mul2 + Mul3; const auto Add2 = Add0 + Add1; return FMove(Add2); }
 
